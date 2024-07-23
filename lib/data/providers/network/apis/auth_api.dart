@@ -1,0 +1,56 @@
+import 'package:fluuky/data/providers/network/api_endpoints.dart';
+import 'package:fluuky/data/providers/network/api_representable.dart';
+
+class AuthAPI implements APIRequestRepresentable {
+  final AuthEndpoint authEndpoint;
+  Map<String, dynamic>? bodyData;
+
+  AuthAPI({required this.authEndpoint, this.bodyData});
+
+  @override
+  String get url => APIEndpoint.fluukyapi + endpoint;
+
+  @override
+  String get endpoint => path;
+
+  @override
+  String get path {
+    switch (authEndpoint) {
+      case AuthEndpoint.login:
+        return '/login';
+      case AuthEndpoint.logout:
+        return '/auth/logout';
+      case AuthEndpoint.register:
+        return '/auth/register';
+      case AuthEndpoint.getCurrentUser:
+        return '/auth/user';
+    }
+  }
+
+  @override
+  RequestMethod get method {
+    switch (authEndpoint) {
+      case AuthEndpoint.login:
+      case AuthEndpoint.register:
+        return RequestMethod.post;
+      case AuthEndpoint.logout:
+        return RequestMethod.post; // or RequestMethod.get, depending on your API
+      case AuthEndpoint.getCurrentUser:
+        return RequestMethod.get;
+    }
+  }
+
+  @override
+  Map<String, String>? get headers => {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      };
+
+  @override
+  Map<String, dynamic>? get query => null;
+
+  @override
+  dynamic get body => bodyData;
+}
+
+enum AuthEndpoint { login, logout, register, getCurrentUser }
