@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
+import 'package:fluuky/presentation/controllers/login_registration.dart';
 import 'package:fluuky/presentation/controllers/registration_controller.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +15,7 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   RegisterationController registerationController = Get.put(RegisterationController());
 
-  // SignupController loginController = Get.put(LoginController());
+  LoginController loginController = Get.put(LoginController());
   var isLogin = false.obs;
   @override
   Widget build(BuildContext context) {
@@ -99,18 +100,18 @@ class _SignupScreenState extends State<SignupScreen> {
         const SizedBox(
           height: 20,
         ),
-        // InputTextFieldWidget(loginController.emailController, 'email address'),
+        InputTextFieldWidget(loginController.emailController, 'email address'),
         const SizedBox(
           height: 20,
         ),
-        // InputTextFieldWidget(loginController.passwordController, 'password'),
+        InputTextFieldWidget(loginController.passwordController, 'password'),
         const SizedBox(
           height: 20,
         ),
-        // ElevatedButton(
-        //   onPressed: () => loginController.loginWithEmail(),
-        //   child: Text('Login'),
-        // )
+        ElevatedButton(
+          onPressed: () => loginController.loginWithEmail(),
+          child: Text('Login'),
+        )
       ],
     );
   }

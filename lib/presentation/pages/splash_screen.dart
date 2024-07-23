@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:fluuky/data/repositories/local_repository.dart';
+import 'package:fluuky/app/utils/shared_preference_helper.dart';
 import 'package:lottie/lottie.dart';
 import '../../app/config/assets_constants.dart';
 import '../../app/config/route_constants.dart';
@@ -39,13 +39,13 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _navigateHomepage() async {
-    bool isFirstLaunch = await LocalStorage.isFirstLaunch();
+    bool isFirstLaunch = await SharedPreferenceHelper.isFirstLaunch();
 
     _navigateTimer = Timer(const Duration(seconds: defaultSplashDelay), () {
       if (mounted) {
         if (isFirstLaunch) {
           Navigator.pushReplacementNamed(context, walkthrough);
-          LocalStorage.setFirstLaunch(false);
+          SharedPreferenceHelper.setFirstLaunch(false);
         } else {
           Navigator.pushReplacementNamed(context, login);
         }
