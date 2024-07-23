@@ -63,4 +63,10 @@ class AuthRepositoryImpl implements AuthRepository {
     }
     return null;
   }
+
+  @override
+  Future<User?> signup(String email, String password) {
+    // TODO: implement signup
+    throw UnimplementedError();
+  }
 }

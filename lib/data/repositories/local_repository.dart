@@ -1,9 +1,37 @@
-import '../config/shared_preference_keys.dart';
+import 'package:fluuky/app/config/shared_preference_keys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final appStoragePref = SharedPreferenceHelper();
+class LocalStorage {
+  late SharedPreferences _prefs;
 
-class SharedPreferenceHelper {
+  Future<void> init() async {
+    _prefs = await SharedPreferences.getInstance();
+  }
+
+  Future<bool> setString(String key, String value) async {
+    return await _prefs.setString(key, value);
+  }
+
+  Future<String?> getString(String key) async {
+    return _prefs.getString(key);
+  }
+
+  Future<bool> setBool(String key, bool value) async {
+    return await _prefs.setBool(key, value);
+  }
+
+  Future<bool?> getBool(String key) async {
+    return _prefs.getBool(key);
+  }
+
+  Future<bool> remove(String key) async {
+    return await _prefs.remove(key);
+  }
+
+  Future<bool> clear() async {
+    return await _prefs.clear();
+  }
+
   static Future<String> getDate() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? dateNew = sharedPreferences.getString(date);
