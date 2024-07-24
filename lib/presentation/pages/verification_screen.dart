@@ -3,12 +3,12 @@ import 'package:fluuky/presentation/widgets/background_scaffold.dart';
 import 'package:get/get.dart';
 import '../controllers/auth_controller.dart';
 
-class LoginScreen extends StatefulWidget {
+class VerificationScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _VerificationScreenState createState() => _VerificationScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
+class _VerificationScreenState extends State<VerificationScreen> with WidgetsBindingObserver {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final AuthController _authController = Get.find<AuthController>();

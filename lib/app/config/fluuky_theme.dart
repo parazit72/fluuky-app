@@ -82,6 +82,36 @@ class FluukyTheme {
     ),
     expansionTileTheme: ExpansionTileThemeData(iconColor: accentColor, textColor: accentColor),
     bottomSheetTheme: const BottomSheetThemeData(surfaceTintColor: Colors.white),
+    inputDecorationTheme: InputDecorationTheme(
+      contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+      filled: true,
+      fillColor: Colors.white,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8.0),
+        borderSide: const BorderSide(color: Color(0xFFDBDBDB), width: 1.0),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8.0),
+        borderSide: const BorderSide(color: Color(0xFFDBDBDB), width: 1.0),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8.0),
+        borderSide: const BorderSide(color: Color(0xFFDBDBDB), width: 1.0),
+      ),
+      // For text field focus
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8.0),
+        borderSide: const BorderSide(color: Color(0xFFDBDBDB), width: 1.0),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8.0),
+        borderSide: const BorderSide(color: Color(0xFFDBDBDB), width: 1.0),
+      ),
+      // Customizing the text style
+      hintStyle: TextStyle(
+        color: Colors.black.withOpacity(0.6),
+      ),
+    ),
   );
 
   // White theme with white text

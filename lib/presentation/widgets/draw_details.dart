@@ -98,7 +98,7 @@ class DrawDetails extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Flexible(
+                        Expanded(
                           child: Row(
                             children: [
                               Image.asset('assets/images/logo-green.png', height: 24),

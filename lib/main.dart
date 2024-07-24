@@ -64,7 +64,6 @@ void main() async {
   Get.put(TogglePushNotificationsUseCase(notificationRepository));
 
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
