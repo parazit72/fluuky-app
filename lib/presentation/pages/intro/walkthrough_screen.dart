@@ -5,7 +5,7 @@ import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/data/models/walkthrough_page_model.dart';
 import 'package:fluuky/presentation/pages/home_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../app/config/route_constants.dart';
+import '../../../app/config/route_constants.dart';
 
 class WalkthroughScreen extends StatefulWidget {
   const WalkthroughScreen({super.key});
@@ -164,7 +164,7 @@ class WalkthroughScreenState extends State<WalkthroughScreen> {
   }
 
   _navigateHomepage() async {
-    Navigator.pushReplacementNamed(context, home);
+    Navigator.pushReplacementNamed(context, verification);
   }
 }
 

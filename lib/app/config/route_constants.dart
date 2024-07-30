@@ -11,6 +11,7 @@ const String termsAndCondition = 'termsAndConditionScreen';
 const String privacyPolicy = 'privacyPolicyScreen';
 const String helpCenter = 'helpCenter';
 const String draw = 'draw';
+const String verification = 'verification';
 const String forgotPassword = 'forgotPassword';
 const String accountInfo = 'accountInfo';
 const String addressList = 'addressList';

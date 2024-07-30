@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 
 class FluukyTheme {
   static String? fontFamily = 'Causten';
-  static Color primaryColor = const Color.fromARGB(255, 13, 39, 21);
-  static Color cardColor = const Color.fromARGB(125, 13, 39, 21);
-  static Color accentColor = const Color.fromARGB(125, 13, 39, 21);
+  static Color primaryColor = const Color(0XFF205C32);
+  static Color cardColor = const Color(0XFF205C32);
+  static Color accentColor = const Color(0XFF205C32);
 
   // Light theme with black text
   static ThemeData lightTheme = ThemeData(
-    primaryColor: const Color.fromARGB(255, 13, 39, 21),
+    appBarTheme: AppBarTheme(
+      scrolledUnderElevation: 0,
+      shadowColor: Colors.transparent,
+      systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+      foregroundColor: Colors.transparent,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      iconTheme: const IconThemeData(color: Colors.black),
+      titleTextStyle: TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.w700, fontSize: 16, color: Colors.black),
+    ),
+    primaryColor: const Color(0XFF205C32),
     hintColor: const Color.fromARGB(125, 13, 39, 21),
-    cardColor: const Color.fromARGB(125, 13, 39, 21),
+    cardColor: const Color(0XFFE9EFEB),
     navigationBarTheme: const NavigationBarThemeData(backgroundColor: Colors.white),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
         elevation: 5,
@@ -22,11 +32,6 @@ class FluukyTheme {
     useMaterial3: true,
     textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.black),
     scaffoldBackgroundColor: Colors.white,
-    appBarTheme: AppBarTheme(
-      titleTextStyle: TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.w700, fontSize: 16, color: Colors.black),
-      backgroundColor: Colors.white,
-      iconTheme: const IconThemeData(color: Colors.black),
-    ),
     checkboxTheme: CheckboxThemeData(
       checkColor: MaterialStateProperty.all<Color?>(primaryColor),
       fillColor: MaterialStateProperty.all<Color?>(accentColor),
@@ -56,12 +61,12 @@ class FluukyTheme {
       style: ButtonStyle(
         textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(color: Colors.white)),
         foregroundColor: MaterialStateProperty.all<Color?>(Colors.white),
-        backgroundColor: MaterialStateProperty.all<Color?>(const Color.fromARGB(255, 13, 39, 21)),
+        backgroundColor: MaterialStateProperty.all<Color?>(const Color(0XFF205C32)),
         elevation: MaterialStateProperty.all<double>(4.0),
         shape: MaterialStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
-            side: const BorderSide(color: Colors.black),
+            side: const BorderSide(color: Colors.transparent),
           ),
         ),
         minimumSize: MaterialStateProperty.all<Size>(const Size(double.infinity, 48.0)),
@@ -76,7 +81,7 @@ class FluukyTheme {
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        foregroundColor: const Color.fromARGB(255, 13, 39, 21),
+        foregroundColor: const Color(0XFF205C32),
         minimumSize: const Size(double.infinity, 48.0),
       ),
     ),
@@ -85,7 +90,8 @@ class FluukyTheme {
     inputDecorationTheme: InputDecorationTheme(
       contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
       filled: true,
-      fillColor: Colors.white,
+      fillColor: Colors.transparent,
+      // border: InputBorder.none,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8.0),
         borderSide: const BorderSide(color: Color(0xFFDBDBDB), width: 1.0),
@@ -108,9 +114,8 @@ class FluukyTheme {
         borderSide: const BorderSide(color: Color(0xFFDBDBDB), width: 1.0),
       ),
       // Customizing the text style
-      hintStyle: TextStyle(
-        color: Colors.black.withOpacity(0.6),
-      ),
+      hintStyle: TextStyle(color: Colors.black.withOpacity(0.6)),
+      labelStyle: const TextStyle(color: Color(0XFFDBDBDB)),
     ),
   );
 
@@ -126,7 +131,7 @@ class FluukyTheme {
     ),
     checkboxTheme: lightTheme.checkboxTheme.copyWith(
       checkColor: MaterialStateProperty.all<Color?>(Colors.white),
-      fillColor: MaterialStateProperty.all<Color?>(accentColor),
+      fillColor: MaterialStateProperty.all<Color?>(const Color(0XFFDBDBDB)),
     ),
     textTheme: lightTheme.textTheme.copyWith(
       displayLarge: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w700, color: Colors.white, fontFamily: fontFamily),
@@ -148,7 +153,7 @@ class FluukyTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
         textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(color: primaryColor)),
-        backgroundColor: MaterialStateProperty.all<Color?>(const Color.fromARGB(255, 13, 39, 21)),
+        backgroundColor: MaterialStateProperty.all<Color?>(const Color(0XFF205C32)),
         shape: MaterialStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
@@ -169,7 +174,7 @@ class FluukyTheme {
     ),
     textButtonTheme: TextButtonThemeData(
       // style: TextButton.styleFrom(
-      //   foregroundColor: const Color.fromARGB(255, 13, 39, 21),
+      //   foregroundColor: const Color(0XFF205C32),
       // ),
 
       style: ButtonStyle(

@@ -16,6 +16,16 @@ class AuthAPI implements APIRequestRepresentable {
   @override
   String get path {
     switch (authEndpoint) {
+      case AuthEndpoint.resendCode:
+        return '/resendCode';
+      case AuthEndpoint.refreshToken:
+        return '/refreshToken';
+      case AuthEndpoint.verifyCode:
+        return '/verifyCode';
+      case AuthEndpoint.createPassword:
+        return '/createPassword';
+      case AuthEndpoint.detailsAboutYou:
+        return '/detailsAboutYou';
       case AuthEndpoint.login:
         return '/login';
       case AuthEndpoint.logout:
@@ -30,11 +40,16 @@ class AuthAPI implements APIRequestRepresentable {
   @override
   RequestMethod get method {
     switch (authEndpoint) {
+      case AuthEndpoint.resendCode:
+      case AuthEndpoint.refreshToken:
+      case AuthEndpoint.createPassword:
+      case AuthEndpoint.verifyCode:
+      case AuthEndpoint.detailsAboutYou:
       case AuthEndpoint.login:
       case AuthEndpoint.register:
         return RequestMethod.post;
       case AuthEndpoint.logout:
-        return RequestMethod.post; // or RequestMethod.get, depending on your API
+        return RequestMethod.post; // or RequestMethod.get
       case AuthEndpoint.getCurrentUser:
         return RequestMethod.get;
     }
@@ -53,4 +68,4 @@ class AuthAPI implements APIRequestRepresentable {
   dynamic get body => bodyData;
 }
 
-enum AuthEndpoint { login, logout, register, getCurrentUser }
+enum AuthEndpoint { login, logout, register, getCurrentUser, detailsAboutYou, createPassword, verifyCode, refreshToken, resendCode }

@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-class RegisterationController extends GetxController {
+class VerificationController extends GetxController {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -33,7 +33,7 @@ class RegisterationController extends GetxController {
           nameController.clear();
           emailController.clear();
           passwordController.clear();
-          Get.offAll(HomeScreen());
+          Get.offAll(const HomeScreen());
         } else {
           throw jsonDecode(response.body)["Message"] ?? "Unknown Error Occured";
         }
@@ -46,8 +46,8 @@ class RegisterationController extends GetxController {
           context: Get.context!,
           builder: (context) {
             return SimpleDialog(
-              title: Text('Error'),
-              contentPadding: EdgeInsets.all(20),
+              title: const Text('Error'),
+              contentPadding: const EdgeInsets.all(20),
               children: [Text(e.toString())],
             );
           });

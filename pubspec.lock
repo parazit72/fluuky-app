@@ -234,7 +234,7 @@ packages:
     source: hosted
     version: "0.7.10"
   dio:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: dio
       sha256: e17f6b3097b8c51b72c74c9f071a605c47bcc8893839bd66732457a5ebe73714
@@ -416,6 +416,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.6.6"
+  get_it:
+    dependency: transitive
+    description:
+      name: get_it
+      sha256: d85128a5dae4ea777324730dc65edd9c9f43155c109d5cc0a69cab74139fbac1
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.7.0"
   glob:
     dependency: transitive
     description:
@@ -496,6 +504,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.0"
+  injectable:
+    dependency: "direct main"
+    description:
+      name: injectable
+      sha256: "3c8355a29d11ff28c0311bed754649761f345ef7a13ff66a714380954af51226"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.2"
   intl:
     dependency: transitive
     description:

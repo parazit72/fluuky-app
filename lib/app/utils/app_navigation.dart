@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/presentation/pages/home_screen.dart';
-import 'package:fluuky/presentation/pages/walkthrough_screen.dart';
-import 'package:fluuky/presentation/pages/login_screen.dart';
+import 'package:fluuky/presentation/pages/auth/verification_screen.dart';
+import 'package:fluuky/presentation/pages/intro/walkthrough_screen.dart';
+import 'package:fluuky/presentation/pages/auth/login_screen.dart';
 import 'package:fluuky/presentation/pages/pages.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 
@@ -51,6 +52,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case draw:
       return MaterialPageRoute(builder: (_) => DrawItemScreen());
+
+    case verification:
+      return MaterialPageRoute(builder: (_) => VerificationScreen());
 
     default:
       return MaterialPageRoute(

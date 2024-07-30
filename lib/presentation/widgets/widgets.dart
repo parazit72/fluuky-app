@@ -11,3 +11,4 @@ export 'package:fluuky/presentation/widgets/active_draws_section.dart';
 export 'package:fluuky/presentation/widgets/status_section.dart';
 export 'package:fluuky/presentation/widgets/subscription_section.dart';
 export 'package:fluuky/presentation/widgets/trees_planted_section.dart';
+export 'package:fluuky/presentation/widgets/otp_input_widget.dart';

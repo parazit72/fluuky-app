@@ -2,9 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fluuky/app/utils/shared_preference_helper.dart';
 import 'package:lottie/lottie.dart';
-import '../../app/config/assets_constants.dart';
-import '../../app/config/route_constants.dart';
-import '../../app/config/server_configuration.dart';
+import '../../../app/config/assets_constants.dart';
+import '../../../app/config/route_constants.dart';
+import '../../../app/config/server_configuration.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.pushReplacementNamed(context, walkthrough);
           SharedPreferenceHelper.setFirstLaunch(false);
         } else {
-          Navigator.pushReplacementNamed(context, login);
+          Navigator.pushReplacementNamed(context, walkthrough);
         }
       }
     });

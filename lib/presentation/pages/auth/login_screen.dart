@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/app/config/route_constants.dart';
+import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/widgets/background_scaffold.dart';
 import 'package:get/get.dart';
-import '../controllers/auth_controller.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final AuthController _authController = Get.find<AuthController>();
+  final LoginController _loginController = Get.find<LoginController>();
   final DraggableScrollableController _scrollableController = DraggableScrollableController();
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
@@ -153,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                     Expanded(
                                       child: Row(
                                         children: [
-                                          Checkbox(value: true, onChanged: onPressed),
+                                          Checkbox(value: false, onChanged: onPressed),
                                           Text(
                                             'Remember me?',
                                             style: Theme.of(context).textTheme.bodySmall,
@@ -175,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                               ),
                               ElevatedButton(
                                 onPressed: () async {
-                                  final (success, errorMessage) = await _authController.login(
+                                  final (success, errorMessage) = await _loginController.loginWithEmail(
                                     _emailController.text,
                                     _passwordController.text,
                                   );
@@ -195,7 +196,7 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                 child: const Text('Login'),
                               ),
                               TextButton(
-                                onPressed: () {},
+                                onPressed: () => goLogin(),
                                 child: const Text('Don’t have an account? Sign Up'),
                               ),
                             ],
@@ -211,6 +212,10 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
         ],
       ),
     );
+  }
+
+  void goLogin() {
+    Navigator.pushReplacementNamed(context, signUp);
   }
 
   void onPressed(bool? value) {}
