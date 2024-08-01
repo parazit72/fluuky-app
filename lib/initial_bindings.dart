@@ -8,7 +8,7 @@ import 'package:fluuky/data/providers/database/push_notification_datasource.dart
 import 'package:fluuky/data/providers/raffle_provider.dart';
 import 'package:fluuky/data/repositories/notification_repository_impl.dart';
 import 'package:fluuky/data/repositories/raffle_repository_impl.dart';
-import 'package:fluuky/domain/entities/raffle.dart';
+import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/domain/repositories/notification_repository.dart';
 import 'package:fluuky/domain/repositories/raffle_repository.dart';
 import 'package:fluuky/domain/usecases/fetch_notifications_usecase.dart';
@@ -18,6 +18,7 @@ import 'package:fluuky/domain/usecases/toggle_push_notifications_usecase.dart';
 import 'package:fluuky/domain/usecases/verify_code_usecase.dart';
 import 'package:fluuky/presentation/controllers/category_controller.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
+import 'package:fluuky/presentation/controllers/items_controller.dart';
 import 'package:fluuky/presentation/controllers/raffle_controller.dart';
 import 'package:get/get.dart';
 import 'package:fluuky/data/providers/network/api_provider.dart';
@@ -46,7 +47,7 @@ class InitialBindings extends Bindings {
 
     // Register RaffleController with GetRafflesUseCase
     Get.put(RaffleController(raffleRepository: Get.find<RaffleRepositoryImpl>()));
-
+    Get.put(ItemsController());
     Get.put<NavBarController>(NavBarController());
     // Register NotificationController with use cases
 

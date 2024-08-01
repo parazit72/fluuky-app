@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'raffle.dart';
+part of 'raffle_entity.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator

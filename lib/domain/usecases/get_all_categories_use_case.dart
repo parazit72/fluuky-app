@@ -1,4 +1,4 @@
-import 'package:fluuky/domain/entities/category.dart';
+import 'package:fluuky/domain/entities/category_entity.dart';
 
 import '../repositories/category_repository.dart';
 

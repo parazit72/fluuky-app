@@ -4,7 +4,7 @@ import 'package:fluuky/presentation/pages/home_screen.dart';
 import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../../../domain/entities/user.dart';
+import '../../../domain/entities/user_entity.dart';
 import '../../../domain/repositories/auth_repository.dart';
 import '../../../domain/usecases/verify_code_usecase.dart';
 

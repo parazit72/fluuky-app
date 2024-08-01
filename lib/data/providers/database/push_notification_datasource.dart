@@ -1,7 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fluuky/data/models/notification_model.dart';
 import 'package:hive/hive.dart';
-import 'package:path_provider/path_provider.dart' as path_provider;
 
 class PushNotificationDataSource {
   final FirebaseMessaging firebaseMessaging;

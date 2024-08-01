@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/presentation/widgets/trees_planted_dialog.dart';
 import 'package:fluuky/presentation/widgets/we_forest_info_dialog.dart';
 
-class DrawDetailsWidget extends StatelessWidget {
-  const DrawDetailsWidget({super.key});
+class RaffleCardWidget extends StatelessWidget {
+  final RaffleEntity raffle;
+
+  const RaffleCardWidget({
+    super.key,
+    required this.raffle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +34,7 @@ class DrawDetailsWidget extends StatelessWidget {
               ClipRRect(
                 borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                 child: Image.asset(
-                  'assets/images/back4.jpg',
+                  raffle.images.isNotEmpty ? raffle.images[0] : 'assets/images/back4.jpg',
                   alignment: Alignment.topCenter,
                   height: 200,
                   width: 500,
@@ -53,9 +59,9 @@ class DrawDetailsWidget extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Rolex Cosmograph Daytona', style: Theme.of(context).textTheme.bodySmall),
+                        Text(raffle.name, style: Theme.of(context).textTheme.bodySmall),
                         const SizedBox(width: 10),
-                        Text('\$33,000', style: Theme.of(context).textTheme.bodySmall),
+                        Text('\$${raffle.price.toStringAsFixed(2)}', style: Theme.of(context).textTheme.bodySmall),
                       ],
                     ),
                     const SizedBox(height: 10),
@@ -69,7 +75,7 @@ class DrawDetailsWidget extends StatelessWidget {
                             Text('Tickets:', style: Theme.of(context).textTheme.bodySmall),
                           ],
                         ),
-                        Text('567/2000', style: Theme.of(context).textTheme.bodySmall),
+                        Text('${raffle.capacity}/2000', style: Theme.of(context).textTheme.bodySmall),
                       ],
                     ),
                     const SizedBox(height: 10),

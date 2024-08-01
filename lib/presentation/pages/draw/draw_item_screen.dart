@@ -26,7 +26,17 @@ class DrawItemScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  DrawDetailsWidget(),
+                  Text(
+                    'Winning this watch means carrying a piece of horological history, a companion for both the high seas and high stakes. It\'s more than a timepiece; it\'s a sustainable heirloom designed to be handed down from generation to generation.',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    'Draw Date: December 17th, 2023 - 18:00',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: 10),
+                  const DrawDetailsWidget(),
                   const SizedBox(height: 20),
                   NumberPicker(
                     minValue: 1,

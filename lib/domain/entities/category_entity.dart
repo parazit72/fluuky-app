@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 
-part 'category.g.dart';
+part 'category_entity.g.dart';
 
 @HiveType(typeId: 3)
 class CategoryEntity {
@@ -22,12 +22,16 @@ class CategoryEntity {
   @HiveField(5)
   final int? parentId;
 
+  @HiveField(6)
+  final String? iconPath;
+
   CategoryEntity({
     required this.id,
     required this.name,
     required this.slug,
     required this.description,
     required this.status,
+    required this.iconPath,
     this.parentId,
   });
 }

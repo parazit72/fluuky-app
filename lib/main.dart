@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:fluuky/domain/entities/category.dart';
-import 'package:fluuky/domain/entities/notification.dart';
-import 'package:fluuky/domain/entities/raffle.dart';
+import 'package:fluuky/domain/entities/category_entity.dart';
+import 'package:fluuky/domain/entities/notification_entity.dart';
+import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/fluucky_app.dart';
 import 'package:fluuky/restart_widget.dart';
 import 'firebase_options.dart';

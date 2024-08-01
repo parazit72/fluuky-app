@@ -1,6 +1,6 @@
 import 'package:fluuky/data/providers/database/local_notification_datasource.dart';
 import 'package:fluuky/data/providers/database/push_notification_datasource.dart';
-import 'package:fluuky/domain/entities/notification.dart';
+import 'package:fluuky/domain/entities/notification_entity.dart';
 import 'package:fluuky/domain/repositories/notification_repository.dart';
 
 class NotificationRepositoryImpl implements NotificationRepository {

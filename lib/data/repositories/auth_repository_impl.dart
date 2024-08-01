@@ -1,6 +1,6 @@
 import 'package:fluuky/data/providers/network/apis/auth_api.dart';
 import 'package:fluuky/data/providers/network/api_provider.dart';
-import 'package:fluuky/domain/entities/user.dart';
+import 'package:fluuky/domain/entities/user_entity.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluuky/domain/repositories/auth_repository.dart';
 

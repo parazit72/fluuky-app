@@ -9,8 +9,6 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Initialize the NotificationController
-    final NotificationController notificationController = Get.find();
-
     return BackgroundScaffold(
       appBar: AppBar(
         title: const Text('Notifications'),

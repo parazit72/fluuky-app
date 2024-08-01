@@ -5,6 +5,7 @@ import 'package:pinput/pinput.dart';
 class FluukyTheme {
   static String? fontFamily = 'Causten';
   static Color primaryColor = const Color(0XFF205C32);
+  static Color indicatorColor = const Color(0xFFDBDBDB);
   static Color secondaryColor = const Color(0xFFDBDBDB);
   static Color cardColor = const Color(0XFF205C32);
   static Color accentColor = const Color(0XFF205C32);

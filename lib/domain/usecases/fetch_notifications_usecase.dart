@@ -1,4 +1,4 @@
-import 'package:fluuky/domain/entities/notification.dart';
+import 'package:fluuky/domain/entities/notification_entity.dart';
 import 'package:fluuky/domain/repositories/notification_repository.dart';
 
 class FetchNotificationsUseCase {

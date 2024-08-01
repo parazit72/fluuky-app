@@ -1,4 +1,4 @@
-import 'package:fluuky/domain/entities/notification.dart';
+import 'package:fluuky/domain/entities/notification_entity.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hive_flutter/adapters.dart';
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'category.dart';
+part of 'category_entity.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
@@ -22,6 +22,7 @@ class CategoryEntityAdapter extends TypeAdapter<CategoryEntity> {
       slug: fields[2] as String,
       description: fields[3] as String,
       status: fields[4] as int,
+      iconPath: fields[6] as String?,
       parentId: fields[5] as int?,
     );
   }
@@ -29,7 +30,7 @@ class CategoryEntityAdapter extends TypeAdapter<CategoryEntity> {
   @override
   void write(BinaryWriter writer, CategoryEntity obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -41,7 +42,9 @@ class CategoryEntityAdapter extends TypeAdapter<CategoryEntity> {
       ..writeByte(4)
       ..write(obj.status)
       ..writeByte(5)
-      ..write(obj.parentId);
+      ..write(obj.parentId)
+      ..writeByte(6)
+      ..write(obj.iconPath);
   }
 
   @override
@@ -49,8 +52,5 @@ class CategoryEntityAdapter extends TypeAdapter<CategoryEntity> {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is CategoryEntityAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      identical(this, other) || other is CategoryEntityAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }

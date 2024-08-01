@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:fluuky/domain/usecases/fetch_notifications_usecase.dart';
 import 'package:fluuky/domain/usecases/mark_all_as_read_usecase.dart';
 import 'package:fluuky/domain/usecases/toggle_push_notifications_usecase.dart';
-import 'package:fluuky/domain/entities/notification.dart';
+import 'package:fluuky/domain/entities/notification_entity.dart';
 
 class NotificationController extends GetxController {
   final FetchNotificationsUseCase fetchNotificationsUseCase;

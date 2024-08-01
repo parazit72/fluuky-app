@@ -1,4 +1,4 @@
-import 'package:fluuky/domain/entities/raffle.dart';
+import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/domain/repositories/raffle_repository.dart';
 
 class GetRafflesUseCase {

@@ -1,4 +1,4 @@
-import 'package:fluuky/domain/entities/raffle.dart';
+import 'package:fluuky/domain/entities/raffle_entity.dart';
 
 abstract class RaffleRepository {
   Future<void> updateRaffle(RaffleEntity raffle);

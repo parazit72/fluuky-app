@@ -1,4 +1,4 @@
-import 'package:fluuky/domain/entities/notification.dart';
+import 'package:fluuky/domain/entities/notification_entity.dart';
 
 abstract class NotificationRepository {
   Future<List<NotificationEntity>> fetchNotifications();

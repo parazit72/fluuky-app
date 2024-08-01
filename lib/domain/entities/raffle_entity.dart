@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 
-part 'raffle.g.dart';
+part 'raffle_entity.g.dart';
 
 @HiveType(typeId: 2)
 class RaffleEntity {
