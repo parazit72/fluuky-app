@@ -20,13 +20,13 @@ class DrawItemScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CarouselSection(),
+            CarouselSectionWidget(),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  DrawDetails(),
+                  DrawDetailsWidget(),
                   const SizedBox(height: 20),
                   NumberPicker(
                     minValue: 1,

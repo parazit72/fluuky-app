@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/widgets/background_scaffold.dart';
+import 'package:fluuky/presentation/widgets/input_text_field_widget.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -10,9 +11,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final LoginController _loginController = Get.find<LoginController>();
+  final AuthController _authController = Get.find<AuthController>();
   final DraggableScrollableController _scrollableController = DraggableScrollableController();
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
@@ -75,6 +74,16 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
     );
   }
 
+  bool _obscured = false;
+
+  void _toggleObscured() {
+    setState(() {
+      _obscured = !_obscured;
+      if (_passwordFocusNode.hasPrimaryFocus) return; // If focus is on text field, dont unfocus
+      _passwordFocusNode.canRequestFocus = false; // Prevents focus if tap on eye
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BackgroundScaffold(
@@ -96,6 +105,7 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
               maxChildSize: 1.0,
               snap: true,
               builder: (BuildContext context, ScrollController scrollController) {
+                var value = false;
                 return NotificationListener<DraggableScrollableNotification>(
                   onNotification: (notification) {
                     if (notification.extent > 0.7) {
@@ -132,17 +142,17 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                 style: Theme.of(context).textTheme.bodySmall,
                               ),
                               const SizedBox(height: 20),
-                              TextField(
-                                controller: _emailController,
-                                focusNode: _emailFocusNode,
-                                decoration: const InputDecoration(labelText: 'Email'),
-                              ),
+                              InputTextFieldWidget(
+                                  labelText: 'Email',
+                                  hintText: 'Enter your email',
+                                  controller: _authController.emailController,
+                                  focusNode: _emailFocusNode),
                               const SizedBox(height: 16),
-                              TextField(
-                                controller: _passwordController,
+                              PasswordTextFieldWidget(
+                                controller: _authController.passwordController,
+                                hintText: 'Enter your password',
                                 focusNode: _passwordFocusNode,
-                                decoration: const InputDecoration(labelText: 'Password'),
-                                obscureText: true,
+                                validator: (val) => (val != null && val.length < 6) ? 'Password too short.' : null,
                               ),
                               const SizedBox(height: 24),
                               SizedBox(
@@ -154,49 +164,26 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                     Expanded(
                                       child: Row(
                                         children: [
-                                          Checkbox(value: false, onChanged: onPressed),
-                                          Text(
-                                            'Remember me?',
-                                            style: Theme.of(context).textTheme.bodySmall,
-                                          ),
+                                          Checkbox(value: value, onChanged: (bool? value) {}),
+                                          Text('Remember me?', style: Theme.of(context).textTheme.bodySmall),
                                         ],
                                       ),
                                     ),
                                     Expanded(
                                       child: TextButton(
                                         onPressed: () {},
-                                        child: const Text(
-                                          'Forgot Password?',
-                                          textAlign: TextAlign.right,
-                                        ),
+                                        child: const Text('Forgot Password?', textAlign: TextAlign.right),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                               ElevatedButton(
-                                onPressed: () async {
-                                  final (success, errorMessage) = await _loginController.loginWithEmail(
-                                    _emailController.text,
-                                    _passwordController.text,
-                                  );
-                                  if (success) {
-                                    Get.offAllNamed('/home');
-                                  } else {
-                                    Get.snackbar(
-                                      'Error',
-                                      errorMessage ?? 'An error occurred',
-                                      snackPosition: SnackPosition.BOTTOM,
-                                      backgroundColor: Colors.red,
-                                      colorText: Colors.white,
-                                      duration: const Duration(seconds: 3),
-                                    );
-                                  }
-                                },
+                                onPressed: () async => await _authController.loginWithEmail(),
                                 child: const Text('Login'),
                               ),
                               TextButton(
-                                onPressed: () => goLogin(),
+                                onPressed: () => Get.toNamed(signUp),
                                 child: const Text('Don’t have an account? Sign Up'),
                               ),
                             ],
@@ -213,10 +200,4 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
       ),
     );
   }
-
-  void goLogin() {
-    Navigator.pushReplacementNamed(context, signUp);
-  }
-
-  void onPressed(bool? value) {}
 }

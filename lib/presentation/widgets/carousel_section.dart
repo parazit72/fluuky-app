@@ -1,90 +1,81 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fluuky/presentation/controllers/raffle_controller.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:fluuky/app/config/fluuky_theme.dart';
+import 'package:get/get.dart';
 
-class CarouselSection extends StatefulWidget {
-  @override
-  _CarouselSectionState createState() => _CarouselSectionState();
-}
-
-class _CarouselSectionState extends State<CarouselSection> {
-  final List<String> _carouselImages = [
-    'assets/images/back4.jpg',
-    'assets/images/back4.jpg',
-    'assets/images/back4.jpg',
-  ];
-
-  final CarouselController _carouselController = CarouselController();
-  int _currentCarouselIndex = 0;
+class CarouselSectionWidget extends StatelessWidget {
+  final RaffleController raffleController = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        CarouselSlider(
-          items: _carouselImages
-              .map(
-                (imagePath) => Stack(
-                  children: [
-                    Image.asset(
-                      imagePath,
-                      fit: BoxFit.cover,
-                      width: MediaQuery.of(context).size.width,
-                    ),
-                    Positioned(
-                      bottom: 40,
-                      left: 10,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Rolex Cosmograph Daytona', style: FluukyTheme.whiteTheme.textTheme.displayMedium),
-                          Text('\$99.99', style: FluukyTheme.whiteTheme.textTheme.headlineSmall),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              )
-              .toList(),
-          carouselController: _carouselController,
-          options: CarouselOptions(
-            height: MediaQuery.of(context).size.height * 0.4,
-            viewportFraction: 1,
-            onPageChanged: (index, reason) {
-              setState(() {
-                _currentCarouselIndex = index;
-              });
-            },
+    return Obx(() {
+      if (raffleController.raffles.isEmpty) {
+        return Stack(children: [
+          Image.asset('assets/images/jungle-1.jpg', fit: BoxFit.cover, height: MediaQuery.of(context).size.height * 0.3),
+          Container(
+            height: MediaQuery.of(context).size.height * 0.3,
+            color: Colors.black.withOpacity(0.5),
           ),
-        ),
-        Positioned(
-          bottom: 24,
-          left: 0,
-          right: 0,
-          child: Center(
-            child: AnimatedSmoothIndicator(
-              activeIndex: _currentCarouselIndex,
-              count: _carouselImages.length,
-              onDotClicked: (index) {
-                _carouselController.animateToPage(
-                  index,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.linear,
-                );
+          const SizedBox(height: 260, child: Center(child: CircularProgressIndicator()))
+        ]);
+      }
+
+      return Stack(
+        children: [
+          CarouselSlider(
+            items: raffleController.raffles
+                .map(
+                  (raffle) => Stack(
+                    children: [
+                      Image.asset(
+                        raffle.images.isNotEmpty ? raffle.images[0] : 'assets/images/jungle-1.jpg',
+                        fit: BoxFit.cover,
+                        width: MediaQuery.of(context).size.width,
+                      ),
+                      Positioned(
+                        bottom: 40,
+                        left: 10,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(raffle.name, style: const TextStyle(color: Colors.white, fontSize: 20)),
+                            Text('\$${raffle.price}', style: const TextStyle(color: Colors.white, fontSize: 16)),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+                .toList(),
+            options: CarouselOptions(
+              height: MediaQuery.of(context).size.height * 0.4,
+              viewportFraction: 1,
+              onPageChanged: (index, reason) {
+                // Optionally handle page changes here
               },
-              effect: ScrollingDotsEffect(
-                activeDotColor: Colors.white,
-                activeDotScale: 1,
-                dotColor: Colors.grey,
-                dotHeight: 4.0,
-                spacing: 16.0,
-                dotWidth: (MediaQuery.of(context).size.width / _carouselImages.length) - (_carouselImages.length * 5),
+            ),
+          ),
+          Positioned(
+            bottom: 24,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: AnimatedSmoothIndicator(
+                activeIndex: raffleController.currentIndex.value,
+                count: raffleController.raffles.length,
+                effect: const ScrollingDotsEffect(
+                  activeDotColor: Colors.white,
+                  dotColor: Colors.grey,
+                  dotHeight: 4.0,
+                  dotWidth: 4.0,
+                  spacing: 16.0,
+                ),
               ),
             ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    });
   }
 }

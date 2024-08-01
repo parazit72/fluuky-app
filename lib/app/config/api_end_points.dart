@@ -1,5 +1,5 @@
 class ApiEndPoints {
-  static final String baseUrl = 'http://base_url/api/';
+  static const String baseUrl = 'http://base_url/api/';
   static _AuthEndPoints authEndpoints = _AuthEndPoints();
 }
 

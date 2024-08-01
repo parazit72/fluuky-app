@@ -1,44 +1,47 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'notification.dart';
+part of 'category.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class NotificationEntityAdapter extends TypeAdapter<NotificationEntity> {
+class CategoryEntityAdapter extends TypeAdapter<CategoryEntity> {
   @override
-  final int typeId = 1;
+  final int typeId = 3;
 
   @override
-  NotificationEntity read(BinaryReader reader) {
+  CategoryEntity read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return NotificationEntity(
-      id: fields[0] as String,
-      title: fields[1] as String,
-      body: fields[2] as String,
-      isRead: fields[3] as bool,
-      timestamp: fields[4] as DateTime,
+    return CategoryEntity(
+      id: fields[0] as int,
+      name: fields[1] as String,
+      slug: fields[2] as String,
+      description: fields[3] as String,
+      status: fields[4] as int,
+      parentId: fields[5] as int?,
     );
   }
 
   @override
-  void write(BinaryWriter writer, NotificationEntity obj) {
+  void write(BinaryWriter writer, CategoryEntity obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.title)
+      ..write(obj.name)
       ..writeByte(2)
-      ..write(obj.body)
+      ..write(obj.slug)
       ..writeByte(3)
-      ..write(obj.isRead)
+      ..write(obj.description)
       ..writeByte(4)
-      ..write(obj.timestamp);
+      ..write(obj.status)
+      ..writeByte(5)
+      ..write(obj.parentId);
   }
 
   @override
@@ -47,7 +50,7 @@ class NotificationEntityAdapter extends TypeAdapter<NotificationEntity> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is NotificationEntityAdapter &&
+      other is CategoryEntityAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

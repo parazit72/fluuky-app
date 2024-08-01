@@ -1,32 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/presentation/controllers/controllers.dart';
+import 'package:fluuky/presentation/pages/notification_screen.dart';
 import 'package:get/get.dart';
 
-class NotificationController extends GetxController {
-  var notificationCount = 0.obs;
-
-  void increment() {
-    notificationCount.value++;
-  }
-
-  void clear() {
-    notificationCount.value = 0;
-  }
-}
-
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+class AppBarProfile extends StatelessWidget implements PreferredSizeWidget {
   final String username;
-  final NotificationController notificationController = Get.put(NotificationController());
 
-  CustomAppBar({super.key, required this.username});
+  AppBarProfile({super.key, required this.username});
+
+  void goNotification() {
+    Get.offAll(() => const NotificationScreen());
+  }
 
   @override
   Widget build(BuildContext context) {
+    final NotificationController notificationController = Get.find();
     return AppBar(
       leading: const Padding(
         padding: EdgeInsets.all(8.0),
-        child: CircleAvatar(
-          backgroundImage: AssetImage('assets/images/avatar.jpg'),
-        ),
+        child: CircleAvatar(backgroundImage: AssetImage('assets/images/avatar.jpg')),
       ),
       title: Text('Welcome, $username'),
       actions: [
@@ -34,9 +26,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           children: [
             IconButton(
               icon: const Icon(Icons.notifications),
-              onPressed: () {
-                // Navigate to notifications page
-              },
+              onPressed: () => goNotification(),
             ),
             Positioned(
               right: 11,

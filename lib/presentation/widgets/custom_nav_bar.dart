@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/route_constants.dart';
+import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:get/get.dart';
 
-class CustomNavBarController extends GetxController {
-  var selectedIndex = 0.obs;
-
-  void changeIndex(int index) {
-    selectedIndex.value = index;
-  }
-}
-
 class CustomNavBar extends StatelessWidget {
-  final CustomNavBarController controller = Get.put(CustomNavBarController());
+  final NavBarController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {

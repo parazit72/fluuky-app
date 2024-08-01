@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
 import 'package:fluuky/presentation/controllers/auth/login_controller.dart';
 import 'package:fluuky/presentation/controllers/auth/registration_controller.dart';
 import 'package:get/get.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -15,6 +15,8 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   RegisterationController registerationController = Get.put(RegisterationController());
+  String initialCountry = 'AE';
+  PhoneNumber number = PhoneNumber(isoCode: 'AE');
 
   LoginController loginController = Get.put(LoginController());
   var isLogin = false.obs;
@@ -78,15 +80,40 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget registerWidget() {
     return Column(
       children: [
-        InputTextFieldWidget(registerationController.firstNameController, 'First name', 'First name'),
+        InputTextFieldWidget(controller: registerationController.firstNameController, labelText: 'First name', hintText: 'Enter your first name'),
         const SizedBox(height: 20),
-        InputTextFieldWidget(registerationController.lastNameController, 'Last name', 'Last name'),
+        InputTextFieldWidget(controller: registerationController.lastNameController, labelText: 'Last name', hintText: 'Enter your last name'),
         const SizedBox(height: 20),
-        InputTextFieldWidget(registerationController.mobileController, 'Phone Number', 'Phone Number'),
+        InternationalPhoneNumberInput(
+          searchBoxDecoration: const InputDecoration(),
+          onInputChanged: (PhoneNumber number) {
+            print(number.phoneNumber);
+          },
+          onInputValidated: (bool value) {
+            print(value);
+          },
+          selectorConfig: const SelectorConfig(
+            selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+            useBottomSheetSafeArea: true,
+          ),
+          ignoreBlank: false,
+          autoValidateMode: AutovalidateMode.disabled,
+          selectorTextStyle: const TextStyle(color: Colors.black),
+          initialValue: number,
+          textFieldController: registerationController.mobileController,
+          formatInput: true,
+          keyboardType: const TextInputType.numberWithOptions(signed: true, decimal: true),
+          inputBorder: const OutlineInputBorder(),
+          onSaved: (PhoneNumber number) {
+            print('On Saved: $number');
+          },
+        ),
+        InputTextFieldWidget(controller: registerationController.mobileController, labelText: 'Phone Number', hintText: 'Enter your phone number'),
         const SizedBox(height: 20),
-        InputTextFieldWidget(registerationController.emailController, 'Email', 'Email'),
+        InputTextFieldWidget(controller: registerationController.emailController, labelText: 'Email', hintText: 'Enter your email'),
         const SizedBox(height: 20),
-        InputTextFieldWidget(registerationController.referalCodeController, 'Referal Code', 'Referal Code'),
+        InputTextFieldWidget(
+            controller: registerationController.referalCodeController, labelText: 'Referal Code', hintText: 'Enter your referal code'),
         const SizedBox(height: 15),
         ElevatedButton(
           onPressed: () => registerationController.registerWithEmail(),

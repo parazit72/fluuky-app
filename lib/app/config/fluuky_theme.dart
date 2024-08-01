@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pinput/pinput.dart';
 
 class FluukyTheme {
   static String? fontFamily = 'Causten';
   static Color primaryColor = const Color(0XFF205C32);
+  static Color secondaryColor = const Color(0xFFDBDBDB);
   static Color cardColor = const Color(0XFF205C32);
   static Color accentColor = const Color(0XFF205C32);
 
@@ -34,7 +36,12 @@ class FluukyTheme {
     scaffoldBackgroundColor: Colors.white,
     checkboxTheme: CheckboxThemeData(
       checkColor: MaterialStateProperty.all<Color?>(primaryColor),
-      fillColor: MaterialStateProperty.all<Color?>(accentColor),
+      fillColor: MaterialStateProperty.all<Color?>(secondaryColor),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+      side: MaterialStateBorderSide.resolveWith(
+        (states) => BorderSide(color: secondaryColor),
+      ),
+      materialTapTargetSize: MaterialTapTargetSize.padded,
     ),
     drawerTheme: const DrawerThemeData(backgroundColor: Colors.white),
     colorScheme: ColorScheme.light(primary: primaryColor, onPrimary: accentColor, background: primaryColor, onBackground: accentColor),
@@ -91,31 +98,13 @@ class FluukyTheme {
       contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
       filled: true,
       fillColor: Colors.transparent,
-      // border: InputBorder.none,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: const BorderSide(color: Color(0xFFDBDBDB), width: 1.0),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: const BorderSide(color: Color(0xFFDBDBDB), width: 1.0),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: const BorderSide(color: Color(0xFFDBDBDB), width: 1.0),
-      ),
-      // For text field focus
-      focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: const BorderSide(color: Color(0xFFDBDBDB), width: 1.0),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: const BorderSide(color: Color(0xFFDBDBDB), width: 1.0),
-      ),
-      // Customizing the text style
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: secondaryColor, width: 1.0)),
+      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: secondaryColor, width: 1.0)),
+      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: secondaryColor, width: 1.0)),
+      focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: secondaryColor, width: 1.0)),
+      errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: secondaryColor, width: 1.0)),
       hintStyle: TextStyle(color: Colors.black.withOpacity(0.6)),
-      labelStyle: const TextStyle(color: Color(0XFFDBDBDB)),
+      labelStyle: TextStyle(color: secondaryColor),
     ),
   );
 
@@ -125,13 +114,11 @@ class FluukyTheme {
     appBarTheme: lightTheme.appBarTheme.copyWith(
       titleTextStyle: TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
       backgroundColor: primaryColor,
-      iconTheme: const IconThemeData(
-        color: Colors.white,
-      ),
+      iconTheme: const IconThemeData(color: Colors.white),
     ),
     checkboxTheme: lightTheme.checkboxTheme.copyWith(
       checkColor: MaterialStateProperty.all<Color?>(Colors.white),
-      fillColor: MaterialStateProperty.all<Color?>(const Color(0XFFDBDBDB)),
+      fillColor: MaterialStateProperty.all<Color?>(secondaryColor),
     ),
     textTheme: lightTheme.textTheme.copyWith(
       displayLarge: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w700, color: Colors.white, fontFamily: fontFamily),
@@ -153,7 +140,7 @@ class FluukyTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
         textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(color: primaryColor)),
-        backgroundColor: MaterialStateProperty.all<Color?>(const Color(0XFF205C32)),
+        backgroundColor: MaterialStateProperty.all<Color?>(primaryColor),
         shape: MaterialStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
@@ -190,4 +177,19 @@ class FluukyTheme {
   static Color bodyTextDarkColor = const Color(0xFF6e6e6e);
   static Color appBarBackgroundColor = Colors.grey.shade400;
   static Color checkOutInActiveColor = Colors.grey.withAlpha(100);
+
+  static final PinTheme defaultPinTheme = PinTheme(
+    padding: const EdgeInsets.only(left: 19, right: 19),
+    width: 52,
+    height: 52,
+    textStyle: const TextStyle(fontSize: 20, color: Color(0xFFDBDBDB), fontWeight: FontWeight.w600),
+    decoration: BoxDecoration(
+      border: Border.all(color: const Color(0xFFDBDBDB)),
+      boxShadow: const [
+        BoxShadow(color: Color(0xFFDBDBDB)),
+        BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+      ],
+      borderRadius: BorderRadius.circular(8),
+    ),
+  );
 }

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fluuky/presentation/widgets/trees_planted_dialog.dart';
 import 'package:fluuky/presentation/widgets/we_forest_info_dialog.dart';
 
-class DrawDetails extends StatelessWidget {
+class DrawDetailsWidget extends StatelessWidget {
+  const DrawDetailsWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(

@@ -9,9 +9,9 @@ class LocalNotificationDataSource {
   LocalNotificationDataSource(this.flutterLocalNotificationsPlugin);
 
   Future<void> init() async {
-    await Hive.initFlutter();
-    Hive.registerAdapter(NotificationEntityAdapter());
-    await Hive.openBox<NotificationEntity>(boxName);
+    // await Hive.initFlutter();
+    // Hive.registerAdapter(NotificationEntityAdapter());
+    // await Hive.openBox<NotificationEntity>(boxName);
 
     const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
 

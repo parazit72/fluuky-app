@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/presentation/pages/draw/draws_list_screen.dart';
 import 'package:fluuky/presentation/pages/home_screen.dart';
 import 'package:fluuky/presentation/pages/auth/verification_screen.dart';
 import 'package:fluuky/presentation/pages/intro/walkthrough_screen.dart';
@@ -28,7 +29,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case signUp:
       return MaterialPageRoute(
-        builder: (_) => SignupScreen(),
+        builder: (_) => const SignupScreen(),
       );
 
     case login:
@@ -53,8 +54,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case draw:
       return MaterialPageRoute(builder: (_) => DrawItemScreen());
 
+    case drawList:
+      return MaterialPageRoute(builder: (_) => DrawsListScreen());
+
     case verification:
-      return MaterialPageRoute(builder: (_) => VerificationScreen());
+      return MaterialPageRoute(builder: (_) => const VerificationScreen());
 
     default:
       return MaterialPageRoute(
