@@ -4,7 +4,6 @@ import 'package:fluuky/app/utils/shared_preference_helper.dart';
 import 'package:lottie/lottie.dart';
 import '../../../app/config/assets_constants.dart';
 import '../../../app/config/route_constants.dart';
-import '../../../app/config/server_configuration.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -41,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
   _navigateHomepage() async {
     bool isFirstLaunch = await SharedPreferenceHelper.isFirstLaunch();
 
-    _navigateTimer = Timer(const Duration(seconds: defaultSplashDelay), () {
+    _navigateTimer = Timer(const Duration(seconds: 2), () {
       if (mounted) {
         if (isFirstLaunch) {
           Navigator.pushReplacementNamed(context, walkthrough);

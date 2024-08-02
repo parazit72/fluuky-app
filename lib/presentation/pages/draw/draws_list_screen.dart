@@ -14,28 +14,7 @@ class DrawsListScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CarouselSectionWidget(),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CategoryTabsWidget(),
-                  const SizedBox(height: 20),
-                  NumberPicker(
-                    minValue: 1,
-                    maxValue: 20,
-                    initialValue: 10,
-                    onChanged: (value) {
-                      print('Selected number: $value');
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  const SizedBox(height: 20),
-                  ActionButtons(),
-                ],
-              ),
-            ),
+            CategoryTabsWidget(),
           ],
         ),
       ),

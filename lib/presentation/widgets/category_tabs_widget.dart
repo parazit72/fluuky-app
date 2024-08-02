@@ -14,92 +14,102 @@ class CategoryTabsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 500,
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Item Type Buttons
-          Padding(
-            padding: const EdgeInsets.only(top: 24),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                // mainAxisSize: MainAxisSize.min,
-                // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildTypeButton(ItemType.raffles, 'Draws'),
-                  _buildTypeButton(ItemType.winners, 'Winners'),
-                  _buildTypeButton(ItemType.announcements, 'Winning Announcements'),
-                ],
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 14),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              _buildTypeButton(ItemType.draws, 'Draws'),
+              _buildTypeButton(ItemType.winners, 'Winners'),
+              _buildTypeButton(ItemType.announcements, 'Winning Announcements'),
+            ],
+          ),
+        ),
+        // Item Type Buttons
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          padding: const EdgeInsets.all(14),
+          child: Column(
+            children: [
+              const Divider(height: 40),
+              Obx(() {
+                final selectedTypeName = _getSelectedTypeName(controller.selectedItemType.value);
+                return Text(
+                  selectedTypeName.capitalizeFirst!,
+                  style: Theme.of(context).textTheme.titleLarge,
+                  textAlign: TextAlign.start,
+                );
+              }),
+
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 8),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  boxShadow: [
+                    BoxShadow(color: Color(0xFFDBDBDB)),
+                    BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _buildViewButton(ViewType.list, Icons.list),
+                    _buildViewButton(ViewType.grid, Icons.grid_on),
+                  ],
+                ),
               ),
-            ),
-          ),
-          const Divider(height: 40),
 
-          // View Type Buttons
-          Text('Draws', style: Theme.of(context).textTheme.titleLarge, textAlign: TextAlign.start),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 8),
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-              boxShadow: [
-                BoxShadow(color: Color(0xFFDBDBDB)),
-                BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildViewButton(ViewType.list, Icons.list),
-                _buildViewButton(ViewType.grid, Icons.grid_on),
-              ],
-            ),
-          ),
+              // Categories Buttons (only visible for raffles)
+              Obx(() {
+                if (controller.selectedItemType.value == ItemType.draws) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: controller.categories.map((category) => _buildCategoryButton(category.id, category.name, category.iconPath)).toList(),
+                  );
+                } else {
+                  return const SizedBox.shrink();
+                }
+              }),
+              const Divider(height: 40),
 
-          // Categories Buttons (only visible for raffles)
-          Obx(() {
-            if (controller.selectedItemType.value == ItemType.raffles) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: controller.categories.map((category) => _buildCategoryButton(category.id, category.name, category.iconPath)).toList(),
-              );
-            } else {
-              return const SizedBox.shrink();
-            }
-          }),
-
-          // Items List/Grid
-          Expanded(
-            child: Obx(() {
-              if (controller.selectedItemType.value == ItemType.raffles) {
-                return _buildItemsView<RaffleEntity>(
-                  controller.filteredRaffles,
-                  (raffle) => RaffleCardWidget(raffle: raffle),
-                );
-              } else if (controller.selectedItemType.value == ItemType.winners) {
-                return _buildItemsView<WinnerEntity>(
-                  controller.winners,
-                  (winner) => WinnerCardWidget(winner: winner),
-                );
-              } else {
-                return _buildItemsView<AnnouncementEntity>(
-                  controller.announcements,
-                  (announcement) => AnnouncementCardWidget(announcement: announcement),
-                );
-              }
-            }),
+              // Items List/Grid
+              Expanded(
+                child: Obx(() {
+                  if (controller.selectedItemType.value == ItemType.draws) {
+                    return _buildItemsView<RaffleEntity>(
+                      controller.filteredRaffles,
+                      (raffle) => RaffleCardWidget(raffle: raffle),
+                    );
+                  } else if (controller.selectedItemType.value == ItemType.winners) {
+                    return _buildItemsView<WinnerEntity>(
+                      controller.winners,
+                      (winner) => WinnerCardWidget(winner: winner),
+                    );
+                  } else {
+                    return _buildItemsView<AnnouncementEntity>(
+                      controller.announcements,
+                      (announcement) => AnnouncementCardWidget(announcement: announcement),
+                    );
+                  }
+                }),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
   Widget _buildTypeButton(ItemType type, String text) {
     return Obx(() {
       bool isSelected = controller.selectedItemType.value == type;
+
       return IntrinsicWidth(
         child: Container(
           margin: const EdgeInsets.only(left: 8, bottom: 8),
@@ -140,8 +150,8 @@ class CategoryTabsWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   // backgroundBlendMode: BlendMode.colorBurn,
                   color: isSelected ? const Color(0xFFE9EFEB) : Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  boxShadow: [BoxShadow(color: Colors.black26, spreadRadius: -4, blurRadius: 17)],
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  boxShadow: const [BoxShadow(color: Colors.black26, spreadRadius: -4, blurRadius: 17)],
                 ),
                 child: IconButton(
                   style: ElevatedButton.styleFrom(splashFactory: NoSplash.splashFactory, elevation: 0),
@@ -213,6 +223,19 @@ class CategoryTabsWidget extends StatelessWidget {
         itemCount: items.length,
         itemBuilder: (context, index) => itemBuilder(items[index]),
       );
+    }
+  }
+
+  String _getSelectedTypeName(ItemType type) {
+    switch (type) {
+      case ItemType.draws:
+        return 'Draws';
+      case ItemType.winners:
+        return 'Winners';
+      case ItemType.announcements:
+        return 'Winning Announcements';
+      default:
+        return '';
     }
   }
 }

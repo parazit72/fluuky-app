@@ -4,13 +4,13 @@ import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/domain/entities/winner_entity.dart';
 import 'package:get/get.dart';
 
-enum ItemType { raffles, winners, announcements }
+enum ItemType { draws, winners, announcements }
 
 enum ViewType { list, grid }
 
 class ItemsController extends GetxController {
-  var selectedItemType = ItemType.raffles.obs;
-  var selectedCategory = 0.obs; // ID of the selected category
+  var selectedItemType = ItemType.draws.obs;
+  var selectedCategory = 1.obs; // ID of the selected category
   var viewType = ViewType.list.obs;
 
   var categories = <CategoryEntity>[].obs;
