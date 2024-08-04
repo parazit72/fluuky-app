@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class TreesPlantedSection extends StatelessWidget {
   const TreesPlantedSection({Key? key}) : super(key: key);
@@ -9,15 +10,11 @@ class TreesPlantedSection extends StatelessWidget {
       margin: const EdgeInsets.all(16.0),
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        image: const DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
+        boxShadow: const [
+          BoxShadow(color: Color(0x00000014)),
+          BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
         ],
       ),
       child: Column(
@@ -33,7 +30,8 @@ class TreesPlantedSection extends StatelessWidget {
           const SizedBox(height: 16),
           Column(
             children: [
-              Icon(Icons.nature, size: 50, color: Theme.of(context).primaryColor),
+              SvgPicture.asset('assets/images/tree-green.svg',
+                  colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn), width: 50, height: 50),
               const SizedBox(height: 16),
               Text(
                 "You haven't planted any trees just yet.\nStart planting and watch your impact grow.",

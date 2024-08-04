@@ -51,7 +51,7 @@ class AuthController extends GetxController {
         referalCodeController.clear();
         emailController.clear();
         mobileController.clear();
-        Get.offAll(() => VerificationScreen(), arguments: {'email': emailController.text});
+        Get.offAll(() => const VerificationScreen(), arguments: {'email': emailController.text});
       } else {
         throw Exception("Registration failed");
       }

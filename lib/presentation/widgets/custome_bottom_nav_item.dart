@@ -30,7 +30,7 @@ class CustomBottomNavItem extends BottomNavigationBarItem {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Text(
             label!,
             style: isSelected ? defaultStyle.copyWith(fontWeight: FontWeight.bold) : defaultStyle,

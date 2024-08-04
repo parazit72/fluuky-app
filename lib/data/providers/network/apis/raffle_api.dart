@@ -1,59 +1,30 @@
-import 'package:fluuky/data/providers/network/api_endpoints.dart';
+import 'package:fluuky/data/providers/network/api_provider.dart';
 import 'package:fluuky/data/providers/network/api_representable.dart';
+
+enum RaffleEndpoint { getRaffles, getRaffle }
 
 class RaffleAPI implements APIRequestRepresentable {
   final RaffleEndpoint raffleEndpoint;
-  Map<String, dynamic>? bodyData;
+  final Map<String, dynamic>? bodyData;
 
   RaffleAPI({required this.raffleEndpoint, this.bodyData});
 
   @override
-  String get url => APIEndpoint.fluukyapi + endpoint;
-
-  @override
-  String get endpoint => path;
-
-  @override
-  String get path {
+  String get endpoint {
     switch (raffleEndpoint) {
-      case RaffleEndpoint.resendCode:
-        return '/resendCode';
-      case RaffleEndpoint.refreshToken:
-        return '/refreshToken';
-      case RaffleEndpoint.verifyCode:
-        return '/verifyCode';
-      case RaffleEndpoint.createPassword:
-        return '/createPassword';
-      case RaffleEndpoint.detailsAboutYou:
-        return '/detailsAboutYou';
-      case RaffleEndpoint.login:
-        return '/login';
-      case RaffleEndpoint.logout:
-        return '/auth/logout';
-      case RaffleEndpoint.register:
-        return '/auth/register';
-      case RaffleEndpoint.getCurrentUser:
-        return '/auth/user';
+      case RaffleEndpoint.getRaffles:
+        return '/draws';
+      case RaffleEndpoint.getRaffle:
+        return '/draws/${bodyData?['id']}';
+      default:
+        throw Exception('Unknown endpoint');
     }
   }
 
+  Map<String, dynamic>? get data => bodyData;
+
   @override
-  RequestMethod get method {
-    switch (raffleEndpoint) {
-      case RaffleEndpoint.resendCode:
-      case RaffleEndpoint.refreshToken:
-      case RaffleEndpoint.createPassword:
-      case RaffleEndpoint.verifyCode:
-      case RaffleEndpoint.detailsAboutYou:
-      case RaffleEndpoint.login:
-      case RaffleEndpoint.register:
-        return RequestMethod.post;
-      case RaffleEndpoint.logout:
-        return RequestMethod.post; // or RequestMethod.get
-      case RaffleEndpoint.getCurrentUser:
-        return RequestMethod.get;
-    }
-  }
+  get body => bodyData;
 
   @override
   Map<String, String>? get headers => {
@@ -62,10 +33,20 @@ class RaffleAPI implements APIRequestRepresentable {
       };
 
   @override
+  RequestMethod get method {
+    switch (raffleEndpoint) {
+      case RaffleEndpoint.getRaffle:
+      case RaffleEndpoint.getRaffles:
+        return RequestMethod.get;
+    }
+  }
+
+  @override
+  String get path => throw UnimplementedError();
+
+  @override
   Map<String, dynamic>? get query => null;
 
   @override
-  dynamic get body => bodyData;
+  String get url => APIEndpoint.fluukyapi + endpoint;
 }
-
-enum RaffleEndpoint { login, logout, register, getCurrentUser, detailsAboutYou, createPassword, verifyCode, refreshToken, resendCode }

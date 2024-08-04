@@ -3,6 +3,10 @@ import 'dart:io';
 import 'package:fluuky/data/providers/network/api_representable.dart';
 import 'package:get/get_connect/connect.dart';
 
+class APIEndpoint {
+  static String get fluukyapi => "https://dev-flukky.snatch.digital/api/v1";
+}
+
 class APIProvider {
   static const requestTimeOut = Duration(seconds: 25);
   final _client = GetConnect(timeout: requestTimeOut);

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:fluuky/app/utils/shared_preference_helper.dart';
+import 'package:fluuky/data/local/local_storage.dart';
 
 class ThemeProvider extends ChangeNotifier {
   late String _isDark;
-  late final SharedPreferenceHelper appStoragePref;
+  late final LocalStorage appStoragePref;
 
   String get isDark => _isDark;
 
   ThemeProvider() {
     _isDark = "false";
-    appStoragePref = SharedPreferenceHelper();
+    appStoragePref = LocalStorage();
     getPreferences();
   }
 

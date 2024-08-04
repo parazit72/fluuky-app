@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/presentation/pages/draw/draws_list_screen.dart';
 import 'package:fluuky/presentation/pages/home_screen.dart';
 import 'package:fluuky/presentation/pages/auth/verification_screen.dart';
@@ -52,10 +53,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
 
     case draw:
-      return MaterialPageRoute(builder: (_) => DrawItemScreen());
+      final raffle = settings.arguments as RaffleEntity;
+      return MaterialPageRoute(builder: (_) => DrawItemScreen(selectedRaffle: raffle));
 
     case drawList:
-      return MaterialPageRoute(builder: (_) => DrawsListScreen());
+      return MaterialPageRoute(builder: (_) => const DrawsListScreen());
 
     case verification:
       return MaterialPageRoute(builder: (_) => const VerificationScreen());

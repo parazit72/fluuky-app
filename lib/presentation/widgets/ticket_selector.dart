@@ -7,7 +7,8 @@ class NumberPicker extends StatefulWidget {
   final int initialValue;
   final ValueChanged<int> onChanged;
 
-  NumberPicker({
+  const NumberPicker({
+    super.key,
     required this.minValue,
     required this.maxValue,
     required this.initialValue,

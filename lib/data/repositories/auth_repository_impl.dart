@@ -8,7 +8,9 @@ class AuthRepositoryImpl implements AuthRepository {
   final APIProvider _apiProvider;
   final FlutterSecureStorage _secureStorage;
 
-  AuthRepositoryImpl(this._apiProvider, this._secureStorage);
+  AuthRepositoryImpl({String? baseUrl})
+      : _apiProvider = APIProvider(),
+        _secureStorage = const FlutterSecureStorage();
 
   @override
   Future<void> login(String email, String password) async {
@@ -59,6 +61,7 @@ class AuthRepositoryImpl implements AuthRepository {
     } catch (e) {
       throw Exception('Create password failed: ${e.toString()}');
     }
+    return null;
   }
 
   @override

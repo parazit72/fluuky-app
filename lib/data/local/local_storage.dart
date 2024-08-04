@@ -1,9 +1,9 @@
-import '../config/shared_preference_keys.dart';
+import '../../app/config/shared_preference_keys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final appStoragePref = SharedPreferenceHelper();
+final appStoragePref = LocalStorage();
 
-class SharedPreferenceHelper {
+class LocalStorage {
   static Future<String> getDate() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? dateNew = sharedPreferences.getString(date);

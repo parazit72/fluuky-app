@@ -1,29 +1,37 @@
+import 'package:fluuky/data/providers/network/apis/raffle_api.dart';
+import 'package:fluuky/data/providers/network/api_provider.dart';
 import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/domain/repositories/raffle_repository.dart';
-import 'package:hive/hive.dart';
 
 class RaffleRepositoryImpl extends RaffleRepository {
-  RaffleRepositoryImpl();
+  final APIProvider _apiProvider;
 
-  Box<RaffleEntity> get raffleBox => Hive.box<RaffleEntity>('rafflesBox');
-
-  @override
-  Future<void> addRaffle(RaffleEntity raffle) async {
-    await raffleBox.put(raffle.id, raffle);
-  }
+  RaffleRepositoryImpl({String? baseUrl}) : _apiProvider = APIProvider();
 
   @override
   Future<List<RaffleEntity>> getRaffles() async {
-    return raffleBox.values.toList();
+    try {
+      final request = RaffleAPI(raffleEndpoint: RaffleEndpoint.getRaffles);
+      final response = await _apiProvider.request(request);
+      final List<dynamic> raffleList = response['data'];
+      return raffleList.map((json) => RaffleEntity.fromJson(json)).toList();
+    } catch (e) {
+      throw Exception('Get raffles failed: ${e.toString()}');
+    }
   }
 
   @override
-  Future<void> updateRaffle(RaffleEntity raffle) async {
-    await raffleBox.put(raffle.id, raffle);
-  }
-
-  @override
-  Future<void> deleteRaffle(int id) async {
-    await raffleBox.delete(id);
+  Future<RaffleEntity> getRaffle(int id) async {
+    try {
+      final request = RaffleAPI(
+        raffleEndpoint: RaffleEndpoint.getRaffle,
+        bodyData: {'id': id},
+      );
+      final response = await _apiProvider.request(request);
+      final raffle = RaffleEntity.fromJson(response);
+      return raffle;
+    } catch (e) {
+      throw Exception('Get raffle failed: ${e.toString()}');
+    }
   }
 }

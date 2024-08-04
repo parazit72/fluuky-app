@@ -8,7 +8,6 @@ import 'package:fluuky/data/providers/database/push_notification_datasource.dart
 import 'package:fluuky/data/providers/raffle_provider.dart';
 import 'package:fluuky/data/repositories/notification_repository_impl.dart';
 import 'package:fluuky/data/repositories/raffle_repository_impl.dart';
-import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/domain/repositories/notification_repository.dart';
 import 'package:fluuky/domain/repositories/raffle_repository.dart';
 import 'package:fluuky/domain/usecases/fetch_notifications_usecase.dart';
@@ -39,7 +38,7 @@ class InitialBindings extends Bindings {
     Get.put(CategoryController(categoryProvider.getAllCategoriesUseCase));
 
     // Register RaffleRepository with RaffleProvider
-    Get.put<RaffleRepositoryImpl>(RaffleRepositoryImpl());
+    Get.put(RaffleRepositoryImpl());
     Get.put<RaffleRepository>(Get.find<RaffleRepositoryImpl>());
 
     // Register GetRafflesUseCase with RaffleRepository
@@ -56,7 +55,7 @@ class InitialBindings extends Bindings {
     Get.put(AuthService());
 
     // Register AuthRepository with APIProvider and FlutterSecureStorage
-    Get.put(AuthRepositoryImpl(Get.find<APIProvider>(), Get.find<FlutterSecureStorage>()));
+    Get.put(AuthRepositoryImpl());
     Get.put<AuthRepository>(Get.find<AuthRepositoryImpl>());
 
     // Register VerifyCodeUseCase with AuthRepository

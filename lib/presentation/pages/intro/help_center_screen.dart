@@ -16,30 +16,28 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return Container(
-          child: Wrap(
-            children: <Widget>[
-              ListTile(
-                leading: const Icon(Icons.email),
-                title: const Text('Send an Email'),
-                onTap: () {
-                  // Handle send email
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.copy),
-                title: const Text('Copy Email Address'),
-                onTap: () {
-                  Clipboard.setData(ClipboardData(text: email));
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Email address copied to clipboard')),
-                  );
-                },
-              ),
-            ],
-          ),
+        return Wrap(
+          children: <Widget>[
+            ListTile(
+              leading: const Icon(Icons.email),
+              title: const Text('Send an Email'),
+              onTap: () {
+                // Handle send email
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.copy),
+              title: const Text('Copy Email Address'),
+              onTap: () {
+                Clipboard.setData(ClipboardData(text: email));
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Email address copied to clipboard')),
+                );
+              },
+            ),
+          ],
         );
       },
     );

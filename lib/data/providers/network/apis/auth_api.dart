@@ -1,5 +1,7 @@
-import 'package:fluuky/data/providers/network/api_endpoints.dart';
+import 'package:fluuky/data/providers/network/api_provider.dart';
 import 'package:fluuky/data/providers/network/api_representable.dart';
+
+enum AuthEndpoint { login, logout, register, getCurrentUser, detailsAboutYou, createPassword, verifyCode, refreshToken, resendCode }
 
 class AuthAPI implements APIRequestRepresentable {
   final AuthEndpoint authEndpoint;
@@ -67,5 +69,3 @@ class AuthAPI implements APIRequestRepresentable {
   @override
   dynamic get body => bodyData;
 }
-
-enum AuthEndpoint { login, logout, register, getCurrentUser, detailsAboutYou, createPassword, verifyCode, refreshToken, resendCode }

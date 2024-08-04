@@ -6,7 +6,7 @@ import 'package:fluuky/data/providers/network/api_provider.dart';
 
 class AuthService extends GetxService {
   final _user = Rxn<UserModel>();
-  final _secureStorage = FlutterSecureStorage();
+  final _secureStorage = const FlutterSecureStorage();
   final APIProvider _apiProvider = Get.find<APIProvider>();
 
   UserModel? get user => _user.value;

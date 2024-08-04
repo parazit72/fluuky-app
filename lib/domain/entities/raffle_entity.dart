@@ -54,4 +54,38 @@ class RaffleEntity {
     required this.status,
     required this.deadline,
   });
+
+  factory RaffleEntity.fromJson(Map<String, dynamic> json) {
+    return RaffleEntity(
+      id: json['id'],
+      name: json['name'],
+      adminId: json['admin_id'],
+      categoryId: json['category_id'],
+      brandId: json['brand_id'],
+      slug: json['slug'],
+      description: json['description'],
+      capacity: json['capacity'],
+      images: List<String>.from(json['image']),
+      price: json['price'].toDouble(),
+      status: json['status'],
+      deadline: DateTime.parse(json['deadline']),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'admin_id': adminId,
+      'category_id': categoryId,
+      'brand_id': brandId,
+      'slug': slug,
+      'description': description,
+      'capacity': capacity,
+      'image': images,
+      'price': price,
+      'status': status,
+      'deadline': deadline.toIso8601String(),
+    };
+  }
 }

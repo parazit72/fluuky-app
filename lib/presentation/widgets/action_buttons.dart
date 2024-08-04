@@ -9,22 +9,22 @@ class ActionButtons extends StatelessWidget {
           onPressed: () {
             // Handle Buy Now
           },
-          child: Text('Buy Now'),
           style: ElevatedButton.styleFrom(
-            minimumSize: Size(double.infinity, 50),
+            minimumSize: const Size(double.infinity, 50),
             backgroundColor: Theme.of(context).primaryColor,
           ),
+          child: const Text('Buy Now'),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         OutlinedButton(
           onPressed: () {
             // Handle Add to Wishlist
           },
-          child: Text('Add to Wishlist'),
           style: OutlinedButton.styleFrom(
             foregroundColor: Theme.of(context).primaryColor,
-            minimumSize: Size(double.infinity, 50),
+            minimumSize: const Size(double.infinity, 50),
           ),
+          child: const Text('Add to Wishlist'),
         ),
       ],
     );

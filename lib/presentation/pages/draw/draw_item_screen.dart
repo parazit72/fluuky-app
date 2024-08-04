@@ -1,19 +1,28 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
 
 class DrawItemScreen extends StatelessWidget {
+  final RaffleEntity selectedRaffle;
+  DrawItemScreen({Key? key, required this.selectedRaffle}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BackgroundScaffold(
       appBar: AppBar(
+        centerTitle: true,
         automaticallyImplyLeading: true,
-        backgroundColor: Colors.transparent,
-        title: Center(
-          child: Text(
-            'Draw',
-            style: Theme.of(context).textTheme.titleLarge,
-            textAlign: TextAlign.center,
-          ),
+        leading: IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.chevron_left, size: 24),
+        ),
+        leadingWidth: 24,
+        elevation: 0,
+        backgroundColor: const Color(0x00F7F7F7),
+        title: Text(
+          'Draw',
+          style: Theme.of(context).textTheme.titleLarge,
+          textAlign: TextAlign.center,
         ),
       ),
       body: SingleChildScrollView(
@@ -26,13 +35,10 @@ class DrawItemScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Winning this watch means carrying a piece of horological history, a companion for both the high seas and high stakes. It\'s more than a timepiece; it\'s a sustainable heirloom designed to be handed down from generation to generation.',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
+                  Text(selectedRaffle.description, style: Theme.of(context).textTheme.bodySmall),
                   const SizedBox(height: 10),
                   Text(
-                    'Draw Date: December 17th, 2023 - 18:00',
+                    'Draw Date: ${DateFormat('MMMM dd\'th\', yyyy - HH:mm').format(selectedRaffle.deadline)}',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: 10),

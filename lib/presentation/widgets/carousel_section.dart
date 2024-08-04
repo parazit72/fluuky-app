@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fluuky/presentation/controllers/raffle_controller.dart';
@@ -28,11 +29,18 @@ class CarouselSectionWidget extends StatelessWidget {
                 .map(
                   (raffle) => Stack(
                     children: [
-                      Image.asset(
-                        raffle.images.isNotEmpty ? raffle.images[0] : 'assets/images/jungle-1.jpg',
-                        fit: BoxFit.cover,
-                        width: MediaQuery.of(context).size.width,
-                      ),
+                      raffle.images.isNotEmpty
+                          ? CachedNetworkImage(
+                              imageUrl: raffle.images[0],
+                              placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                              errorWidget: (context, url, error) => const Center(child: Icon(Icons.error)),
+                              cacheManager: CachedNetworkImageProvider.defaultCacheManager,
+                            )
+                          : Image.asset(
+                              'assets/images/jungle-1.jpg',
+                              fit: BoxFit.cover,
+                              width: MediaQuery.of(context).size.width,
+                            ),
                       Positioned(
                         bottom: 40,
                         left: 10,

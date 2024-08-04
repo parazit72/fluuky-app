@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/domain/repositories/auth_repository.dart';
 import 'package:fluuky/presentation/pages/auth/verification_screen.dart';
-import 'package:fluuky/presentation/pages/home_screen.dart';
 import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -35,7 +34,7 @@ class RegisterationController extends GetxController {
         referalCodeController.clear();
         emailController.clear();
         mobileController.clear();
-        Get.offAll(VerificationScreen());
+        Get.offAll(const VerificationScreen());
       } else {
         throw Exception("Registration failed");
       }

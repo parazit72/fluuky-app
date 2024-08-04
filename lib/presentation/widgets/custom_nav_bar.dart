@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,9 @@ class CustomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       return BottomNavigationBar(
+        elevation: 0,
+        selectedFontSize: 15,
+        unselectedFontSize: 15,
         currentIndex: controller.selectedIndex.value,
         onTap: (index) {
           controller.changeIndex(index);
@@ -18,7 +22,7 @@ class CustomNavBar extends StatelessWidget {
               Navigator.pushReplacementNamed(context, home);
               break;
             case 1:
-              Navigator.pushReplacementNamed(context, draws);
+              Navigator.pushReplacementNamed(context, drawsList);
               break;
             case 2:
               Navigator.pushReplacementNamed(context, profile);
@@ -28,19 +32,22 @@ class CustomNavBar extends StatelessWidget {
         items: [
           _buildNavItem(
             context,
-            icon: Icons.home,
+            iconPath: 'assets/images/home.svg',
+            activeIconPath: 'assets/images/home-active.svg',
             label: 'Home',
             index: 0,
           ),
           _buildNavItem(
             context,
-            icon: Icons.card_giftcard,
+            iconPath: 'assets/images/draw.svg',
+            activeIconPath: 'assets/images/draw-active.svg',
             label: 'Draws',
             index: 1,
           ),
           _buildNavItem(
             context,
-            icon: Icons.person,
+            iconPath: 'assets/images/profile.svg',
+            activeIconPath: 'assets/images/profile-active.svg',
             label: 'Profile',
             index: 2,
           ),
@@ -49,24 +56,23 @@ class CustomNavBar extends StatelessWidget {
     });
   }
 
-  BottomNavigationBarItem _buildNavItem(BuildContext context, {required IconData icon, required String label, required int index}) {
+  BottomNavigationBarItem _buildNavItem(BuildContext context,
+      {required String iconPath, required String activeIconPath, required String label, required int index}) {
     return BottomNavigationBarItem(
-      icon: Stack(
+      icon: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            icon,
-            color: controller.selectedIndex.value == index ? Theme.of(context).primaryColor : Colors.grey,
-          ),
           if (controller.selectedIndex.value == index)
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 2,
-                color: Theme.of(context).primaryColor,
-              ),
+            Container(
+              width: 125,
+              height: 2,
+              color: Theme.of(context).primaryColor,
             ),
+          const SizedBox(height: 11),
+          SvgPicture.asset(
+            controller.selectedIndex.value == index ? activeIconPath : iconPath,
+            width: 25,
+          ),
         ],
       ),
       label: label,
