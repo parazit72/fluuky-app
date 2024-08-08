@@ -59,10 +59,11 @@ class InitialBindings extends Bindings {
     Get.put<AuthRepository>(Get.find<AuthRepositoryImpl>());
 
     // Register VerifyCodeUseCase with AuthRepository
-    Get.put(VerifyCodeUseCase(Get.find<AuthRepositoryImpl>()));
+    // Get.put(VerifyCodeUseCase(Get.find<AuthRepositoryImpl>()));
 
     // Register AuthController with AuthRepository and VerifyCodeUseCase
-    Get.put(AuthController(Get.find<AuthRepository>(), Get.find<VerifyCodeUseCase>()));
+    Get.put(AuthController(Get.find<AuthRepository>()));
+    // Get.put(AuthController(Get.find<AuthRepository>(), Get.find<VerifyCodeUseCase>()));
 
     // Initialize FlutterLocalNotificationsPlugin
     Get.put(FlutterLocalNotificationsPlugin());

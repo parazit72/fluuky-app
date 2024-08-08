@@ -6,7 +6,7 @@ import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
-import 'package:fluuky/presentation/widgets/we_forest_info_dialog.dart';
+import 'package:fluuky/presentation/pages/draw/we_forest_info_dialog.dart';
 import 'package:get/get.dart';
 
 class RaffleCardWidget extends StatelessWidget {

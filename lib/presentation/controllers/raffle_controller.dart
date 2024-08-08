@@ -17,8 +17,12 @@ class RaffleController extends GetxController {
   }
 
   Future<void> fetchRaffles() async {
-    final fetchedRaffles = await raffleRepository.getRaffles();
-    raffles.assignAll(fetchedRaffles);
+    try {
+      final fetchedRaffles = await raffleRepository.getRaffles();
+      raffles.assignAll(fetchedRaffles);
+    } catch (e) {
+      print(e);
+    }
   }
 
   void updateCurrentIndex(int index) {

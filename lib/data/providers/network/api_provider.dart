@@ -8,7 +8,7 @@ class APIEndpoint {
 }
 
 class APIProvider {
-  static const requestTimeOut = Duration(seconds: 25);
+  static const requestTimeOut = Duration(seconds: 1);
   final _client = GetConnect(timeout: requestTimeOut);
 
   static final _singleton = APIProvider();

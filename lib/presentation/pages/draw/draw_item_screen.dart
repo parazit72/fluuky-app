@@ -1,3 +1,4 @@
+import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:fluuky/domain/entities/raffle_entity.dart';
@@ -5,26 +6,11 @@ import 'package:fluuky/presentation/widgets/widgets.dart';
 
 class DrawItemScreen extends StatelessWidget {
   final RaffleEntity selectedRaffle;
-  DrawItemScreen({Key? key, required this.selectedRaffle}) : super(key: key);
+  const DrawItemScreen({super.key, required this.selectedRaffle});
   @override
   Widget build(BuildContext context) {
     return BackgroundScaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: true,
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.chevron_left, size: 24),
-        ),
-        leadingWidth: 24,
-        elevation: 0,
-        backgroundColor: const Color(0x00F7F7F7),
-        title: Text(
-          'Draw',
-          style: Theme.of(context).textTheme.titleLarge,
-          textAlign: TextAlign.center,
-        ),
-      ),
+      appBar: const AppBarSingleWidget(title: 'Draw'),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

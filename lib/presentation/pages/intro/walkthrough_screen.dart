@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 
 import 'package:fluuky/data/models/walkthrough_page_model.dart';
-import 'package:fluuky/presentation/pages/home_screen.dart';
+import 'package:fluuky/presentation/pages/home_screen/home_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../app/config/route_constants.dart';
 

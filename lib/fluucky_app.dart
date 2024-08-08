@@ -16,7 +16,7 @@ class FluukyApp extends StatefulWidget {
 }
 
 class _FluukyAppState extends State<FluukyApp> {
-  String appRoot = drawsList;
+  String appRoot = profile;
 
   @override
   void initState() {

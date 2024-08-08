@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/presentation/widgets/layout/app_bar_fluuky_widget.dart';
+import 'package:fluuky/presentation/widgets/layout/custom_nav_bar.dart';
 
 class BackgroundScaffold extends StatelessWidget {
   final Widget body;
@@ -15,6 +17,8 @@ class BackgroundScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: const AppBarFluuky(),
+      // bottomNavigationBar: CustomNavBar(),
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [

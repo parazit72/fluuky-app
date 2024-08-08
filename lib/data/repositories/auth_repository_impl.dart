@@ -20,7 +20,7 @@ class AuthRepositoryImpl implements AuthRepository {
         bodyData: {'email': email, 'password': password},
       );
       final response = await _apiProvider.request(request);
-      final user = User.fromJson(response);
+
       await _secureStorage.write(key: 'token', value: response['token']);
     } catch (e) {
       throw Exception('Login failed: ${e.toString()}');
@@ -79,14 +79,14 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<User> register(String firstName, String lastName, String mobile, String email, String referalCode) async {
+  Future<UserEntity> register(String firstName, String lastName, String mobile, String email, String referalCode) async {
     try {
       final request = AuthAPI(
         authEndpoint: AuthEndpoint.register,
         bodyData: {'firstName': firstName, 'lastName': lastName, 'mobile': mobile, 'email': email, 'referalCode': referalCode},
       );
       final response = await _apiProvider.request(request);
-      final user = User.fromJson(response);
+      final user = UserEntity.fromJson(response);
       await _secureStorage.write(key: 'token', value: response['token']);
       return user;
     } catch (e) {
@@ -123,13 +123,13 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<User?> getCurrentUser() async {
+  Future<UserEntity?> getCurrentUser() async {
     final token = await _secureStorage.read(key: 'token');
     if (token != null) {
       try {
         final request = AuthAPI(authEndpoint: AuthEndpoint.getCurrentUser);
         final response = await _apiProvider.request(request);
-        return User.fromJson(response);
+        return UserEntity.fromJson(response);
       } catch (e) {
         throw Exception('Get current user failed: ${e.toString()}');
       }

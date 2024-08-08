@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
-import 'package:fluuky/presentation/widgets/background_scaffold.dart';
+import 'package:fluuky/presentation/widgets/layout/background_scaffold.dart';
 import 'package:fluuky/presentation/widgets/input_text_field_widget.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -74,16 +76,6 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
     );
   }
 
-  bool _obscured = false;
-
-  void _toggleObscured() {
-    setState(() {
-      _obscured = !_obscured;
-      if (_passwordFocusNode.hasPrimaryFocus) return; // If focus is on text field, dont unfocus
-      _passwordFocusNode.canRequestFocus = false; // Prevents focus if tap on eye
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return BackgroundScaffold(
@@ -102,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
               controller: _scrollableController,
               initialChildSize: 0.64,
               minChildSize: 0.64,
-              maxChildSize: 1.0,
+              maxChildSize: 0.92,
               snap: true,
               builder: (BuildContext context, ScrollController scrollController) {
                 var value = false;
@@ -196,6 +188,9 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
               },
             ),
           ),
+          Obx(() {
+            return _authController.isLoading.value ? const Center(child: CircularProgressIndicator()) : Container();
+          }),
         ],
       ),
     );

@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/presentation/pages/auth/verification_screen.dart';
-import 'package:fluuky/presentation/pages/home_screen.dart';
+import 'package:fluuky/presentation/pages/home_screen/home_screen.dart';
 import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../../domain/entities/user_entity.dart';
 import '../../../domain/repositories/auth_repository.dart';
-import '../../../domain/usecases/verify_code_usecase.dart';
+// import '../../../domain/usecases/verify_code_usecase.dart';
 
 class AuthController extends GetxController {
   final AuthRepository _authRepository;
-  final VerifyCodeUseCase _verifyCodeUseCase;
+  // final VerifyCodeUseCase _verifyCodeUseCase;
+  final isLogged = false.obs;
+  final isLoading = false.obs;
 
-  AuthController(this._authRepository, this._verifyCodeUseCase);
+  AuthController(this._authRepository);
+  // AuthController(this._authRepository, this._verifyCodeUseCase);
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -22,7 +25,7 @@ class AuthController extends GetxController {
   final TextEditingController referalCodeController = TextEditingController();
   final TextEditingController mobileController = TextEditingController();
 
-  final Rx<User?> user = Rx<User?>(null);
+  final Rx<UserEntity?> user = Rx<UserEntity?>(null);
   final FlutterSecureStorage _secureStorage = Get.find<FlutterSecureStorage>();
 
   @override
@@ -32,6 +35,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> registerWithEmail() async {
+    isLoading.value = true;
     try {
       final user = await _authRepository.register(
         firstNameController.text,
@@ -42,10 +46,6 @@ class AuthController extends GetxController {
       );
 
       if (user != null) {
-        // Store token securely
-        final token = await _secureStorage.read(key: 'token');
-        print(token);
-
         firstNameController.clear();
         lastNameController.clear();
         referalCodeController.clear();
@@ -57,58 +57,99 @@ class AuthController extends GetxController {
       }
     } catch (e) {
       _showErrorDialog(e.toString());
+    } finally {
+      isLoading.value = false;
     }
   }
 
   Future<void> loginWithEmail() async {
+    isLoading.value = true;
     try {
       await _authRepository.login(emailController.text.trim(), passwordController.text);
 
       emailController.clear();
       passwordController.clear();
+      isLogged.value = true;
+
       Get.offAll(() => const HomeScreen());
     } catch (e) {
       _showErrorDialog(e.toString());
+    } finally {
+      isLoading.value = false;
     }
   }
 
   Future<void> verifyCode() async {
+    isLoading.value = true;
     try {
-      await _verifyCodeUseCase.execute(codeController.text);
-      print(codeController.text);
+      // await _verifyCodeUseCase.execute(codeController.text);
+      await _authRepository.verifyCode(codeController.text);
       // Handle success or failure
     } catch (e) {
       _showErrorDialog(e.toString());
+    } finally {
+      isLoading.value = false;
     }
   }
 
   void resendCode(String email) async {
+    isLoading.value = true;
     try {
       await _authRepository.resendCode(email);
       // Handle success or failure
     } catch (e) {
       _showErrorDialog(e.toString());
+    } finally {
+      isLoading.value = false;
     }
   }
 
   Future<void> checkLoginStatus() async {
+    final token = await _secureStorage.read(key: 'token');
+    if (token != null) {
+      isLogged.value = true;
+    }
     user.value = await _authRepository.getCurrentUser();
   }
 
   Future<void> logout() async {
-    await _authRepository.logout();
     user.value = null;
+    isLogged.value = false;
+
+    await _authRepository.logout();
   }
 
   void _showErrorDialog(String message) {
     Get.back();
-    showDialog(
+    showModalBottomSheet(
       context: Get.context!,
+      isScrollControlled: true,
       builder: (context) {
-        return SimpleDialog(
-          title: const Text('Error'),
-          contentPadding: const EdgeInsets.all(20),
-          children: [Text(message)],
+        return DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.25,
+          minChildSize: 0.25,
+          maxChildSize: 0.25,
+          builder: (context, scrollController) {
+            return Container(
+              padding: const EdgeInsets.all(20),
+              decoration: const BoxDecoration(
+                image: DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
+                boxShadow: [BoxShadow(offset: Offset(0, -1), color: Colors.black26, spreadRadius: 0, blurRadius: 4)],
+              ),
+              child: SingleChildScrollView(
+                controller: scrollController,
+                child: Column(
+                  children: [
+                    Text('Error', style: Theme.of(context).textTheme.labelLarge),
+                    const SizedBox(height: 10),
+                    Text(message),
+                  ],
+                ),
+              ),
+            );
+          },
         );
       },
     );

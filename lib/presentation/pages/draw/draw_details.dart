@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluuky/presentation/widgets/trees_planted_dialog.dart';
-import 'package:fluuky/presentation/widgets/we_forest_info_dialog.dart';
+import 'package:fluuky/presentation/pages/draw/trees_planted_dialog.dart';
+import 'package:fluuky/presentation/pages/draw/we_forest_info_dialog.dart';
 
 class DrawDetailsWidget extends StatelessWidget {
   const DrawDetailsWidget({super.key});
@@ -106,9 +106,7 @@ class DrawDetailsWidget extends StatelessWidget {
                                 },
                                 child: Text(
                                   'You are planting:',
-                                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                                        decoration: TextDecoration.underline,
-                                      ),
+                                  style: Theme.of(context).textTheme.bodySmall!.copyWith(decoration: TextDecoration.underline),
                                 ),
                               )
                             ],
@@ -137,9 +135,7 @@ class DrawDetailsWidget extends StatelessWidget {
                                 },
                                 child: Text(
                                   'Bundle Discount:',
-                                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                                        decoration: TextDecoration.underline,
-                                      ),
+                                  style: Theme.of(context).textTheme.bodySmall!.copyWith(decoration: TextDecoration.underline),
                                 ),
                               )
                             ],

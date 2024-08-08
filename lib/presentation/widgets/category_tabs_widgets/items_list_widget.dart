@@ -4,9 +4,9 @@ import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/domain/entities/winner_entity.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
 import 'package:fluuky/presentation/controllers/raffle_controller.dart';
-import 'package:fluuky/presentation/widgets/announcement_card_widget.dart';
-import 'package:fluuky/presentation/widgets/raffle_card_widget.dart';
-import 'package:fluuky/presentation/widgets/winner_card_widget.dart';
+import 'package:fluuky/presentation/widgets/category_tabs_widgets/announcement_card_widget.dart';
+import 'package:fluuky/presentation/widgets/category_tabs_widgets/raffle_card_widget.dart';
+import 'package:fluuky/presentation/widgets/category_tabs_widgets/winner_card_widget.dart';
 import 'package:get/get.dart';
 
 Widget buildItemsList() {
@@ -87,9 +87,7 @@ Widget _buildCategoryGridView<T>(
           const SizedBox(height: 10),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(
-              children: categoryItems.map((item) => itemBuilder(item)).toList(),
-            ),
+            child: Row(children: categoryItems.map((item) => itemBuilder(item)).toList()),
           ),
           const Divider(height: 20),
         ],

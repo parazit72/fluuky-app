@@ -12,19 +12,19 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return BackgroundScaffold(
-      appBar: AppBarProfile(username: "[Username]"),
+      appBar: const AppBarFluuky(),
+      bottomNavigationBar: CustomNavBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
             CarouselSectionWidget(),
             const SubscriptionSection(),
-            StatusSection(),
+            const StatusSection(),
             const TreesPlantedSection(),
             const ActiveDrawsSection(),
           ],
         ),
       ),
-      bottomNavigationBar: CustomNavBar(),
     );
   }
 }

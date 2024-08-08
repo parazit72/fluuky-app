@@ -4,7 +4,7 @@ import 'package:fluuky/presentation/controllers/raffle_controller.dart';
 import 'package:fluuky/presentation/widgets/category_tabs_widgets/category_tabs_widgets.dart';
 import 'package:get/get.dart';
 
-class CategoryTabsWidget extends StatelessWidget {
+class CategoryTabsSection extends StatelessWidget {
   final ItemsController controller = Get.find();
   final RaffleController raffleController = Get.find();
 

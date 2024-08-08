@@ -40,6 +40,9 @@ dependencies:
   flutter_svg: ^2.0.10+1
   cached_network_image: ^3.4.0
   flutter_cache_manager: ^3.4.0
+  get_storage:
+  dotted_line: ^3.2.2
+  dotted_border: ^2.1.0
   # rive: ^0.13.9
 
 dev_dependencies:

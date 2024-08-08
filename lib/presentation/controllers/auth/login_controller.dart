@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/app/services/auth_service.dart';
 import 'package:get/get.dart';
-import 'package:fluuky/presentation/pages/home_screen.dart';
+import 'package:fluuky/presentation/pages/home_screen/home_screen.dart';
 
 class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();

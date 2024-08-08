@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluuky/presentation/widgets/background_scaffold.dart';
-import 'package:fluuky/presentation/widgets/bundle_section.dart';
+import 'package:fluuky/presentation/widgets/layout/background_scaffold.dart';
+import 'package:fluuky/presentation/pages/draw/bundle_section.dart';
 
 class TreesPlantedDialog extends StatelessWidget {
   const TreesPlantedDialog({super.key});

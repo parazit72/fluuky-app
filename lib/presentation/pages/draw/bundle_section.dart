@@ -11,8 +11,8 @@ class BundleSection extends StatelessWidget {
     required this.description,
     required this.ticketsInfo,
     required this.discountInfo,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

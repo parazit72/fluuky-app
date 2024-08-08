@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluuky/presentation/widgets/category_tabs_widget.dart';
+import 'package:fluuky/presentation/widgets/category_tabs_widgets/category_tabs_section.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
 
 class DrawsListScreen extends StatelessWidget {
@@ -9,16 +9,16 @@ class DrawsListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BackgroundScaffold(
       appBar: const AppBarFluuky(),
+      bottomNavigationBar: CustomNavBar(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CarouselSectionWidget(),
-            CategoryTabsWidget(),
+            CategoryTabsSection(),
           ],
         ),
       ),
-      bottomNavigationBar: CustomNavBar(),
     );
   }
 }

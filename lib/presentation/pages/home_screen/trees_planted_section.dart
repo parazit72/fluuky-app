@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class TreesPlantedSection extends StatelessWidget {
-  const TreesPlantedSection({Key? key}) : super(key: key);
+  const TreesPlantedSection({super.key});
 
   @override
   Widget build(BuildContext context) {

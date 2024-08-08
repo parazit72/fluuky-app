@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fluuky/presentation/widgets/background_scaffold.dart';
+import 'package:fluuky/presentation/widgets/layout/background_scaffold.dart';
 
 class WeForestInfoScreen extends StatelessWidget {
-  const WeForestInfoScreen({Key? key}) : super(key: key);
+  const WeForestInfoScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

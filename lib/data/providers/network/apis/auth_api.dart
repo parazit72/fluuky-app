@@ -29,7 +29,7 @@ class AuthAPI implements APIRequestRepresentable {
       case AuthEndpoint.detailsAboutYou:
         return '/detailsAboutYou';
       case AuthEndpoint.login:
-        return '/login';
+        return '/auth/login';
       case AuthEndpoint.logout:
         return '/auth/logout';
       case AuthEndpoint.register:
@@ -59,8 +59,9 @@ class AuthAPI implements APIRequestRepresentable {
 
   @override
   Map<String, String>? get headers => {
-        'Content-Type': 'application/json',
         'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Accept-Language': 'en',
       };
 
   @override

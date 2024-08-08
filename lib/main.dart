@@ -6,6 +6,7 @@ import 'package:fluuky/domain/entities/notification_entity.dart';
 import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/fluucky_app.dart';
 import 'package:fluuky/restart_widget.dart';
+// import 'package:get_storage/get_storage.dart';
 import 'firebase_options.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -18,8 +19,9 @@ void main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-  // Initialize Hive
+  // await GetStorage.init();
 
+  // Initialize Hive
   await Hive.initFlutter();
   Hive.registerAdapter(NotificationEntityAdapter());
   await Hive.openBox<NotificationEntity>('notificationsBox');
@@ -27,6 +29,13 @@ void main() async {
   await Hive.openBox<RaffleEntity>('rafflesBox');
   Hive.registerAdapter(CategoryEntityAdapter());
   await Hive.openBox<CategoryEntity>('categoryBox');
+
+  // SystemChrome.setSystemUIOverlayStyle(
+  //   SystemUiOverlayStyle.light.copyWith(
+  //     statusBarColor: Colors.purple,
+  //     systemNavigationBarColor: Colors.purple,
+  //   ),
+  // );
 
   runApp(const RestartWidget(child: FluukyApp()));
   FlutterNativeSplash.remove();
