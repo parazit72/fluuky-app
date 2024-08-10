@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/widgets/layout/background_scaffold.dart';
@@ -92,12 +93,11 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
             child: DraggableScrollableSheet(
               expand: false,
               controller: _scrollableController,
-              initialChildSize: 0.64,
-              minChildSize: 0.64,
-              maxChildSize: 0.92,
+              initialChildSize: 0.7,
+              minChildSize: 0.7,
+              maxChildSize: 1,
               snap: true,
               builder: (BuildContext context, ScrollController scrollController) {
-                var value = false;
                 return NotificationListener<DraggableScrollableNotification>(
                   onNotification: (notification) {
                     if (notification.extent > 0.7) {
@@ -106,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                     return true;
                   },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    padding: const EdgeInsets.only(top: 30, left: 20, right: 20),
                     decoration: const BoxDecoration(
                       image: DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
                       borderRadius: BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
@@ -114,73 +114,89 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                     ),
                     child: SingleChildScrollView(
                       controller: scrollController,
-                      child: SizedBox(
-                        // height: MediaQuery.of(context).size.height * 0.64,
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const SizedBox(height: 20),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                child: Text(
-                                  'Welcome back to Fluuky!',
-                                  style: Theme.of(context).textTheme.titleLarge,
-                                ),
-                              ),
-                              Text(
-                                'Sign in to your account to continue your tree-planting journey.',
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
-                              const SizedBox(height: 20),
-                              InputTextFieldWidget(
-                                  labelText: 'Email',
-                                  hintText: 'Enter your email',
-                                  controller: _authController.emailController,
-                                  focusNode: _emailFocusNode),
-                              const SizedBox(height: 16),
-                              PasswordTextFieldWidget(
-                                controller: _authController.passwordController,
-                                hintText: 'Enter your password',
-                                focusNode: _passwordFocusNode,
-                                validator: (val) => (val != null && val.length < 6) ? 'Password too short.' : null,
-                              ),
-                              const SizedBox(height: 24),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  mainAxisSize: MainAxisSize.max,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const SizedBox(height: 20),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: Text(
+                              'Welcome back to Fluuky!',
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            'Sign in to your account to continue your tree-planting journey.',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                          const SizedBox(height: 20),
+                          InputTextFieldWidget(
+                              labelText: 'Email',
+                              hintText: 'Enter your email',
+                              controller: _authController.emailController,
+                              focusNode: _emailFocusNode),
+                          const SizedBox(height: 16),
+                          PasswordTextFieldWidget(
+                            controller: _authController.passwordController,
+                            hintText: 'Enter your password',
+                            focusNode: _passwordFocusNode,
+                            validator: (val) => (val != null && val.length < 6) ? 'Password too short.' : null,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Wrap(
+                                  alignment: WrapAlignment.start,
+                                  crossAxisAlignment: WrapCrossAlignment.center,
                                   children: [
-                                    Expanded(
-                                      child: Row(
-                                        children: [
-                                          Checkbox(value: value, onChanged: (bool? value) {}),
-                                          Text('Remember me?', style: Theme.of(context).textTheme.bodySmall),
-                                        ],
+                                    Obx(
+                                      () => SizedBox(
+                                        width: 40,
+                                        child: Transform.scale(
+                                          scale: 1.4,
+                                          child: Checkbox(
+                                            value: _authController.rememberMe.value,
+                                            onChanged: (bool? value) {
+                                              _authController.rememberMe.value = value!;
+                                            },
+                                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, // Reduce padding
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                    Expanded(
-                                      child: TextButton(
-                                        onPressed: () {},
-                                        child: const Text('Forgot Password?', textAlign: TextAlign.right),
-                                      ),
-                                    ),
+                                    Text('Remember me?', style: Theme.of(context).textTheme.bodySmall),
                                   ],
                                 ),
-                              ),
-                              ElevatedButton(
-                                onPressed: () async => await _authController.loginWithEmail(),
-                                child: const Text('Login'),
-                              ),
-                              TextButton(
-                                onPressed: () => Get.toNamed(signUp),
-                                child: const Text('Don’t have an account? Sign Up'),
-                              ),
-                            ],
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: Text(
+                                    'Forgot Password?',
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(color: FluukyTheme.primaryColor),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
-                        ),
+                          ElevatedButton(
+                            onPressed: () async => await _authController.loginWithEmail(),
+                            child: const Text('Login'),
+                          ),
+                          TextButton(
+                            onPressed: () => Get.toNamed(signUp),
+                            child: Wrap(spacing: 10, crossAxisAlignment: WrapCrossAlignment.center, children: [
+                              Text(
+                                'Don’t have an account?',
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                              const Text('Sign Up')
+                            ]),
+                          ),
+                        ],
                       ),
                     ),
                   ),

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
+import 'package:fluuky/presentation/controllers/auth/auth_controller.dart';
+import 'package:fluuky/presentation/pages/auth/verification_screen.dart';
+import 'package:fluuky/presentation/widgets/mobile_input_widget.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
-import 'package:fluuky/presentation/controllers/auth/login_controller.dart';
-import 'package:fluuky/presentation/controllers/auth/registration_controller.dart';
+
 import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
@@ -14,16 +17,18 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  RegisterationController registerationController = Get.put(RegisterationController());
+  final AuthController _authController = Get.find<AuthController>();
+  final _formKey = GlobalKey<FormState>();
   String initialCountry = 'AE';
   PhoneNumber number = PhoneNumber(isoCode: 'AE');
 
-  LoginController loginController = Get.put(LoginController());
   var isLogin = false.obs;
   @override
   Widget build(BuildContext context) {
     return BackgroundScaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: null,
         title: Column(
           children: [
             Row(
@@ -57,7 +62,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: Image.asset('assets/images/exclamation-mark.png', width: 20, height: 20),
+                    child: Icon(Icons.info_outline, size: 20, color: Theme.of(context).primaryColor),
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.7,
@@ -78,60 +83,53 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Widget registerWidget() {
-    return Column(
-      children: [
-        InputTextFieldWidget(controller: registerationController.firstNameController, labelText: 'First name', hintText: 'Enter your first name'),
-        const SizedBox(height: 20),
-        InputTextFieldWidget(controller: registerationController.lastNameController, labelText: 'Last name', hintText: 'Enter your last name'),
-        const SizedBox(height: 20),
-        InternationalPhoneNumberInput(
-          searchBoxDecoration: const InputDecoration(),
-          onInputChanged: (PhoneNumber number) {
-            print(number.phoneNumber);
-          },
-          onInputValidated: (bool value) {
-            print(value);
-          },
-          selectorConfig: const SelectorConfig(
-            selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
-            useBottomSheetSafeArea: true,
-          ),
-          ignoreBlank: false,
-          autoValidateMode: AutovalidateMode.disabled,
-          selectorTextStyle: const TextStyle(color: Colors.black),
-          initialValue: number,
-          textFieldController: registerationController.mobileController,
-          formatInput: true,
-          keyboardType: const TextInputType.numberWithOptions(signed: true, decimal: true),
-          inputBorder: const OutlineInputBorder(),
-          onSaved: (PhoneNumber number) {
-            print('On Saved: $number');
-          },
+    return SingleChildScrollView(
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            InputTextFieldWidget(controller: _authController.firstNameController, labelText: 'First name', hintText: 'Enter your first name'),
+            const SizedBox(height: 20),
+            InputTextFieldWidget(controller: _authController.lastNameController, labelText: 'Last name', hintText: 'Enter your last name'),
+            const SizedBox(height: 20),
+            MobileInputWidget(
+              controller: _authController.mobileController,
+              labelText: '',
+              hintText: 'Enter your mobile number',
+            ),
+            const SizedBox(height: 20),
+            InputTextFieldWidget(controller: _authController.emailController, labelText: 'Email', hintText: 'Enter your email'),
+            const SizedBox(height: 20),
+            InputTextFieldWidget(
+                controller: _authController.referalCodeController, labelText: 'Referal Code', hintText: 'Enter your referal code', required: false),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Processing Data')),
+                  );
+                  Get.offAll(() => VerificationScreen(), arguments: {'email': _authController.emailController.text});
+
+                  // _authController.registerWithEmail();
+                }
+              },
+              child: const Text('Continue'),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              child: TextButton(
+                  onPressed: goSignIn,
+                  child: Wrap(
+                    children: [
+                      Text('Already have an account? ', style: Theme.of(context).textTheme.bodyMedium),
+                      Text('Sign in', style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).primaryColor)),
+                    ],
+                  )),
+            )
+          ],
         ),
-        InputTextFieldWidget(controller: registerationController.mobileController, labelText: 'Phone Number', hintText: 'Enter your phone number'),
-        const SizedBox(height: 20),
-        InputTextFieldWidget(controller: registerationController.emailController, labelText: 'Email', hintText: 'Enter your email'),
-        const SizedBox(height: 20),
-        InputTextFieldWidget(
-            controller: registerationController.referalCodeController, labelText: 'Referal Code', hintText: 'Enter your referal code'),
-        const SizedBox(height: 15),
-        ElevatedButton(
-          onPressed: () => registerationController.registerWithEmail(),
-          child: const Text('Continue'),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 14),
-          child: TextButton(
-              onPressed: goSignIn,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Already have an account? ', style: Theme.of(context).textTheme.bodyMedium),
-                  Text('Sign in', style: Theme.of(context).textTheme.bodyMedium),
-                ],
-              )),
-        )
-      ],
+      ),
     );
   }
 

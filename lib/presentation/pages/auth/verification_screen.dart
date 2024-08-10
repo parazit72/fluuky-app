@@ -7,7 +7,8 @@ import 'package:pinput/pinput.dart';
 import '../../controllers/auth/auth_controller.dart';
 
 class VerificationScreen extends GetView<AuthController> {
-  const VerificationScreen({super.key});
+  VerificationScreen({super.key});
+  final AuthController _authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +16,8 @@ class VerificationScreen extends GetView<AuthController> {
 
     return BackgroundScaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: null,
         title: Column(
           children: [
             Row(
@@ -38,27 +41,32 @@ class VerificationScreen extends GetView<AuthController> {
             const SizedBox(height: 5),
             Text('We have sent you a verification code to $userEmailAddress. Please enter the code here to verify your email address.',
                 style: Theme.of(context).textTheme.bodySmall),
-            const SizedBox(height: 20),
+            const SizedBox(height: 24),
             Center(
-                child: Pinput(
-              defaultPinTheme: FluukyTheme.defaultPinTheme,
-              // focusedPinTheme: Theme.of(context).focusedPinTheme,
-              // submittedPinTheme: Theme.of(context).submittedPinTheme,
-              validator: (s) {
-                return s == '2222' ? null : 'Pin is incorrect';
-              },
-              length: 5,
-              controller: controller.codeController,
-              onCompleted: (pin) => controller.verifyCode,
-            )),
+              child: Pinput(
+                defaultPinTheme: FluukyTheme.defaultPinTheme,
+
+                // focusedPinTheme: Theme.of(context).focusedPinTheme,
+                // submittedPinTheme: Theme.of(context).submittedPinTheme,
+                // validator: (s) {
+                //   return s == '6665' ? null : 'Pin is incorrect';
+                // },
+                length: 5,
+                controller: controller.codeController,
+                onCompleted: (pin) => controller.verifyCode,
+              ),
+            ),
             const SizedBox(height: 24),
             ElevatedButton(
-              onPressed: controller.verifyCode,
+              onPressed: () {
+                _authController.verifyCode();
+              },
               child: const Text('Verify'),
             ),
-            const SizedBox(height: 16),
-            OutlinedButton(onPressed: () => controller.resendCode(userEmailAddress), child: const Text('Resend Code')),
-            const SizedBox(height: 22.5),
+            Padding(
+              padding: const EdgeInsets.only(top: 16, bottom: 24),
+              child: OutlinedButton(onPressed: () => _authController.resendCode(userEmailAddress), child: const Text('Resend Code')),
+            ),
             TextButton(onPressed: goBack, child: const Text('Use different email address ')),
           ],
         ),

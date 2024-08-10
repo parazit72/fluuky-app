@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 
 import 'package:fluuky/data/models/walkthrough_page_model.dart';
+import 'package:fluuky/presentation/pages/auth/login_screen.dart';
 import 'package:fluuky/presentation/pages/home_screen/home_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../app/config/route_constants.dart';
@@ -68,7 +69,7 @@ class WalkthroughScreenState extends State<WalkthroughScreen> {
                 if (index < _pages.length) {
                   return WalkthroughPage(model: _pages[index]);
                 } else {
-                  return const HomeScreen();
+                  return const LoginScreen();
                 }
               },
             ),
@@ -148,7 +149,7 @@ class WalkthroughScreenState extends State<WalkthroughScreen> {
                           ),
                           ElevatedButton(
                             onPressed: () => _navigateHomepage(),
-                            child: Text('Get Started!', style: FluukyTheme.whiteTheme.textTheme.headlineSmall),
+                            child: Text('Get Started!'),
                           ),
                         ],
                       ),
@@ -164,7 +165,7 @@ class WalkthroughScreenState extends State<WalkthroughScreen> {
   }
 
   _navigateHomepage() async {
-    Navigator.pushReplacementNamed(context, verification);
+    Navigator.pushReplacementNamed(context, login);
   }
 }
 

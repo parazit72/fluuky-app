@@ -70,7 +70,7 @@ class FluukyTheme {
         textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(color: Colors.white)),
         foregroundColor: MaterialStateProperty.all<Color?>(Colors.white),
         backgroundColor: MaterialStateProperty.all<Color?>(const Color(0XFF205C32)),
-        elevation: MaterialStateProperty.all<double>(4.0),
+        elevation: MaterialStateProperty.all<double>(0),
         shape: MaterialStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
@@ -89,6 +89,7 @@ class FluukyTheme {
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
+        splashFactory: NoSplash.splashFactory,
         foregroundColor: const Color(0XFF205C32),
         minimumSize: const Size(double.infinity, 48.0),
       ),
@@ -103,9 +104,10 @@ class FluukyTheme {
       focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: secondaryColor, width: 1.0)),
       enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: secondaryColor, width: 1.0)),
       focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: secondaryColor, width: 1.0)),
-      errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: secondaryColor, width: 1.0)),
+      errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: const BorderSide(color: Colors.red, width: 1.0)),
       hintStyle: TextStyle(color: Colors.black.withOpacity(0.6)),
       labelStyle: TextStyle(color: secondaryColor),
+      floatingLabelBehavior: FloatingLabelBehavior.never,
     ),
   );
 
@@ -118,9 +120,9 @@ class FluukyTheme {
       iconTheme: const IconThemeData(color: Colors.white),
     ),
     checkboxTheme: lightTheme.checkboxTheme.copyWith(
-      checkColor: MaterialStateProperty.all<Color?>(Colors.white),
-      fillColor: MaterialStateProperty.all<Color?>(secondaryColor),
-    ),
+        checkColor: MaterialStateProperty.all<Color?>(Colors.white),
+        fillColor: MaterialStateProperty.all<Color?>(secondaryColor),
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap),
     textTheme: lightTheme.textTheme.copyWith(
       displayLarge: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w700, color: Colors.white, fontFamily: fontFamily),
       displayMedium: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w700, color: Colors.white, fontFamily: fontFamily),
@@ -139,15 +141,14 @@ class FluukyTheme {
       bodySmall: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w300, color: Colors.white, fontFamily: fontFamily),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ButtonStyle(
-        textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(color: primaryColor)),
-        backgroundColor: MaterialStateProperty.all<Color?>(primaryColor),
-        shape: MaterialStateProperty.all<OutlinedBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-            side: BorderSide(color: primaryColor),
-          ),
+      style: ElevatedButton.styleFrom(
+        elevation: 0,
+        shadowColor: Colors.transparent,
+        backgroundColor: primaryColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
         ),
+        textStyle: const TextStyle(fontSize: 20.0, color: Colors.white),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
@@ -180,6 +181,7 @@ class FluukyTheme {
   static Color checkOutInActiveColor = Colors.grey.withAlpha(100);
 
   static final PinTheme defaultPinTheme = PinTheme(
+    margin: const EdgeInsets.only(right: 5, left: 5),
     padding: const EdgeInsets.only(left: 19, right: 19),
     width: 52,
     height: 52,

@@ -12,6 +12,7 @@ class InputTextFieldWidget extends StatelessWidget {
     required this.hintText,
     required this.controller,
     this.focusNode,
+    bool required = false,
   });
 
   @override
@@ -20,22 +21,31 @@ class InputTextFieldWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(labelText, style: Theme.of(context).textTheme.bodySmall),
-        Container(
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            boxShadow: [
-              BoxShadow(color: Color(0xFFDBDBDB)),
-              BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
-            ],
-          ),
-          child: TextFormField(
-            controller: controller,
-            focusNode: focusNode,
-            decoration: InputDecoration(
-              labelText: hintText,
-              floatingLabelBehavior: FloatingLabelBehavior.never,
-            ),
-          ),
+        Stack(
+          children: [
+            Container(
+                height: 48,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  boxShadow: [
+                    BoxShadow(color: Color(0xFFDBDBDB)),
+                    BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+                  ],
+                )),
+            TextFormField(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your $labelText';
+                }
+                return null;
+              },
+              controller: controller,
+              focusNode: focusNode,
+              decoration: InputDecoration(
+                labelText: hintText,
+              ),
+            )
+          ],
         ),
       ],
     );
@@ -49,8 +59,10 @@ class PasswordTextFieldWidget extends StatefulWidget {
   final String hintText;
   final String labelText;
   final FormFieldValidator<String>? validator;
+  final ValueChanged<String>? onChanged;
+  bool obscured;
 
-  const PasswordTextFieldWidget({
+  PasswordTextFieldWidget({
     super.key,
     required this.controller,
     this.focusNode,
@@ -58,6 +70,8 @@ class PasswordTextFieldWidget extends StatefulWidget {
     required this.hintText,
     this.labelText = "Password",
     this.validator,
+    this.onChanged,
+    this.obscured = true,
   });
 
   @override
@@ -65,11 +79,9 @@ class PasswordTextFieldWidget extends StatefulWidget {
 }
 
 class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
-  bool _obscured = true;
-
   void _toggleObscured() {
     setState(() {
-      _obscured = !_obscured;
+      widget.obscured = !widget.obscured;
     });
   }
 
@@ -77,15 +89,17 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(widget.labelText, style: Theme.of(context).textTheme.bodySmall),
-      Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-          boxShadow: [
-            BoxShadow(color: Color(0xFFDBDBDB)),
-            BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
-          ],
-        ),
-        child: TextFormField(
+      Stack(children: [
+        Container(
+            height: 48,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              boxShadow: [
+                BoxShadow(color: Color(0xFFDBDBDB)),
+                BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+              ],
+            )),
+        TextFormField(
           keyboardType: TextInputType.visiblePassword,
           controller: widget.controller,
           focusNode: widget.focusNode,
@@ -103,15 +117,16 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
                 onTap: _toggleObscured,
                 child: Icon(
                   size: 24,
-                  _obscured ? Icons.visibility_rounded : Icons.visibility_off_rounded,
+                  widget.obscured ? Icons.visibility_rounded : Icons.visibility_off_rounded,
                 ),
               ),
             ),
           ),
           validator: widget.validator,
-          obscureText: _obscured,
+          obscureText: widget.obscured,
+          onChanged: widget.onChanged,
         ),
-      )
+      ]),
     ]);
   }
 }

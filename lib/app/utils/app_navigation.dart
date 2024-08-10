@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/domain/entities/raffle_entity.dart';
+import 'package:fluuky/presentation/pages/auth/created_password_screen.dart';
+import 'package:fluuky/presentation/pages/auth/details_about_you_screen.dart';
 import 'package:fluuky/presentation/pages/profile/dashboard_screen/dashboard_screen.dart';
 import 'package:fluuky/presentation/pages/profile/flukky_loyality_program_screen/flukky_loyality_program_screen.dart';
 import 'package:fluuky/presentation/pages/profile/profile_menu_screen.dart';
@@ -101,7 +103,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const DrawsListScreen());
 
     case verification:
-      return MaterialPageRoute(builder: (_) => const VerificationScreen());
+      return MaterialPageRoute(builder: (_) => VerificationScreen());
+
+    case detailsAboutYou:
+      return MaterialPageRoute(builder: (_) => DetailsAboutYouScreen());
+
+    case createdPassword:
+      return MaterialPageRoute(builder: (_) => CreatedPasswordScreen());
 
     default:
       return MaterialPageRoute(

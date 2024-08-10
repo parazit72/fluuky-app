@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/presentation/pages/auth/verification_screen.dart';
 import 'package:fluuky/presentation/pages/home_screen/home_screen.dart';
 import 'package:get/get.dart';
@@ -13,12 +14,28 @@ class AuthController extends GetxController {
   // final VerifyCodeUseCase _verifyCodeUseCase;
   final isLogged = false.obs;
   final isLoading = false.obs;
+  final rememberMe = false.obs;
+
+  var hasUpperCase = false.obs;
+  var hasLowerCase = false.obs;
+  var hasDigit = false.obs;
+  var hasSpecialCharacter = false.obs;
+  var isAtLeast8Characters = false.obs;
+
+  void checkPassword(String password) {
+    hasUpperCase.value = password.contains(RegExp(r'[A-Z]'));
+    hasLowerCase.value = password.contains(RegExp(r'[a-z]'));
+    hasDigit.value = password.contains(RegExp(r'\d'));
+    hasSpecialCharacter.value = password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+    isAtLeast8Characters.value = password.length >= 8;
+  }
 
   AuthController(this._authRepository);
   // AuthController(this._authRepository, this._verifyCodeUseCase);
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController codeController = TextEditingController();
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
@@ -36,6 +53,7 @@ class AuthController extends GetxController {
 
   Future<void> registerWithEmail() async {
     isLoading.value = true;
+
     try {
       final user = await _authRepository.register(
         firstNameController.text,
@@ -51,7 +69,7 @@ class AuthController extends GetxController {
         referalCodeController.clear();
         emailController.clear();
         mobileController.clear();
-        Get.offAll(() => const VerificationScreen(), arguments: {'email': emailController.text});
+        Get.offAll(() => VerificationScreen(), arguments: {'email': emailController.text});
       } else {
         throw Exception("Registration failed");
       }
@@ -84,7 +102,7 @@ class AuthController extends GetxController {
     try {
       // await _verifyCodeUseCase.execute(codeController.text);
       await _authRepository.verifyCode(codeController.text);
-      // Handle success or failure
+      Get.toNamed(detailsAboutYou);
     } catch (e) {
       _showErrorDialog(e.toString());
     } finally {
@@ -120,7 +138,7 @@ class AuthController extends GetxController {
   }
 
   void _showErrorDialog(String message) {
-    Get.back();
+    // Get.back();
     showModalBottomSheet(
       context: Get.context!,
       isScrollControlled: true,

@@ -19,7 +19,8 @@ class BackgroundScaffold extends StatelessWidget {
     return Scaffold(
       // appBar: const AppBarFluuky(),
       // bottomNavigationBar: CustomNavBar(),
-      resizeToAvoidBottomInset: false,
+
+      resizeToAvoidBottomInset: true,
       body: Stack(
         children: [
           Container(
