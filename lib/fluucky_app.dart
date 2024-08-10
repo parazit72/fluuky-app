@@ -16,7 +16,7 @@ class FluukyApp extends StatefulWidget {
 }
 
 class _FluukyAppState extends State<FluukyApp> {
-  String appRoot = profile;
+  String appRoot = walkthrough;
 
   @override
   void initState() {
