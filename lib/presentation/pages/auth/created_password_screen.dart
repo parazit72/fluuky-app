@@ -85,7 +85,7 @@ class CreatedPasswordScreen extends StatelessWidget {
                     if (_formKey.currentState!.validate()) {
                       _authController.verifyCode();
                     }
-                    Get.toNamed('createdPassword');
+                    Get.toNamed(home);
                   },
                   child: const Text('Activate Account'),
                 ),

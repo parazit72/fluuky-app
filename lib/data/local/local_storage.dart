@@ -62,17 +62,6 @@ class LocalStorage {
     return isAddressData ?? false;
   }
 
-  static setQuoteId(int quoteId) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setInt(customerQuoteId, quoteId);
-  }
-
-  static getQuoteId() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    int? quoteId = sharedPreferences.getInt(customerQuoteId);
-    return quoteId ?? 0;
-  }
-
   static setCartCount(int cartCount) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setInt(customerCartCount, cartCount);
@@ -138,17 +127,6 @@ class LocalStorage {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     int? customerIdNew = sharedPreferences.getInt(customerId);
     return customerIdNew ?? 0;
-  }
-
-  static setCookie(String cookieData) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString(cookie, cookieData);
-  }
-
-  static getCookie() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String? cookieNew = sharedPreferences.getString(cookie);
-    return cookieNew ?? "";
   }
 
   setTheme(String value) async {

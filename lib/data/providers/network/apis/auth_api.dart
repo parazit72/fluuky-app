@@ -28,14 +28,15 @@ class AuthAPI implements APIRequestRepresentable {
         return '/createPassword';
       case AuthEndpoint.detailsAboutYou:
         return '/detailsAboutYou';
+      case AuthEndpoint.getCurrentUser:
       case AuthEndpoint.login:
         return '/auth/login';
       case AuthEndpoint.logout:
         return '/auth/logout';
       case AuthEndpoint.register:
         return '/auth/register';
-      case AuthEndpoint.getCurrentUser:
-        return '/auth/user';
+      // case AuthEndpoint.getCurrentUser:
+      // return '/auth/user';
     }
   }
 

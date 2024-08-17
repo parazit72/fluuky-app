@@ -9,7 +9,7 @@ Widget buildCategoryButtons() {
     if (controller.selectedItemType.value == ItemType.draws) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: controller.categories.map((category) => _buildCategoryButton(category.id, category.name, category.iconPath)).toList(),
+        children: controller.raffleCategories.map((category) => _buildCategoryButton(category.id, category.name, category.iconPath)).toList(),
       );
     } else {
       return const SizedBox.shrink();
@@ -45,7 +45,7 @@ Widget _buildCategoryButton(int id, String text, String? iconPath) {
           Text(
             text.capitalizeFirst!,
             style: isSelected
-                ? Theme.of(Get.context!).textTheme.titleLarge!.copyWith(color: Theme.of(Get.context!).primaryColor)
+                ? Theme.of(Get.context!).textTheme.titleMedium!.copyWith(color: Theme.of(Get.context!).primaryColor)
                 : Theme.of(Get.context!).textTheme.bodyLarge!.copyWith(color: const Color(0xFFB3B3B3)),
           ),
         ],

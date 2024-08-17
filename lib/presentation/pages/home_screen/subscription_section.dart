@@ -9,9 +9,12 @@ class SubscriptionSection extends StatelessWidget {
       margin: const EdgeInsets.all(16.0),
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 27),
       decoration: BoxDecoration(
-        boxShadow: const [BoxShadow(offset: Offset(0, -1), color: Colors.black26, spreadRadius: 0, blurRadius: 4)],
+        boxShadow: const [
+          BoxShadow(color: Color(0xFFDBDBDB)),
+          BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+        ],
         borderRadius: BorderRadius.circular(8),
-        image: const DecorationImage(image: AssetImage('assets/images/paper.jpg'), fit: BoxFit.cover),
+        // image: const DecorationImage(image: AssetImage('assets/images/paper.jpg'), fit: BoxFit.cover),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

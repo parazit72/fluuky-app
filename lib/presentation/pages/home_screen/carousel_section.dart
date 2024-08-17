@@ -1,24 +1,33 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider_plus/carousel_slider_plus.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/presentation/controllers/raffle_controller.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:get/get.dart';
 
-class CarouselSectionWidget extends StatelessWidget {
+class CarouselSectionWidget extends StatefulWidget {
+  @override
+  _CarouselSectionWidgetState createState() => _CarouselSectionWidgetState();
+}
+
+class _CarouselSectionWidgetState extends State<CarouselSectionWidget> {
   final RaffleController raffleController = Get.find();
+  final CarouselSliderController _carouselSliderController = CarouselSliderController();
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
       if (raffleController.raffles.isEmpty) {
         return Stack(children: [
-          Image.asset('assets/images/jungle-1.jpg', fit: BoxFit.cover, height: MediaQuery.of(context).size.height * 0.3),
           Container(
-            height: MediaQuery.of(context).size.height * 0.3,
-            color: Colors.black.withOpacity(0.5),
-          ),
-          const SizedBox(height: 260, child: Center(child: CircularProgressIndicator()))
+              height: MediaQuery.of(context).size.height * 0.3,
+              color: FluukyTheme.secondaryColor,
+              child: const Center(child: CircularProgressIndicator())),
         ]);
       }
 
@@ -29,26 +38,25 @@ class CarouselSectionWidget extends StatelessWidget {
                 .map(
                   (raffle) => Stack(
                     children: [
-                      raffle.images.isNotEmpty
-                          ? CachedNetworkImage(
-                              imageUrl: raffle.images[0],
-                              placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                              errorWidget: (context, url, error) => const Center(child: Icon(Icons.error)),
-                              cacheManager: CachedNetworkImageProvider.defaultCacheManager,
-                            )
-                          : Image.asset(
-                              'assets/images/jungle-1.jpg',
-                              fit: BoxFit.cover,
-                              width: MediaQuery.of(context).size.width,
-                            ),
+                      Skeletonizer(
+                        enabled: raffle.image.isEmpty,
+                        child: CachedNetworkImage(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.4,
+                          fit: BoxFit.cover,
+                          imageUrl: raffle.mainImage,
+                          placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) => const Center(child: Icon(Icons.error)),
+                        ),
+                      ),
                       Positioned(
                         bottom: 40,
-                        left: 10,
+                        left: 20,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(raffle.name, style: const TextStyle(color: Colors.white, fontSize: 20)),
-                            Text('\$${raffle.price}', style: const TextStyle(color: Colors.white, fontSize: 16)),
+                            Text(raffle.name, style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.white)),
+                            Text('\$${raffle.price}', style: Theme.of(context).textTheme.labelMedium!.copyWith(color: Colors.white)),
                           ],
                         ),
                       ),
@@ -56,13 +64,12 @@ class CarouselSectionWidget extends StatelessWidget {
                   ),
                 )
                 .toList(),
+            controller: _carouselSliderController,
             options: CarouselOptions(
-              height: MediaQuery.of(context).size.height * 0.4,
-              viewportFraction: 1,
-              onPageChanged: (index, reason) {
-                // Optionally handle page changes here
-              },
-            ),
+                enlargeCenterPage: false,
+                viewportFraction: 1,
+                height: MediaQuery.of(context).size.height * 0.4,
+                onPageChanged: (index, reason) => setState(() => _currentIndex = index)),
           ),
           Positioned(
             bottom: 24,
@@ -70,13 +77,20 @@ class CarouselSectionWidget extends StatelessWidget {
             right: 0,
             child: Center(
               child: AnimatedSmoothIndicator(
-                activeIndex: raffleController.currentIndex.value,
+                onDotClicked: (index) {
+                  _carouselSliderController.animateToPage(
+                    index,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                },
+                activeIndex: _currentIndex,
                 count: raffleController.raffles.length,
-                effect: const ScrollingDotsEffect(
+                effect: ScrollingDotsEffect(
                   activeDotColor: Colors.white,
                   dotColor: Colors.grey,
                   dotHeight: 4.0,
-                  dotWidth: 4.0,
+                  dotWidth: (MediaQuery.of(context).size.width - 40) / (raffleController.raffles.length - 1),
                   spacing: 16.0,
                 ),
               ),

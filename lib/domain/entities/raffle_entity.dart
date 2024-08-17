@@ -29,15 +29,18 @@ class RaffleEntity {
   final int capacity;
 
   @HiveField(8)
-  final List<String> images;
+  final String mainImage;
 
   @HiveField(9)
-  final double price;
+  final List<String> image;
 
   @HiveField(10)
-  final String status;
+  final double price;
 
   @HiveField(11)
+  final String status;
+
+  @HiveField(12)
   final DateTime deadline;
 
   RaffleEntity({
@@ -49,7 +52,8 @@ class RaffleEntity {
     required this.slug,
     required this.description,
     required this.capacity,
-    required this.images,
+    required this.mainImage,
+    required this.image,
     required this.price,
     required this.status,
     required this.deadline,
@@ -65,7 +69,8 @@ class RaffleEntity {
       slug: json['slug'],
       description: json['description'],
       capacity: json['capacity'],
-      images: List<String>.from(json['image']),
+      image: List<String>.from(json['image']),
+      mainImage: json['main_image'],
       price: json['price'].toDouble(),
       status: json['status'],
       deadline: DateTime.parse(json['deadline']),
@@ -82,7 +87,8 @@ class RaffleEntity {
       'slug': slug,
       'description': description,
       'capacity': capacity,
-      'image': images,
+      'image': image,
+      'main_image': mainImage,
       'price': price,
       'status': status,
       'deadline': deadline.toIso8601String(),

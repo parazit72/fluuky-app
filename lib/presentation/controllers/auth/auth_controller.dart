@@ -126,8 +126,10 @@ class AuthController extends GetxController {
     final token = await _secureStorage.read(key: 'token');
     if (token != null) {
       isLogged.value = true;
+    } else {
+      isLogged.value = false;
+      // user.value = await _authRepository.getCurrentUser();
     }
-    user.value = await _authRepository.getCurrentUser();
   }
 
   Future<void> logout() async {

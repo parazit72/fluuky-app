@@ -3,10 +3,10 @@ import 'package:fluuky/presentation/controllers/items_controller.dart';
 import 'package:get/get.dart';
 
 Widget TypeButtonWidget({required ItemType type, required String text}) {
-  final ItemsController controller = Get.find();
+  final ItemsController itemsController = Get.find();
 
   return Obx(() {
-    bool isSelected = controller.selectedItemType.value == type;
+    bool isSelected = itemsController.selectedItemType.value == type;
 
     return IntrinsicWidth(
       child: Container(
@@ -21,12 +21,17 @@ Widget TypeButtonWidget({required ItemType type, required String text}) {
         height: 38,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(elevation: 0, backgroundColor: isSelected ? Theme.of(Get.context!).primaryColor : const Color(0XFFE9EFEB)),
-          onPressed: () => controller.selectedItemType.value = type,
+          onPressed: () {
+            itemsController.selectedItemType.value = type;
+            if (type == ItemType.winners || type == ItemType.announcements) {
+              itemsController.viewType.value = ViewType.list;
+            }
+          },
           child: Text(
             text,
             softWrap: false,
             style: isSelected
-                ? Theme.of(Get.context!).textTheme.titleLarge!.copyWith(color: Colors.white)
+                ? Theme.of(Get.context!).textTheme.titleMedium!.copyWith(color: Colors.white)
                 : Theme.of(Get.context!).textTheme.bodyLarge!.copyWith(color: Theme.of(Get.context!).primaryColor),
           ),
         ),

@@ -32,13 +32,13 @@ class CustomNavBar extends StatelessWidget {
             controller.changeIndex(index);
             switch (index) {
               case 0:
-                Navigator.pushReplacementNamed(context, home);
+                Get.toNamed(home);
                 break;
               case 1:
-                Navigator.pushReplacementNamed(context, drawsList);
+                Get.toNamed(drawsList);
                 break;
               case 2:
-                Navigator.pushReplacementNamed(context, profile);
+                Get.toNamed(profile);
                 break;
             }
           },

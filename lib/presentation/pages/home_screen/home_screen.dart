@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/presentation/pages/home_screen/green_subscriber_widget.dart';
+import 'package:fluuky/presentation/pages/profile/dashboard_screen/user_status_section.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -9,6 +11,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool userIsSubscribed = true;
   @override
   Widget build(BuildContext context) {
     return BackgroundScaffold(
@@ -18,8 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             CarouselSectionWidget(),
+            userIsSubscribed ? const GreenSubscriberWidget() : Container(),
             const SubscriptionSection(),
-            const StatusSection(),
+            const UserStatusWidget(),
             const TreesPlantedSection(),
             const ActiveDrawsSection(),
           ],

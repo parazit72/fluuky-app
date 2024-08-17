@@ -20,7 +20,7 @@ class ReferralRewardsWidget extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(47),
               decoration: const BoxDecoration(
-                image: DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
+                // image: DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
                 borderRadius: BorderRadius.all(Radius.circular(8)),
                 boxShadow: [
                   BoxShadow(color: Color(0xFFDBDBDB)),

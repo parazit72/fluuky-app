@@ -18,7 +18,7 @@ class OrderHistoryListWidget extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Orders History', style: Theme.of(context).textTheme.titleLarge),
+                    Text('Orders History', style: Theme.of(context).textTheme.titleSmall),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.75,
                       child: Text('See a rundown of all your previous ticket purchases.', style: Theme.of(context).textTheme.bodySmall),
@@ -58,10 +58,10 @@ class OrderHistoryWidget extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.7,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(8)),
-        image: DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
+        // image: DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
         boxShadow: [
           BoxShadow(color: Color(0xFFDBDBDB)),
-          BoxShadow(color: Colors.transparent, spreadRadius: -4.0, blurRadius: 8.6),
+          BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
         ],
       ),
       child: Column(
@@ -70,14 +70,15 @@ class OrderHistoryWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Container(
-                      decoration: BoxDecoration(
-                        image: const DecorationImage(image: AssetImage('assets/images/bacground.png'), fit: BoxFit.cover),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Image.asset('assets/images/ticket-history.jpg',
-                          width: MediaQuery.of(context).size.width * 0.5 - 28 - 40, fit: BoxFit.cover))),
+                borderRadius: BorderRadius.circular(8),
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: const DecorationImage(image: AssetImage('assets/images/bacground.png'), fit: BoxFit.cover),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Image.asset('assets/images/ticket-history.jpg', width: MediaQuery.of(context).size.width * 0.5 - 28 - 40, fit: BoxFit.cover),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 14),
                 child: DottedLine(
@@ -95,7 +96,7 @@ class OrderHistoryWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text('Ticket Number', style: Theme.of(context).textTheme.bodySmall),
-                  Text('#2000', style: Theme.of(context).textTheme.titleLarge)
+                  Text('#2000', style: Theme.of(context).textTheme.titleSmall)
                 ],
               )
             ],
@@ -115,7 +116,7 @@ class OrderHistoryWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Prize:', style: Theme.of(context).textTheme.bodySmall),
-              Text('Rolex Cosmograph Daytona', style: Theme.of(context).textTheme.titleLarge)
+              Text('Rolex Cosmograph Daytona', style: Theme.of(context).textTheme.titleSmall)
             ],
           ),
           const SizedBox(height: 16),
@@ -123,20 +124,20 @@ class OrderHistoryWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Draw Date:', style: Theme.of(context).textTheme.bodySmall),
-              Text('December 17th, 2023 - 18:00', style: Theme.of(context).textTheme.titleLarge)
+              Text('December 17th, 2023 - 18:00', style: Theme.of(context).textTheme.titleSmall)
             ],
           ),
           const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text('Tickets:', style: Theme.of(context).textTheme.bodySmall), Text('1', style: Theme.of(context).textTheme.titleLarge)],
+            children: [Text('Tickets:', style: Theme.of(context).textTheme.bodySmall), Text('1', style: Theme.of(context).textTheme.titleSmall)],
           ),
           const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Trees Planted:', style: Theme.of(context).textTheme.bodySmall),
-              Text('1', style: Theme.of(context).textTheme.titleLarge)
+              Text('1', style: Theme.of(context).textTheme.titleSmall)
             ],
           ),
           const SizedBox(height: 16),
@@ -144,7 +145,7 @@ class OrderHistoryWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Transaction ID:', style: Theme.of(context).textTheme.bodySmall),
-              Text('0123456789', style: Theme.of(context).textTheme.titleLarge)
+              Text('0123456789', style: Theme.of(context).textTheme.titleSmall)
             ],
           ),
           Padding(
@@ -160,7 +161,7 @@ class OrderHistoryWidget extends StatelessWidget {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text('Total:', style: Theme.of(context).textTheme.bodySmall), Text('\$99.99', style: Theme.of(context).textTheme.titleLarge)],
+            children: [Text('Total:', style: Theme.of(context).textTheme.bodySmall), Text('\$99.99', style: Theme.of(context).textTheme.titleSmall)],
           ),
           Padding(
               padding: const EdgeInsets.only(top: 16, bottom: 20), child: OutlinedButton(onPressed: () {}, child: const Text('Download Certificate')))

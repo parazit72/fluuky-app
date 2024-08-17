@@ -45,7 +45,7 @@ Widget _buildViewButton(ViewType type, IconData icon) {
               ),
               Text(type.name.capitalizeFirst!,
                   style:
-                      Theme.of(Get.context!).textTheme.titleLarge!.copyWith(color: isSelected ? Theme.of(Get.context!).primaryColor : Colors.black)),
+                      Theme.of(Get.context!).textTheme.titleMedium!.copyWith(color: isSelected ? Theme.of(Get.context!).primaryColor : Colors.black)),
             ],
           ),
           onPressed: () => controller.viewType.value = type,

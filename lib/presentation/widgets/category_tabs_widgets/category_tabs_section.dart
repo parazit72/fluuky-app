@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
-import 'package:fluuky/presentation/controllers/raffle_controller.dart';
+// import 'package:fluuky/presentation/controllers/raffle_controller.dart';
 import 'package:fluuky/presentation/widgets/category_tabs_widgets/category_tabs_widgets.dart';
 import 'package:get/get.dart';
 
 class CategoryTabsSection extends StatelessWidget {
   final ItemsController controller = Get.find();
-  final RaffleController raffleController = Get.find();
+  // final RaffleController raffleController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -38,17 +38,24 @@ class CategoryTabsSection extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Divider(height: 40),
-              buildSelectedTypeName(context),
-              buildViewButtons(),
-            ],
-          ),
-        ),
+        Obx(() {
+          if (controller.selectedItemType.value != ItemType.draws) {
+            return Container();
+          }
+          {
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Divider(height: 40),
+                  buildSelectedTypeName(context),
+                  buildViewButtons(),
+                ],
+              ),
+            );
+          }
+        }),
       ],
     );
   }

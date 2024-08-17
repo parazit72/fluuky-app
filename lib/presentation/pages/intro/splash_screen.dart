@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:fluuky/data/local/local_storage.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/pages/auth/login_screen.dart';
 import 'package:fluuky/presentation/pages/home_screen/home_screen.dart';
+import 'package:fluuky/presentation/pages/intro/walkthrough_screen.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import '../../../app/config/assets_constants.dart';
@@ -17,6 +19,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   final AuthController _authRepository = Get.find();
   Timer? _navigateTimer;
+  bool isFirstLaunch = false;
 
   @override
   void initState() {
@@ -26,6 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _initializeSettings() async {
+    isFirstLaunch = await LocalStorage.isFirstLaunch();
     _authRepository.checkLoginStatus();
   }
 
@@ -46,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
           if (snapshot.hasError) {
             return errorView(snapshot);
           } else {
-            return const OnBoard();
+            return const OnBoard(isFirstLaunch: true);
           }
         }
       },
@@ -68,14 +72,19 @@ class _SplashScreenState extends State<SplashScreen> {
 }
 
 class OnBoard extends StatelessWidget {
-  const OnBoard({super.key});
+  final bool isFirstLaunch = false;
+  const OnBoard({super.key, isFirstLaunch = false});
 
   @override
   Widget build(BuildContext context) {
     AuthController authRepository = Get.find();
 
     return Obx(() {
-      return authRepository.isLogged.value ? const HomeScreen() : LoginScreen();
+      if (isFirstLaunch) {
+        LocalStorage.setFirstLaunch(false);
+        return const WalkthroughScreen();
+      }
+      return authRepository.isLogged.value ? const HomeScreen() : const LoginScreen();
     });
   }
 }

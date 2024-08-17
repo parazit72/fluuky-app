@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +10,7 @@ class UserStatusWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
       child: InkWell(
         onTap: () => Get.toNamed(flukkyLoyalityProgram),
         child: Container(
@@ -47,10 +48,10 @@ class UserStatusWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 8, top: 8),
                 child: LinearProgressIndicator(
-                  value: 0.7,
+                  value: 0,
                   borderRadius: BorderRadius.circular(50),
-                  color: const Color(0x00318349),
-                  backgroundColor: const Color(0x00e9efeb),
+                  color: FluukyTheme.accentColor,
+                  backgroundColor: FluukyTheme.lightTheme.cardColor,
                   valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
                 ),
               ),

@@ -9,6 +9,5 @@ export 'package:fluuky/presentation/widgets/input_text_field_widget.dart';
 export 'package:fluuky/presentation/widgets/layout/app_bar_profile_widget.dart';
 export 'package:fluuky/presentation/widgets/layout/app_bar_fluuky_widget.dart';
 export 'package:fluuky/presentation/pages/home_screen/active_draws_section.dart';
-export 'package:fluuky/presentation/pages/home_screen/status_section_widget.dart';
 export 'package:fluuky/presentation/pages/home_screen/subscription_section.dart';
 export 'package:fluuky/presentation/pages/home_screen/trees_planted_section.dart';

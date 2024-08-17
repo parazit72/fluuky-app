@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/domain/entities/winner_entity.dart';
 
 class WinnerCardWidget extends StatelessWidget {
@@ -8,9 +9,28 @@ class WinnerCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        title: Text(winner.name),
+    return Container(
+      padding: const EdgeInsets.only(bottom: 20, right: 32),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          CircleAvatar(
+            backgroundColor: Colors.transparent,
+            radius: MediaQuery.of(context).size.width * 0.17,
+            backgroundImage: const AssetImage('assets/images/avatar.jpg'),
+          ),
+          const SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 3),
+            child: Text('WINNER OF THE', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.primaryColor)),
+          ),
+          Text('Rolex Submariner', style: Theme.of(context).textTheme.titleSmall),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 3),
+            child: Text(winner.name, style: Theme.of(context).textTheme.bodySmall),
+          ),
+          Text('20 December 2023', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.secondaryColor)),
+        ],
       ),
     );
   }

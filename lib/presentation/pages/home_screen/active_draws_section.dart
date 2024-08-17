@@ -1,42 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/presentation/widgets/category_tabs_widgets/category_tabs_widgets.dart';
 
 class ActiveDrawsSection extends StatelessWidget {
-  const ActiveDrawsSection({Key? key}) : super(key: key);
+  const ActiveDrawsSection({super.key});
+  @override
+  Widget build(BuildContext context) {
+    bool userHasActiveCards = false;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Text('Active Draws', style: Theme.of(context).textTheme.titleLarge),
+            ),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.chevron_right))
+          ],
+        ),
+        !userHasActiveCards ? buildUserActiveDrawsList() : const EmptyActiveDraws(),
+      ],
+    );
+  }
+}
+
+class EmptyActiveDraws extends StatelessWidget {
+  const EmptyActiveDraws({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
+    return Container(
+      padding: const EdgeInsets.all(24.0),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      decoration: BoxDecoration(
+        boxShadow: const [
+          BoxShadow(color: Color(0xFFDBDBDB)),
+          BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+        ],
+        borderRadius: BorderRadius.circular(8),
+        // image: const DecorationImage(image: AssetImage('assets/images/paper.jpg'), fit: BoxFit.cover),
+      ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Active Draws', style: Theme.of(context).textTheme.titleLarge),
-          Container(
-            padding: const EdgeInsets.all(24.0),
-            decoration: BoxDecoration(
-              image: const DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: const [
-                BoxShadow(color: Color(0xFFDBDBDB)),
-                BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
-              ],
-            ),
-            child: Column(
-              children: [
-                Image.asset('assets/images/ticket.png', fit: BoxFit.cover, width: 64),
-                const SizedBox(height: 16),
-                Text(
-                  "You're yet to enter, but there's still time!\nStart planting trees for a chance to win.",
-                  style: Theme.of(context).textTheme.bodySmall,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Enter Now!'),
-                ),
-              ],
-            ),
+          Image.asset('assets/images/ticket.png', fit: BoxFit.cover, width: 64),
+          const SizedBox(height: 16),
+          Text(
+            "You're yet to enter, but there's still time!\nStart planting trees for a chance to win.",
+            style: Theme.of(context).textTheme.bodySmall,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () {},
+            child: const Text('Enter Now!'),
           ),
         ],
       ),

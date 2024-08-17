@@ -25,17 +25,18 @@ class RaffleEntityAdapter extends TypeAdapter<RaffleEntity> {
       slug: fields[5] as String,
       description: fields[6] as String,
       capacity: fields[7] as int,
-      images: (fields[8] as List).cast<String>(),
-      price: fields[9] as double,
-      status: fields[10] as String,
-      deadline: fields[11] as DateTime,
+      mainImage: fields[8] as String,
+      image: (fields[9] as List).cast<String>(),
+      price: fields[10] as double,
+      status: fields[11] as String,
+      deadline: fields[12] as DateTime,
     );
   }
 
   @override
   void write(BinaryWriter writer, RaffleEntity obj) {
     writer
-      ..writeByte(12)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -53,12 +54,14 @@ class RaffleEntityAdapter extends TypeAdapter<RaffleEntity> {
       ..writeByte(7)
       ..write(obj.capacity)
       ..writeByte(8)
-      ..write(obj.images)
+      ..write(obj.mainImage)
       ..writeByte(9)
-      ..write(obj.price)
+      ..write(obj.image)
       ..writeByte(10)
-      ..write(obj.status)
+      ..write(obj.price)
       ..writeByte(11)
+      ..write(obj.status)
+      ..writeByte(12)
       ..write(obj.deadline);
   }
 

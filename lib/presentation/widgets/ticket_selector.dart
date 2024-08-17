@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider_plus/carousel_slider_plus.dart';
 
 class NumberPicker extends StatefulWidget {
   final int minValue;
@@ -21,13 +21,13 @@ class NumberPicker extends StatefulWidget {
 
 class _NumberPickerState extends State<NumberPicker> {
   late int _currentValue;
-  late CarouselController _carouselController;
+  late CarouselSliderController _carouselSliderController;
 
   @override
   void initState() {
     super.initState();
     _currentValue = widget.initialValue;
-    _carouselController = CarouselController();
+    _carouselSliderController = CarouselSliderController();
   }
 
   List<int> get _numberRange => List.generate(widget.maxValue - widget.minValue + 1, (index) => widget.minValue + index);
@@ -50,7 +50,7 @@ class _NumberPickerState extends State<NumberPicker> {
               ),
             );
           }).toList(),
-          carouselController: _carouselController,
+          controller: _carouselSliderController,
           options: CarouselOptions(
             enlargeCenterPage: true,
             enlargeFactor: 0.2,
