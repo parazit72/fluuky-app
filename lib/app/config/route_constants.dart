@@ -29,3 +29,4 @@ const String flukkyLoyalityProgram = 'flukkyLoyalityProgramScreen';
 
 const String cart = "CartScreen";
 const String checkout = 'checkoutScreen';
+const String basket = 'BasketScreen';

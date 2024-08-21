@@ -25,7 +25,8 @@ class AppBarSingleWidget extends StatelessWidget {
         icon: const Icon(Icons.chevron_left, size: 24),
       ),
       leadingWidth: 24,
-      elevation: 0,
+      elevation: 2,
+      surfaceTintColor: Colors.transparent,
       title: Text(
         title,
         style: Theme.of(context).textTheme.titleLarge,

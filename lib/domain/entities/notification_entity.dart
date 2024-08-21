@@ -14,7 +14,7 @@ class NotificationEntity {
   final String body;
 
   @HiveField(3)
-  final bool isRead;
+  bool isRead;
 
   @HiveField(4)
   final DateTime timestamp;

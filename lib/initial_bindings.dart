@@ -8,13 +8,9 @@ import 'package:fluuky/data/providers/database/push_notification_datasource.dart
 import 'package:fluuky/data/providers/raffle_provider.dart';
 import 'package:fluuky/data/repositories/notification_repository_impl.dart';
 import 'package:fluuky/data/repositories/raffle_repository_impl.dart';
-import 'package:fluuky/domain/repositories/notification_repository.dart';
 import 'package:fluuky/domain/repositories/raffle_repository.dart';
 import 'package:fluuky/domain/usecases/fetch_notifications_usecase.dart';
 import 'package:fluuky/domain/usecases/get_raffles_use_case.dart';
-import 'package:fluuky/domain/usecases/mark_all_as_read_usecase.dart';
-import 'package:fluuky/domain/usecases/toggle_push_notifications_usecase.dart';
-import 'package:fluuky/domain/usecases/verify_code_usecase.dart';
 import 'package:fluuky/presentation/controllers/category_controller.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
@@ -76,23 +72,12 @@ class InitialBindings extends Bindings {
     Get.put(PushNotificationDataSource(Get.find<FirebaseMessaging>()));
 
     // Register NotificationRepository with data sources
-    Get.put<NotificationRepository>(NotificationRepositoryImpl(
-      localDataSource: Get.find<LocalNotificationDataSource>(),
-      pushDataSource: Get.find<PushNotificationDataSource>(),
-    ));
+    Get.put(NotificationRepositoryImpl());
+
+    // Bind your NotificationController
+    Get.lazyPut(() => NotificationController(notificationRepository: Get.find<NotificationRepositoryImpl>()));
 
     // Initialize Notification Use Cases
-    Get.put(FetchNotificationsUseCase(Get.find<NotificationRepository>()));
-    Get.put(MarkAllAsReadUseCase(Get.find<NotificationRepository>()));
-    Get.put(TogglePushNotificationsUseCase(Get.find<NotificationRepository>()));
-
-    Get.lazyPut<NotificationController>(
-      () => NotificationController(
-        fetchNotificationsUseCase: Get.find<FetchNotificationsUseCase>(),
-        markAllAsReadUseCase: Get.find<MarkAllAsReadUseCase>(),
-        togglePushNotificationsUseCase: Get.find<TogglePushNotificationsUseCase>(),
-        localNotificationDataSource: Get.find<LocalNotificationDataSource>(),
-      ),
-    );
+    Get.put(FetchNotificationsUseCase(NotificationRepositoryImpl()));
   }
 }

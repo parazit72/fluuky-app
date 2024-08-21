@@ -1,47 +1,52 @@
-import 'package:fluuky/data/providers/database/local_notification_datasource.dart';
+import 'package:fluuky/data/repositories/notification_repository_impl.dart';
 import 'package:get/get.dart';
-import 'package:fluuky/domain/usecases/fetch_notifications_usecase.dart';
-import 'package:fluuky/domain/usecases/mark_all_as_read_usecase.dart';
-import 'package:fluuky/domain/usecases/toggle_push_notifications_usecase.dart';
 import 'package:fluuky/domain/entities/notification_entity.dart';
 
 class NotificationController extends GetxController {
-  final FetchNotificationsUseCase fetchNotificationsUseCase;
-  final MarkAllAsReadUseCase markAllAsReadUseCase;
-  final TogglePushNotificationsUseCase togglePushNotificationsUseCase;
-  final LocalNotificationDataSource localNotificationDataSource;
+  final NotificationRepositoryImpl notificationRepository;
 
   var notifications = <NotificationEntity>[].obs;
   var pushNotificationsEnabled = true.obs;
   var notificationCount = 0.obs;
 
-  NotificationController({
-    required this.fetchNotificationsUseCase,
-    required this.markAllAsReadUseCase,
-    required this.togglePushNotificationsUseCase,
-    required this.localNotificationDataSource,
-  });
+  NotificationController({required this.notificationRepository});
 
   @override
   void onInit() {
-    loadNotifications();
+    notificationRepository.initializeNotifications();
+    fetchNotifications();
     super.onInit();
   }
 
-  Future<void> loadNotifications() async {
-    final result = await fetchNotificationsUseCase.execute();
-    notifications.assignAll(result);
-    updateNotificationCount();
+  Future<void> fetchNotifications() async {
+    try {
+      final result = await notificationRepository.fetchNotifications();
+      notifications.assignAll(result);
+      updateNotificationCount();
+    } catch (e) {
+      print("Error fetching notifications: $e");
+    }
   }
 
   Future<void> markAllAsRead() async {
-    await markAllAsReadUseCase.execute();
-    await loadNotifications();
+    try {
+      await notificationRepository.markAllAsRead();
+      for (var notification in notifications) {
+        notification.isRead = true;
+      }
+      notifications.refresh();
+    } catch (e) {
+      print("Error marking notifications as read: $e");
+    }
   }
 
   Future<void> togglePushNotifications(bool enabled) async {
-    await togglePushNotificationsUseCase.execute(enabled);
-    pushNotificationsEnabled.value = enabled;
+    try {
+      await notificationRepository.togglePushNotifications(enabled);
+      pushNotificationsEnabled.value = enabled;
+    } catch (e) {
+      print("Error toggling notifications: $e");
+    }
   }
 
   void updateNotificationCount() {

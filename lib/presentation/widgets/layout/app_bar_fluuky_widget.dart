@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
+import 'package:fluuky/presentation/pages/basket/basket_screen.dart';
 import 'package:fluuky/presentation/pages/notification_screen.dart';
 import 'package:get/get.dart';
 
@@ -7,17 +8,18 @@ class AppBarFluuky extends StatelessWidget implements PreferredSizeWidget {
   const AppBarFluuky({super.key});
 
   void goNotification() {
-    Get.offAll(() => const NotificationScreen());
+    Get.to(() => const NotificationScreen());
   }
 
-  void goCart() {
-    Get.offAll(() => const NotificationScreen());
+  void goBasket() {
+    Get.to(() => const BasketScreen());
   }
 
   @override
   Widget build(BuildContext context) {
     final NotificationController notificationController = Get.find();
     return AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: const Color(0xFFF7F7F7),
       title: Image.asset('assets/images/fluuky.png', height: 16, fit: BoxFit.contain, width: 100),
       actions: [
@@ -49,10 +51,7 @@ class AppBarFluuky extends StatelessWidget implements PreferredSizeWidget {
                             ),
                             child: Text(
                               '${notificationController.notificationCount.value}',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 8,
-                              ),
+                              style: const TextStyle(color: Colors.white, fontSize: 8),
                               textAlign: TextAlign.center,
                             ),
                           )
@@ -63,7 +62,7 @@ class AppBarFluuky extends StatelessWidget implements PreferredSizeWidget {
             ),
             IconButton(
               icon: Image.asset('assets/images/basket.png', width: 26),
-              onPressed: () => goCart(),
+              onPressed: () => goBasket(),
             ),
           ],
         )

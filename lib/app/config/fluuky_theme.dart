@@ -12,6 +12,16 @@ class FluukyTheme {
 
   // Light theme with black text
   static ThemeData lightTheme = ThemeData(
+    switchTheme: SwitchThemeData(
+      thumbColor: WidgetStateProperty.resolveWith((states) {
+        return states.contains(WidgetState.selected) ? FluukyTheme.primaryColor : Colors.white;
+      }),
+      trackColor: WidgetStateProperty.all(Colors.grey.shade400), // Background color when inactive
+
+      overlayColor: WidgetStateProperty.all(Colors.transparent),
+      trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
+      materialTapTargetSize: MaterialTapTargetSize.padded,
+    ),
     appBarTheme: AppBarTheme(
       scrolledUnderElevation: 0,
       shadowColor: Colors.transparent,

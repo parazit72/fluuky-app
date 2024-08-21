@@ -17,9 +17,9 @@ class CustomNavBar extends StatelessWidget {
     return Obx(() {
       return NavigationBarTheme(
         data: NavigationBarThemeData(
-          labelTextStyle: MaterialStateProperty.resolveWith<TextStyle>(
-            (Set<MaterialState> states) =>
-                states.contains(MaterialState.selected) ? TextStyle(color: FluukyTheme.primaryColor) : const TextStyle(color: Colors.black),
+          labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>(
+            (Set<WidgetState> states) =>
+                states.contains(WidgetState.selected) ? TextStyle(color: FluukyTheme.primaryColor) : const TextStyle(color: Colors.black),
           ),
         ),
         child: BottomNavigationBar(
