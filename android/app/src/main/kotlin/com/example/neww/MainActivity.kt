@@ -1,4 +1,4 @@
-package com.example.neww
+package com.fluuky.fluuky
 
 import io.flutter.embedding.android.FlutterActivity
 
