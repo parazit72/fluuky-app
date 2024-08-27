@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/domain/entities/user_entity.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
@@ -33,14 +34,20 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
             const SizedBox(height: 12),
             WelcomeUserAvatar(),
             const Divider(),
-            _buildListItem(Icons.space_dashboard_rounded, 'Dashboard', dashboard),
-            _buildListItem(Icons.person, 'Profile', profile),
-            _buildListItem(Icons.recommend, 'Recommendations', recommendations),
-            _buildListItem(Icons.favorite, 'Wishlist', wishlist),
-            _buildListItem(Icons.subscriptions, 'Green Subscription', greenSubscription),
-            _buildListItem(Icons.stacked_bar_chart, 'Packages', packages),
-            _buildListItem(Icons.notifications, 'Notifications', notifications),
-            _buildListItem(Icons.logout, 'Log Out', logout),
+            _buildListItem('dashboard', 'Dashboard', dashboard),
+            _buildListItem('profile', 'Profile', profilePreferences),
+            _buildListItem('recommendations', 'Recommendations', recommendations),
+            _buildListItem('heart', 'Wishlist', wishlist),
+            _buildListItem('logo-green', 'Green Subscription', greenSubscription),
+            _buildListItem('packages', 'Packages', packages),
+            _buildListItem('notifications', 'Notifications', notifications),
+            ListTile(
+                leading: SvgPicture.asset('assets/images/logout.svg', colorFilter: const ColorFilter.mode(Colors.black, BlendMode.srcIn)),
+                title: const Text('Log Out'),
+                onTap: () {
+                  _authController.logout();
+                  Get.offAllNamed(login);
+                }),
             Obx(() {
               return _authController.isLoading.value ? const Center(child: CircularProgressIndicator()) : Container();
             }),
@@ -50,7 +57,13 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
     );
   }
 
-  Widget _buildListItem(IconData icon, String title, String route) {
-    return ListTile(leading: Icon(icon), title: Text(title), onTap: () => Get.toNamed(route));
+  Widget _buildListItem(String icon, String title, String route) {
+    return ListTile(
+        leading: SvgPicture.asset(
+          'assets/images/$icon.svg',
+          colorFilter: const ColorFilter.mode(Colors.black, BlendMode.srcIn),
+        ),
+        title: Text(title),
+        onTap: () => Get.toNamed(route));
   }
 }

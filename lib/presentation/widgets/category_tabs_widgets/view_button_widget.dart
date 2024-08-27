@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
 import 'package:get/get.dart';
 
 Widget buildViewButtons() {
   return Container(
-    margin: const EdgeInsets.symmetric(vertical: 8),
-    decoration: const BoxDecoration(
-      borderRadius: BorderRadius.all(Radius.circular(8)),
+    margin: const EdgeInsets.only(top: 12, bottom: 24),
+    decoration: BoxDecoration(
+      borderRadius: const BorderRadius.all(Radius.circular(8)),
       boxShadow: [
-        BoxShadow(color: Color(0xFFDBDBDB)),
-        BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+        BoxShadow(color: FluukyTheme.primaryColor.withOpacity(0.15)),
+        const BoxShadow(color: Color(0xFFE9EFEB), spreadRadius: -4.0, blurRadius: 8.6),
       ],
     ),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        _buildViewButton(ViewType.list, Icons.list),
-        _buildViewButton(ViewType.grid, Icons.grid_on),
+        _buildViewButton(ViewType.list),
+        _buildViewButton(ViewType.grid),
       ],
     ),
   );
 }
 
-Widget _buildViewButton(ViewType type, IconData icon) {
+Widget _buildViewButton(ViewType type) {
   final ItemsController controller = Get.find();
   return Obx(() {
     bool isSelected = controller.viewType.value == type;
@@ -36,12 +38,15 @@ Widget _buildViewButton(ViewType type, IconData icon) {
         ),
         child: TextButton(
           style: TextButton.styleFrom(splashFactory: NoSplash.splashFactory),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Wrap(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            alignment: WrapAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.only(right: 4),
-                child: Icon(icon, size: 16, color: isSelected ? Theme.of(Get.context!).primaryColor : Colors.black),
+                child: SvgPicture.asset(type == ViewType.list ? "assets/images/list.svg" : "assets/images/grid.svg",
+                    width: 16, colorFilter: ColorFilter.mode(isSelected ? Theme.of(Get.context!).primaryColor : Colors.black, BlendMode.srcIn)),
               ),
               Text(type.name.capitalizeFirst!,
                   style:

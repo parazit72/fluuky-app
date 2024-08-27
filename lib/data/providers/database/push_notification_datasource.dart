@@ -53,7 +53,7 @@ class PushNotificationDataSource {
       title: message.notification?.title ?? '',
       body: message.notification?.body ?? '',
       isRead: false, // Assuming notification is unread when received
-      timestamp: DateTime.now(),
+      timestamp: DateTime.now(), imageUrl: message.notification?.title ?? '', data: message.data,
     );
 
     // Save notification to Hive
@@ -93,6 +93,8 @@ class NotificationModelAdapter extends TypeAdapter<NotificationModel> {
       body: reader.read(),
       isRead: reader.read(),
       timestamp: reader.read(),
+      imageUrl: reader.read(),
+      data: reader.read(),
     );
   }
 

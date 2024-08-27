@@ -5,8 +5,8 @@ import 'package:fluuky/presentation/pages/home_screen/home_screen.dart';
 import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../../../domain/entities/user_entity.dart';
-import '../../../domain/repositories/auth_repository.dart';
+import '../../domain/entities/user_entity.dart';
+import '../../domain/repositories/auth_repository.dart';
 // import '../../../domain/usecases/verify_code_usecase.dart';
 
 class AuthController extends GetxController {
@@ -14,6 +14,7 @@ class AuthController extends GetxController {
   // final VerifyCodeUseCase _verifyCodeUseCase;
   final isLogged = false.obs;
   final isLoading = false.obs;
+  final isBillingAddressEqualShippingAddress = false.obs;
   final rememberMe = false.obs;
 
   var hasUpperCase = false.obs;
@@ -133,6 +134,8 @@ class AuthController extends GetxController {
   }
 
   Future<void> logout() async {
+    await _secureStorage.write(key: 'token', value: null);
+
     user.value = null;
     isLogged.value = false;
 

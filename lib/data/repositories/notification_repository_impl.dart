@@ -1,10 +1,15 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:fluuky/data/providers/network/api_provider.dart';
+import 'package:fluuky/data/providers/network/apis/notification_api.dart';
+import 'package:fluuky/data/providers/network/mock_api_provider.dart';
 import 'package:fluuky/data/providers/notification_provider.dart';
 import 'package:fluuky/domain/entities/notification_entity.dart';
 import 'package:fluuky/domain/repositories/notification_repository.dart';
 
 class NotificationRepositoryImpl implements NotificationRepository {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  final APIProvider _apiProvider;
+  NotificationRepositoryImpl({String? baseUrl}) : _apiProvider = MockAPIProvider();
 
   @override
   Future<void> initializeNotifications() async {
@@ -37,6 +42,17 @@ class NotificationRepositoryImpl implements NotificationRepository {
   Future<List<NotificationEntity>> fetchNotifications() async {
     NotificationProvider notificationProvider = NotificationProvider();
     notificationProvider.fetchNotifications();
+
+    try {
+      final request = NotificationAPI(notificationEndpoint: NotificationEndpoint.getNotifications);
+      final response = await _apiProvider.requestNotification(request);
+      final List<dynamic> notificationList = response['data'];
+
+      return notificationList.map((json) => NotificationEntity.fromJson(json)).toList();
+    } catch (e) {
+      throw Exception('Get notifications failed: ${e.toString()}');
+    }
+
     // final response = await _httpClient.get('/notifications');
     // if (response.statusCode == 200) {
     //   return NotificationEntity.fromJsonList(response.data);

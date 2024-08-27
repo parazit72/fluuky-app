@@ -21,35 +21,38 @@ Widget _buildCategoryButton(int id, String text, String? iconPath) {
   final ItemsController controller = Get.find();
   return Obx(() {
     bool isSelected = controller.selectedCategory.value == id;
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Container(
-              decoration: BoxDecoration(
-                // backgroundBlendMode: BlendMode.colorBurn,
-                color: isSelected ? const Color(0xFFE9EFEB) : Colors.white,
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
-                boxShadow: const [BoxShadow(color: Colors.black26, spreadRadius: -4, blurRadius: 17)],
-              ),
-              child: IconButton(
-                style: ElevatedButton.styleFrom(splashFactory: NoSplash.splashFactory, elevation: 0),
-                onPressed: () => controller.selectedCategory.value = id,
-                icon: SvgPicture.asset('assets/images/${iconPath ?? 'bag.svg'}',
-                    width: 20,
-                    height: 20,
-                    colorFilter: ColorFilter.mode(isSelected ? Theme.of(Get.context!).primaryColor : const Color(0xFFB3B3B3), BlendMode.srcIn)),
-              )),
-          const SizedBox(height: 6),
-          Text(
-            text.capitalizeFirst!,
-            style: isSelected
-                ? Theme.of(Get.context!).textTheme.titleMedium!.copyWith(color: Theme.of(Get.context!).primaryColor)
-                : Theme.of(Get.context!).textTheme.bodyLarge!.copyWith(color: const Color(0xFFB3B3B3)),
-          ),
-        ],
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Container(
+            decoration: BoxDecoration(
+              // backgroundBlendMode: BlendMode.colorBurn,
+              // color: isSelected ? const Color(0xFFE9EFEB) : Colors.transparent,
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+              boxShadow: [
+                const BoxShadow(color: Color(0xFFDBDBDB)),
+                BoxShadow(color: isSelected ? const Color(0xFFE9EFEB) : Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+              ],
+            ),
+            child: IconButton(
+              style: ElevatedButton.styleFrom(splashFactory: NoSplash.splashFactory, elevation: 0),
+              onPressed: () => controller.selectedCategory.value = id,
+              icon: SvgPicture.asset('assets/images/${iconPath ?? 'bag.svg'}',
+                  width: 20,
+                  height: 20,
+                  colorFilter: ColorFilter.mode(
+                    isSelected ? Theme.of(Get.context!).primaryColor : const Color(0xFFB3B3B3),
+                    BlendMode.srcIn,
+                  )),
+            )),
+        const SizedBox(height: 6),
+        Text(
+          text.capitalizeFirst!,
+          style: isSelected
+              ? Theme.of(Get.context!).textTheme.titleMedium!.copyWith(color: Theme.of(Get.context!).primaryColor)
+              : Theme.of(Get.context!).textTheme.bodyLarge!.copyWith(color: const Color(0xFFB3B3B3)),
+        ),
+      ],
     );
   });
 }

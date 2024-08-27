@@ -12,6 +12,7 @@ class NotificationProvider {
         isRead: false,
         timestamp: DateTime.now(),
         title: 'Rolex Cosmograph Daytona',
+        imageUrl: 'assets/images/avatar.jpg',
       ),
       NotificationEntity(
         id: '2',
@@ -19,6 +20,7 @@ class NotificationProvider {
         isRead: false,
         timestamp: DateTime.now(),
         title: 'Rolex Cosmograph Daytona',
+        imageUrl: 'assets/images/avatar.jpg',
       ),
       NotificationEntity(
         id: '3',
@@ -26,6 +28,7 @@ class NotificationProvider {
         isRead: false,
         timestamp: DateTime.now(),
         title: 'Rolex Cosmograph Daytona',
+        imageUrl: 'assets/images/avatar.jpg',
       ),
     ];
   }

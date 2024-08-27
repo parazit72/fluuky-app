@@ -15,6 +15,7 @@ import 'package:fluuky/presentation/controllers/category_controller.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
 import 'package:fluuky/presentation/controllers/raffle_controller.dart';
+import 'package:fluuky/presentation/controllers/story_controller.dart';
 import 'package:get/get.dart';
 import 'package:fluuky/data/providers/network/api_provider.dart';
 import 'package:fluuky/data/repositories/auth_repository_impl.dart';
@@ -42,6 +43,7 @@ class InitialBindings extends Bindings {
 
     // Register RaffleController with GetRafflesUseCase
     Get.put(RaffleController(raffleRepository: Get.find<RaffleRepositoryImpl>()));
+    Get.put(StoryController());
     Get.put(ItemsController());
     Get.put<NavBarController>(NavBarController());
     // Register NotificationController with use cases
@@ -73,6 +75,7 @@ class InitialBindings extends Bindings {
 
     // Register NotificationRepository with data sources
     Get.put(NotificationRepositoryImpl());
+    Get.put(NotificationController(notificationRepository: Get.find<NotificationRepositoryImpl>()));
 
     // Bind your NotificationController
     Get.lazyPut(() => NotificationController(notificationRepository: Get.find<NotificationRepositoryImpl>()));

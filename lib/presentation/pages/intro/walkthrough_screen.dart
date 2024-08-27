@@ -146,7 +146,7 @@ class WalkthroughScreenState extends State<WalkthroughScreen> {
                           ),
                           ElevatedButton(
                             onPressed: () => _navigateHomepage(),
-                            child: Text('Get Started!'),
+                            child: const Text('Get Started!'),
                           ),
                         ],
                       ),

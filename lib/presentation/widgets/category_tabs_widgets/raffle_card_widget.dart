@@ -83,9 +83,9 @@ class RaffleCardWidget extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Win the', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.secondaryColor)),
+                        Text('Win the', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
                         const SizedBox(width: 10),
-                        Text('Value', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.secondaryColor)),
+                        Text('Value', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
                       ],
                     ),
                     const SizedBox(height: 10),
@@ -178,7 +178,7 @@ class RaffleCardWidget extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 32)
+        // const SizedBox(height: 32),
       ],
     );
   }

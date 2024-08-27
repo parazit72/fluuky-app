@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
-import 'package:fluuky/presentation/controllers/auth/auth_controller.dart';
+import 'package:fluuky/presentation/controllers/auth_controller.dart';
 import 'package:fluuky/presentation/pages/auth/verification_screen.dart';
 import 'package:fluuky/presentation/widgets/mobile_input_widget.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';

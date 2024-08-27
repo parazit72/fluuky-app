@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 class AppBarSingleWidget extends StatelessWidget {
   final String title;
 
-  const AppBarSingleWidget({
-    super.key,
-    required this.title,
-  });
+  const AppBarSingleWidget({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +19,21 @@ class AppBarSingleWidget extends StatelessWidget {
       centerTitle: true,
       automaticallyImplyLeading: true,
       leading: IconButton(
-        onPressed: () {},
+        // style: ButtonStyle(
+        //   minimumSize: WidgetStateProperty.all(const Size(24, 40)),
+        //   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        // ),
+        onPressed: () {
+          Get.back();
+        },
         icon: const Icon(Icons.chevron_left, size: 24),
       ),
-      leadingWidth: 24,
+      leadingWidth: 40,
       elevation: 2,
       surfaceTintColor: Colors.transparent,
       title: Text(
         title,
-        style: Theme.of(context).textTheme.titleLarge,
+        style: Theme.of(context).textTheme.titleMedium,
         textAlign: TextAlign.center,
       ),
     );

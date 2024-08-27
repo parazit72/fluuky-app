@@ -22,6 +22,7 @@ class NotificationEntityAdapter extends TypeAdapter<NotificationEntity> {
       body: fields[2] as String,
       isRead: fields[3] as bool,
       timestamp: fields[4] as DateTime,
+      imageUrl: fields[5] as String,
     );
   }
 
@@ -46,8 +47,5 @@ class NotificationEntityAdapter extends TypeAdapter<NotificationEntity> {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is NotificationEntityAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      identical(this, other) || other is NotificationEntityAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }

@@ -22,6 +22,18 @@ class RaffleRepositoryImpl extends RaffleRepository {
   }
 
   @override
+  Future<List<RaffleEntity>> getWishlistRaffles() async {
+    try {
+      final request = RaffleAPI(raffleEndpoint: RaffleEndpoint.getRaffles);
+      final response = await _apiProvider.request(request);
+      final List<dynamic> raffleList = response['data'];
+      return raffleList.map((json) => RaffleEntity.fromJson(json)).toList();
+    } catch (e) {
+      throw Exception('Get raffles failed: ${e.toString()}');
+    }
+  }
+
+  @override
   Future<RaffleEntity> getRaffle(int id) async {
     try {
       final request = RaffleAPI(

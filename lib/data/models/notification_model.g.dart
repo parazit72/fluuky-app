@@ -20,8 +20,10 @@ class NotificationModelAdapter extends TypeAdapter<NotificationModel> {
       id: fields[0] as String,
       title: fields[1] as String,
       body: fields[2] as String,
-      isRead: fields[3] as bool,
+      imageUrl: fields[3] as String,
       timestamp: fields[4] as DateTime,
+      isRead: fields[5] as bool,
+      data: fields[6] as Map<String, dynamic>,
     );
   }
 
@@ -46,8 +48,5 @@ class NotificationModelAdapter extends TypeAdapter<NotificationModel> {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is NotificationModelAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      identical(this, other) || other is NotificationModelAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }

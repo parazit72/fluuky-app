@@ -4,7 +4,7 @@ import 'package:fluuky/presentation/widgets/widgets.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 
-import '../../controllers/auth/auth_controller.dart';
+import '../../controllers/auth_controller.dart';
 
 class VerificationScreen extends GetView<AuthController> {
   VerificationScreen({super.key});

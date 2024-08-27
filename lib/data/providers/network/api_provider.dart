@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:fluuky/data/providers/network/api_representable.dart';
+import 'package:fluuky/data/providers/network/apis/notification_api.dart';
 import 'package:get/get_connect/connect.dart';
 
 class APIEndpoint {
@@ -48,6 +49,8 @@ class APIProvider {
         throw FetchDataException('Error occured while Communication with Server with StatusCode : ${response.statusCode}');
     }
   }
+
+  requestNotification(NotificationAPI request) {}
 }
 
 class AppException implements Exception {

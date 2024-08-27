@@ -16,15 +16,16 @@ class BasketItem extends StatelessWidget {
         children: [
           Text('Draw Title', style: Theme.of(context).textTheme.titleLarge),
           Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               TextButton.icon(
-                style: ButtonStyle(minimumSize: MaterialStateProperty.all(const Size(0, 0))),
+                style: ButtonStyle(padding: WidgetStateProperty.all(const EdgeInsets.all(0)), minimumSize: WidgetStateProperty.all(const Size(0, 0))),
                 onPressed: () {},
                 icon: const Icon(Icons.favorite, size: 18),
                 label: const Text('Add to Wishlist'),
               ),
               TextButton.icon(
-                style: ButtonStyle(minimumSize: MaterialStateProperty.all(const Size(0, 0))),
+                style: ButtonStyle(minimumSize: WidgetStateProperty.all(const Size(0, 0))),
                 onPressed: () {},
                 icon: const Icon(Icons.delete, size: 18),
                 label: const Text('Delete'),
@@ -39,7 +40,7 @@ class BasketItem extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.3,
                 fit: BoxFit.cover,
-                imageUrl: 'assets/images/watch.png',
+                imageUrl: "https:\/\/fluuky-dev-local.s3.me-south-1.amazonaws.com\/images\/9cb52e3c-72cb-4cf3-8a16-f3ee1b9f3278.jpg",
                 placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                 errorWidget: (context, url, error) => Container(
                   width: MediaQuery.of(context).size.width,
@@ -106,7 +107,7 @@ class BottomOfDrawCardWidget extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Image.asset('assets/images/logo-green.png', height: 24),
+                  Image.asset('assets/images/logo-green.png', height: 20, width: 20, fit: BoxFit.contain),
                   const SizedBox(width: 10),
                   Text('Tickets:', style: Theme.of(context).textTheme.bodySmall),
                 ],
@@ -120,7 +121,7 @@ class BottomOfDrawCardWidget extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Image.asset('assets/images/logo-green.png', height: 24),
+                  Image.asset('assets/images/logo-green.png', height: 20, width: 20, fit: BoxFit.contain),
                   const SizedBox(width: 10),
                   Text('Each ticket plants:', style: Theme.of(context).textTheme.bodySmall),
                 ],
@@ -135,7 +136,7 @@ class BottomOfDrawCardWidget extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    Image.asset('assets/images/logo-green.png', height: 24),
+                    Image.asset('assets/images/logo-green.png', height: 20, width: 20, fit: BoxFit.contain),
                     const SizedBox(width: 10),
                     GestureDetector(
                       onTap: () {
@@ -164,7 +165,7 @@ class BottomOfDrawCardWidget extends StatelessWidget {
               Flexible(
                 child: Row(
                   children: [
-                    Image.asset('assets/images/logo-green.png', height: 24),
+                    Image.asset('assets/images/logo-green.png', height: 20, width: 20, fit: BoxFit.contain),
                     const SizedBox(width: 10),
                     GestureDetector(
                       onTap: () {

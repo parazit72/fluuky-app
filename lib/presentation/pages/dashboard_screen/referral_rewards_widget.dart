@@ -8,6 +8,7 @@ class ReferralRewardsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     String referralCode = 'HPA212F0AK1T';
     final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       child: Column(
@@ -18,14 +19,14 @@ class ReferralRewardsWidget extends StatelessWidget {
           const SizedBox(height: 24),
           Center(
             child: Container(
-              padding: const EdgeInsets.all(47),
+              padding: const EdgeInsets.all(20),
               decoration: const BoxDecoration(
-                // image: DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
+                // boxShadow: [
+                //   BoxShadow(color: Colors.white),
+                //   BoxShadow(color: Color(0xFFDBDBDB), spreadRadius: -4.0, blurRadius: 8.6),
+                // ],
                 borderRadius: BorderRadius.all(Radius.circular(8)),
-                boxShadow: [
-                  BoxShadow(color: Color(0xFFDBDBDB)),
-                  BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
-                ],
+                image: DecorationImage(image: AssetImage("assets/images/ticket-back.png"), fit: BoxFit.contain),
               ),
               width: MediaQuery.of(context).size.width,
               child: Column(

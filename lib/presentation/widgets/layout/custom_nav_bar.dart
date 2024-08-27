@@ -66,7 +66,7 @@ class CustomNavBar extends StatelessWidget {
                   Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: controller.selectedIndex.value == 0 ? Border.all(color: FluukyTheme.primaryColor, width: 2.0) : null,
+                      border: controller.selectedIndex.value == 2 ? Border.all(color: FluukyTheme.primaryColor, width: 2.0) : null,
                     ),
                     child: CircleAvatar(
                       backgroundImage: AssetImage(user!.avatar != '' ? user.avatar : 'assets/images/avatar.jpg'),

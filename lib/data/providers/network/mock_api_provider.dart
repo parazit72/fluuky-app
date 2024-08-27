@@ -10,4 +10,10 @@ class MockAPIProvider extends APIProvider {
     final jsonResponse = await rootBundle.loadString('assets/mock_responses/raffles.json');
     return json.decode(jsonResponse);
   }
+
+  @override
+  Future<Map<String, dynamic>> requestNotification(APIRequestRepresentable request) async {
+    final jsonResponse = await rootBundle.loadString('assets/mock_responses/notifications.json');
+    return json.decode(jsonResponse);
+  }
 }

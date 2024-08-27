@@ -18,73 +18,43 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final AuthController _authRepository = Get.find();
-  Timer? _navigateTimer;
   bool isFirstLaunch = false;
 
   @override
   void initState() {
     super.initState();
-    // _navigateHomepage();
-    // _initializeSettings();
+    _initializeSettings();
   }
 
   Future<void> _initializeSettings() async {
+    // Check if it's the first app launch
     isFirstLaunch = await LocalStorage.isFirstLaunch();
-    _authRepository.checkLoginStatus();
+
+    // Check if the user is logged in
+    await _authRepository.checkLoginStatus();
+
+    await Future.delayed(const Duration(seconds: 2));
+    // Navigate after initialization is complete
+    _navigateToNextScreen();
   }
 
-  @override
-  void dispose() {
-    _navigateTimer?.cancel();
-    super.dispose();
+  void _navigateToNextScreen() {
+    if (isFirstLaunch) {
+      Get.offAll(() => const WalkthroughScreen());
+    } else if (_authRepository.isLogged.value) {
+      Get.offAll(() => const HomeScreen());
+    } else {
+      Get.offAll(() => const LoginScreen());
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _initializeSettings(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return waitingView();
-        } else {
-          if (snapshot.hasError) {
-            return errorView(snapshot);
-          } else {
-            return const OnBoard(isFirstLaunch: true);
-          }
-        }
-      },
-    );
-  }
-
-  Scaffold waitingView() {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
         child: LottieBuilder.asset(AssetConstants.splashLottie, repeat: true),
       ),
     );
-  }
-
-  Scaffold errorView(AsyncSnapshot<Object?> snapshot) {
-    return Scaffold(body: Center(child: Text('Error: ${snapshot.error}')));
-  }
-}
-
-class OnBoard extends StatelessWidget {
-  final bool isFirstLaunch = false;
-  const OnBoard({super.key, isFirstLaunch = false});
-
-  @override
-  Widget build(BuildContext context) {
-    AuthController authRepository = Get.find();
-
-    return Obx(() {
-      if (isFirstLaunch) {
-        LocalStorage.setFirstLaunch(false);
-        return const WalkthroughScreen();
-      }
-      return authRepository.isLogged.value ? const HomeScreen() : const LoginScreen();
-    });
   }
 }

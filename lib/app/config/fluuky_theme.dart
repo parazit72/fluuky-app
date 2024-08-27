@@ -7,6 +7,7 @@ class FluukyTheme {
   static Color primaryColor = const Color(0XFF205C32);
   static Color indicatorColor = const Color(0xFFDBDBDB);
   static Color secondaryColor = const Color(0xFFDBDBDB);
+  static Color thirdColor = const Color(0xFF8C8C8C);
   static Color cardColor = const Color(0XFF205C32);
   static Color accentColor = const Color(0XFF205C32);
 
@@ -77,17 +78,17 @@ class FluukyTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-        textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(color: Colors.white)),
-        foregroundColor: MaterialStateProperty.all<Color?>(Colors.white),
-        backgroundColor: MaterialStateProperty.all<Color?>(const Color(0XFF205C32)),
-        elevation: MaterialStateProperty.all<double>(0),
-        shape: MaterialStateProperty.all<OutlinedBorder>(
+        textStyle: WidgetStateProperty.all<TextStyle>(const TextStyle(color: Colors.white, fontSize: 20)),
+        foregroundColor: WidgetStateProperty.all<Color?>(Colors.white),
+        backgroundColor: WidgetStateProperty.all<Color?>(const Color(0XFF205C32)),
+        elevation: WidgetStateProperty.all<double>(0),
+        shape: WidgetStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
             side: const BorderSide(color: Colors.transparent),
           ),
         ),
-        minimumSize: MaterialStateProperty.all<Size>(const Size(double.infinity, 48.0)),
+        minimumSize: WidgetStateProperty.all<Size>(const Size(double.infinity, 48.0)),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
@@ -99,6 +100,7 @@ class FluukyTheme {
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
+        textStyle: const TextStyle(fontWeight: FontWeight.bold),
         splashFactory: NoSplash.splashFactory,
         foregroundColor: const Color(0XFF205C32),
         minimumSize: const Size(double.infinity, 48.0),
@@ -177,7 +179,7 @@ class FluukyTheme {
       // ),
 
       style: ButtonStyle(
-        textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(color: primaryColor)),
+        textStyle: WidgetStateProperty.all<TextStyle>(TextStyle(color: primaryColor)),
       ),
     ),
   );

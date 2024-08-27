@@ -4,7 +4,7 @@ import 'package:fluuky/presentation/widgets/custom_dropdown_button.dart';
 
 import 'package:fluuky/presentation/widgets/widgets.dart';
 import 'package:get/get.dart';
-import '../../controllers/auth/auth_controller.dart';
+import '../../controllers/auth_controller.dart';
 
 class DetailsAboutYouScreen extends StatelessWidget {
   final AuthController _authController = Get.find<AuthController>();

@@ -17,26 +17,18 @@ class BundleSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(16.0),
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         image: const DecorationImage(
-          image: AssetImage('assets/images/paper.jpg'),
-          fit: BoxFit.cover,
+          image: AssetImage('assets/images/paper-box.png'),
+          fit: BoxFit.fill,
         ),
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
-        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 8),
           Text(title, style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 16),
           Text(description, style: Theme.of(context).textTheme.bodySmall),

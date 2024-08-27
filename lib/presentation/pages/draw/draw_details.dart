@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/presentation/pages/draw/trees_planted_dialog.dart';
 import 'package:fluuky/presentation/pages/draw/we_forest_info_dialog.dart';
 
@@ -60,17 +61,17 @@ class BottomOfDrawCardWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Win the', style: Theme.of(context).textTheme.bodySmall),
+              Text('Win the', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
               const SizedBox(width: 10),
-              Text('Value', style: Theme.of(context).textTheme.bodySmall),
+              Text('Value', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
             ],
           ),
           const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Rolex Cosmograph Daytona', style: Theme.of(context).textTheme.bodySmall),
-              const SizedBox(width: 10),
+              Text('Rolex Cosmograph Daytona', style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14)),
+              // const SizedBox(width: 10),
               Text('\$33,000', style: Theme.of(context).textTheme.bodySmall),
             ],
           ),
@@ -80,7 +81,7 @@ class BottomOfDrawCardWidget extends StatelessWidget {
             children: [
               Wrap(
                 children: [
-                  Image.asset('assets/images/logo-green.png', height: 24),
+                  Image.asset('assets/images/logo-green.png', height: 20, width: 20, fit: BoxFit.contain),
                   const SizedBox(width: 10),
                   Text('Tickets:', style: Theme.of(context).textTheme.bodySmall),
                 ],
@@ -94,12 +95,12 @@ class BottomOfDrawCardWidget extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Image.asset('assets/images/logo-green.png', height: 24),
+                  Image.asset('assets/images/logo-green.png', height: 20, width: 20, fit: BoxFit.contain),
                   const SizedBox(width: 10),
                   Text('Each ticket plants:', style: Theme.of(context).textTheme.bodySmall),
                 ],
               ),
-              Text('10 Trees', style: Theme.of(context).textTheme.bodySmall),
+              Text('10 Trees', style: Theme.of(context).textTheme.bodySmall!.copyWith(fontWeight: FontWeight.w600)),
             ],
           ),
           const SizedBox(height: 10),
@@ -109,7 +110,7 @@ class BottomOfDrawCardWidget extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    Image.asset('assets/images/logo-green.png', height: 24),
+                    Image.asset('assets/images/logo-green.png', height: 20, width: 20, fit: BoxFit.contain),
                     const SizedBox(width: 10),
                     GestureDetector(
                       onTap: () {
@@ -138,7 +139,7 @@ class BottomOfDrawCardWidget extends StatelessWidget {
               Flexible(
                 child: Row(
                   children: [
-                    Image.asset('assets/images/logo-green.png', height: 24),
+                    Image.asset('assets/images/logo-green.png', height: 20, width: 20, fit: BoxFit.contain),
                     const SizedBox(width: 10),
                     GestureDetector(
                       onTap: () {

@@ -3,7 +3,7 @@ import 'package:fluuky/app/config/route_constants.dart';
 
 import 'package:fluuky/presentation/widgets/widgets.dart';
 import 'package:get/get.dart';
-import '../../controllers/auth/auth_controller.dart';
+import '../../controllers/auth_controller.dart';
 
 class CreatedPasswordScreen extends StatelessWidget {
   final AuthController _authController = Get.find<AuthController>();

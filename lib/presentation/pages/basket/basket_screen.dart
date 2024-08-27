@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/presentation/pages/basket/basket_items_section.dart';
 import 'package:fluuky/presentation/pages/basket/draggable_basket_sheet.dart';
 import 'package:fluuky/presentation/pages/basket/interest_you_section.dart';
@@ -50,7 +51,9 @@ class BasketTextHeaderWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Cart', style: Theme.of(context).textTheme.titleLarge),
-          Text('Explore items in your cart and browse draws you may be interested in.', style: Theme.of(context).textTheme.bodySmall),
+          const SizedBox(height: 4),
+          Text('Explore items in your cart and browse draws you may be interested in.',
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
           const SizedBox(height: 24),
           const Divider(),
         ],

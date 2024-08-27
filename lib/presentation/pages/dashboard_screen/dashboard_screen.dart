@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
-import 'package:fluuky/presentation/pages/profile/dashboard_screen/badges_list_widget.dart';
+import 'package:fluuky/presentation/pages/dashboard_screen/badges_list_widget.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
-import 'package:fluuky/presentation/pages/profile/dashboard_screen/order_history_list_widget.dart';
-import 'package:fluuky/presentation/pages/profile/dashboard_screen/referral_rewards_widget.dart';
-import 'package:fluuky/presentation/pages/profile/dashboard_screen/trees_planted_with_flukky_widget.dart';
-import 'package:fluuky/presentation/pages/profile/dashboard_screen/user_status_section.dart';
+import 'package:fluuky/presentation/pages/dashboard_screen/order_history_list_widget.dart';
+import 'package:fluuky/presentation/pages/dashboard_screen/referral_rewards_widget.dart';
+import 'package:fluuky/presentation/pages/dashboard_screen/trees_planted_with_flukky_widget.dart';
+import 'package:fluuky/presentation/pages/dashboard_screen/user_status_section.dart';
 import 'package:fluuky/presentation/widgets/welcome_user_avatar.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
-import 'package:fluuky/presentation/pages/profile/dashboard_screen/your_impact_widget.dart';
+import 'package:fluuky/presentation/pages/dashboard_screen/your_impact_widget.dart';
 import 'package:get/get.dart';
 
 class DashboardScreen extends StatelessWidget {

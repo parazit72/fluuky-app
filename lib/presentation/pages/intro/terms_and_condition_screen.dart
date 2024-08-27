@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
 
 class TermsAndConditionScreen extends StatelessWidget {
@@ -11,15 +12,7 @@ class TermsAndConditionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BackgroundScaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Terms And Condition',
-            style: Theme.of(context).textTheme.titleLarge,
-            textAlign: TextAlign.center,
-          ),
-        ),
-      ),
+      appBar: const AppBarSingleWidget(title: 'Terms And Condition'),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView.builder(

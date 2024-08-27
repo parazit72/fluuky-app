@@ -2,39 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/presentation/widgets/dashed_circle.dart';
-import 'package:fluuky/presentation/pages/profile/dashboard_screen/single_badge_dialog.dart';
+import 'package:fluuky/presentation/pages/dashboard_screen/single_badge_dialog.dart';
 
 class BadgesListWidget extends StatelessWidget {
   const BadgesListWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Badges', style: Theme.of(context).textTheme.titleLarge),
-                Text('the more trees you grow the more badges you get!', style: Theme.of(context).textTheme.bodySmall),
-              ],
-            ),
-          ),
-          const SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(mainAxisSize: MainAxisSize.max, children: [
-                SizedBox(width: 20),
-                BadgeWidget(imagePath: 'assets/images/plus-g.svg', text: 'Eco Guardian', achieved: true),
-                BadgeWidget(imagePath: 'assets/images/ticket-active.svg', text: 'Decade of Tickets', achieved: true),
-                BadgeWidget(imagePath: 'assets/images/ticket-active.svg', text: 'Green Thumb', achieved: false),
-                BadgeWidget(imagePath: 'assets/images/ticket-active.svg', text: 'Silver Ticket History', achieved: false),
-                BadgeWidget(imagePath: 'assets/images/ticket-active.svg', text: 'Centennial Sower', achieved: false),
-              ])),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 20, top: 20),
+          child: Text('Badges', style: Theme.of(context).textTheme.titleLarge),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Text('the more trees you grow the more badges you get!', style: Theme.of(context).textTheme.bodySmall),
+        ),
+        const SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(mainAxisSize: MainAxisSize.max, children: [
+              SizedBox(width: 20),
+              BadgeWidget(imagePath: 'assets/images/plus-g.svg', text: 'Eco Guardian', achieved: true),
+              BadgeWidget(imagePath: 'assets/images/ticket-active.svg', text: 'Decade of Tickets', achieved: true),
+              BadgeWidget(imagePath: 'assets/images/ticket-active.svg', text: 'Green Thumb', achieved: false),
+              BadgeWidget(imagePath: 'assets/images/ticket-active.svg', text: 'Silver Ticket History', achieved: false),
+              BadgeWidget(imagePath: 'assets/images/ticket-active.svg', text: 'Centennial Sower', achieved: false),
+            ])),
+      ],
     );
   }
 }

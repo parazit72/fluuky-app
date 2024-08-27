@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
+import 'package:fluuky/data/local/local_storage.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/widgets/layout/background_scaffold.dart';
 import 'package:fluuky/presentation/widgets/input_text_field_widget.dart';
@@ -19,14 +20,21 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
   bool _isKeyboardVisible = false;
+  bool isFirstLaunch = false;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-
+    _initializeSettings();
     _emailFocusNode.addListener(_handleFocusChange);
     _passwordFocusNode.addListener(_handleFocusChange);
+  }
+
+  Future<void> _initializeSettings() async {
+    // Check if it's the first app launch
+    isFirstLaunch = await LocalStorage.isFirstLaunch();
+    LocalStorage.setFirstLaunch(false);
   }
 
   @override
@@ -121,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                           SizedBox(
                             width: MediaQuery.of(context).size.width,
                             child: Text(
-                              'Welcome back to Fluuky!',
+                              isFirstLaunch ? 'Welcome to Fluuky!' : 'Welcome back to Fluuky!',
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                           ),

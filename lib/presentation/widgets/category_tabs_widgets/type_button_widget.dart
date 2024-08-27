@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
 import 'package:get/get.dart';
 
@@ -11,16 +12,16 @@ Widget TypeButtonWidget({required ItemType type, required String text}) {
     return IntrinsicWidth(
       child: Container(
         margin: const EdgeInsets.only(left: 8, bottom: 8),
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
           boxShadow: [
-            BoxShadow(color: Color(0xFFE9EFEB)),
-            BoxShadow(color: Colors.white, spreadRadius: -4, blurRadius: 8.6),
+            BoxShadow(color: FluukyTheme.primaryColor.withOpacity(0.15)),
+            const BoxShadow(color: Color(0xFFE9EFEB), spreadRadius: -4.0, blurRadius: 8.6),
           ],
         ),
         height: 38,
         child: ElevatedButton(
-          style: ElevatedButton.styleFrom(elevation: 0, backgroundColor: isSelected ? Theme.of(Get.context!).primaryColor : const Color(0XFFE9EFEB)),
+          style: ElevatedButton.styleFrom(elevation: 0, backgroundColor: isSelected ? Theme.of(Get.context!).primaryColor : Colors.transparent),
           onPressed: () {
             itemsController.selectedItemType.value = type;
             if (type == ItemType.winners || type == ItemType.announcements) {

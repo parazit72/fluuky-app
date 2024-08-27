@@ -14,26 +14,36 @@ class NotificationModel {
   String body;
 
   @HiveField(3)
-  bool isRead;
+  String imageUrl;
 
   @HiveField(4)
+  bool isRead;
+
+  @HiveField(5)
   DateTime timestamp;
+
+  @HiveField(6)
+  Map<String, dynamic> data;
 
   NotificationModel({
     required this.id,
     required this.title,
     required this.body,
-    required this.isRead,
+    required this.imageUrl,
     required this.timestamp,
+    required this.isRead,
+    required this.data,
   });
 
   factory NotificationModel.fromJson(Map<String, dynamic> json) {
     return NotificationModel(
-      id: json['id'],
-      title: json['title'],
-      body: json['body'],
-      isRead: json['isRead'] ?? false, // assuming default is false if not provided
+      id: json['id'] as String,
+      title: json['title'] as String,
+      body: json['body'] as String,
+      imageUrl: json['imageUrl'] as String,
       timestamp: DateTime.parse(json['timestamp']),
+      isRead: json['isRead'] as bool,
+      data: json['data'] as Map<String, dynamic>,
     );
   }
 
@@ -42,7 +52,9 @@ class NotificationModel {
       'id': id,
       'title': title,
       'body': body,
+      'imageUrl': imageUrl,
       'isRead': isRead,
+      'data': data,
       'timestamp': timestamp.toIso8601String(),
     };
   }

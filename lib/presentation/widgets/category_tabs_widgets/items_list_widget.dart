@@ -70,8 +70,11 @@ Widget _buildItemsView<T>(
   final ItemsController controller = Get.find();
   if (controller.viewType.value == ViewType.list) {
     return SingleChildScrollView(
-      child: Column(
-        children: items.map((item) => itemBuilder(item)).toList(),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: items.map((item) => itemBuilder(item)).toList(),
+        ),
       ),
     );
   } else {
@@ -106,17 +109,23 @@ Widget _buildCategoryGridView<T>(
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            category.name,
-            style: Theme.of(Get.context!).textTheme.titleMedium,
-            textAlign: TextAlign.start,
+          Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: Text(
+              category.name,
+              style: Theme.of(Get.context!).textTheme.titleMedium,
+              textAlign: TextAlign.start,
+            ),
           ),
           const SizedBox(height: 10),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(children: categoryItems.map((item) => itemBuilder(item)).toList()),
+            child: Row(children: [const SizedBox(width: 20), ...categoryItems.map((item) => itemBuilder(item))]),
           ),
-          const Divider(height: 20),
+          const Padding(
+            padding: EdgeInsets.only(left: 20),
+            child: Divider(height: 20),
+          ),
         ],
       );
     }).toList(),

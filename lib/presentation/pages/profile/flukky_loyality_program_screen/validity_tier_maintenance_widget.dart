@@ -8,12 +8,12 @@ class ValidityTierMaintenanceWidget extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.all(47),
         decoration: const BoxDecoration(
-          image: DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
+          image: DecorationImage(image: AssetImage("assets/images/paper-box.png"), fit: BoxFit.cover),
           borderRadius: BorderRadius.all(Radius.circular(8)),
-          boxShadow: [
-            BoxShadow(color: Color(0xFFDBDBDB)),
-            BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
-          ],
+          // boxShadow: [
+          //   BoxShadow(color: Color(0xFFDBDBDB)),
+          //   BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+          // ],
         ),
         width: MediaQuery.of(context).size.width,
         child: ListView(

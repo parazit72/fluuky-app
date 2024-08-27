@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
+import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:get/get.dart';
 
 class HelpCenterScreen extends StatefulWidget {
   const HelpCenterScreen({super.key});
@@ -22,7 +26,6 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
               leading: const Icon(Icons.email),
               title: const Text('Send an Email'),
               onTap: () {
-                // Handle send email
                 Navigator.pop(context);
               },
             ),
@@ -46,101 +49,249 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
   @override
   Widget build(BuildContext context) {
     return BackgroundScaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Help Center',
-            style: Theme.of(context).textTheme.titleLarge,
-            textAlign: TextAlign.center,
-          ),
-        ),
-      ),
+      appBar: const AppBarSingleWidget(title: 'Help Center'),
       body: ListView(
-        padding: const EdgeInsets.all(16.0),
         children: <Widget>[
-          // Title and Description
-          Text(
-            'Frequently Asked Questions',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          const SizedBox(height: 8.0),
-          Text(
-            'From how to subscribe to our tree planting process with WeForest, you will find all the answers to our top questions below.',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-          const SizedBox(height: 16.0),
-          // FAQ Accordion
-          Text(
-            'Frequently Asked Questions',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          ExpansionPanelList(
-            expansionCallback: (int index, bool isExpanded) {
-              setState(() {
-                _data[index].isExpanded = !isExpanded;
-              });
-            },
-            children: _data.map<ExpansionPanel>((Item item) {
-              return ExpansionPanel(
-                headerBuilder: (BuildContext context, bool isExpanded) {
-                  return ListTile(
-                    title: Text(item.headerValue),
-                  );
-                },
-                body: ListTile(
-                  title: Text(item.expandedValue),
+          const SizedBox(height: 24),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Frequently Asked Questions',
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
-                isExpanded: item.isExpanded,
-              );
-            }).toList(),
+                const SizedBox(height: 8.0),
+                Text(
+                  'From how to subscribe to our tree planting process with WeForest, you will find all the answers to our top questions below.',
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor),
+                ),
+                const SizedBox(height: 16.0),
+              ],
+            ),
           ),
-          const SizedBox(height: 16.0),
-          // Contact Us Section
-          Text(
-            'Contact Us',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          const SizedBox(height: 8.0),
-          Text(
-            'If you need further assistance, please contact us via email or WhatsApp.',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-          ListTile(
-            leading: const Icon(Icons.email),
-            title: const Text('support@example.com'),
-            onTap: () => _showEmailOptions(context, 'support@example.com'),
-          ),
-          ListTile(
-            leading: const Icon(Icons.face),
-            title: const Text('WhatsApp Us'),
+          ..._data.map((item) => CustomFAQTile(
+                item: item,
+                onTap: () {
+                  setState(() {
+                    // Collapse all other items
+                    for (var otherItem in _data) {
+                      if (otherItem != item) {
+                        otherItem.isExpanded = false;
+                      }
+                    }
+                    // Toggle the selected item
+                    item.isExpanded = !item.isExpanded;
+                  });
+                },
+                isLastItem: false,
+              )),
+          InkWell(
             onTap: () {
-              // Handle WhatsApp action
+              sendEmailSheet();
             },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Contact Us',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    'Still have questions? Reach out to us!',
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor),
+                  ),
+                  const ContactItem(
+                    icon: 'assets/images/email.png',
+                    label: 'cs@fluuky.com',
+                  ),
+                  const ContactItem(
+                    icon: 'assets/images/whatsapp.png',
+                    label: 'WhatsApp Us',
+                  ),
+                ],
+              ),
+            ),
           ),
+        ],
+      ),
+    );
+  }
+
+  void sendEmailSheet() {
+    showModalBottomSheet(
+      context: Get.context!,
+      isScrollControlled: true,
+      builder: (context) {
+        return DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.25,
+          minChildSize: 0.25,
+          maxChildSize: 0.25,
+          builder: (context, scrollController) {
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.all(20),
+              decoration: const BoxDecoration(
+                image: DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
+                boxShadow: [BoxShadow(offset: Offset(0, -1), color: Colors.black26, spreadRadius: 0, blurRadius: 4)],
+              ),
+              child: SingleChildScrollView(
+                controller: scrollController,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    const SizedBox(height: 20),
+                    TextButton(
+                      style: ButtonStyle(
+                        minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+                      ),
+                      onPressed: () {
+                        launchUrl(Uri(scheme: 'mailto', path: 'example@example.com'));
+                        Navigator.pop(context);
+                      },
+                      child: const Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          Icon(Icons.email, color: Colors.black),
+                          SizedBox(width: 8),
+                          Text('Send an email', style: TextStyle(color: Colors.black)),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    TextButton(
+                      style: ButtonStyle(
+                        minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+                      ),
+                      onPressed: () {
+                        Clipboard.setData(const ClipboardData(text: 'cs@fluuky.com'));
+                        Navigator.pop(context);
+                      },
+                      child: const Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          Icon(Icons.copy, color: Colors.black),
+                          SizedBox(width: 8),
+                          Text('Copy the email', style: TextStyle(color: Colors.black)),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+class CustomFAQTile extends StatelessWidget {
+  final Item item;
+  final VoidCallback onTap;
+  final bool isLastItem; // Add this flag to handle the last item
+
+  const CustomFAQTile({
+    super.key,
+    required this.item,
+    required this.onTap,
+    required this.isLastItem, // Pass the flag in constructor
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(bottom: item.isExpanded ? 16.0 : 0),
+      decoration: item.isExpanded
+          ? const BoxDecoration(
+              boxShadow: [
+                BoxShadow(color: Color(0xFFDBDBDB)),
+                BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+              ],
+            )
+          : null,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ListTile(
+            title: Text(item.headerValue,
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(color: item.isExpanded ? Colors.black : FluukyTheme.thirdColor)),
+            trailing: Icon(item.isExpanded ? Icons.expand_less : Icons.expand_more),
+            onTap: onTap,
+          ),
+          if (item.isExpanded)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: item.expandedValue.map((point) {
+                  return Text(point, style: const TextStyle(fontSize: 16));
+                }).toList(),
+              ),
+            ),
+          // Show Divider only when item is not expanded and it's not the last item
+          if (!item.isExpanded && !isLastItem) const Divider(),
         ],
       ),
     );
   }
 }
 
-// Helper classes for FAQ items
+class ContactItem extends StatelessWidget {
+  final String icon;
+  final String label;
+
+  const ContactItem({super.key, required this.icon, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Wrap(
+        alignment: WrapAlignment.start,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          Image.asset(icon, width: 32),
+          const SizedBox(width: 16),
+          Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
+        ],
+      ),
+    );
+  }
+}
+
 class Item {
   Item({
-    required this.expandedValue,
     required this.headerValue,
+    required this.expandedValue,
     this.isExpanded = false,
   });
 
-  String expandedValue;
   String headerValue;
+  List<String> expandedValue;
   bool isExpanded;
 }
 
 List<Item> generateItems(int numberOfItems) {
   return List<Item>.generate(numberOfItems, (int index) {
     return Item(
-      headerValue: 'FAQ ${index + 1}',
-      expandedValue: 'This is the answer to FAQ ${index + 1}.',
+      headerValue: 'How do I subscribe?',
+      expandedValue: [
+        '• Log in to your Fluuky account.',
+        '• Navigate to the "Fluuky Green Subscription" section.',
+        '• Calculate your carbon footprint and discover your compensation needs.',
+        '• Set up your payment method for automatic billing.',
+        '• Confirm your subscription.',
+      ],
     );
   });
 }

@@ -34,6 +34,7 @@ class LocalNotificationDataSource {
         title: notification.title,
         body: notification.body,
         isRead: true,
+        imageUrl: 'assets/images/avatar.jpg',
         timestamp: notification.timestamp,
       );
       await box.put(notification.id, updatedNotification);
@@ -73,6 +74,7 @@ class LocalNotificationDataSource {
       title: title,
       body: body,
       isRead: false,
+      imageUrl: 'assets/images/avatar.jpg',
       timestamp: DateTime.now(),
     );
 

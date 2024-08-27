@@ -14,6 +14,8 @@ class OrderHistoryListWidget extends StatelessWidget {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,7 +27,15 @@ class OrderHistoryListWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                IconButton(onPressed: () {}, icon: const Icon(Icons.chevron_right))
+                IconButton(
+                    onPressed: () {},
+                    style: ButtonStyle(
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      alignment: Alignment.centerRight,
+                      padding: WidgetStateProperty.all(EdgeInsets.zero),
+                      minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+                    ),
+                    icon: const Icon(Icons.chevron_right))
               ],
             ),
           ),
@@ -58,11 +68,11 @@ class OrderHistoryWidget extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.7,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(8)),
-        // image: DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
-        boxShadow: [
-          BoxShadow(color: Color(0xFFDBDBDB)),
-          BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
-        ],
+        image: DecorationImage(image: AssetImage("assets/images/ticket-back-hor.png"), fit: BoxFit.contain),
+        // boxShadow: [
+        //   BoxShadow(color: Color(0xFFDBDBDB)),
+        //   BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+        // ],
       ),
       child: Column(
         children: [

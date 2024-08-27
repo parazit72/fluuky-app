@@ -16,18 +16,16 @@ class UserStatusWidget extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: const BoxDecoration(
+            image: DecorationImage(fit: BoxFit.fill, image: AssetImage('assets/images/paper-box.png')),
             borderRadius: BorderRadius.all(Radius.circular(8)),
-            boxShadow: [
-              BoxShadow(color: Color(0xFFDBDBDB)),
-              BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
-            ],
           ),
           child: Column(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       SvgPicture.asset('assets/images/leaf-circle-green.svg',
                           colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn), width: 16, height: 16),
@@ -35,7 +33,8 @@ class UserStatusWidget extends StatelessWidget {
                       Text('Basic', style: Theme.of(context).textTheme.headlineSmall),
                     ],
                   ),
-                  Row(
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       SvgPicture.asset('assets/images/leaf-circle-green.svg',
                           colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn), width: 16, height: 16),
@@ -64,20 +63,17 @@ class UserStatusWidget extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 12),
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                 decoration: BoxDecoration(
                   color: Theme.of(context).cardColor,
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                      child: Image.asset('assets/images/exclamation-mark.png', width: 20, height: 20),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.6,
+                    Image.asset('assets/images/exclamation-mark.png', width: 20, height: 20),
+                    const SizedBox(width: 12),
+                    Expanded(
                       child: Text(
                         'Spend 5,000 AED more before 10 April 2025 to retain your Silver benefits',
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 11),

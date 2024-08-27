@@ -35,6 +35,7 @@ class CategoryTabsSection extends StatelessWidget {
               TypeButtonWidget(type: ItemType.draws, text: 'Draws'),
               TypeButtonWidget(type: ItemType.winners, text: 'Winners'),
               TypeButtonWidget(type: ItemType.announcements, text: 'Winning Announcements'),
+              const SizedBox(width: 8)
             ],
           ),
         ),
@@ -61,9 +62,9 @@ class CategoryTabsSection extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.all(14),
+      // padding: const EdgeInsets.symmetric(horizontal: 14),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +77,11 @@ class CategoryTabsSection extends StatelessWidget {
               return const SizedBox.shrink();
             }
           }),
-          const Divider(height: 40),
+          const SizedBox(height: 20),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Divider(height: 0),
+          ),
           buildItemsList(),
         ],
       ),
