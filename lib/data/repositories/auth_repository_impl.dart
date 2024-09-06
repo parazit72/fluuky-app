@@ -3,6 +3,7 @@ import 'package:fluuky/data/providers/network/api_provider.dart';
 import 'package:fluuky/domain/entities/user_entity.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluuky/domain/repositories/auth_repository.dart';
+import 'package:get/get.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final APIProvider _apiProvider;
@@ -19,9 +20,14 @@ class AuthRepositoryImpl implements AuthRepository {
         authEndpoint: AuthEndpoint.login,
         bodyData: {'email': email, 'password': password},
       );
-      final response = await _apiProvider.request(request);
 
-      await _secureStorage.write(key: 'token', value: response['token']);
+      final responseBody = await _apiProvider.request(request);
+
+      if (responseBody['token'] != null) {
+        await _secureStorage.write(key: 'token', value: responseBody['token']);
+      } else {
+        throw Exception('Login failed: ${responseBody['message'] ?? 'Unknown error'}');
+      }
     } catch (e) {
       throw Exception('Login failed: ${e.toString()}');
     }
@@ -31,9 +37,22 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> logout() async {
     try {
       final request = AuthAPI(authEndpoint: AuthEndpoint.logout);
-      await _apiProvider.request(request);
+      await APIProvider.instance.request(request);
+
+      await _secureStorage.delete(key: 'token');
+      Get.snackbar('Success', 'Logged out successfully');
+    } on TimeOutException catch (e) {
+      Get.snackbar('Timeout', 'The request timed out. Please try again later.');
+    } on FetchDataException catch (e) {
+      Get.snackbar('Network Error', 'No Internet connection. Please try again later.');
+    } on UnauthorisedException catch (e) {
+      await _secureStorage.delete(key: 'token');
+      Get.snackbar('Unauthorised', 'Session expired. You have been logged out.');
+    } catch (e) {
+      Get.snackbar('Error', 'An error occurred. Please try again.');
     } finally {
       await _secureStorage.delete(key: 'token');
+      // Get.offAllNamed(login);
     }
   }
 

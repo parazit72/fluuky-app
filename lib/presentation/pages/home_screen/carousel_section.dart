@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider_plus/carousel_slider_plus.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/presentation/controllers/raffle_controller.dart';
+import 'package:fluuky/presentation/widgets/custom_dot_indicator.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:get/get.dart';
 
 class CarouselSectionWidget extends StatefulWidget {
@@ -75,25 +75,16 @@ class _CarouselSectionWidgetState extends State<CarouselSectionWidget> {
             bottom: 24,
             left: 0,
             right: 0,
-            child: Center(
-              child: AnimatedSmoothIndicator(
-                onDotClicked: (index) {
-                  _carouselSliderController.animateToPage(
-                    index,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  );
-                },
-                activeIndex: _currentIndex,
-                count: raffleController.raffles.length,
-                effect: ScrollingDotsEffect(
-                  activeDotColor: Colors.white,
-                  dotColor: Colors.grey,
-                  dotHeight: 4.0,
-                  dotWidth: (MediaQuery.of(context).size.width - 40) / (raffleController.raffles.length - 1),
-                  spacing: 16.0,
-                ),
-              ),
+            child: CustomDotIndicator(
+              count: raffleController.raffles.length,
+              activeIndex: _currentIndex,
+              onDotClicked: (index) {
+                _carouselSliderController.animateToPage(
+                  index,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
+              },
             ),
           ),
         ],

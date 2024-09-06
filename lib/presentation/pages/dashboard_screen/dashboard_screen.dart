@@ -33,8 +33,7 @@ class DashboardScreen extends StatelessWidget {
           const TreesPlantedWithFlukkyWidget(),
           const SizedBox(height: 24),
           const Padding(padding: EdgeInsets.symmetric(horizontal: 20), child: Divider()),
-          const OrderHistoryListWidget(),
-          const Padding(padding: EdgeInsets.symmetric(horizontal: 20), child: Divider()),
+          const OrderHistoryListHorizentalWidget(),
           const ReferralRewardsWidget(),
           Obx(() {
             return _authController.isLoading.value ? const Center(child: CircularProgressIndicator()) : Container();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_dialog.dart';
 import 'package:fluuky/presentation/widgets/layout/background_scaffold.dart';
 import 'package:get/get.dart';
@@ -25,12 +26,12 @@ class SingleBadgeScreen extends StatelessWidget {
                 child: Column(children: [
                   Text(
                     'Congratulations, John Doe!',
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor),
                     // textAlign: TextAlign.center,
                   ),
                   Text(
                     'You’ve just earned your first badge.',
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),
@@ -55,10 +56,11 @@ class SingleBadgeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 32),
                   Text('Eco Guardian', style: Theme.of(context).textTheme.titleLarge),
+                  const SizedBox(height: 16),
                   SizedBox(
                       width: MediaQuery.of(context).size.width - 130,
                       child: Text('Feel good knowing you have planted 10 trees!',
-                          textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleLarge)),
+                          textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium)),
                 ]),
               ),
               Positioned(

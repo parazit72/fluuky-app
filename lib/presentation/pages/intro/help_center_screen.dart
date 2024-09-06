@@ -71,22 +71,31 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
               ],
             ),
           ),
-          ..._data.map((item) => CustomFAQTile(
-                item: item,
-                onTap: () {
-                  setState(() {
-                    // Collapse all other items
-                    for (var otherItem in _data) {
-                      if (otherItem != item) {
-                        otherItem.isExpanded = false;
-                      }
+          ..._data.asMap().entries.map((entry) {
+            final index = entry.key;
+            final item = entry.value;
+
+            // Check if the next item is expanded
+            final bool belowItemExpanded = (index < _data.length - 1) ? _data[index + 1].isExpanded : false;
+
+            return CustomFAQTile(
+              item: item,
+              onTap: () {
+                setState(() {
+                  // Collapse all other items
+                  for (var otherItem in _data) {
+                    if (otherItem != item) {
+                      otherItem.isExpanded = false;
                     }
-                    // Toggle the selected item
-                    item.isExpanded = !item.isExpanded;
-                  });
-                },
-                isLastItem: false,
-              )),
+                  }
+                  // Toggle the selected item
+                  item.isExpanded = !item.isExpanded;
+                });
+              },
+              isLastItem: index == _data.length - 1,
+              belowItemExpanded: belowItemExpanded, // Pass the below item expanded state
+            );
+          }),
           InkWell(
             onTap: () {
               sendEmailSheet();
@@ -198,13 +207,15 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
 class CustomFAQTile extends StatelessWidget {
   final Item item;
   final VoidCallback onTap;
-  final bool isLastItem; // Add this flag to handle the last item
+  final bool isLastItem;
+  final bool belowItemExpanded; // Add this field
 
   const CustomFAQTile({
     super.key,
     required this.item,
     required this.onTap,
-    required this.isLastItem, // Pass the flag in constructor
+    required this.isLastItem,
+    required this.belowItemExpanded, // Add this parameter
   });
 
   @override
@@ -214,17 +225,18 @@ class CustomFAQTile extends StatelessWidget {
       decoration: item.isExpanded
           ? const BoxDecoration(
               boxShadow: [
-                BoxShadow(color: Color(0xFFDBDBDB)),
-                BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+                BoxShadow(color: Colors.black45),
+                BoxShadow(color: Color(0XAAF7F7F7), spreadRadius: -4.0, blurRadius: 8.6),
               ],
+              color: Color(0XAAF7F7F7),
             )
           : null,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ListTile(
-            title: Text(item.headerValue,
-                style: Theme.of(context).textTheme.titleMedium!.copyWith(color: item.isExpanded ? Colors.black : FluukyTheme.thirdColor)),
+            title:
+                Text(item.headerValue, style: Theme.of(context).textTheme.titleMedium!.copyWith(color: item.isExpanded ? Colors.black : Colors.grey)),
             trailing: Icon(item.isExpanded ? Icons.expand_less : Icons.expand_more),
             onTap: onTap,
           ),
@@ -238,8 +250,8 @@ class CustomFAQTile extends StatelessWidget {
                 }).toList(),
               ),
             ),
-          // Show Divider only when item is not expanded and it's not the last item
-          if (!item.isExpanded && !isLastItem) const Divider(),
+          // Show Divider only when item is not expanded, it's not the last item, and below item is not expanded
+          if (!item.isExpanded && !isLastItem && !belowItemExpanded) const Divider(),
         ],
       ),
     );

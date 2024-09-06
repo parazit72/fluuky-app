@@ -9,7 +9,7 @@ class APIEndpoint {
 }
 
 class APIProvider {
-  static const requestTimeOut = Duration(seconds: 1);
+  static const requestTimeOut = Duration(seconds: 10);
   final _client = GetConnect(timeout: requestTimeOut);
 
   static final _singleton = APIProvider();
@@ -17,13 +17,18 @@ class APIProvider {
 
   Future request(APIRequestRepresentable request) async {
     try {
-      final response = await _client.request(
+      final Response response = await _client.request(
         request.url,
         request.method.string,
         headers: request.headers,
         query: request.query,
         body: request.body,
       );
+
+      if (response.status.hasError) {
+        throw Exception('Login failed: ${response.statusText}');
+      }
+
       return _returnResponse(response);
     } on TimeoutException catch (_) {
       throw TimeOutException(null);

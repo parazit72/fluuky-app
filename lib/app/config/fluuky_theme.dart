@@ -78,7 +78,7 @@ class FluukyTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-        textStyle: WidgetStateProperty.all<TextStyle>(const TextStyle(color: Colors.white, fontSize: 20)),
+        textStyle: WidgetStateProperty.all<TextStyle>(const TextStyle(color: Colors.white, fontSize: 16)),
         foregroundColor: WidgetStateProperty.all<Color?>(Colors.white),
         backgroundColor: WidgetStateProperty.all<Color?>(const Color(0XFF205C32)),
         elevation: WidgetStateProperty.all<double>(0),

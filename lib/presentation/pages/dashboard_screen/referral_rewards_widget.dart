@@ -31,16 +31,20 @@ class ReferralRewardsWidget extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: [
+                  const SizedBox(height: 16),
                   Text(
                     referralCode,
                     style: Theme.of(context).textTheme.titleLarge,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 16),
-                  Text(
-                    'When your friend signs up with your referral code and makes their first purchase, both of you receive a 25 AED credit.',
-                    style: Theme.of(context).textTheme.bodySmall,
-                    textAlign: TextAlign.center,
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * .7,
+                    child: Text(
+                      'When your friend signs up with your referral code and makes their first purchase, both of you receive a 25 AED credit.',
+                      style: Theme.of(context).textTheme.bodySmall,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Tooltip(

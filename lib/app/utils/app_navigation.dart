@@ -1,11 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:fluuky/domain/entities/raffle_entity.dart';
+import 'package:fluuky/app/config/route_constants.dart';
+import 'package:fluuky/presentation/bindings/order_bindings.dart';
+import 'package:fluuky/presentation/pages/intro/help_center_screen.dart';
+import 'package:fluuky/presentation/pages/intro/privacy_policy_screen.dart';
+import 'package:fluuky/presentation/pages/intro/splash_screen.dart';
+import 'package:fluuky/presentation/pages/intro/terms_and_condition_screen.dart';
+import 'package:get/get.dart';
 import 'package:fluuky/presentation/pages/auth/created_password_screen.dart';
 import 'package:fluuky/presentation/pages/auth/details_about_you_screen.dart';
 import 'package:fluuky/presentation/pages/basket/basket_screen.dart';
 import 'package:fluuky/presentation/pages/checkout/checkout_screen.dart';
 import 'package:fluuky/presentation/pages/dashboard_screen/dashboard_screen.dart';
 import 'package:fluuky/presentation/pages/notification_screen.dart';
+import 'package:fluuky/presentation/pages/order_history_screen.dart';
 import 'package:fluuky/presentation/pages/profile/green_subscription_screen.dart';
 import 'package:fluuky/presentation/pages/profile/packages_screen.dart';
 import 'package:fluuky/presentation/pages/profile/personal_data_screen.dart';
@@ -20,8 +26,7 @@ import 'package:fluuky/presentation/pages/home_screen/home_screen.dart';
 import 'package:fluuky/presentation/pages/auth/verification_screen.dart';
 import 'package:fluuky/presentation/pages/intro/walkthrough_screen.dart';
 import 'package:fluuky/presentation/pages/auth/login_screen.dart';
-import 'package:fluuky/presentation/pages/pages.dart';
-import 'package:fluuky/app/config/route_constants.dart';
+import 'package:fluuky/presentation/pages/auth/signup_screen.dart';
 import 'package:fluuky/presentation/pages/profile/profile_preferences_screen.dart';
 import 'package:fluuky/presentation/pages/profile/shipping_address_screen.dart';
 import 'package:fluuky/presentation/pages/recommendations/recommendations_created.dart';
@@ -30,112 +35,149 @@ import 'package:fluuky/presentation/pages/recommendations/recommendations_screen
 import 'package:fluuky/presentation/pages/story/story_screen.dart';
 import 'package:fluuky/presentation/pages/wishlists/wishlist_screen.dart';
 
-Route<dynamic> generateRoute(RouteSettings settings) {
-  switch (settings.name) {
-    case splash:
-      return MaterialPageRoute(builder: (_) => const SplashScreen());
+import 'package:fluuky/presentation/pages/draw/draw_item_screen.dart';
+import 'package:fluuky/domain/entities/raffle_entity.dart';
 
-    case notifications:
-      return MaterialPageRoute(builder: (_) => const NotificationScreen());
-
-    case walkthrough:
-      return MaterialPageRoute(builder: (_) => const WalkthroughScreen());
-
-    case home:
-      return MaterialPageRoute(builder: (_) => const HomeScreen());
-
-    case signUp:
-      return MaterialPageRoute(builder: (_) => const SignupScreen());
-
-    case login:
-      return MaterialPageRoute(builder: (_) => const LoginScreen());
-
-    case dashboard:
-      return MaterialPageRoute(builder: (_) => DashboardScreen());
-
-    case recommendations:
-      return MaterialPageRoute(builder: (_) => const RecommendationsScreen());
-
-    case recommendationsCreated:
-      return MaterialPageRoute(builder: (_) => const RecommendationsCreatedScreen());
-
-    case recommendationsForm:
-      return MaterialPageRoute(builder: (_) => const RecommendationsFormScreen());
-
-    case wishlist:
-      return MaterialPageRoute(builder: (_) => const WishlistScreen());
-
-    case greenSubscription:
-      return MaterialPageRoute(builder: (_) => const GreenSubscriptionScreen());
-
-    case packages:
-      return MaterialPageRoute(builder: (_) => const PackagesScreen());
-
-    case flukkyLoyalityProgram:
-      return MaterialPageRoute(builder: (_) => const FlukkyLoyalityProgramScreen());
-
-    case logout:
-      return MaterialPageRoute(builder: (_) => const LoginScreen());
-
-    case privacyPolicy:
-      return MaterialPageRoute(builder: (_) => PrivacyPolicyScreen());
-
-    case personalData:
-      return MaterialPageRoute(builder: (_) => const PersonalDataScreen());
-
-    case contactInformation:
-      return MaterialPageRoute(builder: (_) => ContactInformationScreen());
-
-    case profilePreferences:
-      return MaterialPageRoute(builder: (_) => ProfilePreferencesScreen());
-
-    case changePassword:
-      return MaterialPageRoute(builder: (_) => ChangePasswordScreen());
-
-    case billingAddress:
-      return MaterialPageRoute(builder: (_) => BillingAddressScreen());
-
-    case shippingAddress:
-      return MaterialPageRoute(builder: (_) => ShippingAddressScreen());
-
-    case paymentMethod:
-      return MaterialPageRoute(builder: (_) => PaymentMethodScreen());
-
-    case termsAndCondition:
-      return MaterialPageRoute(builder: (_) => TermsAndConditionScreen());
-
-    case helpCenter:
-      return MaterialPageRoute(builder: (_) => const HelpCenterScreen());
-
-    case draw:
-      final raffle = settings.arguments as RaffleEntity;
-      return MaterialPageRoute(builder: (_) => DrawItemScreen(selectedRaffle: raffle));
-
-    case profile:
-      return MaterialPageRoute(builder: (_) => const ProfileMenuScreen());
-
-    case drawList:
-      return MaterialPageRoute(builder: (_) => const DrawsListScreen());
-
-    case verification:
-      return MaterialPageRoute(builder: (_) => VerificationScreen());
-
-    case detailsAboutYou:
-      return MaterialPageRoute(builder: (_) => DetailsAboutYouScreen());
-
-    case basket:
-      return MaterialPageRoute(builder: (_) => const BasketScreen());
-
-    case checkout:
-      return MaterialPageRoute(builder: (_) => const CheckoutScreen());
-
-    case createdPassword:
-      return MaterialPageRoute(builder: (_) => CreatedPasswordScreen());
-
-    case story:
-      return MaterialPageRoute(builder: (_) => StoryScreen());
-
-    default:
-      return MaterialPageRoute(builder: (_) => Scaffold(body: Center(child: Text('No route defined for ${settings.name}'))));
-  }
-}
+List<GetPage<dynamic>>? generateRoute = [
+  GetPage(
+    name: splash,
+    page: () => const SplashScreen(),
+  ),
+  GetPage(
+    name: notifications,
+    page: () => const NotificationScreen(),
+  ),
+  GetPage(
+    name: walkthrough,
+    page: () => const WalkthroughScreen(),
+  ),
+  GetPage(
+    name: home,
+    page: () => const HomeScreen(),
+  ),
+  GetPage(
+    name: signUp,
+    page: () => const SignupScreen(),
+  ),
+  GetPage(
+    name: login,
+    page: () => const LoginScreen(),
+  ),
+  GetPage(name: dashboard, page: () => DashboardScreen(), binding: OrderBindings()),
+  GetPage(
+    name: recommendations,
+    page: () => const RecommendationsScreen(),
+  ),
+  GetPage(
+    name: recommendationsCreated,
+    page: () => const RecommendationsCreatedScreen(),
+  ),
+  GetPage(
+    name: recommendationsForm,
+    page: () => const RecommendationsFormScreen(),
+  ),
+  GetPage(
+    name: wishlist,
+    page: () => const WishlistScreen(),
+  ),
+  GetPage(
+    name: greenSubscription,
+    page: () => const GreenSubscriptionScreen(),
+  ),
+  GetPage(
+    name: packages,
+    page: () => const PackagesScreen(),
+  ),
+  GetPage(
+    name: flukkyLoyalityProgram,
+    page: () => const FlukkyLoyalityProgramScreen(),
+  ),
+  GetPage(
+    name: logout,
+    page: () => const LoginScreen(),
+  ),
+  GetPage(
+    name: privacyPolicy,
+    page: () => PrivacyPolicyScreen(),
+  ),
+  GetPage(
+    name: personalData,
+    page: () => const PersonalDataScreen(),
+  ),
+  GetPage(
+    name: contactInformation,
+    page: () => ContactInformationScreen(),
+  ),
+  GetPage(
+    name: profilePreferences,
+    page: () => ProfilePreferencesScreen(),
+  ),
+  GetPage(
+    name: changePassword,
+    page: () => ChangePasswordScreen(),
+  ),
+  GetPage(
+    name: billingAddress,
+    page: () => BillingAddressScreen(),
+  ),
+  GetPage(
+    name: shippingAddress,
+    page: () => ShippingAddressScreen(),
+  ),
+  GetPage(
+    name: paymentMethod,
+    page: () => PaymentMethodScreen(),
+  ),
+  GetPage(
+    name: termsAndCondition,
+    page: () => TermsAndConditionScreen(),
+  ),
+  GetPage(
+    name: helpCenter,
+    page: () => const HelpCenterScreen(),
+  ),
+  GetPage(
+    name: draw,
+    page: () {
+      final raffle = Get.arguments as RaffleEntity;
+      return DrawItemScreen(selectedRaffle: raffle);
+    },
+  ),
+  GetPage(
+    name: profile,
+    page: () => const ProfileMenuScreen(),
+  ),
+  GetPage(
+    name: drawList,
+    page: () => const DrawsListScreen(),
+  ),
+  GetPage(
+    name: verification,
+    page: () => VerificationScreen(),
+  ),
+  GetPage(
+    name: detailsAboutYou,
+    page: () => DetailsAboutYouScreen(),
+  ),
+  GetPage(
+    name: basket,
+    page: () => const BasketScreen(),
+  ),
+  GetPage(
+    name: checkout,
+    page: () => const CheckoutScreen(),
+  ),
+  GetPage(
+    name: createdPassword,
+    page: () => CreatedPasswordScreen(),
+  ),
+  GetPage(
+    name: orderHistory,
+    page: () => OrderHistoryScreen(),
+    binding: OrderBindings(),
+  ),
+  GetPage(
+    name: story,
+    page: () => StoryScreen(),
+  ),
+];

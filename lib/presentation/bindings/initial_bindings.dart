@@ -7,6 +7,7 @@ import 'package:fluuky/data/providers/database/local_notification_datasource.dar
 import 'package:fluuky/data/providers/database/push_notification_datasource.dart';
 import 'package:fluuky/data/providers/raffle_provider.dart';
 import 'package:fluuky/data/repositories/notification_repository_impl.dart';
+import 'package:fluuky/data/repositories/order_repository_impl.dart';
 import 'package:fluuky/data/repositories/raffle_repository_impl.dart';
 import 'package:fluuky/domain/repositories/raffle_repository.dart';
 import 'package:fluuky/domain/usecases/fetch_notifications_usecase.dart';
@@ -77,6 +78,7 @@ class InitialBindings extends Bindings {
     Get.put(NotificationRepositoryImpl());
     Get.put(NotificationController(notificationRepository: Get.find<NotificationRepositoryImpl>()));
 
+    // Get.put(OrderController(orderRepository: OrderRepositoryImpl()));
     // Bind your NotificationController
     Get.lazyPut(() => NotificationController(notificationRepository: Get.find<NotificationRepositoryImpl>()));
 

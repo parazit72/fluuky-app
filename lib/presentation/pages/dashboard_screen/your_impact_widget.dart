@@ -16,14 +16,18 @@ class YourImpactWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Image.asset('assets/images/exclamation-mark.png', width: 16, height: 16),
-                  const SizedBox(width: 5),
-                  Text('More Details', style: Theme.of(context).textTheme.headlineSmall),
-                ],
+              Flexible(
+                child: TextButton.icon(
+                  style: ButtonStyle(
+                      minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+                      padding: WidgetStateProperty.all(EdgeInsets.zero),
+                      textStyle: WidgetStateProperty.all(const TextStyle(decoration: TextDecoration.underline))),
+                  onPressed: () {},
+                  icon: Icon(Icons.info_outline, size: 20, color: Theme.of(context).primaryColor),
+                  label: const Text('More Details'),
+                ),
               ),
-              Text('10 Trees', style: Theme.of(context).textTheme.headlineSmall),
+              Text('10 Trees', style: Theme.of(context).textTheme.titleSmall),
             ],
           ),
           const SizedBox(height: 8),

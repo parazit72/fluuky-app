@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluuky/app/config/route_constants.dart';
+import 'package:get/get.dart';
 
 class TreesPlantedSection extends StatelessWidget {
   const TreesPlantedSection({super.key});
@@ -22,10 +24,6 @@ class TreesPlantedSection extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
-              // boxShadow: const [
-              //   BoxShadow(color: Color(0xFFDBDBDB)),
-              //   BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
-              // ],
               borderRadius: BorderRadius.circular(8),
               image: const DecorationImage(image: AssetImage('assets/images/paper-box.png'), fit: BoxFit.fill),
             ),
@@ -42,7 +40,7 @@ class TreesPlantedSection extends StatelessWidget {
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
-                    // Plant Now action
+                    Get.toNamed(greenSubscription);
                   },
                   child: const Text('Plant Now!'),
                 ),
