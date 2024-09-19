@@ -3,6 +3,7 @@ import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/auth_controller.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
+import 'package:fluuky/presentation/widgets/password_text_field_widget.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
 import 'package:get/get.dart';
 

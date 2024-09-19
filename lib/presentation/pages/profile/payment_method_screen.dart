@@ -24,8 +24,10 @@ class PaymentMethodScreen extends StatelessWidget {
             ListView(
               children: [
                 Form(
-                    key: _formKey,
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Text(t.translate('payment_info'), style: Theme.of(context).textTheme.titleMedium),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,7 +82,9 @@ class PaymentMethodScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                    ]))
+                    ],
+                  ),
+                ),
               ],
             ),
             Positioned(

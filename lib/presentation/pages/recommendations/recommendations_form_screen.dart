@@ -168,7 +168,7 @@ class SelectYourLocationDecriptionBoxWidget extends StatelessWidget {
               BoxShadow(color: Color(0xFFDBDBDB)),
               BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
             ],
-            color: Theme.of(context).primaryColor.withOpacity(0.15),
+            color: Theme.of(context).primaryColor.withOpacity(0.1),
             borderRadius: BorderRadius.circular(16),
           ),
           child: Row(
@@ -207,7 +207,7 @@ class UpdateYourInterestBoxWidget extends StatelessWidget {
               BoxShadow(color: Color(0xFFDBDBDB)),
               BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
             ],
-            color: Theme.of(context).primaryColor.withOpacity(0.15),
+            color: Theme.of(context).primaryColor.withOpacity(0.1),
             borderRadius: BorderRadius.circular(16),
           ),
           child: Row(

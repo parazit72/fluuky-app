@@ -7,10 +7,13 @@ import 'package:fluuky/presentation/bindings/order_bindings.dart';
 import 'package:fluuky/presentation/controllers/basket_controller.dart';
 import 'package:fluuky/presentation/pages/intro/help_center_screen.dart';
 import 'package:fluuky/presentation/pages/intro/privacy_policy_screen.dart';
+import 'package:fluuky/presentation/pages/intro/receipt_screen.dart';
 import 'package:fluuky/presentation/pages/intro/splash_screen.dart';
 import 'package:fluuky/presentation/pages/intro/terms_and_condition_screen.dart';
 import 'package:fluuky/presentation/pages/profile/estimated_carbon_footprint_screen.dart';
+import 'package:fluuky/presentation/pages/profile/green_subscription_subscribed_screen.dart';
 import 'package:fluuky/presentation/pages/profile/question_page.dart';
+import 'package:fluuky/presentation/pages/profile/subscribing_process_screen.dart';
 import 'package:get/get.dart';
 import 'package:fluuky/presentation/pages/auth/created_password_screen.dart';
 import 'package:fluuky/presentation/pages/auth/details_about_you_screen.dart';
@@ -100,8 +103,20 @@ List<GetPage<dynamic>>? generateRoute = [
     page: () => EstimatedCarbonFootprintScreen(),
   ),
   GetPage(
+    name: receiptScreen,
+    page: () => const ReceiptScreen(),
+  ),
+  GetPage(
     name: packages,
     page: () => const PackagesScreen(),
+  ),
+  GetPage(
+    name: subscribingProcessScreen,
+    page: () => const SubscribingProcessScreen(),
+  ),
+  GetPage(
+    name: greenSubscriptionSubscribedScreen,
+    page: () => const GreenSubscriptionSubscribedScreen(),
   ),
   GetPage(
     name: flukkyLoyalityProgram,

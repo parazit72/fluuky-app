@@ -18,6 +18,7 @@ import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
 import 'package:fluuky/presentation/controllers/raffle_controller.dart';
 import 'package:fluuky/presentation/controllers/story_controller.dart';
+import 'package:fluuky/presentation/controllers/subscription_controller.dart';
 import 'package:get/get.dart';
 import 'package:fluuky/data/providers/network/api_provider.dart';
 import 'package:fluuky/data/repositories/auth_repository_impl.dart';
@@ -59,6 +60,7 @@ class InitialBindings extends Bindings {
     // Get.lazyPut(() => BasketRepositoryImpl());
     // Register VerifyCodeUseCase with AuthRepository
     // Get.put(VerifyCodeUseCase(Get.find<AuthRepositoryImpl>()));
+    Get.lazyPut(() => SubscriptionController());
 
     // Register AuthController with AuthRepository and VerifyCodeUseCase
     Get.put(AuthController(Get.find<AuthRepository>()));

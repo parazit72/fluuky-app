@@ -17,7 +17,7 @@ class GreenSubscriptionScreen extends StatefulWidget {
 }
 
 class _GreenSubscriptionScreenState extends State<GreenSubscriptionScreen> {
-  final List<Item> _data = generateItems(5);
+  final List<FaqItem> _data = generateItems(5);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class _GreenSubscriptionScreenState extends State<GreenSubscriptionScreen> {
                   const SizedBox(height: 32),
                   Text(t.translate('fluuky_green_subscription'), style: Theme.of(context).textTheme.titleLarge),
                   const SizedBox(height: 6),
-                  Text(t.translate('conserving_lands'), style: Theme.of(context).textTheme.bodySmall),
+                  Text(t.translate('conserving_lands'), style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
                   const SizedBox(height: 32),
                   Text(t.translate("when_you_subscribe_we_support_your_journey"), style: Theme.of(context).textTheme.bodySmall),
                   const SizedBox(height: 24),
@@ -49,7 +49,7 @@ class _GreenSubscriptionScreenState extends State<GreenSubscriptionScreen> {
                     ],
                   ),
                   const SizedBox(height: 24),
-                  ElevatedButton(onPressed: () {}, child: Text(t.translate('Subscribe'))),
+                  ElevatedButton(onPressed: () => Get.toNamed(subscribingProcessScreen), child: Text(t.translate('Subscribe'))),
                   TextButton(onPressed: () => Get.toNamed(termsAndCondition), child: Text(t.translate('terms_and_conditions'))),
                   const Divider(height: 48),
                   Text(t.translate('grow_the_future'), style: Theme.of(context).textTheme.titleLarge),
@@ -57,12 +57,10 @@ class _GreenSubscriptionScreenState extends State<GreenSubscriptionScreen> {
                   Text(t.translate('fluuky_green_message'), style: Theme.of(context).textTheme.bodySmall),
                   const SizedBox(height: 24),
                   InkWell(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) => const CarbonFootprintScreen(imagePath: 'assets/images/carbon-footprint.svg'),
-                        );
-                      },
+                      onTap: () => showDialog(
+                            context: context,
+                            builder: (BuildContext context) => const CarbonFootprintScreen(imagePath: 'assets/images/carbon-footprint.svg'),
+                          ),
                       child: buildCard('assets/images/leaf.svg', t.translate('carbon_calculator'), t.translate('carbon_calculator_message'))),
                   const SizedBox(height: 24),
                   buildCard('assets/images/tree-green.svg', t.translate('carbon_compensation'), t.translate('carbon_compensation_message')),
@@ -128,7 +126,6 @@ class _GreenSubscriptionScreenState extends State<GreenSubscriptionScreen> {
 
   Widget buildCard(String svgAsset, String titleKey, String messageKey) {
     return Container(
-      height: 150,
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24),
       decoration: BoxDecoration(
@@ -136,22 +133,34 @@ class _GreenSubscriptionScreenState extends State<GreenSubscriptionScreen> {
           BoxShadow(color: Color(0xFFDBDBDB)),
           BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
         ],
-        color: Theme.of(context).primaryColor.withOpacity(0.15),
+        color: Theme.of(context).primaryColor.withOpacity(0.1),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min, // This will make the column take the minimum height needed
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Wrap(
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              SvgPicture.asset(svgAsset, width: 24, colorFilter: ColorFilter.mode(FluukyTheme.primaryColor, BlendMode.srcIn)),
+              SvgPicture.asset(
+                svgAsset,
+                width: 24,
+                colorFilter: ColorFilter.mode(FluukyTheme.primaryColor, BlendMode.srcIn),
+              ),
               const SizedBox(width: 8),
-              Text(titleKey, style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).primaryColor)),
+              Text(
+                titleKey,
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).primaryColor),
+              ),
             ],
           ),
           const SizedBox(height: 8),
-          Text(messageKey, style: Theme.of(context).textTheme.bodySmall),
+          Text(
+            messageKey,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+          const SizedBox(height: 16),
         ],
       ),
     );

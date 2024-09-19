@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
+import 'package:fluuky/presentation/widgets/password_text_field_widget.dart';
 
 import 'package:fluuky/presentation/widgets/widgets.dart';
 import 'package:get/get.dart';
@@ -92,26 +93,37 @@ class CreatedPasswordScreen extends StatelessWidget {
                   child: Text(t.translate('activate_account')),
                 ),
                 const SizedBox(height: 30),
-                Center(child: Text(t.translate('by_registering'), style: Theme.of(context).textTheme.bodySmall)),
                 Center(
-                  child: Wrap(
-                    // alignment: WrapAlignment.center,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      TextButton(
-                        onPressed: () => Get.toNamed(termsAndCondition),
-                        style: TextButton.styleFrom(minimumSize: const Size(100, 48.0)),
-                        child: Text(t.translate('terms_conditions')),
-                      ),
-                      Text(t.translate('_and_'), style: Theme.of(context).textTheme.bodySmall, textAlign: TextAlign.center),
-                      TextButton(
-                        onPressed: () => Get.toNamed(privacyPolicy),
-                        style: TextButton.styleFrom(minimumSize: const Size(100, 48.0)),
-                        child: Text(t.translate('privacy_policy')),
-                      ),
-                    ],
-                  ),
-                )
+                    child: Column(
+                  children: [
+                    Text(t.translate('terms_and_conditions_msg'), style: Theme.of(context).textTheme.bodySmall),
+                    Wrap(
+                      // alignment: WrapAlignment.center,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        TextButton(
+                          onPressed: () => Get.toNamed(termsAndCondition),
+                          style: TextButton.styleFrom(
+                            minimumSize: const Size(0, 0),
+                            padding: const EdgeInsets.all(4),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          child: Text(t.translate('terms_conditions')),
+                        ),
+                        Text(t.translate('_and_'), style: Theme.of(context).textTheme.bodySmall, textAlign: TextAlign.center),
+                        TextButton(
+                          onPressed: () => Get.toNamed(privacyPolicy),
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.all(4),
+                            minimumSize: const Size(0, 0),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          child: Text(t.translate('privacy_policy')),
+                        ),
+                      ],
+                    ),
+                  ],
+                )),
               ],
             ),
           ),

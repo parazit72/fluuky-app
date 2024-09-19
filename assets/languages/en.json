@@ -66,7 +66,7 @@
   "welcome_to_fluuky":"Welcome to Fluuky!",
   "welcome_back_to_fluuky":"Welcome back to Fluuky!",
   "sign_in_continue_tree_planting":"Sign in to your account to continue your tree-planting journey.",
-  "based_on_your_interests_we_think_you_will_love_these_draws":"Based on your interests, we think you will love these draws!",
+  "Based on your interests, we think you will love these draws!":"Based on your interests, we think you will love these draws!",
   
   "AED":"AED",
   "basicRegistration": "Basic Registration",
@@ -101,7 +101,8 @@
   "goToHelpCenter":"Go to Help Center",
 
   "remember_me?":"Remember me?",
-  "by_registering": "By registering, you accept our Terms & Conditions and Privacy Policy",
+  "terms_and_conditions_msg": "By registering, you accept our",
+  "By completing your purchase you accept our ":"By completing your purchase you accept our ",
   "activate_account":"Activate Account",
   "letsStartPlanting": "Let's Start Planting",
   "purchaseSteps": "Purchase in 3 steps:",
@@ -135,6 +136,7 @@
   "fullName": "Full Name",
   "country": "Country",
   "city": "City",
+  "terms_conditions":"Terms & Conditions",
   "addressLine1": "Address Line 1",
   "addressLine2": "Address Line 2",
   "stateRegion": "State/Region",
@@ -399,7 +401,6 @@
 
   "last_step_msg": "Last step! Please create a password to secure your account.",
   "create_a_password":"Create a Password",
-  "terms_and_conditions_msg": "By registering, you accept our Terms & Conditions and Privacy Policy",
   "start_planting": "Let’s Start Planting",
 
   "purchase_steps": "Purchase in 3 steps:",
@@ -456,6 +457,7 @@
   "share_draw": "Share this draw",
   "share":"Share",
   "continue_action": "Continue",
+  "Your Receipt":"Your Receipt",
   "THANK_YOU_FOR_YOUR_IMPACT!":"THANK YOU FOR YOUR IMPACT!",
   "feel_good_knowing_you_have_planted_10_trees":"Feel good knowing you have planted 10 trees!",
   "youve_just_earned_your_first_badge":"You’ve just earned your first badge.",
@@ -662,7 +664,8 @@
   "SECONDS":"SECONDS",
   "YEARS":"YEARS",
   "see_a_rundown":"See a rundown of all your previous ticket purchases.",
-  "your_recommendations_list_successfully_created":"Your recommendations list successfully created!",
+  "Your recommendations list successfully created!":"Your recommendations list successfully created!",
+  "We don’t have any notifications today! Check back later.":"We don’t have any notifications today! Check back later.",
   "your_recommendations":"Your Recommendations",
   "orders_history":"Orders History",
   "PROFILE": "PROFILE",

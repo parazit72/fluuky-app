@@ -7,6 +7,7 @@ import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/widgets/layout/background_scaffold.dart';
 import 'package:fluuky/presentation/widgets/input_text_field_widget.dart';
 import 'package:fluuky/presentation/widgets/locale_toggle_button.dart';
+import 'package:fluuky/presentation/widgets/password_text_field_widget.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {

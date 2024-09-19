@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/domain/entities/notification_entity.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
@@ -51,15 +52,25 @@ class NotificationScreen extends StatelessWidget {
         return Column(
           children: [
             const SizedBox(height: 32),
-            Expanded(
-              child: ListView.builder(
-                itemCount: notificationController.notifications.length,
-                itemBuilder: (context, index) {
-                  final notification = notificationController.notifications[index];
-                  return NotificationRowWidget(notification: notification);
-                },
-              ),
-            ),
+            notificationController.notifications.isEmpty
+                ? Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        Text(t.translate('We don’t have any notifications today! Check back later.'), style: Theme.of(context).textTheme.titleLarge),
+                        SvgPicture.asset('assets/images/we-dont-have-any-notification.svg')
+                      ],
+                    ),
+                  )
+                : Expanded(
+                    child: ListView.builder(
+                      itemCount: notificationController.notifications.length,
+                      itemBuilder: (context, index) {
+                        final notification = notificationController.notifications[index];
+                        return NotificationRowWidget(notification: notification);
+                      },
+                    ),
+                  ),
           ],
         );
       }),

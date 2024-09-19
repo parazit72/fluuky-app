@@ -1,0 +1,182 @@
+import 'package:dotted_line/dotted_line.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
+import 'package:fluuky/presentation/widgets/layout/app_bar_dialog.dart';
+import 'package:fluuky/presentation/widgets/layout/background_scaffold.dart';
+import 'package:get/get.dart';
+
+class ReceiptScreen extends StatelessWidget {
+  const ReceiptScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
+    return Dialog(
+      insetPadding: const EdgeInsets.all(0),
+      child: BackgroundScaffold(
+        appBar: const AppBarDialog(),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Positioned(
+                top: MediaQuery.of(context).size.height * 0.05,
+                left: 0,
+                right: 0,
+                child: Center(child: Text(t.translate('Your Receipt'), style: Theme.of(context).textTheme.titleMedium)),
+              ),
+              Positioned(
+                top: MediaQuery.of(context).size.height * 0.15,
+                child: TicketBackgroundWidget(
+                  width: 300,
+                  height: 400,
+                  children: [
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/images/logo.svg',
+                          colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn),
+                          width: 24,
+                          height: 24,
+                        ),
+                        const SizedBox(width: 8),
+                        Text('FLUUKY Green Subscription', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Text('\$75', style: Theme.of(context).textTheme.titleLarge),
+                    ),
+                    Text('Paid April 26, 2024', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: DottedLine(
+                        direction: Axis.horizontal,
+                        alignment: WrapAlignment.center,
+                        // lineLength: 100,
+                        dashLength: 10,
+                        dashColor: FluukyTheme.secondaryColor,
+                        dashGapLength: 10,
+                        dashGapColor: Colors.transparent,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Receipt Number:', style: Theme.of(context).textTheme.bodySmall),
+                        Text('9128-1420-4124', style: Theme.of(context).textTheme.bodySmall),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Payment Method:', style: Theme.of(context).textTheme.bodySmall),
+                        Text('Visa •••• 8275', style: Theme.of(context).textTheme.bodySmall),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: DottedLine(
+                        direction: Axis.horizontal,
+                        alignment: WrapAlignment.center,
+                        // lineLength: 100,
+                        dashLength: 10,
+                        dashColor: FluukyTheme.secondaryColor,
+                        dashGapLength: 10,
+                        dashGapColor: Colors.transparent,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Trees Planted:', style: Theme.of(context).textTheme.bodySmall),
+                        Text('10', style: Theme.of(context).textTheme.bodySmall),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Total:', style: Theme.of(context).textTheme.bodySmall),
+                        Text('\$75', style: Theme.of(context).textTheme.bodySmall),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: DottedLine(
+                        direction: Axis.horizontal,
+                        alignment: WrapAlignment.center,
+                        // lineLength: 100,
+                        dashLength: 10,
+                        dashColor: FluukyTheme.secondaryColor,
+                        dashGapLength: 10,
+                        dashGapColor: Colors.transparent,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Amount Paid:', style: Theme.of(context).textTheme.bodySmall),
+                        Text('\$99,99', style: Theme.of(context).textTheme.bodySmall),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: ElevatedButton(onPressed: () => Get.back(), child: Text(t.translate('ok'))),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TicketBackgroundWidget extends StatelessWidget {
+  final double width;
+  final double height;
+  final List<Widget> children;
+
+  const TicketBackgroundWidget({
+    super.key,
+    required this.width,
+    required this.height,
+    required this.children,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: width,
+      height: height,
+      child: Stack(
+        children: [
+          // Background Image
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/ticket-back-hor.png',
+              fit: BoxFit.fill,
+            ),
+          ),
+          // Column with padding
+          Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: children,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

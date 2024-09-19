@@ -15,7 +15,7 @@ class HelpCenterScreen extends StatefulWidget {
 }
 
 class _HelpCenterScreenState extends State<HelpCenterScreen> {
-  final List<Item> _data = generateItems(5);
+  final List<FaqItem> _data = generateItems(5);
 
   void _showEmailOptions(BuildContext context, String email) {
     var t = AppLocalizations.of(context)!;
@@ -210,7 +210,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
 }
 
 class CustomFAQTile extends StatelessWidget {
-  final Item item;
+  final FaqItem item;
   final VoidCallback onTap;
   final bool isLastItem;
   final bool belowItemExpanded; // Add this field
@@ -230,8 +230,8 @@ class CustomFAQTile extends StatelessWidget {
       decoration: item.isExpanded
           ? const BoxDecoration(
               boxShadow: [
-                BoxShadow(color: Colors.black45),
-                BoxShadow(color: Color(0XAAF7F7F7), spreadRadius: -4.0, blurRadius: 8.6),
+                BoxShadow(color: Colors.black26),
+                BoxShadow(color: Color.fromARGB(192, 247, 247, 247), spreadRadius: -4.0, blurRadius: 8.6),
               ],
               color: Color(0XAAF7F7F7),
             )
@@ -286,8 +286,8 @@ class ContactItem extends StatelessWidget {
   }
 }
 
-class Item {
-  Item({
+class FaqItem {
+  FaqItem({
     required this.headerValue,
     required this.expandedValue,
     this.isExpanded = false,
@@ -298,9 +298,9 @@ class Item {
   bool isExpanded;
 }
 
-List<Item> generateItems(int numberOfItems) {
-  return List<Item>.generate(numberOfItems, (int index) {
-    return Item(
+List<FaqItem> generateItems(int numberOfItems) {
+  return List<FaqItem>.generate(numberOfItems, (int index) {
+    return FaqItem(
       headerValue: 'How do I subscribe?',
       expandedValue: [
         '• Log in to your Fluuky account.',

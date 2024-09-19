@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 
 import 'package:fluuky/presentation/widgets/layout/background_scaffold.dart';
@@ -26,12 +27,12 @@ class RecommendationsCreatedScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        t.translate('your_recommendations_list_successfully_created'),
+                        t.translate('Your recommendations list successfully created!'),
                         style: Theme.of(context).textTheme.titleLarge,
                         // textAlign: TextAlign.center,
                       ),
                       Text(
-                        t.translate('based_on_your_interests_we_think_you_will_love_these_draws'),
+                        t.translate('Based on your interests, we think you will love these draws!'),
                         style: Theme.of(context).textTheme.bodySmall,
                         textAlign: TextAlign.center,
                       ),
@@ -39,7 +40,7 @@ class RecommendationsCreatedScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Center(child: Image.asset('assets/images/recommendation-completed.png')),
+              Center(child: SvgPicture.asset('assets/images/recommendation-completed.svg')),
               Positioned(
                 bottom: 0,
                 left: 0,

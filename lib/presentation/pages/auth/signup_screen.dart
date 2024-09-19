@@ -106,10 +106,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 controller: _authController.emailController, labelText: t.translate('email'), hintText: t.translate('enterEmailAddress')),
             const SizedBox(height: 20),
             InputTextFieldWidget(
-                controller: _authController.referralCodeController,
-                labelText: t.translate('referral_code'),
-                hintText: t.translate('enter_referral_code'),
-                required: false),
+              controller: _authController.referralCodeController,
+              labelText: t.translate('referral_code'),
+              hintText: t.translate('enter_referral_code'),
+            ),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
