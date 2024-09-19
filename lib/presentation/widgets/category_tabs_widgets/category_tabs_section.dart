@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
 // import 'package:fluuky/presentation/controllers/raffle_controller.dart';
 import 'package:fluuky/presentation/widgets/category_tabs_widgets/category_tabs_widgets.dart';
@@ -24,6 +25,8 @@ class CategoryTabsSection extends StatelessWidget {
   }
 
   Widget _buildTopButtons(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -32,9 +35,10 @@ class CategoryTabsSection extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-              TypeButtonWidget(type: ItemType.draws, text: 'Draws'),
-              TypeButtonWidget(type: ItemType.winners, text: 'Winners'),
-              TypeButtonWidget(type: ItemType.announcements, text: 'Winning Announcements'),
+              const SizedBox(width: 8),
+              TypeButtonWidget(type: ItemType.draws, text: t.translate('Draws')),
+              TypeButtonWidget(type: ItemType.winners, text: t.translate('Winners')),
+              TypeButtonWidget(type: ItemType.announcements, text: t.translate('Winning Announcements')),
               const SizedBox(width: 8)
             ],
           ),
@@ -51,7 +55,7 @@ class CategoryTabsSection extends StatelessWidget {
                 children: [
                   const Divider(height: 40),
                   buildSelectedTypeName(context),
-                  buildViewButtons(),
+                  buildViewButtons(context),
                 ],
               ),
             );
@@ -72,7 +76,7 @@ class CategoryTabsSection extends StatelessWidget {
         children: [
           Obx(() {
             if (controller.selectedItemType.value == ItemType.draws && controller.viewType.value != ViewType.grid) {
-              return buildCategoryButtons();
+              return buildCategoryButtons(context);
             } else {
               return const SizedBox.shrink();
             }

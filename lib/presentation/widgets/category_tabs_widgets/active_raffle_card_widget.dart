@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
+import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:to_arabic_number/to_arabic_number.dart';
 
 class ActiveRaffleCardWidget extends StatelessWidget {
   final RaffleEntity raffle;
@@ -15,6 +17,18 @@ class ActiveRaffleCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final isGridView = viewType == ViewType.grid;
     bool loading = false;
+    final locale = Get.locale;
+
+    // Define a method to format numbers based on locale
+    String formatNumber(String number) {
+      if (locale?.languageCode == 'ar') {
+        // Convert to Arabic numerals
+        return Arabic.number(number);
+      } else {
+        // Use standard numerals
+        return number;
+      }
+    }
 
     return Column(
       children: [
@@ -68,7 +82,7 @@ class ActiveRaffleCardWidget extends StatelessWidget {
                     children: [
                       Text(raffle.name, style: Theme.of(context).textTheme.titleMedium),
                       const SizedBox(height: 8),
-                      Text(raffle.capacity.toString(), style: Theme.of(context).textTheme.bodySmall),
+                      Text(formatNumber(raffle.capacity.toString()), style: Theme.of(context).textTheme.bodySmall),
                     ],
                   ),
                 ),

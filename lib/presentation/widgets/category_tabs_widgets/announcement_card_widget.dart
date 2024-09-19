@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluuky/domain/entities/announcement_entity.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
+import 'package:get/get.dart';
+import 'package:to_arabic_number/to_arabic_number.dart';
 
 class AnnouncementCardWidget extends StatelessWidget {
   final AnnouncementEntity announcement;
@@ -9,6 +12,20 @@ class AnnouncementCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+    final locale = Get.locale;
+
+    // Define a method to format numbers based on locale
+    String formatNumber(String number) {
+      if (locale?.languageCode == 'ar') {
+        // Convert to Arabic numerals
+        return Arabic.number(number);
+      } else {
+        // Use standard numerals
+        return number;
+      }
+    }
+
     return Column(
       children: [
         Row(
@@ -32,13 +49,13 @@ class AnnouncementCardWidget extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildTimerSegment('02', 'DAYS'),
+              _buildTimerSegment('02', t.translate('days_label')),
               const Text(':', style: TextStyle(fontSize: 20)),
-              _buildTimerSegment('02', 'HOURS'),
+              _buildTimerSegment('02', t.translate('hours_label')),
               const Text(':', style: TextStyle(fontSize: 20)),
-              _buildTimerSegment('02', 'MINUTES'),
+              _buildTimerSegment('02', t.translate('minutes_label')),
               const Text(':', style: TextStyle(fontSize: 20)),
-              _buildTimerSegment('02', 'SECONDS'),
+              _buildTimerSegment('02', t.translate('seconds_label')),
             ],
           ),
         ),
@@ -49,15 +66,16 @@ class AnnouncementCardWidget extends StatelessWidget {
             children: [
               Wrap(children: [
                 Padding(padding: const EdgeInsets.only(right: 5), child: SvgPicture.asset('assets/images/ticket-active.svg')),
-                const Text('Tickets:')
+                const SizedBox(width: 10),
+                Text(t.translate('ticketsRemaining'))
               ]),
-              const Text('576/2000')
+              Text(formatNumber('576/2000'))
             ],
           ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16),
-          child: ElevatedButton(onPressed: () {}, child: const Text('Buy More Tickets')),
+          child: ElevatedButton(onPressed: () {}, child: Text(t.translate('buyMoreTickets'))),
         ),
         const Divider(height: 24),
       ],

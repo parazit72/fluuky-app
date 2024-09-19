@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:get/get.dart';
 
 class SubscriptionSection extends StatelessWidget {
@@ -7,6 +9,7 @@ class SubscriptionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.all(16.0),
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 27),
@@ -20,20 +23,23 @@ class SubscriptionSection extends StatelessWidget {
           Row(
             children: [
               Image.asset('assets/images/logo-green.png', height: 24),
-              Text('Fluuky Green Subscription', style: Theme.of(context).textTheme.headlineSmall),
+              const SizedBox(width: 4),
+              Text(t.translate('fluukyGreenSubscription'), style: Theme.of(context).textTheme.headlineSmall),
             ],
           ),
           const SizedBox(height: 10),
-          Text(
-            'With a Green Subscription, you not only contribute to planting trees, but you also get a chance to win.',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
+          Text(t.translate('withGreenSubscription'), style: Theme.of(context).textTheme.bodySmall),
           const SizedBox(height: 10),
           OutlinedButton(
             onPressed: () {
               Get.toNamed(greenSubscription);
             },
-            child: const Text('Learn More'),
+            // style: OutlinedButton.styleFrom(
+            //   textStyle: TextStyle(
+            //     fontFamily: FluukyTheme.updateFontFamilyBasedOnLocale(),
+            //   ),
+            // ),
+            child: Text(t.translate('learnMore')),
           ),
         ],
       ),

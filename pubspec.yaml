@@ -50,6 +50,9 @@ dependencies:
   timeago: ^3.7.0
   intl: ^0.19.0
   share_plus: ^10.0.0
+  to_arabic_number: ^1.0.1
+  jhijri: ^1.0.0
+  easy_refresh: ^3.4.0
   # rive: ^0.13.9
 
 dev_dependencies:
@@ -78,6 +81,18 @@ flutter:
           - asset: assets/fonts/Causten-Round/Causten-Bold.otf
             weight: 700
           - asset: assets/fonts/Causten-Round/Causten-Black.otf
+            weight: 900
+      - family: Cairo
+        fonts:
+          - asset: assets/fonts/Cairo/Cairo-ExtraLight.woff
+            weight: 100
+          - asset: assets/fonts/Cairo/Cairo-Light.woff
+            weight: 300
+          - asset: assets/fonts/Cairo/Cairo-Medium.woff
+            weight: 500
+          - asset: assets/fonts/Cairo/Cairo-Bold.woff
+            weight: 700
+          - asset: assets/fonts/Cairo/Cairo-Black.woff
             weight: 900
 
   assets:

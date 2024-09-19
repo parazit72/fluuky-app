@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/auth_controller.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
@@ -13,8 +13,9 @@ class ChangePasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
-        appBar: const AppBarSingleWidget(title: 'Change Password'),
+        appBar: AppBarSingleWidget(title: t.translate('change_password')),
         bottomNavigationBar: CustomNavBar(),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
@@ -29,11 +30,11 @@ class ChangePasswordScreen extends StatelessWidget {
                         children: [
                           PasswordTextFieldWidget(
                             controller: _authController.passwordController,
-                            hintText: 'Current Password',
+                            hintText: t.translate('current_password'),
                             // focusNode: _passwordFocusNode,
                             validator: (val) {
                               if (val != null && val.length < 6) {
-                                return 'Password too short.';
+                                return t.translate('password_too_short');
                               }
                               return null;
                             },
@@ -45,11 +46,11 @@ class ChangePasswordScreen extends StatelessWidget {
                           const SizedBox(height: 24),
                           PasswordTextFieldWidget(
                             controller: _authController.passwordController,
-                            hintText: 'New Password',
+                            hintText: t.translate('newPassword'),
                             // focusNode: _passwordFocusNode,
                             validator: (val) {
                               if (val != null && val.length < 6) {
-                                return 'Password too short.';
+                                return t.translate('password_too_short');
                               }
                               return null;
                             },
@@ -61,23 +62,23 @@ class ChangePasswordScreen extends StatelessWidget {
                           const SizedBox(height: 24),
                           PasswordTextFieldWidget(
                             controller: _authController.confirmPasswordController,
-                            labelText: 'Confirm Password',
-                            hintText: 'Password',
+                            labelText: t.translate('confirmPassword'),
+                            hintText: t.translate('password'),
                             // focusNode: _passwordFocusNode,
-                            validator: (val) => (val != _authController.passwordController.text) ? 'Passwords do not match.' : null,
+                            validator: (val) => (val != _authController.passwordController.text) ? t.translate('passwords_do_not_match') : null,
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 34, vertical: 24),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Password must include:', style: Theme.of(context).textTheme.titleLarge),
+                                Text(t.translate('password_requirements'), style: Theme.of(context).textTheme.titleLarge),
                                 const SizedBox(height: 8),
-                                _buildPasswordRule(context, 'At least 8 characters', _authController.isAtLeast8Characters),
-                                _buildPasswordRule(context, 'An uppercase character', _authController.hasUpperCase),
-                                _buildPasswordRule(context, 'A lowercase character', _authController.hasLowerCase),
-                                _buildPasswordRule(context, 'A number', _authController.hasDigit),
-                                _buildPasswordRule(context, 'A special character', _authController.hasSpecialCharacter),
+                                _buildPasswordRule(context, t.translate('min_8_characters'), _authController.isAtLeast8Characters),
+                                _buildPasswordRule(context, t.translate('uppercase_character'), _authController.hasUpperCase),
+                                _buildPasswordRule(context, t.translate('lowercase_character'), _authController.hasLowerCase),
+                                _buildPasswordRule(context, t.translate('a_number'), _authController.hasDigit),
+                                _buildPasswordRule(context, t.translate('special_character'), _authController.hasSpecialCharacter),
                               ],
                             ),
                           ),
@@ -93,14 +94,14 @@ class ChangePasswordScreen extends StatelessWidget {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
+                        SnackBar(content: Text(t.translate('processing_data'))),
                       );
                       Get.toNamed(helpCenter);
 
                       // _authController.registerWithEmail();
                     }
                   },
-                  child: const Text('Save Changes'),
+                  child: Text(t.translate('saveChanges')),
                 ),
               ),
             ],

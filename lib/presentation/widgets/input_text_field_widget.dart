@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 
 class InputTextFieldWidget extends StatelessWidget {
   final String labelText;
@@ -17,16 +19,20 @@ class InputTextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(labelText, style: Theme.of(context).textTheme.bodySmall),
+        const SizedBox(height: 4),
         Stack(
           children: [
             Container(
                 height: 48,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
+                  color: Color.fromARGB(122, 219, 219, 219),
                   boxShadow: [
                     BoxShadow(color: Color(0xFFDBDBDB)),
                     BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
@@ -35,15 +41,13 @@ class InputTextFieldWidget extends StatelessWidget {
             TextFormField(
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter your $labelText';
+                  return t.translate('Please_enter_your') + labelText;
                 }
                 return null;
               },
               controller: controller,
               focusNode: focusNode,
-              decoration: InputDecoration(
-                labelText: hintText,
-              ),
+              decoration: InputDecoration(labelText: hintText, labelStyle: TextStyle(height: 2, color: FluukyTheme.secondaryColor, fontSize: 16)),
             )
           ],
         ),
@@ -87,13 +91,17 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(widget.labelText, style: Theme.of(context).textTheme.bodySmall),
+      Text(t.translate(widget.labelText), style: Theme.of(context).textTheme.bodySmall),
+      const SizedBox(height: 4),
       Stack(children: [
         Container(
             height: 48,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(8)),
+              color: Color.fromARGB(122, 219, 219, 219),
               boxShadow: [
                 BoxShadow(color: Color(0xFFDBDBDB)),
                 BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),

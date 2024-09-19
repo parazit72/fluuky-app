@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/domain/entities/winner_entity.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 
 class WinnerCardWidget extends StatelessWidget {
   final WinnerEntity winner;
@@ -9,6 +10,8 @@ class WinnerCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return Container(
       padding: const EdgeInsets.only(bottom: 20, right: 32),
       child: Column(
@@ -22,7 +25,7 @@ class WinnerCardWidget extends StatelessWidget {
           const SizedBox(height: 8),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 3),
-            child: Text('WINNER OF THE', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.primaryColor)),
+            child: Text(t.translate('winner_of_the'), style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.primaryColor)),
           ),
           Text('Rolex Submariner', style: Theme.of(context).textTheme.titleSmall),
           Padding(

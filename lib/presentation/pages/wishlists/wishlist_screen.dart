@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/domain/entities/raffle_entity.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
 import 'package:fluuky/presentation/controllers/raffle_controller.dart';
 import 'package:fluuky/presentation/widgets/category_tabs_widgets/raffle_card_widget.dart';
@@ -23,6 +24,8 @@ class _WishlistScreenState extends State<WishlistScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return BackgroundScaffold(
       appBar: const AppBarFluuky(),
       bottomNavigationBar: CustomNavBar(),
@@ -45,7 +48,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                         children: [
                           ClipRRect(borderRadius: BorderRadius.circular(8), child: Image.asset('assets/images/empty-wishlist.png')),
                           const SizedBox(height: 24),
-                          ElevatedButton(onPressed: () => Get.toNamed(drawList), child: const Text('Buy Tickets Now'))
+                          ElevatedButton(onPressed: () => Get.toNamed(drawList), child: Text(t.translate('buyTicketsNow')))
                         ],
                       ),
                     ),
@@ -66,17 +69,19 @@ class WhislistTextHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Wishlist', style: Theme.of(context).textTheme.titleLarge),
+          Text(t.translate('Wishlist'), style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 8),
           Text(
             isEmpty
-                ? 'You haven’t added any draws to your wish list yet. Browse our current draws to start planting trees!'
-                : 'You’ve added these draws to your wish list. Don’t wait too long - start planting trees for a chance to win!',
+                ? t.translate('you_havent_added_draws_wish_list_browse_current')
+                : t.translate('you_added_these_wish_list_dont_wait_planting_chance_win'),
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 20),
@@ -92,7 +97,7 @@ class WhislistTextHeaderWidget extends StatelessWidget {
               icon: const Icon(
                 Icons.delete,
               ),
-              label: const Text('Delete'),
+              label: Text(t.translate('Delete')),
             ),
           const Divider(),
         ],

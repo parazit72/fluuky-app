@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/route_constants.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/widgets/custom_dropdown_button.dart';
 
 import 'package:fluuky/presentation/widgets/widgets.dart';
@@ -19,6 +20,7 @@ class DetailsAboutYouScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -27,8 +29,8 @@ class DetailsAboutYouScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Register in 4 steps:', style: Theme.of(context).textTheme.bodySmall),
-                Text('Step 3/4', style: Theme.of(context).textTheme.bodySmall),
+                Text(t.translate('register_4_steps'), style: Theme.of(context).textTheme.bodySmall),
+                Text(t.translate('step_3_4'), style: Theme.of(context).textTheme.bodySmall),
               ],
             ),
             const Divider(),
@@ -43,9 +45,9 @@ class DetailsAboutYouScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Details About You', style: Theme.of(context).textTheme.titleLarge),
+                Text(t.translate('details_about_you'), style: Theme.of(context).textTheme.titleLarge),
                 const SizedBox(height: 5),
-                Text('You’re almost there!', style: Theme.of(context).textTheme.bodySmall),
+                Text(t.translate('you_are_almost_there'), style: Theme.of(context).textTheme.bodySmall),
                 const SizedBox(height: 24),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 5),
@@ -63,7 +65,7 @@ class DetailsAboutYouScreen extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.7,
                         child: Text(
-                          'Please ensure your DOB and gender match your government-issued ID, this is mandatory for the delivery of prizes for draw winners.',
+                          t.translate('about_you_msg'),
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ),
@@ -71,7 +73,7 @@ class DetailsAboutYouScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 24),
-                Text('Date of Birth', style: Theme.of(context).textTheme.bodySmall),
+                Text(t.translate('date_of_birth'), style: Theme.of(context).textTheme.bodySmall),
                 const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -81,7 +83,7 @@ class DetailsAboutYouScreen extends StatelessWidget {
                       child: CustomDropdownButton(
                         itemsKey: 'days_en',
                         onChanged: (value) => _selectedDay = value,
-                        hintText: 'day',
+                        hintText: t.translate('day'),
                       ),
                     ),
                     SizedBox(
@@ -89,7 +91,7 @@ class DetailsAboutYouScreen extends StatelessWidget {
                       child: CustomDropdownButton(
                         itemsKey: 'months_en',
                         onChanged: (value) => _selectedMonth = value,
-                        hintText: 'month',
+                        hintText: t.translate('month'),
                       ),
                     ),
                     SizedBox(
@@ -97,17 +99,17 @@ class DetailsAboutYouScreen extends StatelessWidget {
                       child: CustomDropdownButton(
                         itemsKey: 'years',
                         onChanged: (value) => _selectedYear = value,
-                        hintText: 'year',
+                        hintText: t.translate('year'),
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 24),
-                Text('Gender', style: Theme.of(context).textTheme.bodySmall),
+                Text(t.translate('gender'), style: Theme.of(context).textTheme.bodySmall),
                 CustomDropdownButton(
                   itemsKey: 'genders',
                   onChanged: (value) => _selectedGender = value,
-                  hintText: 'Select',
+                  hintText: t.translate('select'),
                 ),
                 const SizedBox(height: 30),
                 ElevatedButton(
@@ -117,7 +119,7 @@ class DetailsAboutYouScreen extends StatelessWidget {
                     // }
                     Get.toNamed(createdPassword);
                   },
-                  child: const Text('Continue'),
+                  child: Text(t.translate('continue_button')),
                 ),
               ],
             ),

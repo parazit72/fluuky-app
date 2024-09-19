@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 
 class YourImpactWidget extends StatelessWidget {
   const YourImpactWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Your Impact', style: Theme.of(context).textTheme.titleLarge),
-          Text('With ever ticket purchase, you are making a measurable impact on reforestation.', style: Theme.of(context).textTheme.bodySmall),
+          Text(t.translate('your_impact'), style: Theme.of(context).textTheme.titleLarge),
+          Text(t.translate('withEverTicketPurchase'), style: Theme.of(context).textTheme.bodySmall),
           const SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -24,10 +26,10 @@ class YourImpactWidget extends StatelessWidget {
                       textStyle: WidgetStateProperty.all(const TextStyle(decoration: TextDecoration.underline))),
                   onPressed: () {},
                   icon: Icon(Icons.info_outline, size: 20, color: Theme.of(context).primaryColor),
-                  label: const Text('More Details'),
+                  label: Text(t.translate('more_details')),
                 ),
               ),
-              Text('10 Trees', style: Theme.of(context).textTheme.titleSmall),
+              Text('10' + t.translate('trees'), style: Theme.of(context).textTheme.titleSmall),
             ],
           ),
           const SizedBox(height: 8),

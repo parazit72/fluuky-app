@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_dialog.dart';
 import 'package:fluuky/presentation/widgets/layout/background_scaffold.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,8 @@ class SingleBadgeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return Dialog(
       insetPadding: const EdgeInsets.all(0),
       child: BackgroundScaffold(
@@ -25,12 +28,12 @@ class SingleBadgeScreen extends StatelessWidget {
                 right: 0,
                 child: Column(children: [
                   Text(
-                    'Congratulations, John Doe!',
+                    t.translate('congratulations') + 'John Doe!',
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor),
                     // textAlign: TextAlign.center,
                   ),
                   Text(
-                    'You’ve just earned your first badge.',
+                    t.translate('youve_just_earned_your_first_badge'),
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor),
                     textAlign: TextAlign.center,
                   ),
@@ -39,10 +42,7 @@ class SingleBadgeScreen extends StatelessWidget {
                     width: 150,
                     height: 150,
                     decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Theme.of(context).primaryColor,
-                        width: 2.0,
-                      ),
+                      border: Border.all(color: Theme.of(context).primaryColor, width: 2.0),
                       shape: BoxShape.circle,
                       color: Theme.of(context).primaryColor,
                     ),
@@ -55,11 +55,11 @@ class SingleBadgeScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 32),
-                  Text('Eco Guardian', style: Theme.of(context).textTheme.titleLarge),
+                  Text(t.translate('eco_guardian'), style: Theme.of(context).textTheme.titleLarge),
                   const SizedBox(height: 16),
                   SizedBox(
                       width: MediaQuery.of(context).size.width - 130,
-                      child: Text('Feel good knowing you have planted 10 trees!',
+                      child: Text(t.translate('feel_good_knowing_you_have_planted_10_trees'),
                           textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium)),
                 ]),
               ),
@@ -69,9 +69,9 @@ class SingleBadgeScreen extends StatelessWidget {
                 right: 0,
                 child: Column(
                   children: [
-                    ElevatedButton(onPressed: () => Get.back(), child: const Text('THANK YOU FOR YOUR IMPACT!')),
+                    ElevatedButton(onPressed: () => Get.back(), child: Text(t.translate('THANK_YOU_FOR_YOUR_IMPACT'))),
                     const SizedBox(height: 16.0),
-                    OutlinedButton(onPressed: () {}, child: const Text('Share'))
+                    OutlinedButton(onPressed: () {}, child: Text(t.translate('share')))
                   ],
                 ),
               )

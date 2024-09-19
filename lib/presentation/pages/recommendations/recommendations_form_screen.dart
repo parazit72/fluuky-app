@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/route_constants.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 
 import 'package:fluuky/presentation/controllers/raffle_controller.dart';
 
@@ -22,8 +23,9 @@ class _RecommendationsFormScreenState extends State<RecommendationsFormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
-      appBar: const AppBarSingleWidget(title: 'Recommendations'),
+      appBar: AppBarSingleWidget(title: t.translate('Recommendations')),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
         child: Stack(
@@ -43,7 +45,7 @@ class _RecommendationsFormScreenState extends State<RecommendationsFormScreen> {
                   onPressed: () {
                     Get.toNamed(recommendationsCreated);
                   },
-                  child: const Text('Continue')),
+                  child: Text(t.translate('continue'))),
             ),
           ],
         ),

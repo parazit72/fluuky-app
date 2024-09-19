@@ -1,158 +1,121 @@
-import 'package:fluuky/data/providers/network/apis/auth_api.dart';
-import 'package:fluuky/data/providers/network/api_provider.dart';
+import 'package:dio/dio.dart';
+import 'package:fluuky/data/models/auth_model.dart';
+import 'package:fluuky/data/models/user_model.dart';
+import 'package:fluuky/data/providers/network/auth_remote_data_source.dart';
+import 'package:fluuky/data/providers/network/dio_provider.dart';
 import 'package:fluuky/domain/entities/user_entity.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluuky/domain/repositories/auth_repository.dart';
-import 'package:get/get.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final APIProvider _apiProvider;
-  final FlutterSecureStorage _secureStorage;
+  late final AuthRemoteDataSource _remoteDataSource;
+  late final AuthModel _authModel;
 
-  AuthRepositoryImpl({String? baseUrl})
-      : _apiProvider = APIProvider(),
-        _secureStorage = const FlutterSecureStorage();
+  AuthRepositoryImpl({AuthRemoteDataSource? remoteDataSource, AuthModel? authModel, DioProvider? dioProvider}) {
+    _authModel = authModel ?? AuthModel(); // Instantiate AuthModel if not provided
+    _remoteDataSource =
+        remoteDataSource ?? AuthRemoteDataSource(dioProvider ?? DioProvider(), _authModel); // Instantiate remote data source with DioProvider
+  }
 
   @override
   Future<void> login(String email, String password) async {
     try {
-      final request = AuthAPI(
-        authEndpoint: AuthEndpoint.login,
-        bodyData: {'email': email, 'password': password},
-      );
+      final response = await _remoteDataSource.login(email, password);
 
-      final responseBody = await _apiProvider.request(request);
-
-      if (responseBody['token'] != null) {
-        await _secureStorage.write(key: 'token', value: responseBody['token']);
-      } else {
-        throw Exception('Login failed: ${responseBody['message'] ?? 'Unknown error'}');
+      // Assume the API returns a token on successful login
+      if (response.token != null) {
+        await _authModel.saveToken(response.token!); // Save the token
       }
     } catch (e) {
-      throw Exception('Login failed: ${e.toString()}');
+      if (e is DioException) {
+        // Check the HTTP status code
+        if (e.response?.statusCode == 422) {
+          throw Exception('Validation failed:\nInvalid email or password.');
+        } else if (e.response?.statusCode == 401) {
+          throw Exception('Unauthorized:\nIncorrect credentials.');
+        } else if (e.response?.statusCode == 500) {
+          throw Exception('Server error:\nPlease try again later.');
+        } else {
+          // Handle other Dio-specific errors
+          throw Exception('Failed to login:\n${e.response?.statusMessage}');
+        }
+      } else {
+        // Handle non-Dio errors
+        throw Exception('Unexpected error:\n$e');
+      }
     }
   }
 
   @override
-  Future<void> logout() async {
+  Future<bool?> resendCode(String email) async {
     try {
-      final request = AuthAPI(authEndpoint: AuthEndpoint.logout);
-      await APIProvider.instance.request(request);
-
-      await _secureStorage.delete(key: 'token');
-      Get.snackbar('Success', 'Logged out successfully');
-    } on TimeOutException catch (e) {
-      Get.snackbar('Timeout', 'The request timed out. Please try again later.');
-    } on FetchDataException catch (e) {
-      Get.snackbar('Network Error', 'No Internet connection. Please try again later.');
-    } on UnauthorisedException catch (e) {
-      await _secureStorage.delete(key: 'token');
-      Get.snackbar('Unauthorised', 'Session expired. You have been logged out.');
+      return await _remoteDataSource.resendCode(email);
     } catch (e) {
-      Get.snackbar('Error', 'An error occurred. Please try again.');
-    } finally {
-      await _secureStorage.delete(key: 'token');
-      // Get.offAllNamed(login);
+      throw Exception('Failed to resend code: $e');
     }
   }
 
   @override
   Future<void> refreshToken() async {
     try {
-      final request = AuthAPI(authEndpoint: AuthEndpoint.refreshToken);
-      final response = await _apiProvider.request(request);
-      final newToken = response['token'] as String;
-      await _secureStorage.write(key: 'token', value: newToken);
+      await _remoteDataSource.refreshToken();
     } catch (e) {
-      throw Exception('Token refresh failed: ${e.toString()}');
+      throw Exception('Failed to refresh token: $e');
     }
   }
 
   @override
   Future<bool?> createPassword(String email, String password) async {
     try {
-      final request = AuthAPI(
-        authEndpoint: AuthEndpoint.createPassword,
-        bodyData: {'email': email, 'password': password},
-      );
-      final response = await _apiProvider.request(request);
-      await _secureStorage.write(key: 'token', value: response['token']);
+      return await _remoteDataSource.createPassword(email, password);
     } catch (e) {
-      throw Exception('Create password failed: ${e.toString()}');
-    }
-    return null;
-  }
-
-  @override
-  Future<bool?> resendCode(String email) async {
-    try {
-      final request = AuthAPI(
-        authEndpoint: AuthEndpoint.resendCode,
-        bodyData: {'email': email},
-      );
-      final response = await _apiProvider.request(request);
-      return response['success'] == true;
-    } catch (e) {
-      throw Exception('Create password failed: ${e.toString()}');
+      throw Exception('Failed to create password: $e');
     }
   }
 
   @override
-  Future<UserEntity> register(String firstName, String lastName, String mobile, String email, String referalCode) async {
+  Future<UserEntity?> register(String firstName, String lastName, String mobile, String email, String referralCode) async {
     try {
-      final request = AuthAPI(
-        authEndpoint: AuthEndpoint.register,
-        bodyData: {'firstName': firstName, 'lastName': lastName, 'mobile': mobile, 'email': email, 'referalCode': referalCode},
-      );
-      final response = await _apiProvider.request(request);
-      final user = UserEntity.fromJson(response);
-      await _secureStorage.write(key: 'token', value: response['token']);
-      return user;
+      final UserModel? userModel = await _remoteDataSource.register(firstName, lastName, mobile, email, referralCode);
+      return userModel?.toEntity();
     } catch (e) {
-      throw Exception('Registration failed: ${e.toString()}');
+      throw Exception('Registration failed: $e');
     }
   }
 
   @override
   Future<bool> detailsAboutYou(String day, String month, String year, String gender) async {
     try {
-      final request = AuthAPI(
-        authEndpoint: AuthEndpoint.detailsAboutYou,
-        bodyData: {'day': day, 'month': month, 'year': year, 'gender': gender},
-      );
-      final response = await _apiProvider.request(request);
-      return response['success'] == true;
+      return await _remoteDataSource.detailsAboutYou(day, month, year, gender);
     } catch (e) {
-      return false;
+      throw Exception('Failed to update details: $e');
     }
   }
 
   @override
-  Future<bool> verifyCode(String code) async {
+  Future<void> logout() async {
     try {
-      final request = AuthAPI(
-        authEndpoint: AuthEndpoint.verifyCode,
-        bodyData: {'code': code},
-      );
-      final response = await _apiProvider.request(request);
-      return response['success'] == true;
+      await _remoteDataSource.logout();
     } catch (e) {
-      return false;
+      throw Exception('Logout failed: $e');
+    }
+  }
+
+  @override
+  Future<void> verifyCode(String code) async {
+    try {
+      await _remoteDataSource.verifyCode(code);
+    } catch (e) {
+      throw Exception('Failed to verify code: $e');
     }
   }
 
   @override
   Future<UserEntity?> getCurrentUser() async {
-    final token = await _secureStorage.read(key: 'token');
-    if (token != null) {
-      try {
-        final request = AuthAPI(authEndpoint: AuthEndpoint.getCurrentUser);
-        final response = await _apiProvider.request(request);
-        return UserEntity.fromJson(response);
-      } catch (e) {
-        throw Exception('Get current user failed: ${e.toString()}');
-      }
+    try {
+      final UserModel? userModel = await _remoteDataSource.getCurrentUser();
+      return userModel?.toEntity();
+    } catch (e) {
+      throw Exception('Failed to get current user: $e');
     }
-    return null;
   }
 }

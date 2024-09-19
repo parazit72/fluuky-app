@@ -19,10 +19,7 @@ class BundleSection extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        image: const DecorationImage(
-          image: AssetImage('assets/images/paper-box.png'),
-          fit: BoxFit.fill,
-        ),
+        image: const DecorationImage(image: AssetImage('assets/images/paper-box.png'), fit: BoxFit.fill),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -37,10 +34,7 @@ class BundleSection extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: Theme.of(context).primaryColor,
-                ),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), color: Theme.of(context).primaryColor),
                 child: const Icon(Icons.airplane_ticket, size: 32, color: Colors.white),
               ),
               const SizedBox(width: 8),
@@ -52,10 +46,7 @@ class BundleSection extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: Theme.of(context).primaryColor,
-                ),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), color: Theme.of(context).primaryColor),
                 child: const Icon(Icons.discount, size: 32, color: Colors.white),
               ),
               const SizedBox(width: 8),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/widgets/layout/background_scaffold.dart';
 import 'package:fluuky/presentation/pages/draw/bundle_section.dart';
 
@@ -7,6 +8,8 @@ class TreesPlantedDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return Dialog(
       insetPadding: const EdgeInsets.all(0),
       child: BackgroundScaffold(
@@ -32,31 +35,31 @@ class TreesPlantedDialog extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 32),
                   child: Text(
-                    'Grow more trees and save more when you purchase Fluuky bundles',
+                    t.translate('growMoreTrees'),
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
                 const SizedBox(height: 20),
-                const BundleSection(
-                  title: 'Thrive Bundle',
-                  description: 'Purchase between 5-9 tickets and save 5%!',
-                  ticketsInfo: 'Number of Tickets: 5-9',
-                  discountInfo: 'Discount: 5% off the total ticket price.',
+                BundleSection(
+                  title: t.translate('thriveBundle'),
+                  description: t.translate('thriveBundleDescription'),
+                  ticketsInfo: t.translate('NumberTickets5-9'),
+                  discountInfo: t.translate('discount5%'),
                 ),
                 const SizedBox(height: 20),
-                const BundleSection(
-                  title: 'Flourish Bundle',
-                  description: 'Purchase 10 or more tickets and save 10%!',
-                  ticketsInfo: 'Number of Tickets: 10 or more',
-                  discountInfo: 'Discount: 10% off the total ticket price.',
+                BundleSection(
+                  title: t.translate('flourishBundle'),
+                  description: t.translate('flourishBundleDescription'),
+                  ticketsInfo: t.translate('NumberTickets10orMore'),
+                  discountInfo: t.translate('discount10%'),
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Text('OK'),
+                  child: Text(t.translate('ok')),
                 ),
               ],
             ),

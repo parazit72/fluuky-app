@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
 import 'package:get/get.dart';
 
-Widget buildCategoryButtons() {
+Widget buildCategoryButtons(context) {
   final ItemsController controller = Get.find();
   return Obx(() {
     if (controller.selectedItemType.value == ItemType.draws) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: controller.raffleCategories.map((category) => _buildCategoryButton(category.id, category.name, category.iconPath)).toList(),
+        children:
+            controller.raffleCategories.map((category) => _buildCategoryButton(category.id, category.name, category.iconPath, context)).toList(),
       );
     } else {
       return const SizedBox.shrink();
@@ -17,8 +19,9 @@ Widget buildCategoryButtons() {
   });
 }
 
-Widget _buildCategoryButton(int id, String text, String? iconPath) {
+Widget _buildCategoryButton(int id, String text, String? iconPath, context) {
   final ItemsController controller = Get.find();
+  var t = AppLocalizations.of(context)!;
   return Obx(() {
     bool isSelected = controller.selectedCategory.value == id;
     return Column(
@@ -47,7 +50,7 @@ Widget _buildCategoryButton(int id, String text, String? iconPath) {
             )),
         const SizedBox(height: 6),
         Text(
-          text.capitalizeFirst!,
+          t.translate(text.capitalizeFirst!),
           style: isSelected
               ? Theme.of(Get.context!).textTheme.titleMedium!.copyWith(color: Theme.of(Get.context!).primaryColor)
               : Theme.of(Get.context!).textTheme.bodyLarge!.copyWith(color: const Color(0xFFB3B3B3)),

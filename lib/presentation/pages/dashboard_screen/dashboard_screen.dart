@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/pages/dashboard_screen/badges_list_widget.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
@@ -18,8 +19,9 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
-      appBar: const AppBarSingleWidget(title: 'Dashboard'),
+      appBar: AppBarSingleWidget(title: t.translate('Dashboard')),
       bottomNavigationBar: CustomNavBar(),
       body: ListView(
         children: [

@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/domain/entities/user_entity.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:get/get.dart';
 
@@ -12,8 +13,16 @@ class CustomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     UserEntity? user = _authController.user.value;
-    user = UserEntity(id: '1', name: 'John Doe', email: 'john.doe@example.com', avatar: 'assets/images/avatar.jpg', token: '');
+    user = UserEntity(
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'john.doe@example.com',
+        avatar: 'assets/images/avatar.jpg',
+        phone: '',
+        birthDate: DateTime.now(),
+        acceptedTermsAndConditions: false);
     return Obx(() {
       return NavigationBarTheme(
         data: NavigationBarThemeData(
@@ -47,14 +56,14 @@ class CustomNavBar extends StatelessWidget {
               context,
               iconPath: 'assets/images/home.svg',
               activeIconPath: 'assets/images/home-active.svg',
-              label: 'Home',
+              label: t.translate('Home'),
               index: 0,
             ),
             _buildNavItem(
               context,
               iconPath: 'assets/images/draw.svg',
               activeIconPath: 'assets/images/draw-active.svg',
-              label: 'Draws',
+              label: t.translate('Draws'),
               index: 1,
             ),
             BottomNavigationBarItem(
@@ -69,14 +78,14 @@ class CustomNavBar extends StatelessWidget {
                       border: controller.selectedIndex.value == 2 ? Border.all(color: FluukyTheme.primaryColor, width: 2.0) : null,
                     ),
                     child: CircleAvatar(
-                      backgroundImage: AssetImage(user!.avatar != '' ? user.avatar : 'assets/images/avatar.jpg'),
+                      backgroundImage: AssetImage(user!.avatar ?? 'assets/images/avatar.jpg'),
                       minRadius: 15,
                       maxRadius: 15,
                     ),
                   ),
                 ],
               ),
-              label: 'Profile',
+              label: t.translate('Profile'),
             )
           ],
         ),

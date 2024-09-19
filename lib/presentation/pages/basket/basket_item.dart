@@ -1,20 +1,24 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:fluuky/presentation/pages/draw/trees_planted_dialog.dart';
-import 'package:fluuky/presentation/pages/draw/we_forest_info_dialog.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
+import 'package:fluuky/presentation/pages/draw/draw_details.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class BasketItem extends StatelessWidget {
-  const BasketItem({super.key});
+class BasketItemWidget extends StatelessWidget {
+  final dynamic item;
+
+  const BasketItemWidget({required this.item, super.key});
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Draw Title', style: Theme.of(context).textTheme.titleLarge),
+          Text(item.raffle.name, style: Theme.of(context).textTheme.titleLarge),
           Wrap(
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
@@ -22,13 +26,13 @@ class BasketItem extends StatelessWidget {
                 style: ButtonStyle(padding: WidgetStateProperty.all(const EdgeInsets.all(0)), minimumSize: WidgetStateProperty.all(const Size(0, 0))),
                 onPressed: () {},
                 icon: const Icon(Icons.favorite, size: 18),
-                label: const Text('Add to Wishlist'),
+                label: Text(t.translate('add_to_wishlist')),
               ),
               TextButton.icon(
                 style: ButtonStyle(minimumSize: WidgetStateProperty.all(const Size(0, 0))),
                 onPressed: () {},
                 icon: const Icon(Icons.delete, size: 18),
-                label: const Text('Delete'),
+                label: Text(t.translate('delete')),
               ),
             ],
           ),
@@ -40,7 +44,7 @@ class BasketItem extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.3,
                 fit: BoxFit.cover,
-                imageUrl: "https:\/\/fluuky-dev-local.s3.me-south-1.amazonaws.com\/images\/9cb52e3c-72cb-4cf3-8a16-f3ee1b9f3278.jpg",
+                imageUrl: item.raffle.mainImage,
                 placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                 errorWidget: (context, url, error) => Container(
                   width: MediaQuery.of(context).size.width,
@@ -54,10 +58,6 @@ class BasketItem extends StatelessWidget {
               margin: const EdgeInsets.only(top: 16),
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
-                // image: const DecorationImage(
-                //   image: AssetImage('assets/images/paper.jpg'),
-                //   fit: BoxFit.cover,
-                // ),
                 borderRadius: BorderRadius.circular(8),
                 boxShadow: const [
                   BoxShadow(color: Color(0xFFDBDBDB)),
@@ -66,127 +66,6 @@ class BasketItem extends StatelessWidget {
               ),
               child: const BottomOfDrawCardWidget()),
           const Divider(height: 48),
-        ],
-      ),
-    );
-  }
-}
-
-class BottomOfDrawCardWidget extends StatelessWidget {
-  const BottomOfDrawCardWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Prize', style: Theme.of(context).textTheme.bodySmall),
-              const SizedBox(width: 10),
-              Text('Rolex Cosmograph Daytona', style: Theme.of(context).textTheme.bodySmall),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Rolex Cosmograph Daytona', style: Theme.of(context).textTheme.bodySmall),
-              const SizedBox(width: 10),
-              Text('\$33,000', style: Theme.of(context).textTheme.bodySmall),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Image.asset('assets/images/logo-green.png', height: 20, width: 20, fit: BoxFit.contain),
-                  const SizedBox(width: 10),
-                  Text('Tickets:', style: Theme.of(context).textTheme.bodySmall),
-                ],
-              ),
-              Text('567/2000', style: Theme.of(context).textTheme.bodySmall),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Image.asset('assets/images/logo-green.png', height: 20, width: 20, fit: BoxFit.contain),
-                  const SizedBox(width: 10),
-                  Text('Each ticket plants:', style: Theme.of(context).textTheme.bodySmall),
-                ],
-              ),
-              Text('10 Trees', style: Theme.of(context).textTheme.bodySmall),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    Image.asset('assets/images/logo-green.png', height: 20, width: 20, fit: BoxFit.contain),
-                    const SizedBox(width: 10),
-                    GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return const WeForestInfoScreen();
-                          },
-                        );
-                      },
-                      child: Text(
-                        'You are planting:',
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(decoration: TextDecoration.underline),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Text('10 Trees', style: Theme.of(context).textTheme.bodySmall),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: Row(
-                  children: [
-                    Image.asset('assets/images/logo-green.png', height: 20, width: 20, fit: BoxFit.contain),
-                    const SizedBox(width: 10),
-                    GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return const TreesPlantedDialog();
-                          },
-                        );
-                      },
-                      child: Text(
-                        'Bundle Discount:',
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(decoration: TextDecoration.underline),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Text('0', style: Theme.of(context).textTheme.bodySmall),
-            ],
-          ),
         ],
       ),
     );

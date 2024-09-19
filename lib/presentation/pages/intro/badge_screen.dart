@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 
 class BadgeScreen extends StatelessWidget {
   final List<Map<String, String>> textParts = [
@@ -9,11 +10,13 @@ class BadgeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         title: Center(
           child: Text(
-            'Terms And Condition',
+            t.translate('terms_conditions'),
             style: Theme.of(context).textTheme.titleLarge,
             textAlign: TextAlign.center,
           ),

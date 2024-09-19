@@ -110,7 +110,7 @@ Widget _buildCategoryGridView<T>(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 20),
+            padding: const EdgeInsets.only(left: 20, right: 20),
             child: Text(
               category.name,
               style: Theme.of(Get.context!).textTheme.titleMedium,

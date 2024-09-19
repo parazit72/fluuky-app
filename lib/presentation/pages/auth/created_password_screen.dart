@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/route_constants.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 
 import 'package:fluuky/presentation/widgets/widgets.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,7 @@ class CreatedPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -22,8 +24,8 @@ class CreatedPasswordScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Register in 4 steps:', style: Theme.of(context).textTheme.bodySmall),
-                Text('Step 4/4', style: Theme.of(context).textTheme.bodySmall),
+                Text(t.translate('register_4_steps'), style: Theme.of(context).textTheme.bodySmall),
+                Text(t.translate('step_4_4'), style: Theme.of(context).textTheme.bodySmall),
               ],
             ),
             const Divider(),
@@ -38,17 +40,17 @@ class CreatedPasswordScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Create a Password', style: Theme.of(context).textTheme.titleLarge),
+                Text(t.translate('create_a_password'), style: Theme.of(context).textTheme.titleLarge),
                 const SizedBox(height: 5),
-                Text('Last step! Please create a password to secure your account. ', style: Theme.of(context).textTheme.bodySmall),
+                Text(t.translate('lastStep'), style: Theme.of(context).textTheme.bodySmall),
                 const SizedBox(height: 24),
                 PasswordTextFieldWidget(
                   controller: _authController.passwordController,
-                  hintText: 'Password',
+                  hintText: t.translate('password'),
                   // focusNode: _passwordFocusNode,
                   validator: (val) {
                     if (val != null && val.length < 6) {
-                      return 'Password too short.';
+                      return t.translate('password_too_short');
                     }
                     return null;
                   },
@@ -60,23 +62,23 @@ class CreatedPasswordScreen extends StatelessWidget {
                 const SizedBox(height: 24),
                 PasswordTextFieldWidget(
                   controller: _authController.confirmPasswordController,
-                  labelText: 'Confirm Password',
-                  hintText: 'Password',
+                  labelText: t.translate('confirm_password'),
+                  hintText: t.translate('password'),
                   // focusNode: _passwordFocusNode,
-                  validator: (val) => (val != _authController.passwordController.text) ? 'Passwords do not match.' : null,
+                  validator: (val) => (val != _authController.passwordController.text) ? t.translate('passwords_do_not_match') : null,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 34, vertical: 24),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Password must include:', style: Theme.of(context).textTheme.titleLarge),
+                      Text(t.translate('password_requirements'), style: Theme.of(context).textTheme.titleLarge),
                       const SizedBox(height: 8),
-                      _buildPasswordRule(context, 'At least 8 characters', _authController.isAtLeast8Characters),
-                      _buildPasswordRule(context, 'An uppercase character', _authController.hasUpperCase),
-                      _buildPasswordRule(context, 'A lowercase character', _authController.hasLowerCase),
-                      _buildPasswordRule(context, 'A number', _authController.hasDigit),
-                      _buildPasswordRule(context, 'A special character', _authController.hasSpecialCharacter),
+                      _buildPasswordRule(context, t.translate('min_8_characters'), _authController.isAtLeast8Characters),
+                      _buildPasswordRule(context, t.translate('uppercase_character'), _authController.hasUpperCase),
+                      _buildPasswordRule(context, t.translate('lowercase_character'), _authController.hasLowerCase),
+                      _buildPasswordRule(context, t.translate('a_number'), _authController.hasDigit),
+                      _buildPasswordRule(context, t.translate('special_character'), _authController.hasSpecialCharacter),
                     ],
                   ),
                 ),
@@ -87,10 +89,10 @@ class CreatedPasswordScreen extends StatelessWidget {
                     }
                     Get.toNamed(home);
                   },
-                  child: const Text('Activate Account'),
+                  child: Text(t.translate('activate_account')),
                 ),
                 const SizedBox(height: 30),
-                Center(child: Text('By registering, you accept our ', style: Theme.of(context).textTheme.bodySmall)),
+                Center(child: Text(t.translate('by_registering'), style: Theme.of(context).textTheme.bodySmall)),
                 Center(
                   child: Wrap(
                     // alignment: WrapAlignment.center,
@@ -99,13 +101,13 @@ class CreatedPasswordScreen extends StatelessWidget {
                       TextButton(
                         onPressed: () => Get.toNamed(termsAndCondition),
                         style: TextButton.styleFrom(minimumSize: const Size(100, 48.0)),
-                        child: const Text('Terms & Conditions'),
+                        child: Text(t.translate('terms_conditions')),
                       ),
-                      Text('and', style: Theme.of(context).textTheme.bodySmall, textAlign: TextAlign.center),
+                      Text(t.translate('_and_'), style: Theme.of(context).textTheme.bodySmall, textAlign: TextAlign.center),
                       TextButton(
                         onPressed: () => Get.toNamed(privacyPolicy),
                         style: TextButton.styleFrom(minimumSize: const Size(100, 48.0)),
-                        child: const Text('Privacy Policy'),
+                        child: Text(t.translate('privacy_policy')),
                       ),
                     ],
                   ),

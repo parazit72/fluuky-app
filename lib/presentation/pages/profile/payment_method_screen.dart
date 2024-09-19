@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/auth_controller.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
@@ -13,8 +13,9 @@ class PaymentMethodScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
-      appBar: const AppBarSingleWidget(title: 'Payment Method'),
+      appBar: AppBarSingleWidget(title: t.translate('payment_method')),
       bottomNavigationBar: CustomNavBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
@@ -25,7 +26,7 @@ class PaymentMethodScreen extends StatelessWidget {
                 Form(
                     key: _formKey,
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Text('Payment Information', style: Theme.of(context).textTheme.titleMedium),
+                      Text(t.translate('payment_info'), style: Theme.of(context).textTheme.titleMedium),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -56,19 +57,26 @@ class PaymentMethodScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 20),
-                      InputTextFieldWidget(controller: _authController.firstNameController, labelText: 'Name On Card', hintText: 'Name On Card'),
+                      InputTextFieldWidget(
+                          controller: _authController.firstNameController, labelText: t.translate('nameOnCard'), hintText: t.translate('nameOnCard')),
                       const SizedBox(height: 20),
-                      InputTextFieldWidget(controller: _authController.firstNameController, labelText: 'Card Number', hintText: 'Card Number'),
+                      InputTextFieldWidget(
+                          controller: _authController.firstNameController,
+                          labelText: t.translate('card_number'),
+                          hintText: t.translate('card_number')),
                       const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Expanded(
                               child: InputTextFieldWidget(
-                                  controller: _authController.firstNameController, labelText: 'Expiration Date', hintText: 'Expiration Date')),
+                                  controller: _authController.firstNameController,
+                                  labelText: t.translate('expirationDate'),
+                                  hintText: t.translate('expirationDate'))),
                           const SizedBox(width: 15),
                           Expanded(
-                            child: InputTextFieldWidget(controller: _authController.firstNameController, labelText: 'CVV', hintText: 'CVV'),
+                            child: InputTextFieldWidget(
+                                controller: _authController.firstNameController, labelText: t.translate('CVV'), hintText: t.translate('CVV')),
                           ),
                         ],
                       ),
@@ -83,14 +91,14 @@ class PaymentMethodScreen extends StatelessWidget {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing Data')),
+                      SnackBar(content: Text(t.translate('processing_data'))),
                     );
                     Get.toNamed(helpCenter);
 
                     // _authController.registerWithEmail();
                   }
                 },
-                child: const Text('Save Changes'),
+                child: Text(t.translate('saveChanges')),
               ),
             ),
           ],

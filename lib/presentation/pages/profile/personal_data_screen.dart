@@ -3,7 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
-import 'package:fluuky/fluucky_app.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/auth_controller.dart';
 import 'package:fluuky/presentation/widgets/custom_dropdown_button.dart';
 import 'package:get/get.dart';
@@ -41,15 +41,16 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
-      appBar: const AppBarSingleWidget(title: 'Personal Data'),
+      appBar: AppBarSingleWidget(title: t.translate('personalData')),
       body: Stack(
         children: [
           ListView(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
             children: [
-              Text('Your Photo', style: Theme.of(context).textTheme.titleLarge),
-              Text('Upload a photo under 2 MB', style: Theme.of(context).textTheme.bodySmall),
+              Text(t.translate('yourPhoto'), style: Theme.of(context).textTheme.titleLarge),
+              Text(t.translate('uploadPhotoUnder2MB'), style: Theme.of(context).textTheme.bodySmall),
               const SizedBox(height: 16),
 
               // Profile image preview and change button
@@ -65,15 +66,15 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                     const SizedBox(height: 8),
                     TextButton(
                       onPressed: _showImageUploadSheetDialog,
-                      child: const Text('Change Photo'),
+                      child: Text(t.translate('changePhoto')),
                     ),
                   ],
                 ),
               ),
 
               const Divider(height: 48),
-              Text('Personal Data', style: Theme.of(context).textTheme.titleLarge),
-              Text('Manage all your personal information.', style: Theme.of(context).textTheme.bodySmall),
+              Text(t.translate('personalData'), style: Theme.of(context).textTheme.titleLarge),
+              Text(t.translate('manageAllYourPersonalInformation'), style: Theme.of(context).textTheme.bodySmall),
               registerWidget(),
             ],
           ),
@@ -83,17 +84,20 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
   }
 
   Widget registerWidget() {
+    var t = AppLocalizations.of(context)!;
     return SingleChildScrollView(
       child: Form(
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            InputTextFieldWidget(controller: _authController.firstNameController, labelText: 'First name', hintText: 'Enter your first name'),
+            InputTextFieldWidget(
+                controller: _authController.firstNameController, labelText: t.translate('firstName'), hintText: t.translate('enterFirstName')),
             const SizedBox(height: 20),
-            InputTextFieldWidget(controller: _authController.lastNameController, labelText: 'Last name', hintText: 'Enter your last name'),
+            InputTextFieldWidget(
+                controller: _authController.lastNameController, labelText: t.translate('lastName'), hintText: t.translate('enterLastName')),
             const SizedBox(height: 20),
-            Text('Date of Birth', style: Theme.of(context).textTheme.bodySmall),
+            Text(t.translate('date_of_birth'), style: Theme.of(context).textTheme.bodySmall),
             const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -103,7 +107,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   child: CustomDropdownButton(
                     itemsKey: 'days_en',
                     onChanged: (value) => _selectedDay = value,
-                    hintText: 'day',
+                    hintText: t.translate('day'),
                   ),
                 ),
                 SizedBox(
@@ -111,7 +115,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   child: CustomDropdownButton(
                     itemsKey: 'months_en',
                     onChanged: (value) => _selectedMonth = value,
-                    hintText: 'month',
+                    hintText: t.translate('month'),
                   ),
                 ),
                 SizedBox(
@@ -119,32 +123,32 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   child: CustomDropdownButton(
                     itemsKey: 'years',
                     onChanged: (value) => _selectedYear = value,
-                    hintText: 'year',
+                    hintText: t.translate('year'),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 20),
-            Text('Gender', style: Theme.of(context).textTheme.bodySmall),
+            Text(t.translate('gender'), style: Theme.of(context).textTheme.bodySmall),
             const SizedBox(height: 8),
             CustomDropdownButton(
               itemsKey: 'genders',
               onChanged: (value) => _selectedGender = value,
-              hintText: 'Select',
+              hintText: t.translate('select'),
             ),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Processing Data')),
+                    SnackBar(content: Text(t.translate('processing_data'))),
                   );
                   // Get.offAll(() => VerificationScreen(), arguments: {'email': _authController.emailController.text});
 
                   // _authController.registerWithEmail();
                 }
               },
-              child: const Text('Save Changes'),
+              child: Text(t.translate('saveChanges')),
             ),
           ],
         ),
@@ -154,6 +158,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
 
   void _showImageUploadSheetDialog() {
     // Get.back();
+    var t = AppLocalizations.of(context)!;
     showModalBottomSheet(
       context: Get.context!,
       isScrollControlled: true,
@@ -178,8 +183,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 20),
-                    Text('Change Photo', style: Theme.of(context).textTheme.titleLarge),
-                    Text('Choose one of the following options',
+                    Text(t.translate('changePhoto'), style: Theme.of(context).textTheme.titleLarge),
+                    Text(t.translate('chooseOneOfTheFollowing'),
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
                     const SizedBox(height: 5),
                     TextButton(
@@ -188,13 +193,13 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           minimumSize: WidgetStateProperty.all(const Size(0, 0)),
                         ),
                         onPressed: _pickImage,
-                        child: const Wrap(
+                        child: Wrap(
                           alignment: WrapAlignment.center,
                           crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
-                            Icon(Icons.camera_alt_rounded, size: 20, color: Colors.black),
-                            SizedBox(width: 8),
-                            Text('Take a Photo', style: TextStyle(color: Colors.black)),
+                            const Icon(Icons.camera_alt_rounded, size: 20, color: Colors.black),
+                            const SizedBox(width: 8),
+                            Text(t.translate('takeAPhoto'), style: const TextStyle(color: Colors.black)),
                           ],
                         )),
                     const SizedBox(height: 5),
@@ -204,13 +209,13 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           minimumSize: WidgetStateProperty.all(const Size(0, 0)),
                         ),
                         onPressed: _pickImage,
-                        child: const Wrap(
+                        child: Wrap(
                           alignment: WrapAlignment.center,
                           crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
-                            Icon(Icons.image, size: 20, color: Colors.black),
-                            SizedBox(width: 8),
-                            Text('Upload from Gallery', style: TextStyle(color: Colors.black)),
+                            const Icon(Icons.image, size: 20, color: Colors.black),
+                            const SizedBox(width: 8),
+                            Text(t.translate('uploadFromGallery'), style: const TextStyle(color: Colors.black)),
                           ],
                         )),
                     const SizedBox(height: 5),
@@ -220,12 +225,12 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                           minimumSize: WidgetStateProperty.all(const Size(0, 0)),
                         ),
                         onPressed: () {},
-                        child: const Wrap(alignment: WrapAlignment.center, crossAxisAlignment: WrapCrossAlignment.center, children: [
-                          Icon(Icons.delete, size: 20, color: Color(0XFFD30201)),
-                          SizedBox(width: 8),
+                        child: Wrap(alignment: WrapAlignment.center, crossAxisAlignment: WrapCrossAlignment.center, children: [
+                          const Icon(Icons.delete, size: 20, color: Color(0XFFD30201)),
+                          const SizedBox(width: 8),
                           Text(
-                            'Remove Photo',
-                            style: TextStyle(color: Color(0XFFD30201)),
+                            t.translate('removePhoto'),
+                            style: const TextStyle(color: Color(0XFFD30201)),
                           )
                         ])),
                   ],

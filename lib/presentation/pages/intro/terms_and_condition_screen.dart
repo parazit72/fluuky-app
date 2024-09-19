@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
 
@@ -11,8 +12,9 @@ class TermsAndConditionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
-      appBar: const AppBarSingleWidget(title: 'Terms And Condition'),
+      appBar: AppBarSingleWidget(title: t.translate('terms_and_conditions')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView.builder(

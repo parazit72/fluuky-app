@@ -1,46 +1,16 @@
-import 'package:hive/hive.dart';
-
-part 'raffle_entity.g.dart';
-
-@HiveType(typeId: 2)
 class RaffleEntity {
-  @HiveField(0)
   final int id;
-
-  @HiveField(1)
   final int categoryId;
-
-  @HiveField(2)
   final int brandId;
-
-  @HiveField(3)
   final int adminId;
-
-  @HiveField(4)
   final String name;
-
-  @HiveField(5)
   final String slug;
-
-  @HiveField(6)
   final String description;
-
-  @HiveField(7)
   final int capacity;
-
-  @HiveField(8)
   final String mainImage;
-
-  @HiveField(9)
   final List<String> image;
-
-  @HiveField(10)
   final double price;
-
-  @HiveField(11)
   final String status;
-
-  @HiveField(12)
   final DateTime deadline;
 
   RaffleEntity({
@@ -69,10 +39,10 @@ class RaffleEntity {
       slug: json['slug'],
       description: json['description'],
       capacity: json['capacity'],
-      image: List<String>.from(json['image']),
       mainImage: json['main_image'],
       price: json['price'].toDouble(),
       status: json['status'],
+      image: List<String>.from(json['image']),
       deadline: DateTime.parse(json['deadline']),
     );
   }

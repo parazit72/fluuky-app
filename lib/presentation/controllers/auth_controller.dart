@@ -40,11 +40,12 @@ class AuthController extends GetxController {
   final TextEditingController codeController = TextEditingController();
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
-  final TextEditingController referalCodeController = TextEditingController();
+  final TextEditingController referralCodeController = TextEditingController();
   final TextEditingController mobileController = TextEditingController();
 
   final Rx<UserEntity?> user = Rx<UserEntity?>(null);
   final FlutterSecureStorage _secureStorage = Get.find<FlutterSecureStorage>();
+  static const _tokenKey = 'auth_token';
 
   @override
   void onInit() {
@@ -61,13 +62,13 @@ class AuthController extends GetxController {
         lastNameController.text,
         mobileController.text,
         emailController.text.trim(),
-        referalCodeController.text,
+        referralCodeController.text,
       );
 
       if (user != null) {
         firstNameController.clear();
         lastNameController.clear();
-        referalCodeController.clear();
+        referralCodeController.clear();
         emailController.clear();
         mobileController.clear();
         Get.offAll(() => VerificationScreen(), arguments: {'email': emailController.text});
@@ -124,7 +125,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> checkLoginStatus() async {
-    final token = await _secureStorage.read(key: 'token');
+    final token = await _secureStorage.read(key: _tokenKey);
     if (token != null) {
       isLogged.value = true;
     } else {
@@ -134,47 +135,22 @@ class AuthController extends GetxController {
   }
 
   Future<void> logout() async {
-    await _secureStorage.write(key: 'token', value: null);
+    try {
+      isLogged.value = true;
+      await _secureStorage.write(key: _tokenKey, value: null);
 
-    user.value = null;
-    isLogged.value = false;
+      user.value = null;
+      isLogged.value = false;
 
-    await _authRepository.logout();
+      await _authRepository.logout();
+    } catch (e) {
+      _showErrorDialog(e.toString());
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   void _showErrorDialog(String message) {
-    // Get.back();
-    showModalBottomSheet(
-      context: Get.context!,
-      isScrollControlled: true,
-      builder: (context) {
-        return DraggableScrollableSheet(
-          expand: false,
-          initialChildSize: 0.25,
-          minChildSize: 0.25,
-          maxChildSize: 0.25,
-          builder: (context, scrollController) {
-            return Container(
-              padding: const EdgeInsets.all(20),
-              decoration: const BoxDecoration(
-                image: DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
-                boxShadow: [BoxShadow(offset: Offset(0, -1), color: Colors.black26, spreadRadius: 0, blurRadius: 4)],
-              ),
-              child: SingleChildScrollView(
-                controller: scrollController,
-                child: Column(
-                  children: [
-                    Text('Error', style: Theme.of(context).textTheme.labelLarge),
-                    const SizedBox(height: 10),
-                    Text(message),
-                  ],
-                ),
-              ),
-            );
-          },
-        );
-      },
-    );
+    Get.snackbar('Error', message);
   }
 }

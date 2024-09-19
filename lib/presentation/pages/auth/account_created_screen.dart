@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 
 class AccountCreatedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: Stack(children: [
         Positioned(
@@ -17,11 +20,11 @@ class AccountCreatedScreen extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Column(children: [
             Text(
-              'Amazing, you’re all set!',
+              t.translate('amazing_all_set'),
               style: Theme.of(context).textTheme.titleLarge,
             ),
             Text(
-              'Click Let’s Start Planting to plant your first tree and select from our range of luxury draws!',
+              t.translate('click_start_planting'),
               style: Theme.of(context).textTheme.bodySmall,
             ),
             Image.asset(
@@ -33,7 +36,7 @@ class AccountCreatedScreen extends StatelessWidget {
         ),
         Positioned(
           bottom: 20,
-          child: ElevatedButton(onPressed: () {}, child: const Text('Let’s Start Planting')),
+          child: ElevatedButton(onPressed: () {}, child: Text(t.translate('let_start_planting'))),
         ),
       ]),
     );

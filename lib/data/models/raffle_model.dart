@@ -1,43 +1,18 @@
-import 'package:hive/hive.dart';
+import '../../domain/entities/raffle_entity.dart';
 
-part 'raffle_model.g.dart';
-
-@HiveType(typeId: 2)
 class RaffleModel {
-  @HiveField(0)
   final int id;
-
-  @HiveField(1)
   final int categoryId;
-
-  @HiveField(2)
   final int brandId;
-
-  @HiveField(3)
   final int adminId;
-
-  @HiveField(4)
   final String name;
-
-  @HiveField(5)
   final String slug;
-
-  @HiveField(6)
   final String description;
-
-  @HiveField(7)
   final int capacity;
-
-  @HiveField(8)
-  final List<String> images;
-
-  @HiveField(9)
+  final String mainImage;
+  final List<String> image;
   final double price;
-
-  @HiveField(10)
   final String status;
-
-  @HiveField(11)
   final DateTime deadline;
 
   RaffleModel({
@@ -49,7 +24,8 @@ class RaffleModel {
     required this.slug,
     required this.description,
     required this.capacity,
-    required this.images,
+    required this.image,
+    required this.mainImage,
     required this.price,
     required this.status,
     required this.deadline,
@@ -65,8 +41,9 @@ class RaffleModel {
       name: json['name'],
       slug: json['slug'],
       description: json['description'],
+      mainImage: json['main_image'],
       capacity: json['capacity'],
-      images: List<String>.from(json['image']),
+      image: List<String>.from(json['image']),
       price: json['price'].toDouble(),
       status: json['status'],
       deadline: DateTime.parse(json['deadline']),
@@ -84,10 +61,30 @@ class RaffleModel {
       'slug': slug,
       'description': description,
       'capacity': capacity,
-      'image': images,
+      'image': image,
+      'mainImage': mainImage,
       'price': price,
       'status': status,
       'deadline': deadline.toIso8601String(),
     };
+  }
+
+  // Method to convert RaffleModel to RaffleEntity
+  RaffleEntity toEntity() {
+    return RaffleEntity(
+      id: id,
+      categoryId: categoryId,
+      brandId: brandId,
+      adminId: adminId,
+      name: name,
+      slug: slug,
+      description: description,
+      capacity: capacity,
+      image: image,
+      price: price,
+      status: status,
+      deadline: deadline,
+      mainImage: mainImage,
+    );
   }
 }

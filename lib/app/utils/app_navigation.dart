@@ -1,9 +1,16 @@
 import 'package:fluuky/app/config/route_constants.dart';
+import 'package:fluuky/data/providers/network/dio_provider.dart';
+import 'package:fluuky/data/repositories/basket_repository_impl.dart';
+import 'package:fluuky/domain/repositories/basket_repository.dart';
+import 'package:fluuky/presentation/bindings/basket_bindings.dart';
 import 'package:fluuky/presentation/bindings/order_bindings.dart';
+import 'package:fluuky/presentation/controllers/basket_controller.dart';
 import 'package:fluuky/presentation/pages/intro/help_center_screen.dart';
 import 'package:fluuky/presentation/pages/intro/privacy_policy_screen.dart';
 import 'package:fluuky/presentation/pages/intro/splash_screen.dart';
 import 'package:fluuky/presentation/pages/intro/terms_and_condition_screen.dart';
+import 'package:fluuky/presentation/pages/profile/estimated_carbon_footprint_screen.dart';
+import 'package:fluuky/presentation/pages/profile/question_page.dart';
 import 'package:get/get.dart';
 import 'package:fluuky/presentation/pages/auth/created_password_screen.dart';
 import 'package:fluuky/presentation/pages/auth/details_about_you_screen.dart';
@@ -85,6 +92,14 @@ List<GetPage<dynamic>>? generateRoute = [
     page: () => const GreenSubscriptionScreen(),
   ),
   GetPage(
+    name: questionPage,
+    page: () => QuestionPage(),
+  ),
+  GetPage(
+    name: estimatedCarbonFootprintScreen,
+    page: () => EstimatedCarbonFootprintScreen(),
+  ),
+  GetPage(
     name: packages,
     page: () => const PackagesScreen(),
   ),
@@ -161,7 +176,8 @@ List<GetPage<dynamic>>? generateRoute = [
   ),
   GetPage(
     name: basket,
-    page: () => const BasketScreen(),
+    page: () => BasketScreen(),
+    // binding: BasketBindings(),
   ),
   GetPage(
     name: checkout,

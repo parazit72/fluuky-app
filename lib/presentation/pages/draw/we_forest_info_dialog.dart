@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/widgets/layout/background_scaffold.dart';
 
 class WeForestInfoScreen extends StatelessWidget {
@@ -6,6 +7,8 @@ class WeForestInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return Dialog(
       insetPadding: const EdgeInsets.all(0),
       child: BackgroundScaffold(
@@ -38,86 +41,62 @@ class WeForestInfoScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16.0),
               Text(
-                'Fluuky proudly partners with WeForest',
+                t.translate('fluukyPartnerWeForest'),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 8.0),
               Text(
-                'Through this partnership, and with your advocacy, we are on a mission to make a tangible and measurable impact on global reforestation programs.',
+                t.translate('throughThisPartnership'),
                 style: Theme.of(context).textTheme.bodyMedium,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 32),
               Text(
-                'VALUES THAT INSPIRE OUR WORK:',
+                t.translate('valuesThatInspire'),
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: 16.0),
-              const Wrap(
+              Wrap(
                 spacing: 8.0,
                 runSpacing: 8.0,
                 children: <Widget>[
                   Chip(
                     backgroundColor: Colors.white,
-                    label: Text('Passion'),
-                    shape: StadiumBorder(
-                      side: BorderSide(
-                        color: Colors.grey,
-                      ),
-                    ),
+                    label: Text(t.translate('Passion')),
+                    shape: const StadiumBorder(side: BorderSide(color: Colors.grey)),
                   ),
                   Chip(
                     backgroundColor: Colors.white,
-                    label: Text('Collaboration'),
-                    shape: StadiumBorder(
-                      side: BorderSide(
-                        color: Colors.grey,
-                      ),
-                    ),
+                    label: Text(t.translate('collaboration')),
+                    shape: const StadiumBorder(side: BorderSide(color: Colors.grey)),
                   ),
                   Chip(
                     backgroundColor: Colors.white,
-                    label: Text('Integrity'),
-                    shape: StadiumBorder(
-                      side: BorderSide(
-                        color: Colors.grey,
-                      ),
-                    ),
+                    label: Text(t.translate('integrity')),
+                    shape: const StadiumBorder(side: BorderSide(color: Colors.grey)),
                   ),
                 ],
               ),
-              const Wrap(
+              Wrap(
                 spacing: 8.0,
                 runSpacing: 8.0,
                 children: <Widget>[
                   Chip(
                     backgroundColor: Colors.white,
-                    label: Text('Transparency'),
-                    shape: StadiumBorder(
-                      side: BorderSide(
-                        color: Colors.grey,
-                      ),
-                    ),
+                    label: Text(t.translate('transparency')),
+                    shape: const StadiumBorder(side: BorderSide(color: Colors.grey)),
                   ),
                   Chip(
                     backgroundColor: Colors.white,
-                    label: Text('Excellence'),
-                    shape: StadiumBorder(
-                      side: BorderSide(
-                        color: Colors.grey,
-                      ),
-                    ),
+                    label: Text(t.translate('excellence')),
+                    shape: const StadiumBorder(side: BorderSide(color: Colors.grey)),
                   ),
                 ],
               ),
-              const Chip(
+              Chip(
                 backgroundColor: Colors.white,
-                label: Text('Courage'),
-                shape: StadiumBorder(
-                  side: BorderSide(
-                    color: Colors.grey,
-                  ),
-                ),
+                label: Text(t.translate('courage')),
+                shape: const StadiumBorder(side: BorderSide(color: Colors.grey)),
               ),
               const Spacer(),
               Center(
@@ -125,7 +104,7 @@ class WeForestInfoScreen extends StatelessWidget {
                   onPressed: () {
                     // Handle learn more action
                   },
-                  child: const Text('Learn More'),
+                  child: Text(t.translate('learnMore')),
                 ),
               ),
             ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -17,6 +18,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
   final List<Item> _data = generateItems(5);
 
   void _showEmailOptions(BuildContext context, String email) {
+    var t = AppLocalizations.of(context)!;
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -24,19 +26,19 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
           children: <Widget>[
             ListTile(
               leading: const Icon(Icons.email),
-              title: const Text('Send an Email'),
+              title: Text(t.translate('send_an_email')),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
             ListTile(
               leading: const Icon(Icons.copy),
-              title: const Text('Copy Email Address'),
+              title: Text(t.translate('copy_email_address')),
               onTap: () {
                 Clipboard.setData(ClipboardData(text: email));
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Email address copied to clipboard')),
+                  SnackBar(content: Text(t.translate('email_address_copied'))),
                 );
               },
             ),
@@ -48,8 +50,9 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
-      appBar: const AppBarSingleWidget(title: 'Help Center'),
+      appBar: AppBarSingleWidget(title: t.translate('helpCenter')),
       body: ListView(
         children: <Widget>[
           const SizedBox(height: 24),
@@ -59,12 +62,12 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Frequently Asked Questions',
+                  t.translate('faq'),
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 8.0),
                 Text(
-                  'From how to subscribe to our tree planting process with WeForest, you will find all the answers to our top questions below.',
+                  t.translate('faqDescription'),
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor),
                 ),
                 const SizedBox(height: 16.0),
@@ -106,12 +109,12 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Contact Us',
+                    t.translate('contactUs'),
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'Still have questions? Reach out to us!',
+                    t.translate('stillHaveQuestions'),
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor),
                   ),
                   const ContactItem(
@@ -132,6 +135,8 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
   }
 
   void sendEmailSheet() {
+    var t = AppLocalizations.of(context)!;
+
     showModalBottomSheet(
       context: Get.context!,
       isScrollControlled: true,
@@ -165,12 +170,12 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
                         launchUrl(Uri(scheme: 'mailto', path: 'example@example.com'));
                         Navigator.pop(context);
                       },
-                      child: const Wrap(
+                      child: Wrap(
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
-                          Icon(Icons.email, color: Colors.black),
-                          SizedBox(width: 8),
-                          Text('Send an email', style: TextStyle(color: Colors.black)),
+                          const Icon(Icons.email, color: Colors.black),
+                          const SizedBox(width: 8),
+                          Text(t.translate('send_an_email'), style: const TextStyle(color: Colors.black)),
                         ],
                       ),
                     ),
@@ -183,12 +188,12 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
                         Clipboard.setData(const ClipboardData(text: 'cs@fluuky.com'));
                         Navigator.pop(context);
                       },
-                      child: const Wrap(
+                      child: Wrap(
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
-                          Icon(Icons.copy, color: Colors.black),
-                          SizedBox(width: 8),
-                          Text('Copy the email', style: TextStyle(color: Colors.black)),
+                          const Icon(Icons.copy, color: Colors.black),
+                          const SizedBox(width: 8),
+                          Text(t.translate('copy_the_email'), style: const TextStyle(color: Colors.black)),
                         ],
                       ),
                     ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/auth_controller.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
@@ -13,8 +13,9 @@ class BillingAddressScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
-      appBar: const AppBarSingleWidget(title: 'Billing Address'),
+      appBar: AppBarSingleWidget(title: t.translate('billingAddress')),
       bottomNavigationBar: CustomNavBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
@@ -28,22 +29,33 @@ class BillingAddressScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 20),
-                      InputTextFieldWidget(controller: _authController.firstNameController, labelText: 'Full Name', hintText: 'Full Name'),
+                      InputTextFieldWidget(
+                          controller: _authController.firstNameController, labelText: t.translate('fullName'), hintText: t.translate('fullName')),
                       const SizedBox(height: 20),
-                      InputTextFieldWidget(controller: _authController.firstNameController, labelText: 'Address Line 1', hintText: 'Address Line 1'),
+                      InputTextFieldWidget(
+                          controller: _authController.firstNameController,
+                          labelText: t.translate('addressLine1'),
+                          hintText: t.translate('addressLine1')),
                       const SizedBox(height: 20),
-                      InputTextFieldWidget(controller: _authController.firstNameController, labelText: 'Address Line 2', hintText: 'Address Line 2'),
+                      InputTextFieldWidget(
+                          controller: _authController.firstNameController,
+                          labelText: t.translate('addressLine2'),
+                          hintText: t.translate('addressLine2')),
                       const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Expanded(
                               child: InputTextFieldWidget(
-                                  controller: _authController.firstNameController, labelText: 'State/Region', hintText: 'State/Region')),
+                                  controller: _authController.firstNameController,
+                                  labelText: t.translate('state_region'),
+                                  hintText: t.translate('state_region'))),
                           const SizedBox(width: 15),
                           Expanded(
                             child: InputTextFieldWidget(
-                                controller: _authController.firstNameController, labelText: 'ZIP/Postal Code', hintText: 'ZIP/Postal Code'),
+                                controller: _authController.firstNameController,
+                                labelText: t.translate('zipPostalCode'),
+                                hintText: t.translate('zipPostalCode')),
                           ),
                         ],
                       ),
@@ -51,7 +63,7 @@ class BillingAddressScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Billing Address = Shipping Address', style: Theme.of(context).textTheme.bodySmall),
+                          Text(t.translate('billing_equals_shipping'), style: Theme.of(context).textTheme.bodySmall),
                           Obx(
                             () {
                               return Switch(
@@ -77,14 +89,14 @@ class BillingAddressScreen extends StatelessWidget {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing Data')),
+                      SnackBar(content: Text(t.translate('processing_data'))),
                     );
                     Get.toNamed(helpCenter);
 
                     // _authController.registerWithEmail();
                   }
                 },
-                child: const Text('Save Changes'),
+                child: Text(t.translate('saveChanges')),
               ),
             ),
           ],

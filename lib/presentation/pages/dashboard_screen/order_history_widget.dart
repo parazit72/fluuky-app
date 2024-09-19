@@ -5,6 +5,7 @@ import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/domain/entities/order_entity.dart';
 
 import 'package:flutter/services.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -22,6 +23,7 @@ class OrderHistoryWidget extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
+        var t = AppLocalizations.of(context)!;
         return Container(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -29,8 +31,8 @@ class OrderHistoryWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               const SizedBox(height: 16),
-              Text('Share this draw!', style: Theme.of(context).textTheme.titleLarge),
-              Text('Choose from one of the following options', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+              Text(t.translate('shareThisDraw'), style: Theme.of(context).textTheme.titleLarge),
+              Text(t.translate('chooseFromOneOfTheFollowing'), style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
               const SizedBox(height: 16),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -39,32 +41,32 @@ class OrderHistoryWidget extends StatelessWidget {
                   children: [
                     ShareIconButton(
                       iconPath: 'assets/images/email-empty.svg',
-                      label: 'Email',
+                      label: t.translate('Email'),
                       order: order,
                     ),
                     ShareIconButton(
                       iconPath: 'assets/images/whatsapp-empty.svg',
-                      label: 'Whatsapp',
+                      label: t.translate('Whatsapp'),
                       order: order,
                     ),
                     ShareIconButton(
                       iconPath: 'assets/images/telegram-empty.svg',
-                      label: 'Telegram',
+                      label: t.translate('Telegram'),
                       order: order,
                     ),
                     ShareIconButton(
                       iconPath: 'assets/images/facebook-empty.svg',
-                      label: 'Facebook',
+                      label: t.translate('Facebook'),
                       order: order,
                     ),
                     ShareIconButton(
                       iconPath: 'assets/images/instagram-empty.svg',
-                      label: 'Instagram',
+                      label: t.translate('Instagram'),
                       order: order,
                     ),
                     ShareIconButton(
                       iconPath: 'assets/images/x-empty.svg',
-                      label: 'X',
+                      label: t.translate('X'),
                       order: order,
                     ),
                   ],
@@ -77,11 +79,11 @@ class OrderHistoryWidget extends StatelessWidget {
                   padding: WidgetStateProperty.all(EdgeInsets.zero),
                 ),
                 icon: const Icon(Icons.copy, size: 20),
-                label: const Text('Copy the link'),
+                label: Text(t.translate('copyTheLink')),
                 onPressed: () {
                   Navigator.of(context).pop();
                   Clipboard.setData(ClipboardData(text: 'https://fluuky.com/order/${order.id}'));
-                  Get.snackbar('Success', 'Link copied to clipboard');
+                  Get.snackbar(t.translate('success'), t.translate('linkCopied'));
                 },
               ),
             ],
@@ -100,6 +102,8 @@ class OrderHistoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       width: MediaQuery.of(context).size.width * 0.85,
@@ -113,8 +117,8 @@ class OrderHistoryWidget extends StatelessWidget {
           _buildDottedLine(),
           ..._buildOrderDetails(context),
           _buildDottedLine(),
-          _buildInfoRow(context, 'Total:', '\$${order.totalPrice?.toStringAsFixed(2)}'),
-          _buildDownloadCertificateButton(),
+          _buildInfoRow(context, t.translate('total_amoun'), '\$${order.totalPrice?.toStringAsFixed(2)}'),
+          _buildDownloadCertificateButton(context),
         ],
       ),
     );
@@ -128,6 +132,8 @@ class OrderHistoryWidget extends StatelessWidget {
   }
 
   Widget _buildShareButton(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return Align(
       alignment: Alignment.topRight,
       child: TextButton.icon(
@@ -136,7 +142,7 @@ class OrderHistoryWidget extends StatelessWidget {
           padding: WidgetStateProperty.all(EdgeInsets.zero),
         ),
         onPressed: () => _showShareBottomSheet(context),
-        label: const Text('Share'),
+        label: Text(t.translate('share')),
         icon: const Icon(Icons.share, size: 18),
       ),
     );
@@ -182,13 +188,15 @@ class OrderHistoryWidget extends StatelessWidget {
   }
 
   Widget _buildTicketNumber(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return SizedBox(
       width: MediaQuery.of(context).size.width / 2 - 60,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text('Ticket Number', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+          Text(t.translate('ticket_number'), style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
           Text('#${order.id}', style: Theme.of(context).textTheme.titleMedium)
         ],
       ),
@@ -210,25 +218,28 @@ class OrderHistoryWidget extends StatelessWidget {
   }
 
   List<Widget> _buildOrderDetails(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return [
-      _buildInfoRow(context, 'Prize:', order.city ?? ''),
+      _buildInfoRow(context, t.translate('prize_label'), order.city ?? ''),
       const SizedBox(height: 16),
-      _buildInfoRow(context, 'Draw Date:', order.email.toString()),
+      _buildInfoRow(context, t.translate('draw_date_label'), order.email.toString()),
       const SizedBox(height: 16),
-      _buildInfoRow(context, 'Tickets:', order.id.toString()),
+      _buildInfoRow(context, t.translate('tickets_count'), order.id.toString()),
       const SizedBox(height: 16),
-      _buildInfoRow(context, 'Trees Planted:', order.id.toString()),
+      _buildInfoRow(context, t.translate('trees_planted'), order.id.toString()),
       const SizedBox(height: 16),
-      _buildInfoRow(context, 'Transaction ID:', order.city ?? ''),
+      _buildInfoRow(context, t.translate('transaction_id'), order.city ?? ''),
     ];
   }
 
-  Widget _buildDownloadCertificateButton() {
+  Widget _buildDownloadCertificateButton(context) {
+    var t = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.only(top: 16, bottom: 20),
       child: OutlinedButton(
         onPressed: () {},
-        child: const Text('Download Certificate'),
+        child: Text(t.translate('download_certificate')),
       ),
     );
   }
@@ -248,6 +259,8 @@ class ShareIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return Column(
       children: [
         Padding(
@@ -267,9 +280,9 @@ class ShareIconButton extends StatelessWidget {
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
             onPressed: () async {
-              final result = await Share.share('Check out this raffle: ${order.id}');
+              final result = await Share.share(t.translate('Check out this raffle: ') + order.id.toString());
               if (result.status == ShareResultStatus.success) {
-                Get.snackbar('Success', 'Thank you for sharing');
+                Get.snackbar(t.translate('Success'), t.translate('Thank you for sharing'));
               }
             },
           ),

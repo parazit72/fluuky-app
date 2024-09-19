@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluuky/domain/entities/notification_entity.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/pages/home_screen/home_screen.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
@@ -14,6 +15,7 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NotificationController notificationController = Get.find<NotificationController>();
+    var t = AppLocalizations.of(context)!;
 
     return BackgroundScaffold(
       appBar: AppBar(
@@ -40,7 +42,7 @@ class NotificationScreen extends StatelessWidget {
         elevation: 2,
         surfaceTintColor: Colors.transparent,
         title: Text(
-          'Notifications',
+          t.translate('Notifications'),
           style: Theme.of(context).textTheme.titleMedium,
           textAlign: TextAlign.center,
         ),
@@ -70,6 +72,7 @@ class NotificationScreen extends StatelessWidget {
       context: Get.context!,
       isScrollControlled: true,
       builder: (context) {
+        var t = AppLocalizations.of(context)!;
         return DraggableScrollableSheet(
           expand: false,
           initialChildSize: 0.3,
@@ -90,8 +93,8 @@ class NotificationScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Notifications', style: Theme.of(context).textTheme.titleLarge),
-                    Text('Choose one of the following options', style: Theme.of(context).textTheme.bodySmall),
+                    Text(t.translate('Notifications'), style: Theme.of(context).textTheme.titleLarge),
+                    Text(t.translate('chooseOneOfTheFollowing'), style: Theme.of(context).textTheme.bodySmall),
                     const SizedBox(height: 10),
                     TextButton(
                       style: ButtonStyle(
@@ -99,12 +102,12 @@ class NotificationScreen extends StatelessWidget {
                         minimumSize: WidgetStateProperty.all(const Size(0, 0)),
                       ),
                       onPressed: () async => await controller.markAllAsRead(),
-                      child: const Text('Mark all as read'),
+                      child: Text(t.translate('mark_all_as_read')),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Push Notifications', style: Theme.of(context).textTheme.bodySmall),
+                        Text(t.translate('push_notifications'), style: Theme.of(context).textTheme.bodySmall),
                         Obx(
                           () {
                             return Switch(

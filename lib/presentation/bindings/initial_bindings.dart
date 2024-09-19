@@ -1,17 +1,18 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:fluuky/app/services/auth_service.dart';
 import 'package:fluuky/data/providers/category_provider.dart';
 import 'package:fluuky/data/providers/database/local_notification_datasource.dart';
 import 'package:fluuky/data/providers/database/push_notification_datasource.dart';
 import 'package:fluuky/data/providers/raffle_provider.dart';
+import 'package:fluuky/data/repositories/basket_repository_impl.dart';
 import 'package:fluuky/data/repositories/notification_repository_impl.dart';
-import 'package:fluuky/data/repositories/order_repository_impl.dart';
 import 'package:fluuky/data/repositories/raffle_repository_impl.dart';
+import 'package:fluuky/domain/repositories/basket_repository.dart';
 import 'package:fluuky/domain/repositories/raffle_repository.dart';
 import 'package:fluuky/domain/usecases/fetch_notifications_usecase.dart';
 import 'package:fluuky/domain/usecases/get_raffles_use_case.dart';
+import 'package:fluuky/presentation/controllers/basket_controller.dart';
 import 'package:fluuky/presentation/controllers/category_controller.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
@@ -51,18 +52,22 @@ class InitialBindings extends Bindings {
 
     // Register FlutterSecureStorage
     Get.put(const FlutterSecureStorage());
-    Get.put(AuthService());
 
     // Register AuthRepository with APIProvider and FlutterSecureStorage
     Get.put(AuthRepositoryImpl());
     Get.put<AuthRepository>(Get.find<AuthRepositoryImpl>());
-
+    // Get.lazyPut(() => BasketRepositoryImpl());
     // Register VerifyCodeUseCase with AuthRepository
     // Get.put(VerifyCodeUseCase(Get.find<AuthRepositoryImpl>()));
 
     // Register AuthController with AuthRepository and VerifyCodeUseCase
     Get.put(AuthController(Get.find<AuthRepository>()));
     // Get.put(AuthController(Get.find<AuthRepository>(), Get.find<VerifyCodeUseCase>()));
+
+    Get.put(BasketRepositoryImpl());
+    Get.put<BasketRepository>(Get.find<BasketRepositoryImpl>());
+
+    Get.put(BasketController(Get.find<BasketRepository>()));
 
     // Initialize FlutterLocalNotificationsPlugin
     Get.put(FlutterLocalNotificationsPlugin());

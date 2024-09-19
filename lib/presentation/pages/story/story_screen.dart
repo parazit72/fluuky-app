@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/story_controller.dart';
 import 'package:get/get.dart';
 
@@ -34,6 +35,8 @@ class StoryScreen extends StatelessWidget {
               },
               itemBuilder: (context, index) {
                 final storyItem = _storyController.stories[index];
+                var t = AppLocalizations.of(context)!;
+
                 return Stack(
                   children: [
                     // Fullscreen image
@@ -86,7 +89,7 @@ class StoryScreen extends StatelessWidget {
                       bottom: 40,
                       left: 20,
                       right: 20,
-                      child: ElevatedButton(onPressed: () {}, child: const Text('View Details')),
+                      child: ElevatedButton(onPressed: () {}, child: Text(t.translate('View Details'))),
                     ),
                   ],
                 );

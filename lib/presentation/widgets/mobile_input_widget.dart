@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/widgets/country_picker_sheet_widget.dart';
 import 'package:get/get.dart';
 
@@ -44,6 +45,8 @@ class _MobileInputWidgetState extends State<MobileInputWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return Row(
       children: [
         Column(
@@ -91,7 +94,7 @@ class _MobileInputWidgetState extends State<MobileInputWidget> {
                 if (value == null || value.isEmpty) {
                   validator = true;
                   setState(() {});
-                  return 'Please enter your mobile number';
+                  return t.translate('please_enter_your_mobile_number');
                 }
                 validator = false;
                 setState(() {});

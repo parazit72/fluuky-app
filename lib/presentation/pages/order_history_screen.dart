@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/order_controller.dart';
 import 'package:fluuky/presentation/pages/dashboard_screen/order_history_widget.dart';
 import 'package:get/get.dart';
@@ -11,8 +12,9 @@ class OrderHistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
-      appBar: const AppBarSingleWidget(title: 'History Order'),
+      appBar: AppBarSingleWidget(title: t.translate('history_order')),
       bottomNavigationBar: CustomNavBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
@@ -23,16 +25,16 @@ class OrderHistoryScreen extends StatelessWidget {
               children: [
                 const SizedBox(height: 32),
                 DropdownButtonFormField<String>(
-                  decoration: const InputDecoration(
-                    labelText: 'Select Date Range',
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    labelText: t.translate('Select Date Range'),
+                    border: const OutlineInputBorder(),
                   ),
                   value: _orderController.timeFilter.value.isEmpty ? 'All Time' : _orderController.timeFilter.value,
-                  items: const [
-                    DropdownMenuItem(value: 'All Time', child: Text('All Time')),
-                    DropdownMenuItem(value: 'Last 7 Days', child: Text('Last 7 Days')),
-                    DropdownMenuItem(value: 'Last 30 Days', child: Text('Last 30 Days')),
-                    DropdownMenuItem(value: 'Last 3 Months', child: Text('Last 3 Months')),
+                  items: [
+                    DropdownMenuItem(value: 'All Time', child: Text(t.translate('All Time'))),
+                    DropdownMenuItem(value: 'Last 7 Days', child: Text(t.translate('Last 7 Days'))),
+                    DropdownMenuItem(value: 'Last 30 Days', child: Text(t.translate('Last 30 Days'))),
+                    DropdownMenuItem(value: 'Last 3 Months', child: Text(t.translate('Last 3 Months'))),
                   ],
                   onChanged: (String? newValue) {
                     if (newValue == 'All Time') {
@@ -60,10 +62,10 @@ class OrderHistoryScreen extends StatelessWidget {
                   final ordersToShow = _orderController.filteredOrders.isNotEmpty ? _orderController.filteredOrders : _orderController.orders;
 
                   if (ordersToShow.isEmpty) {
-                    return const Center(
+                    return Center(
                       child: Text(
-                        'No orders found',
-                        style: TextStyle(fontSize: 16),
+                        t.translate('No orders found'),
+                        style: const TextStyle(fontSize: 16),
                       ),
                     );
                   }

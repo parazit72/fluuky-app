@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/domain/entities/user_entity.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_fluuky_widget.dart';
 import 'package:fluuky/presentation/widgets/layout/background_scaffold.dart';
@@ -22,7 +23,16 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
   @override
   Widget build(BuildContext context) {
     UserEntity? user = _authController.user.value;
-    user = UserEntity(id: '1', name: 'John Doe', email: 'john.doe@example.com', avatar: 'assets/images/avatar.jpg', token: '');
+    user = UserEntity(
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'john.doe@example.com',
+        avatar: 'assets/images/avatar.jpg',
+        acceptedTermsAndConditions: false,
+        phone: '',
+        birthDate: DateTime.now());
+
+    var t = AppLocalizations.of(context)!;
 
     return BackgroundScaffold(
       appBar: const AppBarFluuky(),
@@ -43,7 +53,7 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
             _buildListItem('notifications', 'Notifications', notifications),
             ListTile(
                 leading: SvgPicture.asset('assets/images/logout.svg', colorFilter: const ColorFilter.mode(Colors.black, BlendMode.srcIn)),
-                title: const Text('Log Out'),
+                title: Text(t.translate('Log Out')),
                 onTap: () {
                   _authController.logout();
                   Get.offAllNamed(login);
@@ -58,12 +68,13 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
   }
 
   Widget _buildListItem(String icon, String title, String route) {
+    var t = AppLocalizations.of(context)!;
     return ListTile(
         leading: SvgPicture.asset(
           'assets/images/$icon.svg',
           colorFilter: const ColorFilter.mode(Colors.black, BlendMode.srcIn),
         ),
-        title: Text(title),
+        title: Text(t.translate(title)),
         onTap: () => Get.toNamed(route));
   }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/auth_controller.dart';
+import 'package:fluuky/presentation/widgets/language_dropdown.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
 import 'package:get/get.dart';
@@ -12,42 +14,44 @@ class ProfilePreferencesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
-      appBar: const AppBarSingleWidget(title: 'Profile'),
+      appBar: AppBarSingleWidget(title: t.translate('profile')),
       bottomNavigationBar: CustomNavBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
         child: ListView(
           children: [
             const SizedBox(height: 32),
-            buildSectionTitle('Account', context),
-            buildPreferenceItem('Personal Data', personalData),
-            buildPreferenceItem('Contact Information', contactInformation),
-            buildPreferenceItem('Change Password', changePassword),
+            buildSectionTitle(t.translate('Account'), context),
+            buildPreferenceItem(t.translate('personalData'), personalData),
+            buildPreferenceItem(t.translate('contactInformation'), contactInformation),
+            buildPreferenceItem(t.translate('change_password'), changePassword),
             const SizedBox(height: 32),
-            buildSectionTitle('Checkout Details', context),
-            buildPreferenceItem('Billing Address', billingAddress),
-            buildPreferenceItem('Shipping Address', shippingAddress),
-            buildPreferenceItem('Payment Method', paymentMethod),
+            buildSectionTitle(t.translate('checkoutDetails'), context),
+            buildPreferenceItem(t.translate('billingAddress'), billingAddress),
+            // buildPreferenceItem(t.translate('Shipping Address'), shippingAddress),
+            buildPreferenceItem(t.translate('payment_method'), paymentMethod),
             const SizedBox(height: 32),
-            buildSectionTitle('Manage Subscription', context),
-            buildSimpleRow('Membership', 'Basic'),
-            buildTextButton('Upgrade now', () {}),
+            buildSectionTitle(t.translate('manage_subscription'), context),
+            buildSimpleRow(t.translate('Membership'), t.translate('basic')),
+            buildTextButton(t.translate('upgrade_now'), () {}),
             const SizedBox(height: 32),
-            buildSectionTitle('Referral Program', context),
-            buildTextButton('Invite a Friend', () {}),
+            buildSectionTitle(t.translate('referral_program'), context),
+            buildTextButton(t.translate('invite_a_friend'), () {}),
             const SizedBox(height: 32),
-            buildSectionTitle('About', context),
-            buildPreferenceItem('Privacy Policy', privacyPolicy),
-            buildPreferenceItem('Terms of Service', termsAndCondition),
-            buildPreferenceItem('Help Center', helpCenter),
+            buildSectionTitle(t.translate('Language'), context),
+            LanguageDropdown(hintText: 'Select Language', initialValue: Get.locale?.languageCode),
             const SizedBox(height: 32),
-            buildTextButton('Log out', () {
-              _showLogOutSheet();
-            }),
-            buildTextButton('Delete Account', () {}, color: const Color(0XFFD30201)),
+            buildSectionTitle(t.translate('About'), context),
+            buildPreferenceItem(t.translate('privacy_policy'), privacyPolicy),
+            buildPreferenceItem(t.translate('terms_of_service'), termsAndCondition),
+            buildPreferenceItem(t.translate('helpCenter'), helpCenter),
             const SizedBox(height: 32),
-            buildSectionTitle('Fluuky in Social Media', context),
+            buildTextButton(t.translate('logout'), () => _showLogOutSheet(context)),
+            buildTextButton(t.translate('delete_account'), () {}, color: const Color(0XFFD30201)),
+            const SizedBox(height: 32),
+            buildSectionTitle(t.translate('fluuky_in_social_media'), context),
             buildSocialMediaRow(),
             const SizedBox(height: 40),
           ],
@@ -101,13 +105,7 @@ class ProfilePreferencesScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                title,
-                style: TextStyle(
-                  color: color ?? FluukyTheme.primaryColor,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              Text(title, style: TextStyle(color: color ?? FluukyTheme.primaryColor, fontWeight: FontWeight.w600)),
             ],
           ),
         ),
@@ -124,7 +122,8 @@ class ProfilePreferencesScreen extends StatelessWidget {
     );
   }
 
-  void _showLogOutSheet() {
+  void _showLogOutSheet(context) {
+    var t = AppLocalizations.of(context)!;
     showModalBottomSheet(
       context: Get.context!,
       isScrollControlled: true,
@@ -149,8 +148,9 @@ class ProfilePreferencesScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 20),
-                    Text('Log out?', style: Theme.of(context).textTheme.titleMedium),
-                    Text('Are you sure you want to log out?', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+                    Text(t.translate('logout?'), style: Theme.of(context).textTheme.titleMedium),
+                    Text(t.translate('are_you_sure_you_want_to_log_out'),
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
                     const SizedBox(height: 20),
                     ElevatedButton(
                         onPressed: () {
@@ -158,13 +158,11 @@ class ProfilePreferencesScreen extends StatelessWidget {
                           Navigator.pop(context);
                           Get.offAllNamed(login);
                         },
-                        child: const Text('Log Out')),
+                        child: Text(t.translate('logout'))),
                     const SizedBox(height: 20),
                     OutlinedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Cancel'),
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(t.translate('Cancel')),
                     ),
                     const SizedBox(height: 10),
                   ],

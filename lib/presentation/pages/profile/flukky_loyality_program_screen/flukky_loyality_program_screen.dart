@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/pages/profile/flukky_loyality_program_screen/gold_tier_widget.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
 import 'package:fluuky/presentation/pages/profile/flukky_loyality_program_screen/validity_tier_maintenance_widget.dart';
@@ -12,14 +13,16 @@ class FlukkyLoyalityProgramScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return BackgroundScaffold(
-      appBar: const AppBarSingleWidget(title: 'Flukky Loyality Program'),
+      appBar: AppBarSingleWidget(title: t.translate('flukkyLoyaltyProgram')),
       body: Padding(
         padding: const EdgeInsets.all(32),
         child: ListView(
           children: [
             const SizedBox(height: 32),
-            Text('Unlock rewards with our tiered loyalty program!',
+            Text(t.translate('unlockRewardsWithOurTieredLoyaltyProgram'),
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
             const SizedBox(height: 24),
             const SilverTierWidget(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/domain/entities/user_entity.dart';
 import 'package:fluuky/presentation/controllers/auth_controller.dart';
+import 'package:fluuky/presentation/widgets/locale_toggle_button.dart';
 import 'package:get/get.dart';
 
 class WelcomeUserAvatar extends StatelessWidget {
@@ -9,7 +10,14 @@ class WelcomeUserAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserEntity? user = _authController.user.value;
-    user = UserEntity(id: '1', name: 'John Doe', email: 'john.doe@example.com', avatar: 'assets/images/avatar.jpg', token: '');
+    user = UserEntity(
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'john.doe@example.com',
+        avatar: 'assets/images/avatar.jpg',
+        acceptedTermsAndConditions: false,
+        phone: '',
+        birthDate: DateTime.now());
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 29),
       child: Wrap(
@@ -18,10 +26,10 @@ class WelcomeUserAvatar extends StatelessWidget {
           CircleAvatar(
             minRadius: 18,
             maxRadius: 20,
-            backgroundImage: AssetImage(user.avatar != '' ? user.avatar : 'assets/images/avatar.jpg'),
+            backgroundImage: AssetImage(user.avatar ?? 'assets/images/avatar.jpg'),
           ),
           const SizedBox(width: 16),
-          Text(' ${user.name}', style: Get.textTheme.titleLarge),
+          Text(' ${user.firstName}', style: Get.textTheme.titleLarge),
         ],
       ),
     );

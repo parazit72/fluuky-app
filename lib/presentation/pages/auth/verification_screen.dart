@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
@@ -12,7 +13,8 @@ class VerificationScreen extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    final userEmailAddress = controller.user.value?.email ?? 'your email address';
+    var t = AppLocalizations.of(context)!;
+    final userEmailAddress = controller.user.value?.email ?? t.translate('email_placeholder');
 
     return BackgroundScaffold(
       appBar: AppBar(
@@ -23,8 +25,8 @@ class VerificationScreen extends GetView<AuthController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Register in 4 steps:', style: Theme.of(context).textTheme.bodySmall),
-                Text('Step 2/4', style: Theme.of(context).textTheme.bodySmall)
+                Text(t.translate('registerSteps'), style: Theme.of(context).textTheme.bodySmall),
+                Text(t.translate('step_2_4'), style: Theme.of(context).textTheme.bodySmall)
               ],
             ),
             const Divider()
@@ -37,9 +39,9 @@ class VerificationScreen extends GetView<AuthController> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Verification Code', style: Theme.of(context).textTheme.titleLarge),
+            Text(t.translate('verificationCode'), style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 5),
-            Text('We have sent you a verification code to $userEmailAddress. Please enter the code here to verify your email address.',
+            Text(t.translate('verificationCodeSent_1') + userEmailAddress + t.translate('verificationCodeSent_2'),
                 style: Theme.of(context).textTheme.bodySmall),
             const SizedBox(height: 24),
             Center(
@@ -58,16 +60,14 @@ class VerificationScreen extends GetView<AuthController> {
             ),
             const SizedBox(height: 24),
             ElevatedButton(
-              onPressed: () {
-                _authController.verifyCode();
-              },
-              child: const Text('Verify'),
+              onPressed: () => _authController.verifyCode(),
+              child: Text(t.translate('verify')),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 16, bottom: 24),
-              child: OutlinedButton(onPressed: () => _authController.resendCode(userEmailAddress), child: const Text('Resend Code')),
+              child: OutlinedButton(onPressed: () => _authController.resendCode(userEmailAddress), child: Text(t.translate('resend_code'))),
             ),
-            TextButton(onPressed: goBack, child: const Text('Use different email address ')),
+            TextButton(onPressed: goBack, child: Text(t.translate('use_different_email'))),
           ],
         ),
       ),

@@ -2,13 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:get/get.dart';
+import 'package:to_arabic_number/to_arabic_number.dart';
 
 class UserStatusWidget extends StatelessWidget {
   const UserStatusWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+    // Get the current locale
+    final locale = Get.locale;
+
+    // Define a method to format numbers based on locale
+    String formatNumber(String number) {
+      if (locale?.languageCode == 'ar') {
+        // Convert to Arabic numerals
+        return Arabic.number(number);
+      } else {
+        // Use standard numerals
+        return number;
+      }
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
       child: InkWell(
@@ -30,7 +47,7 @@ class UserStatusWidget extends StatelessWidget {
                       SvgPicture.asset('assets/images/leaf-circle-green.svg',
                           colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn), width: 16, height: 16),
                       const SizedBox(width: 5),
-                      Text('Basic', style: Theme.of(context).textTheme.headlineSmall),
+                      Text(t.translate('basic'), style: Theme.of(context).textTheme.headlineSmall),
                     ],
                   ),
                   Wrap(
@@ -39,7 +56,7 @@ class UserStatusWidget extends StatelessWidget {
                       SvgPicture.asset('assets/images/leaf-circle-green.svg',
                           colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn), width: 16, height: 16),
                       const SizedBox(width: 5),
-                      Text('Silver', style: Theme.of(context).textTheme.headlineSmall),
+                      Text(t.translate('silver'), style: Theme.of(context).textTheme.headlineSmall),
                     ],
                   ),
                 ],
@@ -57,8 +74,8 @@ class UserStatusWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('5,000/10,000 AED', style: Theme.of(context).textTheme.bodySmall),
-                  Text('12 months left', style: Theme.of(context).textTheme.bodySmall),
+                  Text(formatNumber('5,000/10,000 AED'), style: Theme.of(context).textTheme.bodySmall),
+                  Text(formatNumber(t.translate('12_months_left')), style: Theme.of(context).textTheme.bodySmall),
                 ],
               ),
               const SizedBox(height: 16),
@@ -75,7 +92,7 @@ class UserStatusWidget extends StatelessWidget {
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
-                        'Spend 5,000 AED more before 10 April 2025 to retain your Silver benefits',
+                        formatNumber(t.translate('spend_5k_more')),
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 11),
                       ),
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
 
 class PrivacyPolicyScreen extends StatelessWidget {
@@ -10,11 +11,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
       appBar: AppBar(
         title: Center(
           child: Text(
-            'Privacy Policy',
+            t.translate('privacy_policy'),
             style: Theme.of(context).textTheme.titleLarge,
             textAlign: TextAlign.center,
           ),

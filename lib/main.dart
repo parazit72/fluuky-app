@@ -25,7 +25,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(NotificationEntityAdapter());
   await Hive.openBox<NotificationEntity>('notificationsBox');
-  Hive.registerAdapter(RaffleEntityAdapter());
+  // Hive.registerAdapter(RaffleEntityAdapter());
   await Hive.openBox<RaffleEntity>('rafflesBox');
   Hive.registerAdapter(CategoryEntityAdapter());
   await Hive.openBox<CategoryEntity>('categoryBox');

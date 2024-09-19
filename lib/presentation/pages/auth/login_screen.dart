@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/data/local/local_storage.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/widgets/layout/background_scaffold.dart';
 import 'package:fluuky/presentation/widgets/input_text_field_widget.dart';
+import 'package:fluuky/presentation/widgets/locale_toggle_button.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -87,6 +89,7 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
       body: Stack(
         children: [
@@ -95,6 +98,11 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
             right: 0,
             left: 0,
             child: Image.asset('assets/images/fluuky.png', height: 28),
+          ),
+          const Positioned(
+            top: 50,
+            right: 10,
+            child: LocaleToggleButton(),
           ),
           Align(
             alignment: Alignment.bottomCenter,
@@ -129,27 +137,27 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                           SizedBox(
                             width: MediaQuery.of(context).size.width,
                             child: Text(
-                              isFirstLaunch ? 'Welcome to Fluuky!' : 'Welcome back to Fluuky!',
+                              isFirstLaunch ? t.translate('welcome_to_fluuky') : t.translate('welcome_back_to_fluuky'),
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                           ),
                           const SizedBox(height: 12),
                           Text(
-                            'Sign in to your account to continue your tree-planting journey.',
+                            t.translate('sign_in_continue_tree_planting'),
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                           const SizedBox(height: 20),
                           InputTextFieldWidget(
-                              labelText: 'Email',
-                              hintText: 'Enter your email',
+                              labelText: t.translate('email'),
+                              hintText: t.translate('enterEmailAddress'),
                               controller: _authController.emailController,
                               focusNode: _emailFocusNode),
                           const SizedBox(height: 16),
                           PasswordTextFieldWidget(
                             controller: _authController.passwordController,
-                            hintText: 'Enter your password',
+                            hintText: t.translate('enter_password'),
                             focusNode: _passwordFocusNode,
-                            validator: (val) => (val != null && val.length < 6) ? 'Password too short.' : null,
+                            validator: (val) => (val != null && val.length < 6) ? t.translate('password_too_short') : null,
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
@@ -176,13 +184,13 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                         ),
                                       ),
                                     ),
-                                    Text('Remember me?', style: Theme.of(context).textTheme.bodySmall),
+                                    Text(t.translate('remember_me?'), style: Theme.of(context).textTheme.bodySmall),
                                   ],
                                 ),
                                 GestureDetector(
                                   onTap: () {},
                                   child: Text(
-                                    'Forgot Password?',
+                                    t.translate('forgot_password'),
                                     textAlign: TextAlign.right,
                                     style: TextStyle(color: FluukyTheme.primaryColor),
                                   ),
@@ -192,16 +200,16 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                           ),
                           ElevatedButton(
                             onPressed: () async => await _authController.loginWithEmail(),
-                            child: const Text('Login'),
+                            child: Text(t.translate('login')),
                           ),
                           TextButton(
                             onPressed: () => Get.toNamed(signUp),
                             child: Wrap(spacing: 10, crossAxisAlignment: WrapCrossAlignment.center, children: [
                               Text(
-                                'Don’t have an account?',
+                                t.translate('dontHaveAccount'),
                                 style: Theme.of(context).textTheme.bodySmall,
                               ),
-                              const Text('Sign Up')
+                              Text(t.translate('signup'))
                             ]),
                           ),
                         ],

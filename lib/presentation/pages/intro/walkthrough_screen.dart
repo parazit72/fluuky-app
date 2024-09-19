@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:fluuky/data/models/walkthrough_page_model.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/pages/auth/login_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../app/config/route_constants.dart';
@@ -24,9 +25,7 @@ class WalkthroughScreenState extends State<WalkthroughScreen> {
     _controller.addListener(() {
       int next = _controller.page!.round();
       if (_currentPage != next) {
-        setState(() {
-          _currentPage = next;
-        });
+        setState(() => _currentPage = next);
       }
     });
   }
@@ -40,6 +39,8 @@ class WalkthroughScreenState extends State<WalkthroughScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -135,18 +136,18 @@ class WalkthroughScreenState extends State<WalkthroughScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            'Welcome to Fluuky!',
+                            t.translate('welcome_to_fluuky'),
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.headlineSmall,
                           ),
                           Text(
-                            'Plant trees, enter luxury draws, & get a chance to win!',
+                            t.translate('plantTreesEnterDrawsGetChanceToWin'),
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           ElevatedButton(
                             onPressed: () => _navigateHomepage(),
-                            child: const Text('Get Started!'),
+                            child: Text(t.translate('get_started')),
                           ),
                         ],
                       ),

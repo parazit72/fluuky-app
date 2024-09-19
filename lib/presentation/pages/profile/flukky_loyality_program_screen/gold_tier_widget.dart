@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 
 class GoldTierWidget extends StatelessWidget {
   const GoldTierWidget({super.key});
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return Container(
         padding: const EdgeInsets.all(16),
         decoration: const BoxDecoration(
@@ -34,12 +37,11 @@ class GoldTierWidget extends StatelessWidget {
                     ),
                     child: Center(child: Image.asset('assets/images/tree-green.png', width: 24)),
                   ),
-                  Text('Gold Tier', style: Theme.of(context).textTheme.titleMedium),
+                  Text(t.translate('GoldTier'), style: Theme.of(context).textTheme.titleMedium),
                 ],
               ),
               const SizedBox(height: 16),
-              Text('Spend 25,000 AED within a rolling 12-month period.',
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+              Text(t.translate('spend25kAEDwithin12Months'), style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
               const SizedBox(height: 24),
               Row(
                 children: [
@@ -59,7 +61,7 @@ class GoldTierWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Expanded(child: Text('10% on all draws')),
+                  Expanded(child: Text(t.translate('10percentOnAllDraws'))),
                 ],
               ),
               const SizedBox(height: 20),
@@ -81,7 +83,7 @@ class GoldTierWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Expanded(child: Text('Priority customer service')),
+                  Expanded(child: Text(t.translate('priorityCustomerService'))),
                 ],
               ),
               const SizedBox(height: 20),
@@ -103,7 +105,7 @@ class GoldTierWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Expanded(child: Text('Access to Silver exclusive draws')),
+                  Expanded(child: Text(t.translate('accessToSilverExclusiveDraws'))),
                 ],
               ),
               const SizedBox(height: 20),
@@ -125,7 +127,7 @@ class GoldTierWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Expanded(child: Text('Exclusive Gold-Tier draws and events')),
+                  Expanded(child: Text(t.translate('exclusiveGoldTierDraws'))),
                 ],
               ),
               const SizedBox(height: 20),
@@ -147,7 +149,7 @@ class GoldTierWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Expanded(child: Text('Access to exclusive events or product launches')),
+                  Expanded(child: Text(t.translate('accessToExclusiveEventsOrProductLaunches'))),
                 ],
               ),
               const SizedBox(height: 20),
@@ -169,7 +171,7 @@ class GoldTierWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Expanded(child: Text('Free birthday credit to plant a tree and enter any draw')),
+                  Expanded(child: Text(t.translate('freeBirthdayCredittoPlantATree'))),
                 ],
               ),
             ],

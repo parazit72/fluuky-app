@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/route_constants.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/pages/dashboard_screen/order_history_widget.dart';
 import 'package:get/get.dart';
 import 'package:fluuky/presentation/controllers/order_controller.dart';
@@ -24,6 +25,8 @@ class _OrderHistoryListHorizentalWidgetState extends State<OrderHistoryListHoriz
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     if (orderController.orders.isNotEmpty) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
@@ -38,10 +41,10 @@ class _OrderHistoryListHorizentalWidgetState extends State<OrderHistoryListHoriz
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Orders History', style: Theme.of(context).textTheme.titleSmall),
+                      Text(t.translate('orders_history'), style: Theme.of(context).textTheme.titleSmall),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.75,
-                        child: Text('See a rundown of all your previous ticket purchases.', style: Theme.of(context).textTheme.bodySmall),
+                        child: Text(t.translate('see_a_rundown'), style: Theme.of(context).textTheme.bodySmall),
                       ),
                     ],
                   ),
@@ -86,7 +89,7 @@ class _OrderHistoryListHorizentalWidgetState extends State<OrderHistoryListHoriz
                 );
               }
               if (orderController.orders.isEmpty) {
-                return const Text('No orders found');
+                return Text(t.translate('no_orders_found'));
               } else {
                 return SingleChildScrollView(
                   scrollDirection: Axis.horizontal,

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 
 class TreesPlantedWithFlukkyWidget extends StatelessWidget {
   const TreesPlantedWithFlukkyWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     return Stack(
       children: [
         Container(
@@ -39,7 +40,7 @@ class TreesPlantedWithFlukkyWidget extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.white),
                 ),
                 Text(
-                  'TREES PLANTED WITH FLUUKY',
+                  t.translate('TREES_PLANTED_WITH_FLUUKY'),
                   style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white),
                 ),
               ],

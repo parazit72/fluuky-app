@@ -5,10 +5,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/domain/entities/raffle_entity.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
 import 'package:fluuky/presentation/pages/draw/we_forest_info_dialog.dart';
 import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:to_arabic_number/to_arabic_number.dart';
 
 class RaffleCardWidget extends StatelessWidget {
   final RaffleEntity raffle;
@@ -20,6 +22,19 @@ class RaffleCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final isGridView = viewType == ViewType.grid;
     bool loading = false;
+    var t = AppLocalizations.of(context)!;
+    final locale = Get.locale;
+
+    // Define a method to format numbers based on locale
+    String formatNumber(String number) {
+      if (locale?.languageCode == 'ar') {
+        // Convert to Arabic numerals
+        return Arabic.number(number);
+      } else {
+        // Use standard numerals
+        return number;
+      }
+    }
 
     return Column(
       children: [
@@ -30,7 +45,7 @@ class RaffleCardWidget extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: Text(
-                    'Plant "X" trees to enter the Draw to win: Rolex Cosmograph Daytona',
+                    t.translate('Plant') + "X" + t.translate('trees_to_enter_the_draw_to_win') + 'Rolex Cosmograph Daytona',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
@@ -83,9 +98,9 @@ class RaffleCardWidget extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Win the', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+                        Text(t.translate('win_the'), style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
                         const SizedBox(width: 10),
-                        Text('Value', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+                        Text(t.translate('value_label'), style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
                       ],
                     ),
                     const SizedBox(height: 10),
@@ -96,7 +111,7 @@ class RaffleCardWidget extends StatelessWidget {
                         children: [
                           Text(raffle.name, style: Theme.of(context).textTheme.bodySmall),
                           const SizedBox(width: 10),
-                          Text('\$${raffle.price.toStringAsFixed(2)}', style: Theme.of(context).textTheme.bodySmall),
+                          Text(formatNumber(raffle.price.toStringAsFixed(2)), style: Theme.of(context).textTheme.bodySmall),
                         ],
                       ),
                     ),
@@ -110,10 +125,10 @@ class RaffleCardWidget extends StatelessWidget {
                             children: [
                               SvgPicture.asset('assets/images/ticket-active.svg', width: 20),
                               const SizedBox(width: 10),
-                              Text('Tickets:', style: Theme.of(context).textTheme.bodySmall),
+                              Text(t.translate('ticket_status'), style: Theme.of(context).textTheme.bodySmall),
                             ],
                           ),
-                          Text('${raffle.capacity}/2000', style: Theme.of(context).textTheme.bodySmall),
+                          Text(formatNumber('${raffle.capacity}/2000'), style: Theme.of(context).textTheme.bodySmall),
                         ],
                       ),
                     ),
@@ -128,9 +143,9 @@ class RaffleCardWidget extends StatelessWidget {
                             SvgPicture.asset('assets/images/tree-green.svg',
                                 height: 18, colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn)),
                             const SizedBox(width: 10),
-                            Text('Each ticket plants:', style: Theme.of(context).textTheme.bodySmall),
+                            Text(t.translate('each_ticket_plants'), style: Theme.of(context).textTheme.bodySmall),
                           ]),
-                          Text('10 Trees', style: Theme.of(context).textTheme.bodySmall),
+                          Text(formatNumber('10 ${t.translate('Trees')}'), style: Theme.of(context).textTheme.bodySmall),
                         ],
                       ),
                     ),
@@ -156,7 +171,7 @@ class RaffleCardWidget extends StatelessWidget {
                                     );
                                   },
                                   child: Text(
-                                    'You are planting:',
+                                    t.translate('tree_planting_count'),
                                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
                                         decoration: TextDecoration.underline,
                                         color: FluukyTheme.primaryColor,
@@ -166,12 +181,12 @@ class RaffleCardWidget extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Text('10 Trees', style: Theme.of(context).textTheme.bodySmall),
+                          Text(formatNumber('10 ${t.translate('Trees')}'), style: Theme.of(context).textTheme.bodySmall),
                         ],
                       ),
                     ),
                     const SizedBox(height: 16),
-                    ElevatedButton(onPressed: () => Get.toNamed(draw, arguments: raffle), child: const Text('Buy Tickets Now'))
+                    ElevatedButton(onPressed: () => Get.toNamed(draw, arguments: raffle), child: Text(t.translate('buy_tickets_now')))
                   ],
                 ),
               ),

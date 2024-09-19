@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 
 class SilverTierWidget extends StatelessWidget {
   const SilverTierWidget({super.key});
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+
     return Container(
         padding: const EdgeInsets.all(16),
         decoration: const BoxDecoration(
@@ -33,12 +36,11 @@ class SilverTierWidget extends StatelessWidget {
                   ),
                   child: Center(child: Image.asset('assets/images/tree-green.png', width: 24)),
                 ),
-                Text('Silver Tier', style: Theme.of(context).textTheme.titleMedium),
+                Text(t.translate('SilverTier'), style: Theme.of(context).textTheme.titleMedium),
               ],
             ),
             const SizedBox(height: 16),
-            Text('Spend 10,000 AED within a rolling 12-month period.',
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+            Text(t.translate('spend10kAEDwithin12Months'), style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
             const SizedBox(height: 24),
             Row(
               children: [
@@ -56,7 +58,7 @@ class SilverTierWidget extends StatelessWidget {
                     colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                   )),
                 ),
-                const Expanded(child: Text('5% on all draws')),
+                Expanded(child: Text(t.translate('5percentOnAllDraws'))),
               ],
             ),
             const SizedBox(height: 20),
@@ -78,7 +80,7 @@ class SilverTierWidget extends StatelessWidget {
                     colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                   )),
                 ),
-                const Expanded(child: Text('Exclusive Silver-Tier draws on particular items')),
+                Expanded(child: Text(t.translate('exclusiveSilverTierDraws'))),
               ],
             ),
             const SizedBox(height: 20),
@@ -100,7 +102,7 @@ class SilverTierWidget extends StatelessWidget {
                     colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                   )),
                 ),
-                const Expanded(child: Text('Free birthday credit to plant a tree and enter any draw')),
+                Expanded(child: Text(t.translate('freeBirthdayCredittoPlantATree'))),
               ],
             ),
             const SizedBox(height: 24),

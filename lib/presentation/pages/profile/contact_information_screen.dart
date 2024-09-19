@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/auth_controller.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
 import 'package:fluuky/presentation/widgets/mobile_input_widget.dart';
@@ -15,8 +15,9 @@ class ContactInformationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
-      appBar: const AppBarSingleWidget(title: 'Contact Information'),
+      appBar: AppBarSingleWidget(title: t.translate('contactInformation')),
       bottomNavigationBar: CustomNavBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
@@ -32,10 +33,11 @@ class ContactInformationScreen extends StatelessWidget {
                       MobileInputWidget(
                         controller: _authController.mobileController,
                         labelText: '',
-                        hintText: 'Enter your mobile number',
+                        hintText: t.translate('enterPhoneNumber'),
                       ),
                       const SizedBox(height: 20),
-                      InputTextFieldWidget(controller: _authController.emailController, labelText: 'Email', hintText: 'Enter your email'),
+                      InputTextFieldWidget(
+                          controller: _authController.emailController, labelText: t.translate('email'), hintText: t.translate('enterEmailAddress')),
                       const SizedBox(height: 20),
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 14),
@@ -56,7 +58,7 @@ class ContactInformationScreen extends StatelessWidget {
                             Expanded(
                               // Wrap text with Expanded to avoid overflow
                               child: Text(
-                                'This information can be changed by the customer service only by contacting cs@fluuky.com',
+                                t.translate('thisInfoCanOnlyCS@FLUUKY.com'),
                                 style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Theme.of(context).primaryColor),
                               ),
                             ),
@@ -76,14 +78,14 @@ class ContactInformationScreen extends StatelessWidget {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing Data')),
+                      SnackBar(content: Text(t.translate('processing_data'))),
                     );
                     Get.toNamed(helpCenter);
 
                     // _authController.registerWithEmail();
                   }
                 },
-                child: const Text('Go to Help Center'),
+                child: Text(t.translate('goToHelpCenter')),
               ),
             ),
           ],

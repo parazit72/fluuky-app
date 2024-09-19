@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/pages/draw/trees_planted_dialog.dart';
 import 'package:fluuky/presentation/pages/draw/we_forest_info_dialog.dart';
+import 'package:get/get.dart';
+import 'package:to_arabic_number/to_arabic_number.dart';
 
 class DrawDetailsWidget extends StatelessWidget {
   const DrawDetailsWidget({super.key});
@@ -53,6 +56,21 @@ class BottomOfDrawCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+    // Get the current locale
+    final locale = Get.locale;
+
+    // Define a method to format numbers based on locale
+    String formatNumber(String number) {
+      if (locale?.languageCode == 'ar') {
+        // Convert to Arabic numerals
+        return Arabic.number(number);
+      } else {
+        // Use standard numerals
+        return number;
+      }
+    }
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -61,9 +79,9 @@ class BottomOfDrawCardWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Win the', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+              Text(t.translate('winThe'), style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
               const SizedBox(width: 10),
-              Text('Value', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+              Text(t.translate('value'), style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
             ],
           ),
           const SizedBox(height: 10),
@@ -72,7 +90,7 @@ class BottomOfDrawCardWidget extends StatelessWidget {
             children: [
               Text('Rolex Cosmograph Daytona', style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14)),
               // const SizedBox(width: 10),
-              Text('\$33,000', style: Theme.of(context).textTheme.bodySmall),
+              Text(formatNumber('33,000'), style: Theme.of(context).textTheme.bodySmall),
             ],
           ),
           const SizedBox(height: 10),
@@ -83,10 +101,10 @@ class BottomOfDrawCardWidget extends StatelessWidget {
                 children: [
                   Image.asset('assets/images/logo-green.png', height: 20, width: 20, fit: BoxFit.contain),
                   const SizedBox(width: 10),
-                  Text('Tickets:', style: Theme.of(context).textTheme.bodySmall),
+                  Text(t.translate('ticketsRemaining'), style: Theme.of(context).textTheme.bodySmall),
                 ],
               ),
-              Text('567/2000', style: Theme.of(context).textTheme.bodySmall),
+              Text(formatNumber('567/2000'), style: Theme.of(context).textTheme.bodySmall),
             ],
           ),
           const SizedBox(height: 10),
@@ -97,10 +115,10 @@ class BottomOfDrawCardWidget extends StatelessWidget {
                 children: [
                   Image.asset('assets/images/logo-green.png', height: 20, width: 20, fit: BoxFit.contain),
                   const SizedBox(width: 10),
-                  Text('Each ticket plants:', style: Theme.of(context).textTheme.bodySmall),
+                  Text(t.translate('eachTicketPlants'), style: Theme.of(context).textTheme.bodySmall),
                 ],
               ),
-              Text('10 Trees', style: Theme.of(context).textTheme.bodySmall!.copyWith(fontWeight: FontWeight.w600)),
+              Text(formatNumber('10 ${t.translate('trees')}'), style: Theme.of(context).textTheme.bodySmall!.copyWith(fontWeight: FontWeight.w600)),
             ],
           ),
           const SizedBox(height: 10),
@@ -116,20 +134,18 @@ class BottomOfDrawCardWidget extends StatelessWidget {
                       onTap: () {
                         showDialog(
                           context: context,
-                          builder: (BuildContext context) {
-                            return const WeForestInfoScreen();
-                          },
+                          builder: (BuildContext context) => const WeForestInfoScreen(),
                         );
                       },
                       child: Text(
-                        'You are planting:',
+                        t.translate('youArePlanting'),
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(decoration: TextDecoration.underline),
                       ),
                     )
                   ],
                 ),
               ),
-              Text('10 Trees', style: Theme.of(context).textTheme.bodySmall),
+              Text(formatNumber('10 ${t.translate('trees')}'), style: Theme.of(context).textTheme.bodySmall),
             ],
           ),
           const SizedBox(height: 10),
@@ -151,14 +167,14 @@ class BottomOfDrawCardWidget extends StatelessWidget {
                         );
                       },
                       child: Text(
-                        'Bundle Discount:',
+                        t.translate('bundleDiscount'),
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(decoration: TextDecoration.underline),
                       ),
                     )
                   ],
                 ),
               ),
-              Text('0', style: Theme.of(context).textTheme.bodySmall),
+              Text(formatNumber('0'), style: Theme.of(context).textTheme.bodySmall),
             ],
           ),
         ],

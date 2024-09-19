@@ -17,14 +17,21 @@ class AppBarProfile extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     UserEntity? user = _authController.user.value;
     final NotificationController notificationController = Get.find();
-    user = UserEntity(id: '1', name: 'John Doe', email: 'john.doe@example.com', avatar: 'assets/images/avatar.jpg', token: '');
+    user = UserEntity(
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'john.doe@example.com',
+        avatar: 'assets/images/avatar.jpg',
+        acceptedTermsAndConditions: false,
+        phone: '',
+        birthDate: DateTime.now());
     return AppBar(
       backgroundColor: const Color(0xFFF7F7F7),
       leading: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: CircleAvatar(backgroundImage: AssetImage(user!.avatar != '' ? user.avatar : 'assets/images/avatar.jpg')),
+        child: CircleAvatar(backgroundImage: AssetImage(user.avatar ?? 'assets/images/avatar.jpg')),
       ),
-      title: Text('Welcome, ${user.name}'),
+      title: Text('Welcome, ${user.firstName}'),
       actions: [
         Stack(
           children: [

@@ -7,7 +7,7 @@ class RaffleProvider {
 
     return [
       RaffleModel(
-          images: ['assets/images/back4.jpg'],
+          image: ['assets/images/back4.jpg'],
           name: 'Rolex Cosmograph Daytona',
           price: 99.9,
           id: 1,
@@ -18,9 +18,10 @@ class RaffleProvider {
           description: 'null',
           capacity: 1,
           status: 'null',
-          deadline: DateTime.now()),
+          deadline: DateTime.now(),
+          mainImage: ''),
       RaffleModel(
-          images: ['assets/images/back4.jpg'],
+          image: ['assets/images/back4.jpg'],
           name: 'Rolex Submariner',
           price: 89.8,
           id: 2,
@@ -31,9 +32,10 @@ class RaffleProvider {
           description: 'null',
           capacity: 1,
           status: 'null',
-          deadline: DateTime.now()),
+          deadline: DateTime.now(),
+          mainImage: ''),
       RaffleModel(
-          images: ['assets/images/back4.jpg'],
+          image: ['assets/images/back4.jpg'],
           name: 'Omega Seamaster',
           price: 66.56,
           id: 3,
@@ -44,7 +46,8 @@ class RaffleProvider {
           description: 'null',
           capacity: 1,
           status: 'null',
-          deadline: DateTime.now()),
+          deadline: DateTime.now(),
+          mainImage: ''),
     ];
   }
 }

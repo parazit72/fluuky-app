@@ -8,6 +8,7 @@ import 'package:fluuky/presentation/controllers/raffle_controller.dart';
 import 'package:fluuky/presentation/widgets/custom_dot_indicator.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:get/get.dart';
+import 'package:to_arabic_number/to_arabic_number.dart';
 
 class CarouselSectionWidget extends StatefulWidget {
   @override
@@ -21,6 +22,19 @@ class _CarouselSectionWidgetState extends State<CarouselSectionWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Get.locale;
+
+    // Define a method to format numbers based on locale
+    String formatNumber(String number) {
+      if (locale?.languageCode == 'ar') {
+        // Convert to Arabic numerals
+        return Arabic.number(number);
+      } else {
+        // Use standard numerals
+        return number;
+      }
+    }
+
     return Obx(() {
       if (raffleController.raffles.isEmpty) {
         return Stack(children: [
@@ -56,7 +70,8 @@ class _CarouselSectionWidgetState extends State<CarouselSectionWidget> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(raffle.name, style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.white)),
-                            Text('\$${raffle.price}', style: Theme.of(context).textTheme.labelMedium!.copyWith(color: Colors.white)),
+                            Text(formatNumber('\$${raffle.price.toString()}'),
+                                style: Theme.of(context).textTheme.labelMedium!.copyWith(color: Colors.white)),
                           ],
                         ),
                       ),

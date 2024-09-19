@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/auth_controller.dart';
 import 'package:fluuky/presentation/pages/auth/verification_screen.dart';
 import 'package:fluuky/presentation/widgets/mobile_input_widget.dart';
@@ -25,6 +25,7 @@ class _SignupScreenState extends State<SignupScreen> {
   var isLogin = false.obs;
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -34,8 +35,8 @@ class _SignupScreenState extends State<SignupScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Register in 4 steps', style: Theme.of(context).textTheme.bodySmall),
-                Text('Step 1/4', style: Theme.of(context).textTheme.bodySmall),
+                Text(t.translate('registerSteps'), style: Theme.of(context).textTheme.bodySmall),
+                Text(t.translate('step_1_4'), style: Theme.of(context).textTheme.bodySmall),
               ],
             ),
             const Divider(),
@@ -46,9 +47,8 @@ class _SignupScreenState extends State<SignupScreen> {
         child: Padding(
           padding: const EdgeInsets.all(18),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text('Create an Account', style: Theme.of(context).textTheme.titleLarge),
-            Text('Ready to make a positive impact? Complete the form below to enter our draws with a cause!',
-                style: Theme.of(context).textTheme.bodySmall),
+            Text(t.translate('create_account'), style: Theme.of(context).textTheme.titleLarge),
+            Text(t.translate('readyToMakeImpact'), style: Theme.of(context).textTheme.bodySmall),
             const SizedBox(height: 20),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 5),
@@ -67,7 +67,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.7,
                     child: Text(
-                      'Please ensure your first and last name match your government-issued ID, this is mandatory for the delivery of prizes for draw winners.',
+                      t.translate('pleaseEnterFirstNameMandatoryPrizesWinning'),
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
@@ -83,38 +83,46 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Widget registerWidget() {
+    var t = AppLocalizations.of(context)!;
+
     return SingleChildScrollView(
       child: Form(
         key: _formKey,
         child: Column(
           children: [
-            InputTextFieldWidget(controller: _authController.firstNameController, labelText: 'First name', hintText: 'Enter your first name'),
+            InputTextFieldWidget(
+                controller: _authController.firstNameController, labelText: t.translate('firstName'), hintText: t.translate('enterFirstName')),
             const SizedBox(height: 20),
-            InputTextFieldWidget(controller: _authController.lastNameController, labelText: 'Last name', hintText: 'Enter your last name'),
+            InputTextFieldWidget(
+                controller: _authController.lastNameController, labelText: t.translate('lastName'), hintText: t.translate('enterLastName')),
             const SizedBox(height: 20),
             MobileInputWidget(
               controller: _authController.mobileController,
               labelText: '',
-              hintText: 'Enter your mobile number',
+              hintText: t.translate('enterPhoneNumber'),
             ),
             const SizedBox(height: 20),
-            InputTextFieldWidget(controller: _authController.emailController, labelText: 'Email', hintText: 'Enter your email'),
+            InputTextFieldWidget(
+                controller: _authController.emailController, labelText: t.translate('email'), hintText: t.translate('enterEmailAddress')),
             const SizedBox(height: 20),
             InputTextFieldWidget(
-                controller: _authController.referalCodeController, labelText: 'Referal Code', hintText: 'Enter your referal code', required: false),
+                controller: _authController.referralCodeController,
+                labelText: t.translate('referral_code'),
+                hintText: t.translate('enter_referral_code'),
+                required: false),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Processing Data')),
+                    SnackBar(content: Text(t.translate('processing_data'))),
                   );
                   Get.offAll(() => VerificationScreen(), arguments: {'email': _authController.emailController.text});
 
                   // _authController.registerWithEmail();
                 }
               },
-              child: const Text('Continue'),
+              child: Text(t.translate('continue')),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 14),
@@ -122,8 +130,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   onPressed: goSignIn,
                   child: Wrap(
                     children: [
-                      Text('Already have an account? ', style: Theme.of(context).textTheme.bodyMedium),
-                      Text('Sign in', style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).primaryColor)),
+                      Text(t.translate('already_have_account '), style: Theme.of(context).textTheme.bodyMedium),
+                      Text(t.translate('sign_in'), style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).primaryColor)),
                     ],
                   )),
             )

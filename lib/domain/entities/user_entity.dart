@@ -1,19 +1,31 @@
 class UserEntity {
-  final String id;
+  final String firstName;
+  final String lastName;
   final String email;
-  final String name;
-  String token = '';
-  String avatar = '';
+  final String phone;
+  final String? avatar;
+  final DateTime? birthDate;
+  final bool acceptedTermsAndConditions;
 
-  UserEntity({required this.id, required this.email, required this.name, required this.token, required this.avatar});
+  UserEntity({
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.phone,
+    this.avatar,
+    this.birthDate,
+    required this.acceptedTermsAndConditions,
+  });
 
   factory UserEntity.fromJson(Map<String, dynamic> json) {
     return UserEntity(
-      id: json['id'],
-      name: json['name'],
-      token: json['token'],
+      firstName: json['firstName'],
+      lastName: json['lastName'],
       email: json['email'],
+      phone: json['phone'],
       avatar: json['avatar'],
+      birthDate: json['birth_date'],
+      acceptedTermsAndConditions: json['accepted_terms_and_conditions'],
     );
   }
 }

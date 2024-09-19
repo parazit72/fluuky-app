@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 
 import 'package:fluuky/presentation/widgets/layout/background_scaffold.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,7 @@ class RecommendationsCreatedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     return Dialog(
       insetPadding: const EdgeInsets.all(0),
       child: BackgroundScaffold(
@@ -24,12 +26,12 @@ class RecommendationsCreatedScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Your recommendations list successfully created!',
+                        t.translate('your_recommendations_list_successfully_created'),
                         style: Theme.of(context).textTheme.titleLarge,
                         // textAlign: TextAlign.center,
                       ),
                       Text(
-                        'Based on your interests, we think you will love these draws!',
+                        t.translate('based_on_your_interests_we_think_you_will_love_these_draws'),
                         style: Theme.of(context).textTheme.bodySmall,
                         textAlign: TextAlign.center,
                       ),
@@ -42,7 +44,7 @@ class RecommendationsCreatedScreen extends StatelessWidget {
                 bottom: 0,
                 left: 0,
                 right: 0,
-                child: ElevatedButton(onPressed: () => Get.back(), child: const Text('Continue')),
+                child: ElevatedButton(onPressed: () => Get.back(), child: Text(t.translate('continue'))),
               )
             ],
           ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/presentation/controllers/story_controller.dart';
 import 'package:fluuky/presentation/widgets/category_tabs_widgets/category_tabs_section.dart';
@@ -52,7 +51,7 @@ class HeaderStoriesAvatarWidget extends StatelessWidget {
             children: stories.map((storyitem) {
               bool isWatched = storyitem.isWatched;
               return Padding(
-                padding: const EdgeInsets.only(left: 20),
+                padding: const EdgeInsets.only(left: 10, right: 10),
                 child: InkWell(
                   onTap: () {
                     Get.toNamed(story, arguments: storyitem);

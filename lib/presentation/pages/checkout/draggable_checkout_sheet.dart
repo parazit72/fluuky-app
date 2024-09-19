@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:fluuky/app/config/route_constants.dart';
+import 'package:to_arabic_number/to_arabic_number.dart';
 
 class DraggableCheckoutSheet extends StatefulWidget {
   const DraggableCheckoutSheet({super.key});
@@ -12,12 +14,27 @@ class DraggableCheckoutSheet extends StatefulWidget {
 class _DraggableCheckoutSheetState extends State<DraggableCheckoutSheet> {
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
+    // Get the current locale
+    final locale = Get.locale;
+
+    // Define a method to format numbers based on locale
+    String formatNumber(String number) {
+      if (locale?.languageCode == 'ar') {
+        // Convert to Arabic numerals
+        return Arabic.number(number);
+      } else {
+        // Use standard numerals
+        return number;
+      }
+    }
+
     return Align(
       alignment: Alignment.bottomCenter,
       child: DraggableScrollableSheet(
-        initialChildSize: 0.32,
-        minChildSize: 0.32,
-        maxChildSize: 0.32,
+        initialChildSize: 0.35,
+        minChildSize: 0.35,
+        maxChildSize: 0.35,
         builder: (BuildContext context, ScrollController scrollController) {
           return Container(
             padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -35,26 +52,26 @@ class _DraggableCheckoutSheetState extends State<DraggableCheckoutSheet> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Total:', style: Theme.of(context).textTheme.titleLarge),
-                      Text('\$100', style: Theme.of(context).textTheme.titleLarge),
+                      Text(t.translate('total_amount'), style: Theme.of(context).textTheme.titleLarge),
+                      Text(formatNumber('\$100'), style: Theme.of(context).textTheme.titleLarge),
                     ],
                   ),
                   const SizedBox(height: 24),
                   ElevatedButton(
                     onPressed: () => Get.toNamed(checkout),
-                    child: const Text('Checkout'),
+                    child: Text(t.translate('checkout')),
                   ),
                   const SizedBox(height: 16),
-                  const Text('By completing your purchase you accept our '),
+                  Text(t.translate('purchase_terms')),
                   Wrap(children: [
                     InkWell(
                       onTap: () => Get.toNamed(termsAndCondition),
-                      child: Text('Terms & Conditions', style: TextStyle(color: Theme.of(context).primaryColor)),
+                      child: Text(t.translate('terms_conditions'), style: TextStyle(color: Theme.of(context).primaryColor)),
                     ),
                     const Text(' and '),
                     InkWell(
                       onTap: () => Get.toNamed(privacyPolicy),
-                      child: Text('Privacy Policy', style: TextStyle(color: Theme.of(context).primaryColor)),
+                      child: Text(t.translate('privacy_policy'), style: TextStyle(color: Theme.of(context).primaryColor)),
                     ),
                   ])
                 ],

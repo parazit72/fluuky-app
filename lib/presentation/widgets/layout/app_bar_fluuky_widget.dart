@@ -12,7 +12,7 @@ class AppBarFluuky extends StatelessWidget implements PreferredSizeWidget {
   }
 
   void goBasket() {
-    Get.to(() => const BasketScreen());
+    Get.to(() => BasketScreen());
   }
 
   @override
