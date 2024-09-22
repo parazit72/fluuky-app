@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 
 class FluukyTheme {
   static String? fontFamily = 'Causten';
-  static Color cardColor = const Color(0XFF205C32);
-  static Color accentColor = const Color(0XFF205C32);
+
+  // App Colors
   static Color thirdColor = const Color(0xFF8C8C8C);
   static Color primaryColor = const Color(0XFF205C32);
-  static Color indicatorColor = const Color(0xFFDBDBDB);
   static Color secondaryColor = const Color(0xFFDBDBDB);
+  static Color inputTextColor = const Color(0xFF1A1A1A);
+  static Color redColor = const Color(0xFFD30201);
+
+  static Color inputBackgroundColor = const Color.fromARGB(25, 219, 219, 219);
 
   static String updateFontFamilyBasedOnLocale() {
     Locale locale = Get.locale ?? const Locale('ar');
@@ -47,7 +51,7 @@ class FluukyTheme {
       titleTextStyle: TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.w700, fontSize: 16, color: Colors.black),
     ),
     cardColor: const Color(0XFFE9EFEB),
-    primaryColor: const Color(0XFF205C32),
+    primaryColor: primaryColor,
     hintColor: const Color.fromARGB(125, 13, 39, 21),
     navigationBarTheme: const NavigationBarThemeData(backgroundColor: Colors.white),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -71,30 +75,34 @@ class FluukyTheme {
     dividerTheme: DividerThemeData(color: Colors.grey.shade300),
     drawerTheme: const DrawerThemeData(backgroundColor: Colors.white),
     sliderTheme: const SliderThemeData(showValueIndicator: ShowValueIndicator.always),
-    colorScheme: ColorScheme.light(primary: primaryColor, onPrimary: accentColor, background: primaryColor, onBackground: accentColor),
+    colorScheme: ColorScheme.light(primary: primaryColor, onPrimary: primaryColor, background: primaryColor, onBackground: primaryColor),
     textTheme: TextTheme(
-      displayLarge: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 2),
-      displayMedium: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 2),
-      displaySmall: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 2),
-      headlineLarge: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w900, color: primaryColor, fontFamily: fontFamily, height: 2),
-      headlineMedium: TextStyle(fontSize: 26.0, fontWeight: FontWeight.w900, color: primaryColor, fontFamily: fontFamily, height: 2),
-      headlineSmall: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w900, color: primaryColor, fontFamily: fontFamily, height: 2),
-      titleLarge: TextStyle(fontSize: 26.0, fontWeight: FontWeight.w700, color: Colors.black, fontFamily: fontFamily, height: 2),
-      titleMedium: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700, color: Colors.black, fontFamily: fontFamily, height: 2),
-      titleSmall: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w700, color: Colors.black, fontFamily: fontFamily, height: 2),
-      labelLarge: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 2),
-      labelMedium: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 2),
-      labelSmall: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 2),
+      titleLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.black, fontFamily: fontFamily, height: 1.5),
+      titleMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black, fontFamily: fontFamily, height: 1.2),
+      titleSmall: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black, fontFamily: fontFamily, height: 1.2),
+      //
       bodyLarge: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500, color: Colors.black, fontFamily: fontFamily, height: 2),
       bodyMedium: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 2),
       bodySmall: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 2),
+      //
+      displayLarge: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 2),
+      displayMedium: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 2),
+      displaySmall: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: FluukyTheme.thirdColor, fontFamily: fontFamily, height: 2),
+      //
+      headlineLarge: const TextStyle(fontSize: 30, fontWeight: FontWeight.w900, color: Colors.black, fontFamily: 'Brinnan', height: 1.25),
+      headlineMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: primaryColor, fontFamily: fontFamily, height: 1.5),
+      headlineSmall: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w900, color: primaryColor, fontFamily: fontFamily, height: 2),
+      //
+      labelLarge: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 2),
+      labelMedium: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400, color: Colors.black, fontFamily: fontFamily, height: 1.5),
+      labelSmall: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 2),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
         elevation: WidgetStateProperty.all<double>(0),
         foregroundColor: WidgetStateProperty.all<Color?>(Colors.white),
-        backgroundColor: WidgetStateProperty.all<Color?>(const Color(0XFF205C32)),
-        minimumSize: WidgetStateProperty.all<Size>(const Size(double.infinity, 48.0)),
+        backgroundColor: WidgetStateProperty.all<Color?>(primaryColor),
+        minimumSize: WidgetStateProperty.all<Size>(Size(double.infinity, 48.h)),
         textStyle:
             WidgetStateProperty.all<TextStyle>(TextStyle(color: Colors.white, fontSize: 16, fontFamily: FluukyTheme.updateFontFamilyBasedOnLocale())),
         shape: WidgetStateProperty.all<OutlinedBorder>(
@@ -104,8 +112,8 @@ class FluukyTheme {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        minimumSize: const Size(double.infinity, 48.0),
-        textStyle: TextStyle(fontSize: 16, color: Colors.white, fontFamily: FluukyTheme.updateFontFamilyBasedOnLocale()),
+        minimumSize: Size(double.infinity, 48.h),
+        textStyle: TextStyle(fontSize: 16.h, color: Colors.white, fontFamily: FluukyTheme.updateFontFamilyBasedOnLocale()),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
           side: const BorderSide(color: Color.fromARGB(255, 13, 39, 21)),
@@ -115,13 +123,13 @@ class FluukyTheme {
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         splashFactory: NoSplash.splashFactory,
-        foregroundColor: const Color(0XFF205C32),
-        minimumSize: const Size(double.infinity, 48.0),
-        textStyle: TextStyle(fontWeight: FontWeight.bold, fontFamily: FluukyTheme.updateFontFamilyBasedOnLocale()),
+        foregroundColor: primaryColor,
+        minimumSize: Size(double.infinity, 48.h),
+        textStyle: TextStyle(fontSize: 16.h, fontWeight: FontWeight.w600, fontFamily: FluukyTheme.updateFontFamilyBasedOnLocale(), height: 1.5),
       ),
     ),
     bottomSheetTheme: const BottomSheetThemeData(surfaceTintColor: Colors.white),
-    expansionTileTheme: ExpansionTileThemeData(iconColor: accentColor, textColor: accentColor),
+    expansionTileTheme: ExpansionTileThemeData(iconColor: primaryColor, textColor: primaryColor),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: Colors.transparent,
@@ -151,11 +159,11 @@ class FluukyTheme {
     textTheme: lightTheme.textTheme.copyWith(
       displayLarge: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w700, color: Colors.white, fontFamily: fontFamily),
       displayMedium: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w700, color: Colors.white, fontFamily: fontFamily),
-      displaySmall: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w700, color: Colors.white, fontFamily: fontFamily),
+      displaySmall: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: FluukyTheme.thirdColor, fontFamily: fontFamily),
       headlineLarge: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w900, color: Colors.white, fontFamily: fontFamily),
       headlineMedium: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w900, color: Colors.white, fontFamily: fontFamily),
       headlineSmall: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w900, color: Colors.white, fontFamily: fontFamily),
-      titleLarge: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: fontFamily),
+      titleLarge: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.white, fontFamily: fontFamily),
       titleMedium: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: fontFamily),
       titleSmall: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: fontFamily),
       labelLarge: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: fontFamily),
@@ -163,7 +171,7 @@ class FluukyTheme {
       labelSmall: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: fontFamily),
       bodyLarge: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w300, color: Colors.white, fontFamily: fontFamily),
       bodyMedium: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w300, color: Colors.white, fontFamily: fontFamily),
-      bodySmall: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w300, color: Colors.white, fontFamily: fontFamily),
+      bodySmall: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400, color: Colors.white, fontFamily: fontFamily),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -186,7 +194,7 @@ class FluukyTheme {
     ),
     textButtonTheme: TextButtonThemeData(
       // style: TextButton.styleFrom(
-      //   foregroundColor: const Color(0XFF205C32),
+      //   foregroundColor: const primaryColor,
       // ),
 
       style: ButtonStyle(
@@ -195,26 +203,18 @@ class FluukyTheme {
     ),
   );
 
-  // App Colors
-  static Color saleRedColor = Colors.red;
-  static Color offerBackgroundLightGreen = primaryColor;
-  static Color bodyTextDarkColor = const Color(0xFF6e6e6e);
-  static Color appBarBackgroundColor = Colors.grey.shade400;
-  static Color checkOutInActiveColor = Colors.grey.withAlpha(100);
-  static Color darkBtnBackground = const Color.fromRGBO(6, 12, 59, 1);
-
   static final PinTheme defaultPinTheme = PinTheme(
-    width: 52,
-    height: 52,
-    margin: const EdgeInsets.only(right: 5, left: 5),
-    padding: const EdgeInsets.only(left: 19, right: 19),
-    textStyle: const TextStyle(fontSize: 20, color: Color(0xFFDBDBDB), fontWeight: FontWeight.w600),
+    width: 52.w,
+    height: 52.h,
+    margin: EdgeInsets.only(right: 5.w, left: 5.w),
+    padding: EdgeInsets.only(left: 19.w, right: 19.w),
+    textStyle: TextStyle(fontSize: 20.w, color: inputTextColor, fontWeight: FontWeight.w600),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(8),
-      border: Border.all(color: const Color(0xFFDBDBDB)),
-      boxShadow: const [
-        BoxShadow(color: Color(0xFFDBDBDB)),
-        BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+      border: Border.all(color: secondaryColor),
+      boxShadow: [
+        BoxShadow(color: secondaryColor),
+        const BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
       ],
     ),
   );
@@ -237,25 +237,4 @@ class AppSizes {
 
   static double screenWidth = MediaQueryData.fromView(WidgetsBinding.instance.platformDispatcher.views.single).size.width;
   static double screenHeight = MediaQueryData.fromView(WidgetsBinding.instance.platformDispatcher.views.single).size.height;
-}
-
-class AppColors {
-  //Order status Color
-  static const Color orderCompleteColor = Color(0xFF66BB6A);
-  static const Color orderPendingColor = Color(0xFFfead4c);
-  static const Color orderProcessingColor = Color(0xFF3F51B5);
-  static const Color orderHoldColor = Color(0XFFF9A825);
-  static const Color orderCanceledColor = Color(0xFFE53935);
-  static const Color orderNewColor = Color(0xFF448AFF);
-  static const Color orderClosedColor = Color(0xFFe44c53);
-  static const Color orderPaidColor = Color(0xFF66BB6A);
-  static const Color orderRefundedColor = Color(0xFFE53935);
-  static const Color orderRequestedColor = Color(0xFFefad4c);
-
-  //Review color
-  static const Color oneStarReview = Color(0xFFE51A1A);
-  static const Color twoStarReview = Color(0xFFE91E63);
-  static const Color threeStarReview = Color(0xFFFFA100);
-  static const Color fourStarReview = Color(0xFFFFCC00);
-  static const Color fiveStarReview = Color(0xFF6BC700);
 }

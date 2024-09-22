@@ -25,14 +25,15 @@ class WinnerCardWidget extends StatelessWidget {
           const SizedBox(height: 8),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 3),
-            child: Text(t.translate('winner_of_the'), style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.primaryColor)),
+            child:
+                Text(t.translate('winner_of_the'), style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(color: FluukyTheme.primaryColor)),
           ),
           Text('Rolex Submariner', style: Theme.of(context).textTheme.titleSmall),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 3),
-            child: Text(winner.name, style: Theme.of(context).textTheme.bodySmall),
+            child: Text(winner.name, style: FluukyTheme.lightTheme.textTheme.displaySmall),
           ),
-          Text('20 December 2023', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.secondaryColor)),
+          Text('20 December 2023', style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(color: FluukyTheme.secondaryColor)),
         ],
       ),
     );

@@ -45,14 +45,14 @@ class ReceiptScreen extends StatelessWidget {
                           height: 24,
                         ),
                         const SizedBox(width: 8),
-                        Text('FLUUKY Green Subscription', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+                        Text('FLUUKY Green Subscription', style: FluukyTheme.lightTheme.textTheme.bodySmall),
                       ],
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: Text('\$75', style: Theme.of(context).textTheme.titleLarge),
+                      child: Text('\$75', style: FluukyTheme.lightTheme.textTheme.titleLarge),
                     ),
-                    Text('Paid April 26, 2024', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+                    Text('Paid April 26, 2024', style: FluukyTheme.lightTheme.textTheme.bodySmall),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       child: DottedLine(
@@ -68,41 +68,15 @@ class ReceiptScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Receipt Number:', style: Theme.of(context).textTheme.bodySmall),
-                        Text('9128-1420-4124', style: Theme.of(context).textTheme.bodySmall),
+                        Text('Receipt Number:', style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                        Text('9128-1420-4124', style: FluukyTheme.lightTheme.textTheme.displaySmall),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Payment Method:', style: Theme.of(context).textTheme.bodySmall),
-                        Text('Visa •••• 8275', style: Theme.of(context).textTheme.bodySmall),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: DottedLine(
-                        direction: Axis.horizontal,
-                        alignment: WrapAlignment.center,
-                        // lineLength: 100,
-                        dashLength: 10,
-                        dashColor: FluukyTheme.secondaryColor,
-                        dashGapLength: 10,
-                        dashGapColor: Colors.transparent,
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Trees Planted:', style: Theme.of(context).textTheme.bodySmall),
-                        Text('10', style: Theme.of(context).textTheme.bodySmall),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Total:', style: Theme.of(context).textTheme.bodySmall),
-                        Text('\$75', style: Theme.of(context).textTheme.bodySmall),
+                        Text('Payment Method:', style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                        Text('Visa •••• 8275', style: FluukyTheme.lightTheme.textTheme.displaySmall),
                       ],
                     ),
                     Padding(
@@ -120,8 +94,34 @@ class ReceiptScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Amount Paid:', style: Theme.of(context).textTheme.bodySmall),
-                        Text('\$99,99', style: Theme.of(context).textTheme.bodySmall),
+                        Text('Trees Planted:', style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                        Text('10', style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Total:', style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                        Text('\$75', style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: DottedLine(
+                        direction: Axis.horizontal,
+                        alignment: WrapAlignment.center,
+                        // lineLength: 100,
+                        dashLength: 10,
+                        dashColor: FluukyTheme.secondaryColor,
+                        dashGapLength: 10,
+                        dashGapColor: Colors.transparent,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Amount Paid:', style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                        Text('\$99,99', style: FluukyTheme.lightTheme.textTheme.displaySmall),
                       ],
                     ),
                   ],

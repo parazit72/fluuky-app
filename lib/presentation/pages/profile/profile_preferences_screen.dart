@@ -78,7 +78,7 @@ class ProfilePreferencesScreen extends StatelessWidget {
   Widget buildSectionTitle(String title, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
-      child: Text(title, style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+      child: Text(title, style: FluukyTheme.lightTheme.textTheme.bodySmall),
     );
   }
 
@@ -149,8 +149,7 @@ class ProfilePreferencesScreen extends StatelessWidget {
                   children: [
                     const SizedBox(height: 20),
                     Text(t.translate('logout?'), style: Theme.of(context).textTheme.titleMedium),
-                    Text(t.translate('are_you_sure_you_want_to_log_out'),
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+                    Text(t.translate('are_you_sure_you_want_to_log_out'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
                     const SizedBox(height: 20),
                     ElevatedButton(
                         onPressed: () {

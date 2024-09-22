@@ -64,7 +64,7 @@ class ShippingAddressScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(t.translate('billing_equals_shipping'), style: Theme.of(context).textTheme.bodySmall),
+                          Text(t.translate('billing_equals_shipping'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                           Obx(
                             () {
                               return Switch(
@@ -124,7 +124,7 @@ class ShippingAddressScreen extends StatelessWidget {
   Widget buildSectionTitle(String title, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
-      child: Text(title, style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+      child: Text(title, style: FluukyTheme.lightTheme.textTheme.bodySmall),
     );
   }
 

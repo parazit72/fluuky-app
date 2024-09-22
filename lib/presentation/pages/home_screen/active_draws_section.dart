@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/widgets/category_tabs_widgets/category_tabs_widgets.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class ActiveDrawsSection extends StatelessWidget {
   const ActiveDrawsSection({super.key});
@@ -17,7 +18,7 @@ class ActiveDrawsSection extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Text(t.translate('Active Draws'), style: Theme.of(context).textTheme.titleLarge),
+              child: Text(t.translate('Active Draws'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
             ),
             IconButton(onPressed: () {}, icon: const Icon(Icons.chevron_right))
           ],
@@ -53,7 +54,7 @@ class EmptyActiveDraws extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             t.translate('youreYetToEnter.StartPlantingTrees'),
-            style: Theme.of(context).textTheme.bodySmall,
+            style: FluukyTheme.lightTheme.textTheme.displaySmall,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),

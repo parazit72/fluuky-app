@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/data/local/local_storage.dart';
@@ -6,7 +7,6 @@ import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/widgets/layout/background_scaffold.dart';
 import 'package:fluuky/presentation/widgets/input_text_field_widget.dart';
-import 'package:fluuky/presentation/widgets/locale_toggle_button.dart';
 import 'package:fluuky/presentation/widgets/password_text_field_widget.dart';
 import 'package:get/get.dart';
 
@@ -24,6 +24,7 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
   final FocusNode _passwordFocusNode = FocusNode();
   bool _isKeyboardVisible = false;
   bool isFirstLaunch = false;
+  final double _targetExtent = 570.h / 812.h;
 
   @override
   void initState() {
@@ -72,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
       );
     } else {
       _scrollableController.animateTo(
-        0.64,
+        _targetExtent,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
@@ -80,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
   }
 
   void _updateSheetSize() {
-    final targetExtent = _isKeyboardVisible ? 1.0 : 0.64;
+    final targetExtent = _isKeyboardVisible ? 1.0 : _targetExtent;
     _scrollableController.animateTo(
       targetExtent,
       duration: const Duration(milliseconds: 300),
@@ -95,35 +96,30 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
       body: Stack(
         children: [
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.16,
+            top: 100.h,
             right: 0,
             left: 0,
-            child: Image.asset('assets/images/fluuky.png', height: 28),
-          ),
-          const Positioned(
-            top: 50,
-            right: 10,
-            child: LocaleToggleButton(),
+            child: Image.asset('assets/images/fluuky.png', height: 28.h),
           ),
           Align(
             alignment: Alignment.bottomCenter,
             child: DraggableScrollableSheet(
               expand: false,
               controller: _scrollableController,
-              initialChildSize: 0.7,
-              minChildSize: 0.7,
+              initialChildSize: _targetExtent,
+              minChildSize: _targetExtent,
               maxChildSize: 1,
-              snap: true,
+              // snap: true,
               builder: (BuildContext context, ScrollController scrollController) {
                 return NotificationListener<DraggableScrollableNotification>(
                   onNotification: (notification) {
-                    if (notification.extent > 0.7) {
+                    if (notification.extent > _targetExtent) {
                       return false;
                     }
                     return true;
                   },
                   child: Container(
-                    padding: const EdgeInsets.only(top: 30, left: 20, right: 20),
+                    padding: EdgeInsets.only(top: 28.h, left: 20.w, right: 20.w),
                     decoration: const BoxDecoration(
                       image: DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
                       borderRadius: BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
@@ -132,28 +128,28 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                     child: SingleChildScrollView(
                       controller: scrollController,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const SizedBox(height: 20),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width,
+                          Container(
+                            padding: EdgeInsets.symmetric(vertical: 12.h),
                             child: Text(
-                              isFirstLaunch ? t.translate('welcome_to_fluuky') : t.translate('welcome_back_to_fluuky'),
-                              style: Theme.of(context).textTheme.titleLarge,
+                              isFirstLaunch ? t.translate('Welcome to FLUUKY!') : t.translate('Welcome back to FLUUKY!'),
+                              style: FluukyTheme.lightTheme.textTheme.titleLarge,
                             ),
                           ),
-                          const SizedBox(height: 12),
                           Text(
                             t.translate('sign_in_continue_tree_planting'),
-                            style: Theme.of(context).textTheme.bodySmall,
+                            style: FluukyTheme.lightTheme.textTheme.displaySmall,
                           ),
-                          const SizedBox(height: 20),
-                          InputTextFieldWidget(
-                              labelText: t.translate('email'),
-                              hintText: t.translate('enterEmailAddress'),
-                              controller: _authController.emailController,
-                              focusNode: _emailFocusNode),
-                          const SizedBox(height: 16),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 24.h),
+                            child: InputTextFieldWidget(
+                                labelText: t.translate('email'),
+                                hintText: t.translate('enterEmailAddress'),
+                                controller: _authController.emailController,
+                                focusNode: _emailFocusNode),
+                          ),
                           PasswordTextFieldWidget(
                             controller: _authController.passwordController,
                             hintText: t.translate('enter_password'),
@@ -161,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                             validator: (val) => (val != null && val.length < 6) ? t.translate('password_too_short') : null,
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            padding: EdgeInsets.symmetric(vertical: 24.h),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               mainAxisSize: MainAxisSize.max,
@@ -171,29 +167,42 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                   crossAxisAlignment: WrapCrossAlignment.center,
                                   children: [
                                     Obx(
-                                      () => SizedBox(
-                                        width: 40,
-                                        child: Transform.scale(
-                                          scale: 1.4,
-                                          child: Checkbox(
-                                            value: _authController.rememberMe.value,
-                                            onChanged: (bool? value) {
-                                              _authController.rememberMe.value = value!;
-                                            },
-                                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, // Reduce padding
+                                      () => Stack(
+                                        children: [
+                                          Image.asset('assets/images/checkbox.png', width: 24.w, height: 24.h),
+                                          SizedBox(
+                                            width: 24.w,
+                                            height: 24.h,
+                                            child: Transform.scale(
+                                              scale: 1.2,
+                                              child: Checkbox(
+                                                fillColor: WidgetStateProperty.all(Colors.transparent),
+                                                value: _authController.rememberMe.value,
+                                                onChanged: (bool? value) {
+                                                  _authController.rememberMe.value = value!;
+                                                },
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       ),
                                     ),
-                                    Text(t.translate('remember_me?'), style: Theme.of(context).textTheme.bodySmall),
+                                    SizedBox(width: 8.w),
+                                    Text(
+                                      t.translate('remember_me?'),
+                                      style: FluukyTheme.lightTheme.textTheme.labelMedium,
+                                    ),
                                   ],
                                 ),
-                                GestureDetector(
-                                  onTap: () {},
-                                  child: Text(
-                                    t.translate('forgot_password'),
-                                    textAlign: TextAlign.right,
-                                    style: TextStyle(color: FluukyTheme.primaryColor),
+                                Flexible(
+                                  child: TextButton(
+                                    style: ButtonStyle(
+                                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                      padding: const WidgetStatePropertyAll(EdgeInsets.symmetric(vertical: 0)),
+                                      minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+                                    ),
+                                    onPressed: () => Get.toNamed(forgotPassword),
+                                    child: Text(t.translate('forgot_password')),
                                   ),
                                 )
                               ],
@@ -203,12 +212,18 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                             onPressed: () async => await _authController.loginWithEmail(),
                             child: Text(t.translate('login')),
                           ),
+                          SizedBox(height: 24.h),
                           TextButton(
+                            style: ButtonStyle(
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              padding: const WidgetStatePropertyAll(EdgeInsets.symmetric(vertical: 0)),
+                              minimumSize: WidgetStateProperty.all(Size(double.infinity, 24.h)),
+                            ),
                             onPressed: () => Get.toNamed(signUp),
                             child: Wrap(spacing: 10, crossAxisAlignment: WrapCrossAlignment.center, children: [
                               Text(
                                 t.translate('dontHaveAccount'),
-                                style: Theme.of(context).textTheme.bodySmall,
+                                style: FluukyTheme.lightTheme.textTheme.displaySmall,
                               ),
                               Text(t.translate('signup'))
                             ]),

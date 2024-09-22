@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/pages/basket/basket_screen.dart';
 import 'package:fluuky/presentation/pages/notification_screen.dart';
@@ -61,7 +62,7 @@ class AppBarFluuky extends StatelessWidget implements PreferredSizeWidget {
               ],
             ),
             IconButton(
-              icon: Image.asset('assets/images/basket.png', width: 26),
+              icon: SvgPicture.asset('assets/images/basket.svg', width: 32),
               onPressed: () => goBasket(),
             ),
           ],

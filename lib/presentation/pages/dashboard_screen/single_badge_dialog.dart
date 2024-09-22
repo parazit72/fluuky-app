@@ -29,12 +29,12 @@ class SingleBadgeScreen extends StatelessWidget {
                 child: Column(children: [
                   Text(
                     t.translate('congratulations') + 'John Doe!',
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor),
+                    style: FluukyTheme.lightTheme.textTheme.bodySmall,
                     // textAlign: TextAlign.center,
                   ),
                   Text(
                     t.translate('youve_just_earned_your_first_badge'),
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor),
+                    style: FluukyTheme.lightTheme.textTheme.bodySmall,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),
@@ -55,7 +55,7 @@ class SingleBadgeScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 32),
-                  Text(t.translate('eco_guardian'), style: Theme.of(context).textTheme.titleLarge),
+                  Text(t.translate('eco_guardian'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
                   const SizedBox(height: 16),
                   SizedBox(
                       width: MediaQuery.of(context).size.width - 130,

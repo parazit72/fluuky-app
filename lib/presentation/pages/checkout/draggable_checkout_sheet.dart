@@ -3,6 +3,7 @@ import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:to_arabic_number/to_arabic_number.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class DraggableCheckoutSheet extends StatefulWidget {
   const DraggableCheckoutSheet({super.key});
@@ -21,10 +22,8 @@ class _DraggableCheckoutSheetState extends State<DraggableCheckoutSheet> {
     // Define a method to format numbers based on locale
     String formatNumber(String number) {
       if (locale?.languageCode == 'ar') {
-        // Convert to Arabic numerals
         return Arabic.number(number);
       } else {
-        // Use standard numerals
         return number;
       }
     }
@@ -52,8 +51,8 @@ class _DraggableCheckoutSheetState extends State<DraggableCheckoutSheet> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(t.translate('total_amount'), style: Theme.of(context).textTheme.titleLarge),
-                      Text(formatNumber('\$100'), style: Theme.of(context).textTheme.titleLarge),
+                      Text(t.translate('total_amount'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+                      Text(formatNumber('\$100'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
                     ],
                   ),
                   const SizedBox(height: 24),

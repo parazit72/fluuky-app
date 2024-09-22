@@ -5,6 +5,7 @@ import 'package:fluuky/presentation/controllers/auth_controller.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
 import 'package:get/get.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class BillingAddressScreen extends StatelessWidget {
   BillingAddressScreen({super.key});
@@ -63,7 +64,7 @@ class BillingAddressScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(t.translate('billing_equals_shipping'), style: Theme.of(context).textTheme.bodySmall),
+                          Text(t.translate('billing_equals_shipping'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                           Obx(
                             () {
                               return Switch(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/story_controller.dart';
 import 'package:get/get.dart';
@@ -54,19 +56,12 @@ class StoryScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 16),
+                          SizedBox(height: 16.h),
                           // Title and Close button
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                storyItem.title,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                              Text(storyItem.title, style: FluukyTheme.lightTheme.textTheme.headlineLarge),
                               IconButton(
                                 onPressed: () => Get.back(),
                                 icon: const Icon(Icons.close, color: Colors.white),

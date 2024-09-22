@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:to_arabic_number/to_arabic_number.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class OrderSummaryWidget extends StatelessWidget {
   const OrderSummaryWidget({super.key});
@@ -88,10 +89,8 @@ class OrderSummaryWidget extends StatelessWidget {
     // Define a method to format numbers based on locale
     String formatNumber(String number) {
       if (locale?.languageCode == 'ar') {
-        // Convert to Arabic numerals
         return Arabic.number(number);
       } else {
-        // Use standard numerals
         return number;
       }
     }
@@ -182,7 +181,7 @@ class _ExpandableSectionState extends State<ExpandableSection> {
             children: [
               Text(
                 widget.title,
-                style: Theme.of(context).textTheme.titleLarge,
+                style: FluukyTheme.lightTheme.textTheme.titleLarge,
               ),
               IconButton(
                 iconSize: 24,

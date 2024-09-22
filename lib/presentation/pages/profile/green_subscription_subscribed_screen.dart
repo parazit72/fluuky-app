@@ -61,9 +61,9 @@ class _GreenSubscriptionSubscribedScreenState extends State<GreenSubscriptionSub
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(t.translate('Credits: 5,000'), style: Theme.of(context).textTheme.titleLarge),
+              Text(t.translate('Credits: 5,000'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
               const SizedBox(height: 4),
-              Text(t.translate('Expires at May 26, 2024'), style: Theme.of(context).textTheme.bodySmall),
+              Text(t.translate('Expires at May 26, 2024'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
             ],
           ),
         ),
@@ -75,11 +75,11 @@ class _GreenSubscriptionSubscribedScreenState extends State<GreenSubscriptionSub
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(t.translate('Green Benefits'), style: Theme.of(context).textTheme.titleLarge),
+        Text(t.translate('Green Benefits'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
         const SizedBox(height: 6),
         Text(
           t.translate('Discover all the benefits of your FLUUKY subscription below.'),
-          style: Theme.of(context).textTheme.bodySmall,
+          style: FluukyTheme.lightTheme.textTheme.displaySmall,
         ),
         const SizedBox(height: 24),
         InkWell(
@@ -113,11 +113,11 @@ class _GreenSubscriptionSubscribedScreenState extends State<GreenSubscriptionSub
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(t.translate('Manage Subscription'), style: Theme.of(context).textTheme.titleLarge),
+        Text(t.translate('Manage Subscription'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
         const SizedBox(height: 6),
         Text(
           t.translate('Manage all your essential information.'),
-          style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor),
+          style: FluukyTheme.lightTheme.textTheme.bodySmall,
         ),
         const SizedBox(height: 16),
         _buildSubscriptionOptions(t),
@@ -157,7 +157,7 @@ class _GreenSubscriptionSubscribedScreenState extends State<GreenSubscriptionSub
             Expanded(
               child: Text(
                 t.translate('Automatic Subscription Renewal'),
-                style: Theme.of(context).textTheme.bodySmall,
+                style: FluukyTheme.lightTheme.textTheme.displaySmall,
               ),
             ),
             Obx(
@@ -180,7 +180,7 @@ class _GreenSubscriptionSubscribedScreenState extends State<GreenSubscriptionSub
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(child: Text(text, style: Theme.of(context).textTheme.bodySmall)),
+          Expanded(child: Text(text, style: FluukyTheme.lightTheme.textTheme.displaySmall)),
           const SizedBox(width: 8),
           TextButton(
             style: ButtonStyle(
@@ -201,11 +201,11 @@ class _GreenSubscriptionSubscribedScreenState extends State<GreenSubscriptionSub
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 24),
-        Text(t.translate('faq'), style: Theme.of(context).textTheme.titleLarge),
+        Text(t.translate('faq'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
         const SizedBox(height: 6),
         Text(
           t.translate('find_all_the_information_you_need'),
-          style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor),
+          style: FluukyTheme.lightTheme.textTheme.bodySmall,
         ),
       ],
     );
@@ -264,14 +264,14 @@ class _GreenSubscriptionSubscribedScreenState extends State<GreenSubscriptionSub
               const SizedBox(width: 8),
               Text(
                 titleKey,
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).primaryColor),
+                style: FluukyTheme.lightTheme.textTheme.titleLarge!.copyWith(color: Theme.of(context).primaryColor),
               ),
             ],
           ),
           const SizedBox(height: 8),
           Text(
             messageKey,
-            style: Theme.of(context).textTheme.bodySmall,
+            style: FluukyTheme.lightTheme.textTheme.displaySmall,
           ),
           const SizedBox(height: 16),
         ],

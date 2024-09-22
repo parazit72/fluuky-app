@@ -27,10 +27,8 @@ class _CarouselSectionWidgetState extends State<CarouselSectionWidget> {
     // Define a method to format numbers based on locale
     String formatNumber(String number) {
       if (locale?.languageCode == 'ar') {
-        // Convert to Arabic numerals
         return Arabic.number(number);
       } else {
-        // Use standard numerals
         return number;
       }
     }
@@ -69,7 +67,7 @@ class _CarouselSectionWidgetState extends State<CarouselSectionWidget> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(raffle.name, style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.white)),
+                            Text(raffle.name, style: FluukyTheme.lightTheme.textTheme.titleLarge!.copyWith(color: Colors.white)),
                             Text(formatNumber('\$${raffle.price.toString()}'),
                                 style: Theme.of(context).textTheme.labelMedium!.copyWith(color: Colors.white)),
                           ],

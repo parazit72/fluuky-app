@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/widgets/layout/background_scaffold.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class WeForestInfoScreen extends StatelessWidget {
   const WeForestInfoScreen({super.key});
@@ -42,7 +43,7 @@ class WeForestInfoScreen extends StatelessWidget {
               const SizedBox(height: 16.0),
               Text(
                 t.translate('fluukyPartnerWeForest'),
-                style: Theme.of(context).textTheme.titleLarge,
+                style: FluukyTheme.lightTheme.textTheme.titleLarge,
               ),
               const SizedBox(height: 8.0),
               Text(

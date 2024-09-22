@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class YourImpactWidget extends StatelessWidget {
   const YourImpactWidget({super.key});
@@ -12,8 +13,8 @@ class YourImpactWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(t.translate('your_impact'), style: Theme.of(context).textTheme.titleLarge),
-          Text(t.translate('withEverTicketPurchase'), style: Theme.of(context).textTheme.bodySmall),
+          Text(t.translate('your_impact'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+          Text(t.translate('withEverTicketPurchase'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
           const SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

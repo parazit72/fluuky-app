@@ -5,6 +5,8 @@ import 'package:fluuky/domain/repositories/basket_repository.dart';
 import 'package:fluuky/presentation/bindings/basket_bindings.dart';
 import 'package:fluuky/presentation/bindings/order_bindings.dart';
 import 'package:fluuky/presentation/controllers/basket_controller.dart';
+import 'package:fluuky/presentation/pages/auth/forgot_password_screen.dart';
+import 'package:fluuky/presentation/pages/auth/set_new_password_screen.dart';
 import 'package:fluuky/presentation/pages/intro/help_center_screen.dart';
 import 'package:fluuky/presentation/pages/intro/privacy_policy_screen.dart';
 import 'package:fluuky/presentation/pages/intro/receipt_screen.dart';
@@ -125,6 +127,14 @@ List<GetPage<dynamic>>? generateRoute = [
   GetPage(
     name: logout,
     page: () => const LoginScreen(),
+  ),
+  GetPage(
+    name: forgotPassword,
+    page: () => const ForgotPasswordScreen(),
+  ),
+  GetPage(
+    name: setNewPassword,
+    page: () => const SetNewPasswordScreen(),
   ),
   GetPage(
     name: privacyPolicy,

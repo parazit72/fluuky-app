@@ -6,12 +6,14 @@ class BackgroundScaffold extends StatelessWidget {
   final Widget body;
   final Widget? appBar;
   final Widget? bottomNavigationBar;
+  final bool? resizeToAvoidBottomInset;
 
   const BackgroundScaffold({
     required this.body,
     this.appBar,
     this.bottomNavigationBar,
     super.key,
+    bool this.resizeToAvoidBottomInset = true,
   });
 
   @override
@@ -20,7 +22,7 @@ class BackgroundScaffold extends StatelessWidget {
       // appBar: const AppBarFluuky(),
       // bottomNavigationBar: CustomNavBar(),
 
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: resizeToAvoidBottomInset ?? true,
       body: Stack(
         children: [
           Container(

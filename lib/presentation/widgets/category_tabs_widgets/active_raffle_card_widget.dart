@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/domain/entities/raffle_entity.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
 import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -18,14 +19,13 @@ class ActiveRaffleCardWidget extends StatelessWidget {
     final isGridView = viewType == ViewType.grid;
     bool loading = false;
     final locale = Get.locale;
+    var t = AppLocalizations.of(context)!;
 
     // Define a method to format numbers based on locale
     String formatNumber(String number) {
       if (locale?.languageCode == 'ar') {
-        // Convert to Arabic numerals
         return Arabic.number(number);
       } else {
-        // Use standard numerals
         return number;
       }
     }
@@ -35,14 +35,14 @@ class ActiveRaffleCardWidget extends StatelessWidget {
         Container(
           width: MediaQuery.of(context).size.height * 0.3,
           margin: const EdgeInsets.only(left: 12, right: 12, bottom: 20),
-          padding: const EdgeInsets.symmetric(vertical: 20),
+          // padding: const EdgeInsets.symmetric(vertical: 20),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(14)),
-            image: DecorationImage(image: AssetImage('assets/images/paper.jpg'), fit: BoxFit.cover),
-            boxShadow: [
-              BoxShadow(color: Color(0xFFDBDBDB)),
-              BoxShadow(color: Colors.white, spreadRadius: 4.0, blurRadius: 8.6),
-            ],
+            image: DecorationImage(image: AssetImage('assets/images/raffle-back-vrtal.png'), fit: BoxFit.fill),
+            // boxShadow: [
+            //   BoxShadow(color: Color(0xFFDBDBDB)),
+            //   BoxShadow(color: Colors.white, spreadRadius: 4.0, blurRadius: 8.6),
+            // ],
           ),
           child: Column(
             children: [
@@ -82,7 +82,8 @@ class ActiveRaffleCardWidget extends StatelessWidget {
                     children: [
                       Text(raffle.name, style: Theme.of(context).textTheme.titleMedium),
                       const SizedBox(height: 8),
-                      Text(formatNumber(raffle.capacity.toString()), style: Theme.of(context).textTheme.bodySmall),
+                      Text(t.translate("Trees Planted: ") + formatNumber(raffle.capacity.toString()),
+                          style: FluukyTheme.lightTheme.textTheme.displaySmall),
                     ],
                   ),
                 ),

@@ -63,12 +63,12 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
               children: [
                 Text(
                   t.translate('faq'),
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: FluukyTheme.lightTheme.textTheme.titleLarge,
                 ),
                 const SizedBox(height: 8.0),
                 Text(
                   t.translate('faqDescription'),
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor),
+                  style: FluukyTheme.lightTheme.textTheme.bodySmall,
                 ),
                 const SizedBox(height: 16.0),
               ],
@@ -110,12 +110,12 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
                 children: [
                   Text(
                     t.translate('contactUs'),
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: FluukyTheme.lightTheme.textTheme.titleLarge,
                   ),
                   const SizedBox(height: 24),
                   Text(
                     t.translate('stillHaveQuestions'),
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor),
+                    style: FluukyTheme.lightTheme.textTheme.bodySmall,
                   ),
                   const ContactItem(
                     icon: 'assets/images/email.png',

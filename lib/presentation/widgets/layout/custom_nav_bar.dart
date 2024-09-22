@@ -73,14 +73,15 @@ class CustomNavBar extends StatelessWidget {
                   if (controller.selectedIndex.value == 2) Container(width: 125, height: 2, color: Theme.of(context).primaryColor),
                   const SizedBox(height: 8),
                   Container(
+                    width: 24,
+                    height: 24,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: controller.selectedIndex.value == 2 ? Border.all(color: FluukyTheme.primaryColor, width: 2.0) : null,
                     ),
                     child: CircleAvatar(
                       backgroundImage: AssetImage(user!.avatar ?? 'assets/images/avatar.jpg'),
-                      minRadius: 15,
-                      maxRadius: 15,
+                      radius: 12,
                     ),
                   ),
                 ],
@@ -103,7 +104,7 @@ class CustomNavBar extends StatelessWidget {
           const SizedBox(height: 11),
           SvgPicture.asset(
             controller.selectedIndex.value == index ? activeIconPath : iconPath,
-            width: 25,
+            width: 20,
           ),
         ],
       ),

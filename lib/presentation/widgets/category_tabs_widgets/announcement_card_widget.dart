@@ -18,10 +18,8 @@ class AnnouncementCardWidget extends StatelessWidget {
     // Define a method to format numbers based on locale
     String formatNumber(String number) {
       if (locale?.languageCode == 'ar') {
-        // Convert to Arabic numerals
         return Arabic.number(number);
       } else {
-        // Use standard numerals
         return number;
       }
     }

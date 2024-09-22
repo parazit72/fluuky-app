@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class TreesPlantedWithFlukkyWidget extends StatelessWidget {
   const TreesPlantedWithFlukkyWidget({super.key});
@@ -37,7 +38,7 @@ class TreesPlantedWithFlukkyWidget extends StatelessWidget {
               children: [
                 Text(
                   '15,000',
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.white),
+                  style: FluukyTheme.lightTheme.textTheme.titleLarge!.copyWith(color: Colors.white),
                 ),
                 Text(
                   t.translate('TREES_PLANTED_WITH_FLUUKY'),

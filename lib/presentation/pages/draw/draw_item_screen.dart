@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
 import 'package:jhijri/_src/_jHijri.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class DrawItemScreen extends StatelessWidget {
   final RaffleEntity selectedRaffle;
@@ -24,11 +25,11 @@ class DrawItemScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(selectedRaffle.description, style: Theme.of(context).textTheme.bodySmall),
+                  Text(selectedRaffle.description, style: FluukyTheme.lightTheme.textTheme.displaySmall),
                   const SizedBox(height: 10),
                   Text(
                     '${t.translate('drawDate')} ${DateFormat('MMMM dd\'th\', yyyy - HH:mm').format(selectedRaffle.deadline)}',
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: FluukyTheme.lightTheme.textTheme.displaySmall,
                   ),
                   const SizedBox(height: 10),
                   const DrawDetailsWidget(),

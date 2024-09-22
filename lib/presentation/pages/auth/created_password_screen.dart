@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/widgets/password_text_field_widget.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 import 'package:fluuky/presentation/widgets/widgets.dart';
 import 'package:get/get.dart';
@@ -25,8 +26,8 @@ class CreatedPasswordScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(t.translate('register_4_steps'), style: Theme.of(context).textTheme.bodySmall),
-                Text(t.translate('step_4_4'), style: Theme.of(context).textTheme.bodySmall),
+                Text(t.translate('register_4_steps'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                Text(t.translate('step_4_4'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
               ],
             ),
             const Divider(),
@@ -41,9 +42,9 @@ class CreatedPasswordScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(t.translate('create_a_password'), style: Theme.of(context).textTheme.titleLarge),
+                Text(t.translate('create_a_password'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
                 const SizedBox(height: 5),
-                Text(t.translate('lastStep'), style: Theme.of(context).textTheme.bodySmall),
+                Text(t.translate('lastStep'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                 const SizedBox(height: 24),
                 PasswordTextFieldWidget(
                   controller: _authController.passwordController,
@@ -73,7 +74,7 @@ class CreatedPasswordScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(t.translate('password_requirements'), style: Theme.of(context).textTheme.titleLarge),
+                      Text(t.translate('Password must include:'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
                       const SizedBox(height: 8),
                       _buildPasswordRule(context, t.translate('min_8_characters'), _authController.isAtLeast8Characters),
                       _buildPasswordRule(context, t.translate('uppercase_character'), _authController.hasUpperCase),
@@ -96,7 +97,7 @@ class CreatedPasswordScreen extends StatelessWidget {
                 Center(
                     child: Column(
                   children: [
-                    Text(t.translate('terms_and_conditions_msg'), style: Theme.of(context).textTheme.bodySmall),
+                    Text(t.translate('terms_and_conditions_msg'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                     Wrap(
                       // alignment: WrapAlignment.center,
                       crossAxisAlignment: WrapCrossAlignment.center,
@@ -110,7 +111,7 @@ class CreatedPasswordScreen extends StatelessWidget {
                           ),
                           child: Text(t.translate('terms_conditions')),
                         ),
-                        Text(t.translate('_and_'), style: Theme.of(context).textTheme.bodySmall, textAlign: TextAlign.center),
+                        Text(t.translate('_and_'), style: FluukyTheme.lightTheme.textTheme.displaySmall, textAlign: TextAlign.center),
                         TextButton(
                           onPressed: () => Get.toNamed(privacyPolicy),
                           style: TextButton.styleFrom(
@@ -141,7 +142,7 @@ class CreatedPasswordScreen extends StatelessWidget {
               isValid.value ? Icons.check : Icons.close,
               color: isValid.value ? Theme.of(context).primaryColor : const Color(0XFFD30201),
             ),
-            Text(ruleText, style: Theme.of(context).textTheme.bodySmall),
+            Text(ruleText, style: FluukyTheme.lightTheme.textTheme.displaySmall),
           ],
         ));
   }

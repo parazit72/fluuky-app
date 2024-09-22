@@ -31,8 +31,8 @@ class OrderHistoryWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               const SizedBox(height: 16),
-              Text(t.translate('shareThisDraw'), style: Theme.of(context).textTheme.titleLarge),
-              Text(t.translate('chooseFromOneOfTheFollowing'), style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+              Text(t.translate('shareThisDraw'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+              Text(t.translate('chooseFromOneOfTheFollowing'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
               const SizedBox(height: 16),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -96,7 +96,7 @@ class OrderHistoryWidget extends StatelessWidget {
   Widget _buildInfoRow(BuildContext context, String label, String value) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [Text(label, style: Theme.of(context).textTheme.bodySmall), Text(value, style: Theme.of(context).textTheme.titleSmall)],
+      children: [Text(label, style: FluukyTheme.lightTheme.textTheme.displaySmall), Text(value, style: Theme.of(context).textTheme.titleSmall)],
     );
   }
 
@@ -196,7 +196,7 @@ class OrderHistoryWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text(t.translate('ticket_number'), style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+          Text(t.translate('ticket_number'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
           Text('#${order.id}', style: Theme.of(context).textTheme.titleMedium)
         ],
       ),

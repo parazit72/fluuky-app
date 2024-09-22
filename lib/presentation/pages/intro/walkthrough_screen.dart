@@ -5,6 +5,7 @@ import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/pages/auth/login_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../app/config/route_constants.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class WalkthroughScreen extends StatefulWidget {
   const WalkthroughScreen({super.key});
@@ -136,7 +137,7 @@ class WalkthroughScreenState extends State<WalkthroughScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            t.translate('welcome_to_fluuky'),
+                            t.translate('Welcome to FLUUKY!'),
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.headlineSmall,
                           ),
@@ -199,7 +200,7 @@ class WalkthroughPage extends StatelessWidget {
                 const SizedBox(height: 30.0),
                 Text(model.title, style: Theme.of(context).textTheme.headlineLarge),
                 const SizedBox(height: 16.0),
-                Text(model.description, style: Theme.of(context).textTheme.bodySmall),
+                Text(model.description, style: FluukyTheme.lightTheme.textTheme.displaySmall),
                 const SizedBox(height: 16.0),
               ],
             ),

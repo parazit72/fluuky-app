@@ -44,10 +44,9 @@ class QuestionController extends GetxController {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(t.translate('Almost There!'), style: Theme.of(context).textTheme.titleLarge),
+              Text(t.translate('Almost There!'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
               const SizedBox(height: 6),
-              Text(t.translate('Ready to discover your results?'),
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+              Text(t.translate('Ready to discover your results?'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
               const SizedBox(height: 24),
               ElevatedButton(
                 onPressed: () {

@@ -5,6 +5,7 @@ import 'package:fluuky/presentation/controllers/auth_controller.dart';
 import 'package:fluuky/presentation/pages/auth/verification_screen.dart';
 import 'package:fluuky/presentation/widgets/mobile_input_widget.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -35,8 +36,8 @@ class _SignupScreenState extends State<SignupScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(t.translate('registerSteps'), style: Theme.of(context).textTheme.bodySmall),
-                Text(t.translate('step_1_4'), style: Theme.of(context).textTheme.bodySmall),
+                Text(t.translate('registerSteps'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                Text(t.translate('step_1_4'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
               ],
             ),
             const Divider(),
@@ -47,13 +48,13 @@ class _SignupScreenState extends State<SignupScreen> {
         child: Padding(
           padding: const EdgeInsets.all(18),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text(t.translate('create_account'), style: Theme.of(context).textTheme.titleLarge),
-            Text(t.translate('readyToMakeImpact'), style: Theme.of(context).textTheme.bodySmall),
+            Text(t.translate('create_account'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+            Text(t.translate('readyToMakeImpact'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
             const SizedBox(height: 20),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 5),
               decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
+                color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Row(
@@ -68,7 +69,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     width: MediaQuery.of(context).size.width * 0.7,
                     child: Text(
                       t.translate('pleaseEnterFirstNameMandatoryPrizesWinning'),
-                      style: Theme.of(context).textTheme.bodySmall,
+                      style: FluukyTheme.lightTheme.textTheme.displaySmall,
                     ),
                   ),
                 ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 
 class AccountCreatedScreen extends StatelessWidget {
@@ -21,11 +22,11 @@ class AccountCreatedScreen extends StatelessWidget {
           child: Column(children: [
             Text(
               t.translate('amazing_all_set'),
-              style: Theme.of(context).textTheme.titleLarge,
+              style: FluukyTheme.lightTheme.textTheme.titleLarge,
             ),
             Text(
               t.translate('click_start_planting'),
-              style: Theme.of(context).textTheme.bodySmall,
+              style: FluukyTheme.lightTheme.textTheme.displaySmall,
             ),
             Image.asset(
               'assets/images/show-background.jpg',

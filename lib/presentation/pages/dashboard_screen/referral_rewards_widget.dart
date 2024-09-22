@@ -16,8 +16,8 @@ class ReferralRewardsWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(t.translate('referral_rewards'), style: Theme.of(context).textTheme.titleLarge),
-          Text(t.translate('refer_fluuky_to_your_friends'), style: Theme.of(context).textTheme.bodySmall),
+          Text(t.translate('referral_rewards'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+          Text(t.translate('refer_fluuky_to_your_friends'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
           const SizedBox(height: 24),
           Center(
             child: Container(
@@ -36,7 +36,7 @@ class ReferralRewardsWidget extends StatelessWidget {
                   const SizedBox(height: 16),
                   Text(
                     referralCode,
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: FluukyTheme.lightTheme.textTheme.titleLarge,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 16),
@@ -44,7 +44,7 @@ class ReferralRewardsWidget extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * .7,
                     child: Text(
                       t.translate('when_your_friend_signs_up_with_your_referral_code'),
-                      style: Theme.of(context).textTheme.bodySmall,
+                      style: FluukyTheme.lightTheme.textTheme.displaySmall,
                       textAlign: TextAlign.center,
                     ),
                   ),

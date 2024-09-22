@@ -6,6 +6,7 @@ import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
 import 'package:fluuky/presentation/widgets/mobile_input_widget.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
 import 'package:get/get.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class ContactInformationScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -59,7 +60,7 @@ class ContactInformationScreen extends StatelessWidget {
                               // Wrap text with Expanded to avoid overflow
                               child: Text(
                                 t.translate('thisInfoCanOnlyCS@FLUUKY.com'),
-                                style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Theme.of(context).primaryColor),
+                                style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(color: Theme.of(context).primaryColor),
                               ),
                             ),
                           ],

@@ -30,9 +30,8 @@ class _PackagesScreenState extends State<PackagesScreen> {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
         children: [
-          Text(t.translate('Prebuy Tree-Planting Packages'), style: Theme.of(context).textTheme.titleLarge!.copyWith(height: 2)),
-          Text(t.translate('Receive additional credits when you prebuy bundle packages!'),
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+          Text(t.translate('Prebuy Tree-Planting Packages'), style: FluukyTheme.lightTheme.textTheme.titleLarge!.copyWith(height: 2)),
+          Text(t.translate('Receive additional credits when you prebuy bundle packages!'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
           PaymentFormWidget(),
           Container(
             margin: const EdgeInsets.only(top: 32),
@@ -63,13 +62,13 @@ class _PackagesScreenState extends State<PackagesScreen> {
                       ),
                     ),
                     const SizedBox(width: 16),
-                    Text(t.translate('Forester Package'), style: Theme.of(context).textTheme.titleLarge),
+                    Text(t.translate('Forester Package'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
                   ],
                 ),
                 const SizedBox(height: 16),
                 Text(
                   t.translate('Prebuy Amount: 10,000 AED'),
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor),
+                  style: FluukyTheme.lightTheme.textTheme.bodySmall,
                 ),
                 const SizedBox(height: 16),
                 Row(
@@ -142,7 +141,7 @@ class _PackagesScreenState extends State<PackagesScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(t.translate("terms_and_conditions"), style: Theme.of(context).textTheme.titleLarge!.copyWith(height: 2)),
+                Text(t.translate("terms_and_conditions"), style: FluukyTheme.lightTheme.textTheme.titleLarge!.copyWith(height: 2)),
                 const SizedBox(height: 16),
                 BulletList(items: [
                   t.translate("Prebuy credit packages are non-refundable"),

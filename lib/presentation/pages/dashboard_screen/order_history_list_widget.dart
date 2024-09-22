@@ -6,6 +6,7 @@ import 'package:fluuky/presentation/pages/dashboard_screen/order_history_widget.
 import 'package:get/get.dart';
 import 'package:fluuky/presentation/controllers/order_controller.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class OrderHistoryListHorizentalWidget extends StatefulWidget {
   const OrderHistoryListHorizentalWidget({super.key});
@@ -44,7 +45,7 @@ class _OrderHistoryListHorizentalWidgetState extends State<OrderHistoryListHoriz
                       Text(t.translate('orders_history'), style: Theme.of(context).textTheme.titleSmall),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.75,
-                        child: Text(t.translate('see_a_rundown'), style: Theme.of(context).textTheme.bodySmall),
+                        child: Text(t.translate('see_a_rundown'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                       ),
                     ],
                   ),

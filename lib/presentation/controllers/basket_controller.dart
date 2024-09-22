@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:fluuky/data/models/basket_model.dart';
 import 'package:fluuky/domain/repositories/basket_repository.dart';
 import 'package:get/get.dart';
@@ -12,10 +13,26 @@ class BasketController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchBasket();
+    // fetchBasket();
   }
 
   Future<void> fetchBasket() async {
+    try {
+      isLoading(true);
+      var fetchedBasket = await repository.fetchBasket();
+      basket.value = fetchedBasket;
+      print('Total Price: ${basket.value.totalPrice}');
+      for (var item in basket.value.items) {
+        print('Raffle: ${item.raffle.name}');
+      }
+    } catch (e) {
+      Get.snackbar('Error', e.toString());
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future<void> fetchRecommendations() async {
     try {
       isLoading(true);
       var fetchedBasket = await repository.fetchBasket();

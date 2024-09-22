@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/pages/draw/draw_details.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class BasketItemWidget extends StatelessWidget {
   final dynamic item;
@@ -18,7 +19,7 @@ class BasketItemWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(item.raffle.name, style: Theme.of(context).textTheme.titleLarge),
+          Text(item.raffle.name, style: FluukyTheme.lightTheme.textTheme.titleLarge),
           Wrap(
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [

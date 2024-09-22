@@ -4,6 +4,7 @@ import 'package:fluuky/presentation/pages/checkout/draggable_checkout_sheet.dart
 import 'package:fluuky/presentation/pages/checkout/order_summary_widget.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -52,8 +53,8 @@ class BasketTextHeaderWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(t.translate('cart'), style: Theme.of(context).textTheme.titleLarge),
-          Text(t.translate('explore_items_in_cart'), style: Theme.of(context).textTheme.bodySmall),
+          Text(t.translate('cart'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+          Text(t.translate('explore_items_in_cart'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
           const SizedBox(height: 24),
           const Divider(),
         ],

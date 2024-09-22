@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class LanguageDropdown extends StatelessWidget {
   final String hintText;
@@ -18,7 +19,7 @@ class LanguageDropdown extends StatelessWidget {
           BoxShadow(color: Color.fromARGB(125, 219, 219, 219)),
           BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
         ],
-        color: const Color.fromARGB(122, 219, 219, 219),
+        color: FluukyTheme.inputBackgroundColor,
       ),
       child: DropdownButtonFormField2<String>(
         isExpanded: true,
@@ -29,7 +30,7 @@ class LanguageDropdown extends StatelessWidget {
         ),
         hint: Text(
           hintText,
-          style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.grey),
+          style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(color: Colors.grey),
         ),
         value: initialValue,
         items: const [

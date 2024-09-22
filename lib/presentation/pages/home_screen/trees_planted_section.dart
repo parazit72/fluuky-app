@@ -4,6 +4,7 @@ import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:to_arabic_number/to_arabic_number.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class TreesPlantedSection extends StatelessWidget {
   const TreesPlantedSection({super.key});
@@ -16,10 +17,8 @@ class TreesPlantedSection extends StatelessWidget {
     // Define a method to format numbers based on locale
     String formatNumber(String number) {
       if (locale?.languageCode == 'ar') {
-        // Convert to Arabic numerals
         return Arabic.number(number);
       } else {
-        // Use standard numerals
         return number;
       }
     }
@@ -51,7 +50,7 @@ class TreesPlantedSection extends StatelessWidget {
                 const SizedBox(height: 16),
                 Text(
                   t.translate('youHavenPlantedAnyTrees'),
-                  style: Theme.of(context).textTheme.bodySmall,
+                  style: FluukyTheme.lightTheme.textTheme.displaySmall,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),

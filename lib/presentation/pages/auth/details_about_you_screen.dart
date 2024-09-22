@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/widgets/custom_dropdown_button.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 import 'package:fluuky/presentation/widgets/widgets.dart';
 import 'package:get/get.dart';
@@ -29,8 +30,8 @@ class DetailsAboutYouScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(t.translate('register_4_steps'), style: Theme.of(context).textTheme.bodySmall),
-                Text(t.translate('step_3_4'), style: Theme.of(context).textTheme.bodySmall),
+                Text(t.translate('register_4_steps'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                Text(t.translate('step_3_4'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
               ],
             ),
             const Divider(),
@@ -45,14 +46,14 @@ class DetailsAboutYouScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(t.translate('details_about_you'), style: Theme.of(context).textTheme.titleLarge),
+                Text(t.translate('details_about_you'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
                 const SizedBox(height: 5),
-                Text(t.translate('you_are_almost_there'), style: Theme.of(context).textTheme.bodySmall),
+                Text(t.translate('you_are_almost_there'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                 const SizedBox(height: 24),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 5),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).cardColor,
+                    color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Row(
@@ -66,14 +67,14 @@ class DetailsAboutYouScreen extends StatelessWidget {
                         width: MediaQuery.of(context).size.width * 0.7,
                         child: Text(
                           t.translate('about_you_msg'),
-                          style: Theme.of(context).textTheme.bodySmall,
+                          style: FluukyTheme.lightTheme.textTheme.displaySmall,
                         ),
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(height: 24),
-                Text(t.translate('date_of_birth'), style: Theme.of(context).textTheme.bodySmall),
+                Text(t.translate('date_of_birth'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                 const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -105,7 +106,7 @@ class DetailsAboutYouScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 24),
-                Text(t.translate('gender'), style: Theme.of(context).textTheme.bodySmall),
+                Text(t.translate('gender'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                 CustomDropdownButton(
                   itemsKey: 'genders',
                   onChanged: (value) => _selectedGender = value,

@@ -59,7 +59,7 @@ class BadgeWidget extends StatelessWidget {
               width: 56,
               child: Text(
                 text,
-                style: Theme.of(context).textTheme.bodySmall,
+                style: FluukyTheme.lightTheme.textTheme.displaySmall,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,

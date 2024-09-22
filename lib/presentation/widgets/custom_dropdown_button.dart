@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class CustomDropdownButton extends StatefulWidget {
   final String itemsKey;
@@ -92,7 +93,7 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
           BoxShadow(color: Color(0xFFDBDBDB)),
           BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
         ],
-        color: const Color.fromARGB(122, 219, 219, 219),
+        color: FluukyTheme.inputBackgroundColor,
       ),
       child: DropdownButtonFormField2<String>(
         isExpanded: true,
@@ -100,12 +101,12 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
           contentPadding: const EdgeInsets.symmetric(vertical: 16),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         ),
-        hint: Text(widget.hintText, style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.grey)),
+        hint: Text(widget.hintText, style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(color: Colors.grey)),
         value: widget.value,
         items: items.map((item) {
           return DropdownMenuItem<String>(
             value: item,
-            child: Text(item, style: Theme.of(context).textTheme.bodySmall),
+            child: Text(item, style: FluukyTheme.lightTheme.textTheme.displaySmall),
           );
         }).toList(),
         onChanged: (String? value) {
@@ -127,7 +128,7 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
               BoxShadow(color: Color(0xFFDBDBDB)),
               BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
             ],
-            color: const Color.fromARGB(122, 219, 219, 219),
+            color: FluukyTheme.inputBackgroundColor,
           ),
         ),
         menuItemStyleData: const MenuItemStyleData(padding: EdgeInsets.symmetric(horizontal: 16)),

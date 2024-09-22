@@ -35,7 +35,6 @@ class DioProvider {
         return handler.next(response);
       },
       onError: (DioException e, handler) {
-        // Handle errors
         return handler.next(e);
       },
     ));

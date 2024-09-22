@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 import 'package:fluuky/presentation/widgets/layout/background_scaffold.dart';
 import 'package:get/get.dart';
@@ -28,12 +29,12 @@ class RecommendationsCreatedScreen extends StatelessWidget {
                     children: [
                       Text(
                         t.translate('Your recommendations list successfully created!'),
-                        style: Theme.of(context).textTheme.titleLarge,
+                        style: FluukyTheme.lightTheme.textTheme.titleLarge,
                         // textAlign: TextAlign.center,
                       ),
                       Text(
                         t.translate('Based on your interests, we think you will love these draws!'),
-                        style: Theme.of(context).textTheme.bodySmall,
+                        style: FluukyTheme.lightTheme.textTheme.displaySmall,
                         textAlign: TextAlign.center,
                       ),
                     ],

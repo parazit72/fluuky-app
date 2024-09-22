@@ -22,8 +22,7 @@ class FlukkyLoyalityProgramScreen extends StatelessWidget {
         child: ListView(
           children: [
             const SizedBox(height: 32),
-            Text(t.translate('unlockRewardsWithOurTieredLoyaltyProgram'),
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+            Text(t.translate('unlockRewardsWithOurTieredLoyaltyProgram'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
             const SizedBox(height: 24),
             const SilverTierWidget(),
             const SizedBox(height: 32),

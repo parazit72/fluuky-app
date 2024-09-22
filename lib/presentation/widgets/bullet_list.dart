@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class BulletList extends StatelessWidget {
   final List<String> items;
@@ -28,7 +29,7 @@ class BulletList extends StatelessWidget {
                   Expanded(
                     child: Text(
                       item,
-                      style: Theme.of(context).textTheme.bodySmall, // Customize text style as needed
+                      style: FluukyTheme.lightTheme.textTheme.displaySmall, // Customize text style as needed
                     ),
                   ),
                 ],

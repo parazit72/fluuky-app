@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
 import 'package:get/get.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 Widget buildSelectedTypeName(BuildContext context) {
   return Obx(() {
@@ -10,7 +11,7 @@ Widget buildSelectedTypeName(BuildContext context) {
     final selectedTypeName = _getSelectedTypeName(controller.selectedItemType.value, context);
     return Text(
       selectedTypeName.capitalizeFirst!,
-      style: Theme.of(context).textTheme.titleLarge,
+      style: FluukyTheme.lightTheme.textTheme.titleLarge,
       textAlign: TextAlign.start,
     );
   });

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
@@ -9,6 +10,7 @@ import 'package:fluuky/presentation/widgets/layout/app_bar_fluuky_widget.dart';
 import 'package:fluuky/presentation/widgets/layout/background_scaffold.dart';
 import 'package:fluuky/presentation/widgets/layout/custom_nav_bar.dart';
 import 'package:get/get.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class WishlistScreen extends StatefulWidget {
   const WishlistScreen({super.key});
@@ -21,6 +23,12 @@ class _WishlistScreenState extends State<WishlistScreen> {
   final RaffleController raffleController = Get.find();
 
   bool userIsSubscribed = true;
+
+  @override
+  void initState() {
+    super.initState();
+    raffleController.fetchWishlist();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +54,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Column(
                         children: [
-                          ClipRRect(borderRadius: BorderRadius.circular(8), child: Image.asset('assets/images/empty-wishlist.png')),
+                          ClipRRect(borderRadius: BorderRadius.circular(8), child: SvgPicture.asset('assets/images/empty-wishlist.svg')),
                           const SizedBox(height: 24),
                           ElevatedButton(onPressed: () => Get.toNamed(drawList), child: Text(t.translate('buyTicketsNow')))
                         ],
@@ -76,13 +84,13 @@ class WhislistTextHeaderWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(t.translate('Wishlist'), style: Theme.of(context).textTheme.titleLarge),
+          Text(t.translate('Wishlist'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
           const SizedBox(height: 8),
           Text(
             isEmpty
                 ? t.translate('you_havent_added_draws_wish_list_browse_current')
                 : t.translate('you_added_these_wish_list_dont_wait_planting_chance_win'),
-            style: Theme.of(context).textTheme.bodySmall,
+            style: FluukyTheme.lightTheme.textTheme.displaySmall,
           ),
           const SizedBox(height: 20),
           if (!isEmpty)

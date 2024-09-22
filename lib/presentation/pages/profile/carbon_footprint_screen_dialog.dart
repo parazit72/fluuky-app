@@ -36,14 +36,14 @@ class CarbonFootprintScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 32),
-                  Text(t.translate('WHAT_IS_YOUR'), style: Theme.of(context).textTheme.displaySmall),
+                  Text(t.translate('WHAT_IS_YOUR'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
                   const SizedBox(height: 16),
-                  Text(t.translate('carbon_footprint?'), style: Theme.of(context).textTheme.titleLarge),
+                  Text(t.translate('carbon_footprint?'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
                   const SizedBox(height: 16),
                   SizedBox(
                       width: MediaQuery.of(context).size.width - 130,
                       child: Text(t.translate('a_carbon_footprint_is_msg'),
-                          textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor))),
+                          textAlign: TextAlign.center, style: FluukyTheme.lightTheme.textTheme.bodySmall)),
                 ]),
               ),
               Positioned(

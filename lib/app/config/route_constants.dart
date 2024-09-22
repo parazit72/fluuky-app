@@ -29,6 +29,7 @@ const String draw = '/DrawScreen';
 const String drawsList = '/DrawsListScreen';
 const String verification = '/VerificationScreen';
 const String forgotPassword = '/ForgotPasswordScreen';
+const String setNewPassword = '/SetNewPasswordScreen';
 const String reviewList = '/ReviewListScreen';
 const String dashboard = '/DashboardScreen';
 const String recommendations = '/RecommendationsScreen';

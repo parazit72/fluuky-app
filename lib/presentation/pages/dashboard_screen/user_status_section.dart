@@ -18,10 +18,8 @@ class UserStatusWidget extends StatelessWidget {
     // Define a method to format numbers based on locale
     String formatNumber(String number) {
       if (locale?.languageCode == 'ar') {
-        // Convert to Arabic numerals
         return Arabic.number(number);
       } else {
-        // Use standard numerals
         return number;
       }
     }
@@ -66,23 +64,23 @@ class UserStatusWidget extends StatelessWidget {
                 child: LinearProgressIndicator(
                   value: 0,
                   borderRadius: BorderRadius.circular(50),
-                  color: FluukyTheme.accentColor,
-                  backgroundColor: FluukyTheme.lightTheme.cardColor,
+                  color: FluukyTheme.primaryColor,
+                  backgroundColor: FluukyTheme.lightTheme.primaryColor,
                   valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
                 ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(formatNumber('5,000/10,000 AED'), style: Theme.of(context).textTheme.bodySmall),
-                  Text(formatNumber(t.translate('12_months_left')), style: Theme.of(context).textTheme.bodySmall),
+                  Text(formatNumber('5,000/10,000 AED'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                  Text(formatNumber(t.translate('12_months_left')), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                 ],
               ),
               const SizedBox(height: 16),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).cardColor,
+                  color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Row(
@@ -93,7 +91,7 @@ class UserStatusWidget extends StatelessWidget {
                     Expanded(
                       child: Text(
                         formatNumber(t.translate('spend_5k_more')),
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 11),
+                        style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(fontSize: 11),
                       ),
                     ),
                   ],

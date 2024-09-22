@@ -63,10 +63,8 @@ class BottomOfDrawCardWidget extends StatelessWidget {
     // Define a method to format numbers based on locale
     String formatNumber(String number) {
       if (locale?.languageCode == 'ar') {
-        // Convert to Arabic numerals
         return Arabic.number(number);
       } else {
-        // Use standard numerals
         return number;
       }
     }
@@ -79,18 +77,18 @@ class BottomOfDrawCardWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(t.translate('winThe'), style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+              Text(t.translate('winThe'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
               const SizedBox(width: 10),
-              Text(t.translate('value'), style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+              Text(t.translate('value'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
             ],
           ),
           const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Rolex Cosmograph Daytona', style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14)),
+              Text('Rolex Cosmograph Daytona', style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(fontSize: 14)),
               // const SizedBox(width: 10),
-              Text(formatNumber('33,000'), style: Theme.of(context).textTheme.bodySmall),
+              Text(formatNumber('33,000'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
             ],
           ),
           const SizedBox(height: 10),
@@ -101,10 +99,10 @@ class BottomOfDrawCardWidget extends StatelessWidget {
                 children: [
                   Image.asset('assets/images/logo-green.png', height: 20, width: 20, fit: BoxFit.contain),
                   const SizedBox(width: 10),
-                  Text(t.translate('ticketsRemaining'), style: Theme.of(context).textTheme.bodySmall),
+                  Text(t.translate('ticketsRemaining'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                 ],
               ),
-              Text(formatNumber('567/2000'), style: Theme.of(context).textTheme.bodySmall),
+              Text(formatNumber('567/2000'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
             ],
           ),
           const SizedBox(height: 10),
@@ -115,10 +113,11 @@ class BottomOfDrawCardWidget extends StatelessWidget {
                 children: [
                   Image.asset('assets/images/logo-green.png', height: 20, width: 20, fit: BoxFit.contain),
                   const SizedBox(width: 10),
-                  Text(t.translate('eachTicketPlants'), style: Theme.of(context).textTheme.bodySmall),
+                  Text(t.translate('eachTicketPlants'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                 ],
               ),
-              Text(formatNumber('10 ${t.translate('trees')}'), style: Theme.of(context).textTheme.bodySmall!.copyWith(fontWeight: FontWeight.w600)),
+              Text(formatNumber('10 ${t.translate('trees')}'),
+                  style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(fontWeight: FontWeight.w600)),
             ],
           ),
           const SizedBox(height: 10),
@@ -139,13 +138,13 @@ class BottomOfDrawCardWidget extends StatelessWidget {
                       },
                       child: Text(
                         t.translate('youArePlanting'),
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(decoration: TextDecoration.underline),
+                        style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(decoration: TextDecoration.underline),
                       ),
                     )
                   ],
                 ),
               ),
-              Text(formatNumber('10 ${t.translate('trees')}'), style: Theme.of(context).textTheme.bodySmall),
+              Text(formatNumber('10 ${t.translate('trees')}'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
             ],
           ),
           const SizedBox(height: 10),
@@ -168,13 +167,13 @@ class BottomOfDrawCardWidget extends StatelessWidget {
                       },
                       child: Text(
                         t.translate('bundleDiscount'),
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(decoration: TextDecoration.underline),
+                        style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(decoration: TextDecoration.underline),
                       ),
                     )
                   ],
                 ),
               ),
-              Text(formatNumber('0'), style: Theme.of(context).textTheme.bodySmall),
+              Text(formatNumber('0'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
             ],
           ),
         ],

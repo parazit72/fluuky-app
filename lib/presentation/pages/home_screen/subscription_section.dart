@@ -28,7 +28,7 @@ class SubscriptionSection extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          Text(t.translate('withGreenSubscription'), style: Theme.of(context).textTheme.bodySmall),
+          Text(t.translate('withGreenSubscription'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
           const SizedBox(height: 10),
           OutlinedButton(
             onPressed: () {

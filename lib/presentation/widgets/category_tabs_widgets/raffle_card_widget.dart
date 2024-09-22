@@ -28,10 +28,8 @@ class RaffleCardWidget extends StatelessWidget {
     // Define a method to format numbers based on locale
     String formatNumber(String number) {
       if (locale?.languageCode == 'ar') {
-        // Convert to Arabic numerals
         return Arabic.number(number);
       } else {
-        // Use standard numerals
         return number;
       }
     }
@@ -45,7 +43,7 @@ class RaffleCardWidget extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: Text(
-                    t.translate('Plant') + "X" + t.translate('trees_to_enter_the_draw_to_win') + 'Rolex Cosmograph Daytona',
+                    t.translate('Plant') + raffle.capacity.toString() + t.translate('trees_to_enter_the_draw_to_win') + raffle.name,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
@@ -54,14 +52,10 @@ class RaffleCardWidget extends StatelessWidget {
           width: MediaQuery.of(context).size.width * (isGridView ? 0.66 : 1),
           // height: MediaQuery.of(context).size.height * 0.6,
           margin: EdgeInsets.only(right: isGridView ? 12 : 0),
-          padding: const EdgeInsets.only(bottom: 20),
+          // padding: const EdgeInsets.only(bottom: 20),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(14)),
-            image: DecorationImage(image: AssetImage('assets/images/paper.jpg'), fit: BoxFit.cover),
-            boxShadow: [
-              BoxShadow(color: Color(0xFFDBDBDB)),
-              BoxShadow(color: Colors.white, spreadRadius: 4.0, blurRadius: 8.6),
-            ],
+            image: DecorationImage(image: AssetImage('assets/images/raffle-back-vrtal.png'), fit: BoxFit.fill),
           ),
           child: Column(
             children: [
@@ -95,44 +89,58 @@ class RaffleCardWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(raffle.name, style: FluukyTheme.lightTheme.textTheme.titleLarge),
+                    const SizedBox(height: 8),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(t.translate('win_the'), style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
-                        const SizedBox(width: 10),
-                        Text(t.translate('value_label'), style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+                        Text(t.translate('Prize Value:'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                        Text(raffle.price.toStringAsFixed(2), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                       ],
                     ),
-                    const SizedBox(height: 10),
-                    Skeletonizer(
-                      enabled: loading,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    const Divider(height: 32),
+                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                      SizedBox(width: (MediaQuery.of(context).size.width - 30) * 0.5, child: const Text("How many tickets do you wish to purchase?")),
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
-                          Text(raffle.name, style: Theme.of(context).textTheme.bodySmall),
-                          const SizedBox(width: 10),
-                          Text(formatNumber(raffle.price.toStringAsFixed(2)), style: Theme.of(context).textTheme.bodySmall),
+                          InkWell(
+                            child: Icon(Icons.remove_circle, color: FluukyTheme.primaryColor, size: 20),
+                            onTap: () {},
+                          ),
+                          Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 0),
+                              width: 40,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey, width: 1), borderRadius: const BorderRadius.all(Radius.circular(4))),
+                              child: const Center(child: Text('10'))),
+                          InkWell(
+                            child: Icon(Icons.add_circle, color: FluukyTheme.primaryColor, size: 20),
+                            onTap: () {},
+                          ),
                         ],
-                      ),
-                    ),
-                    const SizedBox(height: 10),
+                      )
+                    ]),
+                    const SizedBox(height: 16),
                     Skeletonizer(
                       enabled: loading,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
+                          Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.center,
                             children: [
                               SvgPicture.asset('assets/images/ticket-active.svg', width: 20),
                               const SizedBox(width: 10),
-                              Text(t.translate('ticket_status'), style: Theme.of(context).textTheme.bodySmall),
+                              Text(t.translate('Tickets sold:'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                             ],
                           ),
-                          Text(formatNumber('${raffle.capacity}/2000'), style: Theme.of(context).textTheme.bodySmall),
+                          Text(formatNumber('${raffle.capacity}/2000'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 16),
                     Skeletonizer(
                       enabled: loading,
                       child: Row(
@@ -143,13 +151,13 @@ class RaffleCardWidget extends StatelessWidget {
                             SvgPicture.asset('assets/images/tree-green.svg',
                                 height: 18, colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn)),
                             const SizedBox(width: 10),
-                            Text(t.translate('each_ticket_plants'), style: Theme.of(context).textTheme.bodySmall),
+                            Text(t.translate('each_ticket_plants'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                           ]),
-                          Text(formatNumber('10 ${t.translate('Trees')}'), style: Theme.of(context).textTheme.bodySmall),
+                          Text(formatNumber('10 ${t.translate('Trees')}'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 16),
                     Skeletonizer(
                       enabled: loading,
                       child: Row(
@@ -160,7 +168,7 @@ class RaffleCardWidget extends StatelessWidget {
                             child: Row(
                               children: [
                                 Icon(Icons.info_outline, size: 18, color: Theme.of(context).primaryColor),
-                                const SizedBox(width: 10),
+                                const SizedBox(width: 2),
                                 GestureDetector(
                                   onTap: () {
                                     showDialog(
@@ -172,7 +180,7 @@ class RaffleCardWidget extends StatelessWidget {
                                   },
                                   child: Text(
                                     t.translate('tree_planting_count'),
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                                    style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(
                                         decoration: TextDecoration.underline,
                                         color: FluukyTheme.primaryColor,
                                         decorationColor: FluukyTheme.primaryColor),
@@ -181,12 +189,77 @@ class RaffleCardWidget extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Text(formatNumber('10 ${t.translate('Trees')}'), style: Theme.of(context).textTheme.bodySmall),
+                          Text(formatNumber('10 ${t.translate('Trees')}'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                         ],
                       ),
                     ),
                     const SizedBox(height: 16),
-                    ElevatedButton(onPressed: () => Get.toNamed(draw, arguments: raffle), child: Text(t.translate('buy_tickets_now')))
+                    Skeletonizer(
+                      enabled: loading,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Icon(Icons.info_outline, size: 18, color: Theme.of(context).primaryColor),
+                                const SizedBox(width: 2),
+                                GestureDetector(
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return const WeForestInfoScreen();
+                                      },
+                                    );
+                                  },
+                                  child: Text(
+                                    t.translate('bundleDiscount'),
+                                    style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(
+                                        decoration: TextDecoration.underline,
+                                        color: FluukyTheme.primaryColor,
+                                        decorationColor: FluukyTheme.primaryColor),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          Text(formatNumber('\$9.99'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                        ],
+                      ),
+                    ),
+                    const Divider(height: 32),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(t.translate('Total:'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+                        Text(raffle.price.toStringAsFixed(2), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: ElevatedButton(
+                                style: ButtonStyle(
+                                  minimumSize: WidgetStateProperty.all<Size>(const Size(double.infinity, 40)),
+                                ),
+                                onPressed: () => Get.toNamed(draw, arguments: raffle),
+                                child: Text(t.translate('Add to Cart')))),
+                        const SizedBox(width: 16),
+                        InkWell(
+                            onTap: () {},
+                            child: Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(color: Theme.of(context).primaryColor),
+                                ),
+                                child: Center(child: SvgPicture.asset('assets/images/heart-line.svg', width: 20)))),
+                      ],
+                    )
                   ],
                 ),
               ),

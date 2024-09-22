@@ -17,7 +17,6 @@ dependencies:
   get: ^4.6.6
   # google_fonts: ^6.2.1
   hive: ^2.2.3
-  overlay_support: ^2.1.0
   path_provider: ^2.1.3
   provider: ^6.1.2
   shared_preferences: ^2.2.3
@@ -53,6 +52,7 @@ dependencies:
   to_arabic_number: ^1.0.1
   jhijri: ^1.0.0
   easy_refresh: ^3.4.0
+  flutter_screenutil: ^5.9.3
   # rive: ^0.13.9
 
 dev_dependencies:
@@ -81,6 +81,16 @@ flutter:
           - asset: assets/fonts/Causten-Round/Causten-Bold.otf
             weight: 700
           - asset: assets/fonts/Causten-Round/Causten-Black.otf
+            weight: 900
+      - family: Brinnan
+        fonts:
+          - asset: assets/fonts/Brinnan/Brinnan-Light.ttf
+            weight: 300
+          - asset: assets/fonts/Brinnan/Brinnan-Regular.ttf
+            weight: 500
+          - asset: assets/fonts/Brinnan/Brinnan-Bold.ttf
+            weight: 700
+          - asset: assets/fonts/Brinnan/Brinnan-Black.ttf
             weight: 900
       - family: Cairo
         fonts:

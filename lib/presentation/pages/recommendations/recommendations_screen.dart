@@ -117,7 +117,7 @@ class UpdateYourInterestBoxWidget extends StatelessWidget {
           ),
           Text(
             t.translate('updateInterests_msg'),
-            style: Theme.of(context).textTheme.bodySmall,
+            style: FluukyTheme.lightTheme.textTheme.displaySmall,
           ),
           const SizedBox(height: 16.0),
           Padding(

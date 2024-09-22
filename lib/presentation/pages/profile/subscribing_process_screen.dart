@@ -65,12 +65,12 @@ class _SubscribingProcessScreenState extends State<SubscribingProcessScreen> wit
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 32),
-                  Text(t.translate('My Subscription'), style: Theme.of(context).textTheme.titleLarge),
+                  Text(t.translate('My Subscription'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
                   const SizedBox(height: 6),
                   Text(
                     t.translate(
                         'With a simple monthly commitment, you not only contribute to a greener planet by funding tree planting but also get a chance to win in exclusive draws!'),
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor),
+                    style: FluukyTheme.lightTheme.textTheme.bodySmall,
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 24),
@@ -97,9 +97,8 @@ class _SubscribingProcessScreenState extends State<SubscribingProcessScreen> wit
                           ],
                         ),
                         const SizedBox(height: 16),
-                        Text(t.translate('120 Trees'), style: Theme.of(context).textTheme.titleLarge),
-                        Text('${t.translate('Billing starts:')} April 26, 2024',
-                            style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+                        Text(t.translate('120 Trees'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+                        Text('${t.translate('Billing starts:')} April 26, 2024', style: FluukyTheme.lightTheme.textTheme.bodySmall),
                         const Divider(),
                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                           Text(t.translate("Monthly Tree Planting:")),
@@ -118,7 +117,7 @@ class _SubscribingProcessScreenState extends State<SubscribingProcessScreen> wit
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(t.translate('Payment Method'), style: Theme.of(context).textTheme.titleLarge),
+                      Text(t.translate('Payment Method'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
                       IconButton(
                         onPressed: _toggleExpansion,
                         icon: Icon(isExpanded ? Icons.expand_less : Icons.expand_more),
@@ -133,7 +132,7 @@ class _SubscribingProcessScreenState extends State<SubscribingProcessScreen> wit
                       children: [
                         Text(
                           t.translate('Almost there! Add your payment details to secure your subscription.'),
-                          style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor),
+                          style: FluukyTheme.lightTheme.textTheme.bodySmall,
                         ),
                         PaymentFormWidget(),
                         const SizedBox(height: 24),
@@ -151,7 +150,7 @@ class _SubscribingProcessScreenState extends State<SubscribingProcessScreen> wit
                             children: [
                               Text(
                                 t.translate('By completing your purchase you accept our '),
-                                style: Theme.of(context).textTheme.bodySmall,
+                                style: FluukyTheme.lightTheme.textTheme.displaySmall,
                               ),
                               Wrap(
                                 crossAxisAlignment: WrapCrossAlignment.center,
@@ -167,7 +166,7 @@ class _SubscribingProcessScreenState extends State<SubscribingProcessScreen> wit
                                   ),
                                   Text(
                                     t.translate('_and_'),
-                                    style: Theme.of(context).textTheme.bodySmall,
+                                    style: FluukyTheme.lightTheme.textTheme.displaySmall,
                                     textAlign: TextAlign.center,
                                   ),
                                   TextButton(

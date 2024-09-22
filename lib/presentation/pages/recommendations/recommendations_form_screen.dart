@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 import 'package:fluuky/presentation/controllers/raffle_controller.dart';
 
@@ -160,7 +161,7 @@ class SelectYourLocationDecriptionBoxWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('Select Your Location & Interests', style: Theme.of(context).textTheme.titleLarge),
+        Text('Select Your Location & Interests', style: FluukyTheme.lightTheme.textTheme.titleLarge),
         Container(
           padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 14),
           decoration: BoxDecoration(
@@ -181,7 +182,7 @@ class SelectYourLocationDecriptionBoxWidget extends StatelessWidget {
                 // Wrap text with Expanded to avoid overflow
                 child: Text(
                   'By providing these details, you empower us to curate recommendations that align specifically with your interests, ensuring you receive exclusive offers and discover draws tailored just for you.',
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Theme.of(context).primaryColor),
+                  style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(color: Theme.of(context).primaryColor),
                 ),
               ),
             ],
@@ -199,7 +200,7 @@ class UpdateYourInterestBoxWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('Select Your Location & Interests', style: Theme.of(context).textTheme.titleLarge),
+        Text('Select Your Location & Interests', style: FluukyTheme.lightTheme.textTheme.titleLarge),
         Container(
           padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 14),
           decoration: BoxDecoration(
@@ -220,7 +221,7 @@ class UpdateYourInterestBoxWidget extends StatelessWidget {
                 // Wrap text with Expanded to avoid overflow
                 child: Text(
                   'By providing these details, you empower us to curate recommendations that align specifically with your interests, ensuring you receive exclusive offers and discover draws tailored just for you.',
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Theme.of(context).primaryColor),
+                  style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(color: Theme.of(context).primaryColor),
                 ),
               ),
             ],

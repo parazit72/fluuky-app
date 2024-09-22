@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/widgets/layout/background_scaffold.dart';
 import 'package:fluuky/presentation/pages/draw/bundle_section.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class TreesPlantedDialog extends StatelessWidget {
   const TreesPlantedDialog({super.key});
@@ -37,7 +38,7 @@ class TreesPlantedDialog extends StatelessWidget {
                   child: Text(
                     t.translate('growMoreTrees'),
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: FluukyTheme.lightTheme.textTheme.displaySmall,
                   ),
                 ),
                 const SizedBox(height: 20),

@@ -20,7 +20,7 @@ class RaffleController extends GetxController {
   @override
   void onInit() {
     fetchRaffles();
-    fetchWishlist();
+    // fetchWishlist();
     super.onInit();
   }
 

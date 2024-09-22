@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:fluuky/data/models/basket_item_model.dart';
 import 'package:fluuky/data/models/basket_model.dart';
 import 'package:fluuky/domain/repositories/basket_repository.dart';
 import 'package:fluuky/data/providers/network/dio_provider.dart';

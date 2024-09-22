@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class LoyalityProgramScreen extends StatelessWidget {
   final List<Map<String, String>> textParts = [
@@ -17,7 +18,7 @@ class LoyalityProgramScreen extends StatelessWidget {
         title: Center(
           child: Text(
             t.translate('terms_conditions'),
-            style: Theme.of(context).textTheme.titleLarge,
+            style: FluukyTheme.lightTheme.textTheme.titleLarge,
             textAlign: TextAlign.center,
           ),
         ),

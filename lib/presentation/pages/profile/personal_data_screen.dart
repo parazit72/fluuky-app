@@ -49,8 +49,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
           ListView(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
             children: [
-              Text(t.translate('yourPhoto'), style: Theme.of(context).textTheme.titleLarge),
-              Text(t.translate('uploadPhotoUnder2MB'), style: Theme.of(context).textTheme.bodySmall),
+              Text(t.translate('yourPhoto'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+              Text(t.translate('uploadPhotoUnder2MB'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
               const SizedBox(height: 16),
 
               // Profile image preview and change button
@@ -73,8 +73,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
               ),
 
               const Divider(height: 48),
-              Text(t.translate('personalData'), style: Theme.of(context).textTheme.titleLarge),
-              Text(t.translate('manageAllYourPersonalInformation'), style: Theme.of(context).textTheme.bodySmall),
+              Text(t.translate('personalData'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+              Text(t.translate('manageAllYourPersonalInformation'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
               registerWidget(),
             ],
           ),
@@ -97,7 +97,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
             InputTextFieldWidget(
                 controller: _authController.lastNameController, labelText: t.translate('lastName'), hintText: t.translate('enterLastName')),
             const SizedBox(height: 20),
-            Text(t.translate('date_of_birth'), style: Theme.of(context).textTheme.bodySmall),
+            Text(t.translate('date_of_birth'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
             const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -129,7 +129,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
               ],
             ),
             const SizedBox(height: 20),
-            Text(t.translate('gender'), style: Theme.of(context).textTheme.bodySmall),
+            Text(t.translate('gender'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
             const SizedBox(height: 8),
             CustomDropdownButton(
               itemsKey: 'genders',
@@ -183,9 +183,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 20),
-                    Text(t.translate('changePhoto'), style: Theme.of(context).textTheme.titleLarge),
-                    Text(t.translate('chooseOneOfTheFollowing'),
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+                    Text(t.translate('changePhoto'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+                    Text(t.translate('chooseOneOfTheFollowing'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
                     const SizedBox(height: 5),
                     TextButton(
                         style: ButtonStyle(

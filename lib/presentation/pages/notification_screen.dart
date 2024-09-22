@@ -57,7 +57,8 @@ class NotificationScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(20),
                     child: Column(
                       children: [
-                        Text(t.translate('We don’t have any notifications today! Check back later.'), style: Theme.of(context).textTheme.titleLarge),
+                        Text(t.translate('We don’t have any notifications today! Check back later.'),
+                            style: FluukyTheme.lightTheme.textTheme.titleLarge),
                         SvgPicture.asset('assets/images/we-dont-have-any-notification.svg')
                       ],
                     ),
@@ -104,8 +105,8 @@ class NotificationScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(t.translate('Notifications'), style: Theme.of(context).textTheme.titleLarge),
-                    Text(t.translate('chooseOneOfTheFollowing'), style: Theme.of(context).textTheme.bodySmall),
+                    Text(t.translate('Notifications'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+                    Text(t.translate('chooseOneOfTheFollowing'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                     const SizedBox(height: 10),
                     TextButton(
                       style: ButtonStyle(
@@ -118,7 +119,7 @@ class NotificationScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(t.translate('push_notifications'), style: Theme.of(context).textTheme.bodySmall),
+                        Text(t.translate('push_notifications'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                         Obx(
                           () {
                             return Switch(
@@ -194,10 +195,10 @@ class NotificationRowWidget extends StatelessWidget {
                     Text(notification.title, style: Theme.of(context).textTheme.titleSmall),
                     const SizedBox(width: 8),
                     Text(timeago.format(DateTime.parse(notification.timestamp.toString())),
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.grey)),
+                        style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(color: Colors.grey)),
                   ],
                 ),
-                Text(notification.body, style: Theme.of(context).textTheme.bodySmall),
+                Text(notification.body, style: FluukyTheme.lightTheme.textTheme.displaySmall),
               ],
             ),
           ),

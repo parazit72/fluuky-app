@@ -41,7 +41,7 @@ class GoldTierWidget extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 16),
-              Text(t.translate('spend25kAEDwithin12Months'), style: Theme.of(context).textTheme.bodySmall!.copyWith(color: FluukyTheme.thirdColor)),
+              Text(t.translate('spend25kAEDwithin12Months'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
               const SizedBox(height: 24),
               Row(
                 children: [
