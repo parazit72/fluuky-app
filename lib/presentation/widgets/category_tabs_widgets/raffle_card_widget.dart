@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
@@ -7,6 +8,7 @@ import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
+import 'package:fluuky/presentation/pages/draw/trees_planted_dialog.dart';
 import 'package:fluuky/presentation/pages/draw/we_forest_info_dialog.dart';
 import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -37,21 +39,21 @@ class RaffleCardWidget extends StatelessWidget {
     return Column(
       children: [
         isGridView
-            ? Container()
-            : Skeletonizer(
+            ? Skeletonizer(
                 enabled: loading,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  padding: EdgeInsets.symmetric(vertical: 20.h),
                   child: Text(
                     t.translate('Plant') + raffle.capacity.toString() + t.translate('trees_to_enter_the_draw_to_win') + raffle.name,
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: FluukyTheme.lightTheme.textTheme.titleMedium,
                   ),
                 ),
-              ),
+              )
+            : Container(),
         Container(
-          width: MediaQuery.of(context).size.width * (isGridView ? 0.66 : 1),
+          width: 375.w * (isGridView ? 0.66 : 1),
           // height: MediaQuery.of(context).size.height * 0.6,
-          margin: EdgeInsets.only(right: isGridView ? 12 : 0),
+          margin: EdgeInsets.only(right: isGridView ? 12.w : 0, bottom: 20.h),
           // padding: const EdgeInsets.only(bottom: 20),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(14)),
@@ -62,11 +64,11 @@ class RaffleCardWidget extends StatelessWidget {
               Skeletonizer(
                 enabled: loading,
                 child: ClipRRect(
-                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(8.w), topRight: const Radius.circular(8)),
                     child: raffle.image.isNotEmpty
                         ? CachedNetworkImage(
-                            height: isGridView ? MediaQuery.of(context).size.height * 0.2 : MediaQuery.of(context).size.height * 0.3,
-                            width: MediaQuery.of(context).size.width,
+                            height: 812.h * (isGridView ? 0.2 : 0.3),
+                            width: 375.w,
                             fit: BoxFit.cover,
                             imageUrl: raffle.mainImage,
                             placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
@@ -77,52 +79,85 @@ class RaffleCardWidget extends StatelessWidget {
                             fadeInCurve: Curves.easeIn,
                           )
                         : Container(
-                            height: MediaQuery.of(context).size.height * 0.2,
-                            width: MediaQuery.of(context).size.width,
+                            height: 812.h * 0.2,
+                            width: 375.w,
                             color: FluukyTheme.secondaryColor,
                           )),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10.h),
               Container(
-                width: MediaQuery.of(context).size.width * (isGridView ? 0.66 : 1),
-                padding: const EdgeInsets.all(16.0),
+                width: 375.w * (isGridView ? 0.66 : 1),
+                padding: EdgeInsets.all(20.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(raffle.name, style: FluukyTheme.lightTheme.textTheme.titleLarge),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(t.translate('Prize Value:'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
-                        Text(raffle.price.toStringAsFixed(2), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                        Text(t.translate('Prize Value:'), style: FluukyTheme.lightTheme.textTheme.bodyMedium),
+                        Text('\$33,000', style: FluukyTheme.lightTheme.textTheme.bodyMedium),
                       ],
                     ),
-                    const Divider(height: 32),
+                    Divider(height: 32.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(t.translate('Price per ticket:'),
+                            style: TextStyle(
+                              fontSize: 14.w,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                              fontFamily: 'Causten',
+                              height: 1.5,
+                            )),
+                        Text('\$${raffle.price.toStringAsFixed(2)}',
+                            style: TextStyle(
+                              fontSize: 14.w,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                              fontFamily: 'Causten',
+                              height: 1.5,
+                            )),
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      SizedBox(width: (MediaQuery.of(context).size.width - 30) * 0.5, child: const Text("How many tickets do you wish to purchase?")),
+                      SizedBox(
+                          width: 345.w * 0.5,
+                          child: Text(
+                            "How many tickets do you wish to purchase?",
+                            style: TextStyle(
+                              fontSize: 14.w,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontFamily: 'Causten',
+                              height: 1.5,
+                            ),
+                          )),
                       Wrap(
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           InkWell(
-                            child: Icon(Icons.remove_circle, color: FluukyTheme.primaryColor, size: 20),
+                            child: Icon(Icons.remove_circle, color: FluukyTheme.primaryColor, size: 20.w),
                             onTap: () {},
                           ),
                           Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 0),
-                              width: 40,
-                              height: 20,
+                              margin: EdgeInsets.symmetric(horizontal: 14.w),
+                              width: 42.w,
+                              height: 20.h,
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey, width: 1), borderRadius: const BorderRadius.all(Radius.circular(4))),
                               child: const Center(child: Text('10'))),
                           InkWell(
-                            child: Icon(Icons.add_circle, color: FluukyTheme.primaryColor, size: 20),
+                            child: Icon(Icons.add_circle, color: FluukyTheme.primaryColor, size: 20.w),
                             onTap: () {},
                           ),
                         ],
                       )
                     ]),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     Skeletonizer(
                       enabled: loading,
                       child: Row(
@@ -131,16 +166,23 @@ class RaffleCardWidget extends StatelessWidget {
                           Wrap(
                             crossAxisAlignment: WrapCrossAlignment.center,
                             children: [
-                              SvgPicture.asset('assets/images/ticket-active.svg', width: 20),
-                              const SizedBox(width: 10),
-                              Text(t.translate('Tickets sold:'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                              SvgPicture.asset('assets/images/ticket-active.svg', width: 18.w),
+                              SizedBox(width: 4.w),
+                              Text(t.translate('Tickets sold:'),
+                                  style: TextStyle(
+                                    fontSize: 14.w,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                    fontFamily: 'Causten',
+                                    height: 1.5,
+                                  )),
                             ],
                           ),
-                          Text(formatNumber('${raffle.capacity}/2000'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                          Text(formatNumber('${raffle.capacity}/2000'), style: FluukyTheme.lightTheme.textTheme.bodyMedium),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     Skeletonizer(
                       enabled: loading,
                       child: Row(
@@ -149,15 +191,22 @@ class RaffleCardWidget extends StatelessWidget {
                         children: [
                           Wrap(children: [
                             SvgPicture.asset('assets/images/tree-green.svg',
-                                height: 18, colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn)),
-                            const SizedBox(width: 10),
-                            Text(t.translate('each_ticket_plants'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                                height: 18.h, colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn)),
+                            SizedBox(width: 4.w),
+                            Text(t.translate('each_ticket_plants'),
+                                style: TextStyle(
+                                  fontSize: 14.w,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                  fontFamily: 'Causten',
+                                  height: 1.5,
+                                )),
                           ]),
-                          Text(formatNumber('10 ${t.translate('Trees')}'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                          Text(formatNumber('10 ${t.translate('Trees')}'), style: FluukyTheme.lightTheme.textTheme.bodyMedium),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     Skeletonizer(
                       enabled: loading,
                       child: Row(
@@ -167,15 +216,13 @@ class RaffleCardWidget extends StatelessWidget {
                           Expanded(
                             child: Row(
                               children: [
-                                Icon(Icons.info_outline, size: 18, color: Theme.of(context).primaryColor),
+                                Icon(Icons.info_outline, size: 18.w, color: Theme.of(context).primaryColor),
                                 const SizedBox(width: 2),
                                 GestureDetector(
                                   onTap: () {
                                     showDialog(
                                       context: context,
-                                      builder: (BuildContext context) {
-                                        return const WeForestInfoScreen();
-                                      },
+                                      builder: (BuildContext context) => const WeForestInfoScreen(),
                                     );
                                   },
                                   child: Text(
@@ -189,11 +236,11 @@ class RaffleCardWidget extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Text(formatNumber('10 ${t.translate('Trees')}'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                          Text(formatNumber('10 ${t.translate('Trees')}'), style: FluukyTheme.lightTheme.textTheme.bodyMedium),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     Skeletonizer(
                       enabled: loading,
                       child: Row(
@@ -203,15 +250,13 @@ class RaffleCardWidget extends StatelessWidget {
                           Expanded(
                             child: Row(
                               children: [
-                                Icon(Icons.info_outline, size: 18, color: Theme.of(context).primaryColor),
+                                Icon(Icons.info_outline, size: 18.w, color: Theme.of(context).primaryColor),
                                 const SizedBox(width: 2),
                                 GestureDetector(
                                   onTap: () {
                                     showDialog(
                                       context: context,
-                                      builder: (BuildContext context) {
-                                        return const WeForestInfoScreen();
-                                      },
+                                      builder: (BuildContext context) => const TreesPlantedDialog(),
                                     );
                                   },
                                   child: Text(
@@ -225,39 +270,51 @@ class RaffleCardWidget extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Text(formatNumber('\$9.99'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                          Text(formatNumber('\$9.99'), style: FluukyTheme.lightTheme.textTheme.bodyMedium),
                         ],
                       ),
                     ),
-                    const Divider(height: 32),
+                    Divider(height: 32.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(t.translate('Total:'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
-                        Text(raffle.price.toStringAsFixed(2), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                        Text('\$90,000', style: FluukyTheme.lightTheme.textTheme.titleLarge),
                       ],
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     Row(
                       children: [
                         Expanded(
                             child: ElevatedButton(
                                 style: ButtonStyle(
-                                  minimumSize: WidgetStateProperty.all<Size>(const Size(double.infinity, 40)),
-                                ),
+                                    textStyle: WidgetStateProperty.all(TextStyle(
+                                        fontSize: 14.w, fontWeight: FontWeight.w600, color: Colors.black, fontFamily: 'Causten', height: 1.5)),
+                                    minimumSize: WidgetStateProperty.all<Size>(Size(double.infinity, 40.h))),
                                 onPressed: () => Get.toNamed(draw, arguments: raffle),
                                 child: Text(t.translate('Add to Cart')))),
-                        const SizedBox(width: 16),
+                        SizedBox(width: 16.w),
                         InkWell(
-                            onTap: () {},
+                          onTap: () {
+                            raffle.isFavorite.value = !raffle.isFavorite.value;
+                          },
+                          child: Expanded(
                             child: Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(color: Theme.of(context).primaryColor),
+                              width: 40.w,
+                              height: 40.h,
+                              decoration:
+                                  BoxDecoration(borderRadius: BorderRadius.circular(8.w), border: Border.all(color: FluukyTheme.primaryColor)),
+                              child: Center(
+                                child: Obx(
+                                  () => SvgPicture.asset(
+                                    raffle.isFavorite.value ? 'assets/images/heart.svg' : 'assets/images/heart-line.svg',
+                                    width: 20.w,
+                                  ),
                                 ),
-                                child: Center(child: SvgPicture.asset('assets/images/heart-line.svg', width: 20)))),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     )
                   ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/pages/dashboard_screen/badge_widget.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
@@ -14,12 +15,12 @@ class BadgesListWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
+          padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 24.h),
           child: Text(t.translate('badges'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
-          child: Text(t.translate('theMoreTreesYouGrowMoreBadgesYouGet'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+          padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 24.h),
+          child: Text(t.translate('The more trees you grow the more badges you get!'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
         ),
         SingleChildScrollView(
             scrollDirection: Axis.horizontal,

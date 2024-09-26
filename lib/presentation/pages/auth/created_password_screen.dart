@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/widgets/password_text_field_widget.dart';
@@ -35,7 +36,7 @@ class CreatedPasswordScreen extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(20.h),
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -43,9 +44,9 @@ class CreatedPasswordScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(t.translate('create_a_password'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
-                const SizedBox(height: 5),
+                SizedBox(height: 5.h),
                 Text(t.translate('lastStep'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
-                const SizedBox(height: 24),
+                SizedBox(height: 24.h),
                 PasswordTextFieldWidget(
                   controller: _authController.passwordController,
                   hintText: t.translate('password'),
@@ -61,21 +62,21 @@ class CreatedPasswordScreen extends StatelessWidget {
                     _authController.checkPassword(value); // Update password checks
                   },
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24.h),
                 PasswordTextFieldWidget(
                   controller: _authController.confirmPasswordController,
-                  labelText: t.translate('confirm_password'),
+                  labelText: t.translate('Confirm Password'),
                   hintText: t.translate('password'),
                   // focusNode: _passwordFocusNode,
                   validator: (val) => (val != _authController.passwordController.text) ? t.translate('passwords_do_not_match') : null,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 34, vertical: 24),
+                  padding: EdgeInsets.all(16.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(t.translate('Password must include:'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
-                      const SizedBox(height: 8),
+                      Text(t.translate('Password must include:'), style: FluukyTheme.lightTheme.textTheme.labelMedium),
+                      SizedBox(height: 8.h),
                       _buildPasswordRule(context, t.translate('min_8_characters'), _authController.isAtLeast8Characters),
                       _buildPasswordRule(context, t.translate('uppercase_character'), _authController.hasUpperCase),
                       _buildPasswordRule(context, t.translate('lowercase_character'), _authController.hasLowerCase),
@@ -84,20 +85,35 @@ class CreatedPasswordScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+                SizedBox(height: 8.h),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      _authController.verifyCode();
+                      // Optionally, check other conditions here if needed
+                      if (_authController.isAtLeast8Characters.value &&
+                          _authController.hasUpperCase.value &&
+                          _authController.hasLowerCase.value &&
+                          _authController.hasDigit.value &&
+                          _authController.hasSpecialCharacter.value) {
+                        // If all validations pass, verify code and navigate
+                        _authController.verifyCode();
+                        // Get.toNamed(home);
+                      } else {
+                        // Show some error message if the password rules are not met
+                        Get.snackbar('Validation Error', t.translate('Please make sure your password meets all the requirements.'));
+                      }
+                    } else {
+                      // Show some error message if the form is not valid
+                      Get.snackbar('Validation Error', t.translate('Please fill out all fields correctly.'));
                     }
-                    Get.toNamed(home);
                   },
                   child: Text(t.translate('activate_account')),
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 24.h),
                 Center(
                     child: Column(
                   children: [
-                    Text(t.translate('terms_and_conditions_msg'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                    Text(t.translate('terms_and_conditions_msg'), style: FluukyTheme.lightTheme.textTheme.labelMedium),
                     Wrap(
                       // alignment: WrapAlignment.center,
                       crossAxisAlignment: WrapCrossAlignment.center,
@@ -111,7 +127,7 @@ class CreatedPasswordScreen extends StatelessWidget {
                           ),
                           child: Text(t.translate('terms_conditions')),
                         ),
-                        Text(t.translate('_and_'), style: FluukyTheme.lightTheme.textTheme.displaySmall, textAlign: TextAlign.center),
+                        Text(t.translate('_and_'), style: FluukyTheme.lightTheme.textTheme.labelMedium, textAlign: TextAlign.center),
                         TextButton(
                           onPressed: () => Get.toNamed(privacyPolicy),
                           style: TextButton.styleFrom(

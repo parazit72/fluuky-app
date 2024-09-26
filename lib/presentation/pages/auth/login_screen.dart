@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
@@ -20,6 +21,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
   final AuthController _authController = Get.find<AuthController>();
   final DraggableScrollableController _scrollableController = DraggableScrollableController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
   bool _isKeyboardVisible = false;
@@ -118,117 +120,132 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                     }
                     return true;
                   },
-                  child: Container(
-                    padding: EdgeInsets.only(top: 28.h, left: 20.w, right: 20.w),
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
-                      boxShadow: [BoxShadow(offset: Offset(0, -1), color: Colors.black26, spreadRadius: 0, blurRadius: 4)],
-                    ),
-                    child: SingleChildScrollView(
-                      controller: scrollController,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(vertical: 12.h),
-                            child: Text(
-                              isFirstLaunch ? t.translate('Welcome to FLUUKY!') : t.translate('Welcome back to FLUUKY!'),
-                              style: FluukyTheme.lightTheme.textTheme.titleLarge,
+                  child: Form(
+                    key: _formKey,
+                    autovalidateMode: AutovalidateMode.disabled,
+                    child: Container(
+                      padding: EdgeInsets.only(top: 28.h, left: 20.w, right: 20.w),
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
+                        boxShadow: [BoxShadow(offset: Offset(0, -1), color: Colors.black26, spreadRadius: 0, blurRadius: 4)],
+                      ),
+                      child: SingleChildScrollView(
+                        controller: scrollController,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(vertical: 12.h),
+                              child: Text(
+                                isFirstLaunch ? t.translate('Welcome to FLUUKY!') : t.translate('Welcome back to FLUUKY!'),
+                                style: FluukyTheme.lightTheme.textTheme.titleLarge,
+                              ),
                             ),
-                          ),
-                          Text(
-                            t.translate('sign_in_continue_tree_planting'),
-                            style: FluukyTheme.lightTheme.textTheme.displaySmall,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 24.h),
-                            child: InputTextFieldWidget(
+                            Text(
+                              t.translate('sign_in_continue_tree_planting'),
+                              style: FluukyTheme.lightTheme.textTheme.displaySmall,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 24.h),
+                              child: InputTextFieldWidget(
                                 labelText: t.translate('email'),
                                 hintText: t.translate('enterEmailAddress'),
                                 controller: _authController.emailController,
-                                focusNode: _emailFocusNode),
-                          ),
-                          PasswordTextFieldWidget(
-                            controller: _authController.passwordController,
-                            hintText: t.translate('enter_password'),
-                            focusNode: _passwordFocusNode,
-                            validator: (val) => (val != null && val.length < 6) ? t.translate('password_too_short') : null,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 24.h),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Wrap(
-                                  alignment: WrapAlignment.start,
-                                  crossAxisAlignment: WrapCrossAlignment.center,
-                                  children: [
-                                    Obx(
-                                      () => Stack(
-                                        children: [
-                                          Image.asset('assets/images/checkbox.png', width: 24.w, height: 24.h),
-                                          SizedBox(
-                                            width: 24.w,
-                                            height: 24.h,
-                                            child: Transform.scale(
-                                              scale: 1.2,
-                                              child: Checkbox(
-                                                fillColor: WidgetStateProperty.all(Colors.transparent),
-                                                value: _authController.rememberMe.value,
-                                                onChanged: (bool? value) {
-                                                  _authController.rememberMe.value = value!;
-                                                },
+                                focusNode: _emailFocusNode,
+                                validator: (value) => EmailValidator.validate(value ?? '') ? null : t.translate("Please enter a valid email"),
+                              ),
+                            ),
+                            PasswordTextFieldWidget(
+                              controller: _authController.passwordController,
+                              hintText: t.translate('Enter your password'),
+                              focusNode: _passwordFocusNode,
+                              validator: (value) {
+                                if (value != null && value.length < 6) {
+                                  return t.translate('password_too_short');
+                                }
+                                return null;
+                              },
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 24.h),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Wrap(
+                                    alignment: WrapAlignment.start,
+                                    crossAxisAlignment: WrapCrossAlignment.center,
+                                    children: [
+                                      Obx(
+                                        () => Stack(
+                                          children: [
+                                            Image.asset('assets/images/checkbox.png', width: 24.w, height: 24.h),
+                                            SizedBox(
+                                              width: 24.w,
+                                              height: 24.h,
+                                              child: Transform.scale(
+                                                scale: 1.2,
+                                                child: Checkbox(
+                                                  fillColor: WidgetStateProperty.all(Colors.transparent),
+                                                  value: _authController.rememberMe.value,
+                                                  onChanged: (bool? value) {
+                                                    _authController.rememberMe.value = value!;
+                                                  },
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(width: 8.w),
-                                    Text(
-                                      t.translate('remember_me?'),
-                                      style: FluukyTheme.lightTheme.textTheme.labelMedium,
-                                    ),
-                                  ],
-                                ),
-                                Flexible(
-                                  child: TextButton(
-                                    style: ButtonStyle(
-                                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                      padding: const WidgetStatePropertyAll(EdgeInsets.symmetric(vertical: 0)),
-                                      minimumSize: WidgetStateProperty.all(const Size(0, 0)),
-                                    ),
-                                    onPressed: () => Get.toNamed(forgotPassword),
-                                    child: Text(t.translate('forgot_password')),
+                                      SizedBox(width: 8.w),
+                                      Text(
+                                        t.translate('remember_me?'),
+                                        style: FluukyTheme.lightTheme.textTheme.labelMedium,
+                                      ),
+                                    ],
                                   ),
-                                )
-                              ],
-                            ),
-                          ),
-                          ElevatedButton(
-                            onPressed: () async => await _authController.loginWithEmail(),
-                            child: Text(t.translate('login')),
-                          ),
-                          SizedBox(height: 24.h),
-                          TextButton(
-                            style: ButtonStyle(
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              padding: const WidgetStatePropertyAll(EdgeInsets.symmetric(vertical: 0)),
-                              minimumSize: WidgetStateProperty.all(Size(double.infinity, 24.h)),
-                            ),
-                            onPressed: () => Get.toNamed(signUp),
-                            child: Wrap(spacing: 10, crossAxisAlignment: WrapCrossAlignment.center, children: [
-                              Text(
-                                t.translate('dontHaveAccount'),
-                                style: FluukyTheme.lightTheme.textTheme.displaySmall,
+                                  Flexible(
+                                    child: TextButton(
+                                      style: ButtonStyle(
+                                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                        padding: const WidgetStatePropertyAll(EdgeInsets.symmetric(vertical: 0)),
+                                        minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+                                      ),
+                                      onPressed: () => Get.toNamed(forgotPassword),
+                                      child: Text(t.translate('forgot_password')),
+                                    ),
+                                  )
+                                ],
                               ),
-                              Text(t.translate('signup'))
-                            ]),
-                          ),
-                        ],
+                            ),
+                            ElevatedButton(
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  await _authController.loginWithEmail();
+                                }
+                              },
+                              child: Text(t.translate('login')),
+                            ),
+                            SizedBox(height: 24.h),
+                            TextButton(
+                              style: ButtonStyle(
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                padding: const WidgetStatePropertyAll(EdgeInsets.symmetric(vertical: 0)),
+                                minimumSize: WidgetStateProperty.all(Size(double.infinity, 24.h)),
+                              ),
+                              onPressed: () => Get.toNamed(signUp),
+                              child: Wrap(spacing: 10, crossAxisAlignment: WrapCrossAlignment.center, children: [
+                                Text(
+                                  t.translate('dontHaveAccount'),
+                                  style: FluukyTheme.lightTheme.textTheme.displaySmall,
+                                ),
+                                Text(t.translate('signup'))
+                              ]),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

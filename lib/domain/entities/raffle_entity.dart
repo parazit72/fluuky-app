@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class RaffleEntity {
   final int id;
   final int categoryId;
@@ -5,8 +7,9 @@ class RaffleEntity {
   final int adminId;
   final String name;
   final String slug;
-  final String description;
   final int capacity;
+  RxBool isFavorite = false.obs;
+  final String description;
   final String mainImage;
   final List<String> image;
   final double price;
@@ -27,6 +30,7 @@ class RaffleEntity {
     required this.price,
     required this.status,
     required this.deadline,
+    isFavorite,
   });
 
   factory RaffleEntity.fromJson(Map<String, dynamic> json) {
@@ -42,6 +46,7 @@ class RaffleEntity {
       mainImage: json['main_image'],
       price: json['price'].toDouble(),
       status: json['status'],
+      isFavorite: json['isFavorite'] ?? false.obs,
       image: List<String>.from(json['image']),
       deadline: DateTime.parse(json['deadline']),
     );
@@ -60,6 +65,7 @@ class RaffleEntity {
       'image': image,
       'main_image': mainImage,
       'price': price,
+      'isFavorite': isFavorite,
       'status': status,
       'deadline': deadline.toIso8601String(),
     };

@@ -100,9 +100,10 @@ class UpdateYourInterestBoxWidget extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 18),
       decoration: BoxDecoration(
-        boxShadow: const [
-          BoxShadow(color: Color(0xFFDBDBDB)),
-          BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+        boxShadow: [
+          BoxShadow(color: FluukyTheme.secondaryColor),
+          BoxShadow(color: FluukyTheme.fourthColor),
+          const BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
         ],
         color: FluukyTheme.secondaryColor.withOpacity(0.3),
         borderRadius: BorderRadius.circular(16),

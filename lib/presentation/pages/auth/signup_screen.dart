@@ -1,8 +1,9 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/auth_controller.dart';
-import 'package:fluuky/presentation/pages/auth/verification_screen.dart';
 import 'package:fluuky/presentation/widgets/mobile_input_widget.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
@@ -46,30 +47,35 @@ class _SignupScreenState extends State<SignupScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(18),
+          padding: EdgeInsets.all(18.w),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
             Text(t.translate('create_account'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
             Text(t.translate('readyToMakeImpact'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h),
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 5),
+              padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 5.w),
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(color: FluukyTheme.secondaryColor),
+                  BoxShadow(color: FluukyTheme.fourthColor),
+                  const BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+                ],
+                color: FluukyTheme.secondaryColor.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(16.w),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: Icon(Icons.info_outline, size: 20, color: Theme.of(context).primaryColor),
+                    padding: EdgeInsets.symmetric(horizontal: 5.w),
+                    child: Icon(Icons.info_outline, size: 20.w, color: FluukyTheme.primaryColor),
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.7,
+                    width: 262.w,
                     child: Text(
                       t.translate('pleaseEnterFirstNameMandatoryPrizesWinning'),
-                      style: FluukyTheme.lightTheme.textTheme.displaySmall,
+                      style: FluukyTheme.lightTheme.textTheme.labelSmall!.copyWith(color: FluukyTheme.primaryColor, height: 1.66),
                     ),
                   ),
                 ],
@@ -92,33 +98,62 @@ class _SignupScreenState extends State<SignupScreen> {
         child: Column(
           children: [
             InputTextFieldWidget(
-                controller: _authController.firstNameController, labelText: t.translate('firstName'), hintText: t.translate('enterFirstName')),
-            const SizedBox(height: 20),
+              controller: _authController.firstNameController,
+              labelText: t.translate('firstName'),
+              hintText: t.translate('enterFirstName'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return t.translate('Please enter your first name');
+                } else if (value.length > 50) {
+                  return t.translate('Maximum length is 50 characters');
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 20.h),
             InputTextFieldWidget(
-                controller: _authController.lastNameController, labelText: t.translate('lastName'), hintText: t.translate('enterLastName')),
-            const SizedBox(height: 20),
+              controller: _authController.lastNameController,
+              labelText: t.translate('lastName'),
+              hintText: t.translate('enterLastName'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return t.translate('Please enter your last name');
+                } else if (value.length > 50) {
+                  return t.translate('Maximum length is 50 characters');
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 20.h),
             MobileInputWidget(
               controller: _authController.mobileController,
-              labelText: '',
               hintText: t.translate('enterPhoneNumber'),
+              labelText: t.translate('phoneNumber'),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h),
             InputTextFieldWidget(
-                controller: _authController.emailController, labelText: t.translate('email'), hintText: t.translate('enterEmailAddress')),
-            const SizedBox(height: 20),
+              controller: _authController.emailController,
+              labelText: t.translate('email'),
+              hintText: t.translate('Enter your Email Address'),
+              keyboardType: TextInputType.emailAddress,
+              validator: (value) => EmailValidator.validate(value ?? '') ? null : "Please enter a valid email",
+            ),
+            SizedBox(height: 20.h),
             InputTextFieldWidget(
               controller: _authController.referralCodeController,
               labelText: t.translate('referral_code'),
+              labelTextHelper: t.translate('(If Available)'),
               hintText: t.translate('enter_referral_code'),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h),
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(t.translate('processing_data'))),
-                  );
-                  Get.offAll(() => VerificationScreen(), arguments: {'email': _authController.emailController.text});
+                  // ScaffoldMessenger.of(context).showSnackBar(
+                  //   SnackBar(content: Text(t.translate('processing_data'))),
+                  // );
+
+                  Get.toNamed(verification, arguments: {'email': _authController.emailController.text});
 
                   // _authController.registerWithEmail();
                 }
@@ -131,7 +166,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   onPressed: goSignIn,
                   child: Wrap(
                     children: [
-                      Text(t.translate('already_have_account '), style: Theme.of(context).textTheme.bodyMedium),
+                      Text(t.translate('Already have an account?'), style: Theme.of(context).textTheme.bodyMedium),
                       Text(t.translate('sign_in'), style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).primaryColor)),
                     ],
                   )),

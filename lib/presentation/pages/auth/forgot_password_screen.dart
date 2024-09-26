@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
@@ -18,6 +19,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> with WidgetsBindingObserver {
   final AuthController _authController = Get.find<AuthController>();
   final FocusNode _emailFocusNode = FocusNode();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -52,18 +54,24 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> with Widget
                     t.translate('No worries! Enter your email and we will send you reset instructions.'),
                     style: FluukyTheme.lightTheme.textTheme.displaySmall,
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 24.h),
-                    child: InputTextFieldWidget(
-                        labelText: t.translate('email'),
-                        hintText: t.translate('enterEmailAddress'),
-                        controller: _authController.emailController,
-                        focusNode: _emailFocusNode),
+                  Form(
+                    key: _formKey,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 24.h),
+                      child: InputTextFieldWidget(
+                          labelText: t.translate('email'),
+                          hintText: t.translate('enterEmailAddress'),
+                          validator: (value) => EmailValidator.validate(value ?? '') ? null : t.translate("Please enter a valid email"),
+                          controller: _authController.emailController,
+                          focusNode: _emailFocusNode),
+                    ),
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      // _authController.resendCode(_authController.emailController.text.trim());
-                      Get.toNamed(verification);
+                      if (_formKey.currentState!.validate()) {
+                        // _authController.resendCode(_authController.emailController.text.trim());
+                        Get.toNamed(verification);
+                      }
                     },
                     child: Text(t.translate('Send Instructions')),
                   ),

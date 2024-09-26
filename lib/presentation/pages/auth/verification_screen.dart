@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
@@ -18,6 +19,7 @@ class VerificationScreen extends GetView<AuthController> {
   Widget build(BuildContext context) {
     var t = AppLocalizations.of(context)!;
     final userEmailAddress = controller.user.value?.email ?? t.translate('email_placeholder');
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _pinFocusNode.requestFocus();
@@ -52,33 +54,47 @@ class VerificationScreen extends GetView<AuthController> {
             Text(t.translate('verificationCodeSent_1') + userEmailAddress + t.translate('verificationCodeSent_2'),
                 style: FluukyTheme.lightTheme.textTheme.displaySmall),
             SizedBox(height: 24.h),
-            Center(
-              child: Pinput(
-                defaultPinTheme: FluukyTheme.defaultPinTheme,
-                focusNode: _pinFocusNode,
-                // focusedPinTheme: Theme.of(context).focusedPinTheme,
-                // submittedPinTheme: Theme.of(context).submittedPinTheme,
-                // validator: (s) {
-                //   return s == '6665' ? null : 'Pin is incorrect';
-                // },
-                length: 5,
-                controller: controller.codeController,
-                onCompleted: (pin) => controller.verifyCode,
+            Form(
+              key: formKey,
+              child: Center(
+                child: Pinput(
+                  defaultPinTheme: FluukyTheme.defaultPinTheme,
+                  focusNode: _pinFocusNode,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+                  // focusedPinTheme: Theme.of(context).focusedPinTheme,
+                  // submittedPinTheme: Theme.of(context).submittedPinTheme,
+                  validator: (s) {
+                    return s != '12345' ? null : 'Pin is incorrect';
+                  },
+                  length: 5,
+                  controller: controller.codeController,
+                  onCompleted: (pin) => controller.verifyCode,
+                ),
               ),
             ),
             SizedBox(height: 24.h),
             ElevatedButton(
               onPressed: () {
+                String? previousRoute = Get.previousRoute;
+
+                if (previousRoute == signUp) {
+                  Get.toNamed(detailsAboutYou);
+                } else if (previousRoute == forgotPassword) {
+                  Get.toNamed(setNewPassword);
+                }
+
                 // _authController.verifyCode();
-                Get.toNamed(setNewPassword);
               },
               child: Text(t.translate('verify')),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 16.h, bottom: 12.h),
+              padding: EdgeInsets.only(top: 14.h, bottom: 10.h),
               child: OutlinedButton(onPressed: () => _authController.resendCode(userEmailAddress), child: Text(t.translate('resend_code'))),
             ),
-            TextButton(onPressed: () => Get.back(), child: Text(t.translate('use_different_email'))),
+            TextButton(onPressed: () => Get.back(), child: Text(t.translate('Use different email address'))),
           ],
         ),
       ),

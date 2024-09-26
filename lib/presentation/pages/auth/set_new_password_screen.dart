@@ -19,6 +19,8 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> with Widget
   final AuthController _authController = Get.find<AuthController>();
   final FocusNode _passwordFocusNode = FocusNode();
   final TextEditingController _confirmPasswordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
 
   @override
   void initState() {
@@ -51,7 +53,7 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> with Widget
   // Validation function to check password requirements
   String? _validatePassword(String? password) {
     if (password == null || password.isEmpty) {
-      return AppLocalizations.of(context)!.translate('password_required');
+      return AppLocalizations.of(context)!.translate('Password Required');
     }
     if (password.length < 8) {
       return AppLocalizations.of(context)!.translate('password_too_short');
@@ -88,78 +90,96 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> with Widget
           Container(
             padding: EdgeInsets.only(top: 30.h, left: 20.w, right: 20.w),
             child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(height: 12.h),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 12.h),
-                    child: Text(
-                      t.translate('Set a New Password'),
-                      style: FluukyTheme.lightTheme.textTheme.titleLarge,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(height: 12.h),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 12.h),
+                      child: Text(
+                        t.translate('Set a New Password'),
+                        style: FluukyTheme.lightTheme.textTheme.titleLarge,
+                      ),
                     ),
-                  ),
-                  Text(
-                    t.translate('Enter your new password and you are all set.'),
-                    style: FluukyTheme.lightTheme.textTheme.displaySmall,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 24.h),
-                    child: PasswordTextFieldWidget(
-                      controller: _authController.passwordController,
-                      hintText: t.translate('enter_password'),
-                      focusNode: _passwordFocusNode,
-                      onChanged: _validateConfirmPassword,
-                      validator: _validatePassword,
+                    Text(
+                      t.translate('Enter your new password and you are all set.'),
+                      style: FluukyTheme.lightTheme.textTheme.displaySmall,
                     ),
-                  ),
-                  PasswordTextFieldWidget(
-                    labelText: t.translate('confirm_password'),
-                    controller: _confirmPasswordController,
-                    hintText: t.translate('confirm_password'),
-                    validator: _validateConfirmPassword,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          t.translate('Password must include:'),
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: FluukyTheme.inputTextColor, height: 1.5),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildValidationCheck(t.translate('At least 8 characters'), _authController.passwordController.text.length >= 8),
-                            _buildValidationCheck(
-                                t.translate('An uppercase character'), RegExp(r'^(?=.*?[A-Z])').hasMatch(_authController.passwordController.text)),
-                            _buildValidationCheck(
-                                t.translate('A lowercase character'), RegExp(r'^(?=.*?[a-z])').hasMatch(_authController.passwordController.text)),
-                            _buildValidationCheck(
-                                t.translate('A number'), RegExp(r'^(?=.*?[0-9])').hasMatch(_authController.passwordController.text)),
-                            _buildValidationCheck(
-                                t.translate('A special character'), RegExp(r'^(?=.*?[!@#\$&*~])').hasMatch(_authController.passwordController.text)),
-                          ],
-                        ),
-                      ],
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 24.h),
+                      child: PasswordTextFieldWidget(
+                        controller: _authController.passwordController,
+                        hintText: t.translate('Enter your password'),
+                        focusNode: _passwordFocusNode,
+                        onChanged: _validateConfirmPassword,
+                        validator: _validatePassword,
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 8.h),
-                    child: ElevatedButton(
-                      onPressed: _arePasswordsMatching()
-                          ? () {
-                              // _authController.resendCode(_authController.emailController.text.trim());
-                              // Action when passwords match
-                              Get.toNamed(login);
-                            }
-                          : null,
-                      child: Text(t.translate('Update Password')),
+                    Tooltip(
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(14.w), color: FluukyTheme.secondaryColor),
+                      height: 14.h,
+                      key: tooltipkey,
+                      preferBelow: true,
+                      padding: EdgeInsets.all(15.w),
+                      margin: EdgeInsets.only(bottom: 10.w),
+                      textStyle: TextStyle(fontSize: 12.w),
+                      triggerMode: TooltipTriggerMode.manual,
+                      waitDuration: const Duration(seconds: 1),
+                      showDuration: const Duration(seconds: 3),
+                      message: t.translate('passwords_do_not_match'),
+                      child: PasswordTextFieldWidget(
+                        labelText: t.translate('Confirm Password'),
+                        controller: _confirmPasswordController,
+                        hintText: t.translate('Confirm Password'),
+                        validator: _validateConfirmPassword,
+                      ),
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            t.translate('Password must include:'),
+                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: FluukyTheme.inputTextColor, height: 1.5),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildValidationCheck(t.translate('At least 8 characters'), _authController.passwordController.text.length >= 8),
+                              _buildValidationCheck(
+                                  t.translate('An uppercase character'), RegExp(r'^(?=.*?[A-Z])').hasMatch(_authController.passwordController.text)),
+                              _buildValidationCheck(
+                                  t.translate('A lowercase character'), RegExp(r'^(?=.*?[a-z])').hasMatch(_authController.passwordController.text)),
+                              _buildValidationCheck(
+                                  t.translate('A number'), RegExp(r'^(?=.*?[0-9])').hasMatch(_authController.passwordController.text)),
+                              _buildValidationCheck(t.translate('A special character'),
+                                  RegExp(r'^(?=.*?[!@#\$&*~])').hasMatch(_authController.passwordController.text)),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 8.h),
+                      child: ElevatedButton(
+                        onPressed: _arePasswordsMatching()
+                            ? () {
+                                if (_formKey.currentState!.validate()) {
+                                  // _authController.resendCode(_authController.emailController.text.trim());
+                                  // Action when passwords match
+                                  Get.toNamed(login);
+                                }
+                              }
+                            : () => tooltipkey.currentState?.ensureTooltipVisible(),
+                        child: Text(t.translate('Update Password')),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -184,7 +204,7 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> with Widget
         Text(
           text,
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 14.w,
             fontWeight: FontWeight.w400,
             color: isValid ? FluukyTheme.thirdColor : FluukyTheme.redColor,
             height: 1.5,

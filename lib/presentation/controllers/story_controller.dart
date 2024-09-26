@@ -37,18 +37,21 @@ class StoryController extends GetxController {
         title: 'Story 2',
         description: 'Description for story 2',
         iconPath: 'assets/images/tree-green.svg',
+        isWatched: true,
       ),
       StoryItem(
         imagePath: 'assets/images/back6.jpg',
         title: 'Story 2',
         description: 'Description for story 2',
         iconPath: 'assets/images/tree-green.svg',
+        isWatched: true,
       ),
       StoryItem(
         imagePath: 'assets/images/back6.jpg',
         title: 'Story 2',
         description: 'Description for story 2',
         iconPath: 'assets/images/tree-green.svg',
+        isWatched: true,
       ),
       StoryItem(
         imagePath: 'assets/images/back6.jpg',

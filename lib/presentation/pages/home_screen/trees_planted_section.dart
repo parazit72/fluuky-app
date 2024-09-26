@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
@@ -24,41 +25,43 @@ class TreesPlantedSection extends StatelessWidget {
     }
 
     return Container(
-      margin: const EdgeInsets.all(16.0),
+      margin: EdgeInsets.all(16.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Wrap(
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              Icon(Icons.info_outline, color: Theme.of(context).primaryColor),
-              const SizedBox(width: 8),
-              Text("${formatNumber('0')} ${t.translate('treesPlanted')}", style: Theme.of(context).textTheme.headlineSmall),
+              Icon(Icons.info_outline, color: FluukyTheme.primaryColor, size: 24.w),
+              SizedBox(width: 8.w),
+              Text(
+                "${formatNumber('0')} ${t.translate('Trees Planted')}",
+                style: FluukyTheme.lightTheme.textTheme.titleLarge!.copyWith(color: FluukyTheme.primaryColor),
+              ),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           Container(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(16.w),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.w),
               image: const DecorationImage(image: AssetImage('assets/images/paper-box.png'), fit: BoxFit.fill),
             ),
             child: Column(
               children: [
                 SvgPicture.asset('assets/images/tree-green.svg',
-                    colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn), width: 50, height: 50),
-                const SizedBox(height: 16),
+                    colorFilter: ColorFilter.mode(FluukyTheme.primaryColor, BlendMode.srcIn), width: 50.w, height: 50.h),
+                SizedBox(height: 16.h),
                 Text(
                   t.translate('youHavenPlantedAnyTrees'),
-                  style: FluukyTheme.lightTheme.textTheme.displaySmall,
+                  style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(color: FluukyTheme.inputTextColor),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16.h),
                 ElevatedButton(
-                  onPressed: () {
-                    Get.toNamed(greenSubscription);
-                  },
-                  child: Text(t.translate('plantNow')),
+                  style: ButtonStyle(textStyle: WidgetStateProperty.all(TextStyle(fontSize: 12.w))),
+                  onPressed: () => Get.toNamed(greenSubscription),
+                  child: Text(t.translate('Enter Now!')),
                 ),
               ],
             ),

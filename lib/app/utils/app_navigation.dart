@@ -7,6 +7,7 @@ import 'package:fluuky/presentation/bindings/order_bindings.dart';
 import 'package:fluuky/presentation/controllers/basket_controller.dart';
 import 'package:fluuky/presentation/pages/auth/forgot_password_screen.dart';
 import 'package:fluuky/presentation/pages/auth/set_new_password_screen.dart';
+import 'package:fluuky/presentation/pages/draw/active_draws_list_screen.dart';
 import 'package:fluuky/presentation/pages/intro/help_center_screen.dart';
 import 'package:fluuky/presentation/pages/intro/privacy_policy_screen.dart';
 import 'package:fluuky/presentation/pages/intro/receipt_screen.dart';
@@ -16,6 +17,7 @@ import 'package:fluuky/presentation/pages/profile/estimated_carbon_footprint_scr
 import 'package:fluuky/presentation/pages/profile/green_subscription_subscribed_screen.dart';
 import 'package:fluuky/presentation/pages/profile/question_page.dart';
 import 'package:fluuky/presentation/pages/profile/subscribing_process_screen.dart';
+import 'package:fluuky/presentation/pages/transaction_history_screen.dart';
 import 'package:get/get.dart';
 import 'package:fluuky/presentation/pages/auth/created_password_screen.dart';
 import 'package:fluuky/presentation/pages/auth/details_about_you_screen.dart';
@@ -192,6 +194,10 @@ List<GetPage<dynamic>>? generateRoute = [
     page: () => const DrawsListScreen(),
   ),
   GetPage(
+    name: activeDraws,
+    page: () => const ActiveDrawsListScreen(),
+  ),
+  GetPage(
     name: verification,
     page: () => VerificationScreen(),
   ),
@@ -201,7 +207,7 @@ List<GetPage<dynamic>>? generateRoute = [
   ),
   GetPage(
     name: basket,
-    page: () => BasketScreen(),
+    page: () => const BasketScreen(),
     // binding: BasketBindings(),
   ),
   GetPage(
@@ -215,6 +221,11 @@ List<GetPage<dynamic>>? generateRoute = [
   GetPage(
     name: orderHistory,
     page: () => OrderHistoryScreen(),
+    binding: OrderBindings(),
+  ),
+  GetPage(
+    name: transactionHistory,
+    page: () => TransactionHistoryScreen(),
     binding: OrderBindings(),
   ),
   GetPage(

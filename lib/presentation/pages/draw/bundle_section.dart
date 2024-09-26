@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class BundleSection extends StatelessWidget {
@@ -18,40 +20,41 @@ class BundleSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 22.h),
       decoration: BoxDecoration(
         image: const DecorationImage(image: AssetImage('assets/images/paper-box.png'), fit: BoxFit.fill),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8.w),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 8),
           Text(title, style: FluukyTheme.lightTheme.textTheme.titleLarge),
-          const SizedBox(height: 16),
+          SizedBox(height: 14.h),
           Text(description, style: FluukyTheme.lightTheme.textTheme.displaySmall),
-          const SizedBox(height: 16),
+          SizedBox(height: 21.h),
           Row(
             children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), color: Theme.of(context).primaryColor),
-                child: const Icon(Icons.airplane_ticket, size: 32, color: Colors.white),
+              CircleAvatar(
+                backgroundColor: FluukyTheme.primaryColor,
+                radius: 20.w,
+                child: SvgPicture.asset('assets/images/ticket-active.svg',
+                    width: 21.h, colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
               ),
-              const SizedBox(width: 8),
-              Text(ticketsInfo, style: FluukyTheme.lightTheme.textTheme.displaySmall),
+              SizedBox(width: 16.w),
+              Text(ticketsInfo, style: FluukyTheme.lightTheme.textTheme.labelMedium),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 18.h),
           Row(
             children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), color: Theme.of(context).primaryColor),
-                child: const Icon(Icons.discount, size: 32, color: Colors.white),
+              CircleAvatar(
+                backgroundColor: FluukyTheme.primaryColor,
+                radius: 20.w,
+                child:
+                    SvgPicture.asset('assets/images/percentage.svg', width: 21.h, colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
               ),
-              const SizedBox(width: 8),
-              Expanded(child: Text(discountInfo, style: FluukyTheme.lightTheme.textTheme.displaySmall)),
+              SizedBox(width: 16.w),
+              Flexible(child: Text(discountInfo, style: FluukyTheme.lightTheme.textTheme.labelMedium)),
             ],
           ),
         ],

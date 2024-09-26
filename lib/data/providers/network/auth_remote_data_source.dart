@@ -76,11 +76,12 @@ class AuthRemoteDataSource {
     return response.statusCode == 200;
   }
 
-  Future<void> logout() async {
+  Future<bool> logout() async {
     final response = await _dio.post('/auth/logout');
     if (response.statusCode != 200) {
       throw Exception('Logout failed');
     }
+    return true;
   }
 
   Future<void> verifyCode(String code) async {

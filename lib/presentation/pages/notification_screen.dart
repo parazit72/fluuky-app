@@ -170,7 +170,7 @@ class NotificationRowWidget extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               notification.isRead
-                  ? Wrap(
+                  ? Row(
                       children: [
                         Icon(Icons.circle, color: FluukyTheme.primaryColor, size: 6),
                         const SizedBox(width: 8),

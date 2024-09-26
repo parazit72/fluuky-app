@@ -61,7 +61,7 @@ class StoryScreen extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(storyItem.title, style: FluukyTheme.lightTheme.textTheme.headlineLarge),
+                              Text(storyItem.title, style: FluukyTheme.lightTheme.textTheme.headlineMedium),
                               IconButton(
                                 onPressed: () => Get.back(),
                                 icon: const Icon(Icons.close, color: Colors.white),

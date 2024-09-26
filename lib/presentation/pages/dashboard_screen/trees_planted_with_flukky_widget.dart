@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 
@@ -11,38 +12,38 @@ class TreesPlantedWithFlukkyWidget extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20),
+          margin: EdgeInsets.symmetric(horizontal: 20.w),
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.black87),
-          height: 100,
+          height: 106.h,
           width: MediaQuery.of(context).size.width,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(8.w),
             child: Image.asset('assets/images/jungle-1.jpg', fit: BoxFit.cover),
           ),
         ),
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          height: 100,
+          margin: EdgeInsets.symmetric(horizontal: 20.w),
+          height: 106.h,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(8.w),
             color: Colors.black.withOpacity(0.5),
           ),
         ),
-        const SizedBox(height: 24),
+        // const SizedBox(height: 24),
         SizedBox(
-          height: 100,
+          height: 106.h,
           child: Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   '15,000',
-                  style: FluukyTheme.lightTheme.textTheme.titleLarge!.copyWith(color: Colors.white),
+                  style: FluukyTheme.lightTheme.textTheme.headlineLarge,
                 ),
                 Text(
                   t.translate('TREES_PLANTED_WITH_FLUUKY'),
-                  style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white),
+                  style: FluukyTheme.lightTheme.textTheme.headlineSmall,
                 ),
               ],
             ),

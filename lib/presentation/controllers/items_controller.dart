@@ -49,7 +49,8 @@ class ItemsController extends GetxController {
           ],
           mainImage: 'https://fluuky-dev-local.s3.me-south-1.amazonaws.com/images/9cb52e3c-72cb-4cf3-8a16-f3ee1b9f3278.jpg',
           price: 12.5,
-          slug: 'fdsfdf'),
+          slug: 'fdsfdf',
+          isFavorite: false),
       RaffleEntity(
           id: 2,
           name: 'Raffle 2',

@@ -7,15 +7,15 @@ import 'package:get/get.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
 
-class OrderHistoryScreen extends StatelessWidget {
-  OrderHistoryScreen({super.key});
+class TransactionHistoryScreen extends StatelessWidget {
+  TransactionHistoryScreen({super.key});
   final OrderController _orderController = Get.find<OrderController>();
 
   @override
   Widget build(BuildContext context) {
     var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
-      appBar: AppBarSingleWidget(title: t.translate('history_order')),
+      appBar: AppBarSingleWidget(title: t.translate('Transactions History')),
       bottomNavigationBar: CustomNavBar(),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 0),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
 import 'package:get/get.dart';
@@ -30,30 +32,27 @@ Widget _buildCategoryButton(int id, String text, String? iconPath, context) {
         Container(
             decoration: BoxDecoration(
               // backgroundBlendMode: BlendMode.colorBurn,
-              // color: isSelected ? const Color(0xFFE9EFEB) : Colors.transparent,
+              color: isSelected ? FluukyTheme.fourthColor : Colors.transparent,
               borderRadius: const BorderRadius.all(Radius.circular(8)),
               boxShadow: [
-                const BoxShadow(color: Color(0xFFDBDBDB)),
-                BoxShadow(color: isSelected ? const Color(0xFFE9EFEB) : Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+                BoxShadow(color: FluukyTheme.secondaryColor),
+                BoxShadow(color: isSelected ? FluukyTheme.fourthColor : Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
               ],
             ),
             child: IconButton(
               style: ElevatedButton.styleFrom(splashFactory: NoSplash.splashFactory, elevation: 0),
               onPressed: () => controller.selectedCategory.value = id,
               icon: SvgPicture.asset('assets/images/${iconPath ?? 'bag.svg'}',
-                  width: 20,
-                  height: 20,
-                  colorFilter: ColorFilter.mode(
-                    isSelected ? Theme.of(Get.context!).primaryColor : const Color(0xFFB3B3B3),
-                    BlendMode.srcIn,
-                  )),
+                  width: 20.w,
+                  height: 20.h,
+                  colorFilter: ColorFilter.mode(isSelected ? FluukyTheme.primaryColor : FluukyTheme.fifthColor, BlendMode.srcIn)),
             )),
-        const SizedBox(height: 6),
+        SizedBox(height: 6.h),
         Text(
           t.translate(text.capitalizeFirst!),
           style: isSelected
-              ? Theme.of(Get.context!).textTheme.titleMedium!.copyWith(color: Theme.of(Get.context!).primaryColor)
-              : Theme.of(Get.context!).textTheme.bodyLarge!.copyWith(color: const Color(0xFFB3B3B3)),
+              ? FluukyTheme.lightTheme.textTheme.labelSmall!.copyWith(color: FluukyTheme.primaryColor, fontWeight: FontWeight.w600)
+              : FluukyTheme.lightTheme.textTheme.labelSmall!.copyWith(color: FluukyTheme.fifthColor, fontWeight: FontWeight.w600),
         ),
       ],
     );

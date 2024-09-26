@@ -1,6 +1,8 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 
 class CustomDropdownButton extends StatefulWidget {
   final String itemsKey;
@@ -60,19 +62,19 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
       case 'genders':
         return genders;
       case 'years':
-        return List.generate(61, (index) => (2020 - index).toString()); // For years from 1960 to 2020
+        return List.generate(61, (index) => (DateTime.now().year - index).toString()); // For years from 1960 to 2020
       case 'days_en':
         if (selectedMonth != null) {
           int daysInMonth = int.parse(monthsEn.firstWhere((m) => m['value'] == selectedMonth)['day']!);
-          return List.generate(daysInMonth, (index) => (index + 1).toString());
+          return List.generate(daysInMonth, (index) => (index + 1).toString().padLeft(2, '0'));
         }
-        return List.generate(31, (index) => (index + 1).toString());
+        return List.generate(31, (index) => (index + 1).toString().padLeft(2, '0'));
       case 'days_ar':
         if (selectedMonth != null) {
           int daysInMonth = int.parse(monthsAr.firstWhere((m) => m['value'] == selectedMonth)['day']!);
-          return List.generate(daysInMonth, (index) => (index + 1).toString());
+          return List.generate(daysInMonth, (index) => (index + 1).toString().padLeft(2, '0'));
         }
-        return List.generate(31, (index) => (index + 1).toString());
+        return List.generate(31, (index) => (index + 1).toString().padLeft(2, '0'));
       case 'months_en':
         return monthsEn.map((month) => month['value']!).toList();
       case 'months_ar':
@@ -82,57 +84,88 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
     }
   }
 
+  String? errorText;
+
   @override
   Widget build(BuildContext context) {
     final items = _getItems(widget.itemsKey);
+    var t = AppLocalizations.of(context)!;
 
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: const [
-          BoxShadow(color: Color(0xFFDBDBDB)),
-          BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
-        ],
-        color: FluukyTheme.inputBackgroundColor,
-      ),
-      child: DropdownButtonFormField2<String>(
-        isExpanded: true,
-        decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(vertical: 16),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-        ),
-        hint: Text(widget.hintText, style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(color: Colors.grey)),
-        value: widget.value,
-        items: items.map((item) {
-          return DropdownMenuItem<String>(
-            value: item,
-            child: Text(item, style: FluukyTheme.lightTheme.textTheme.displaySmall),
-          );
-        }).toList(),
-        onChanged: (String? value) {
-          setState(() {
-            if (widget.itemsKey == 'months_en' || widget.itemsKey == 'months_ar') {
-              selectedMonth = value;
-            }
-            widget.onChanged(value);
-          });
-        },
-        buttonStyleData: const ButtonStyleData(padding: EdgeInsets.only(right: 8)),
-        iconStyleData: const IconStyleData(icon: Icon(Icons.arrow_drop_down, color: Colors.black45), iconSize: 24),
-        dropdownStyleData: DropdownStyleData(
-          maxHeight: 300,
-          offset: const Offset(0, -5),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: const [
-              BoxShadow(color: Color(0xFFDBDBDB)),
-              BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+            borderRadius: BorderRadius.circular(8.w),
+            boxShadow: [
+              BoxShadow(color: FluukyTheme.secondaryColor),
+              const BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
             ],
             color: FluukyTheme.inputBackgroundColor,
           ),
+          child: DropdownButtonFormField2<String>(
+            validator: (value) {
+              if (value == null) {
+                // Return the error message directly
+                setState(() {
+                  errorText = widget.hintText == 'select' ? t.translate('gender') : t.translate(widget.hintText) + t.translate(' is required');
+                });
+                return (widget.hintText == 'select' ? t.translate('gender') : '') + t.translate('is required');
+              }
+              // Return null if validation passes
+              return null;
+            },
+            isExpanded: true,
+            decoration: InputDecoration(
+              errorText: null,
+              errorStyle: const TextStyle(height: -1, fontSize: 0),
+              contentPadding: EdgeInsets.symmetric(vertical: 0.h),
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.w)),
+            ),
+            hint: Text(widget.hintText, style: FluukyTheme.lightTheme.textTheme.displaySmall),
+            value: widget.value,
+            items: items.map((item) {
+              return DropdownMenuItem<String>(
+                value: item,
+                child: Text(item, style: FluukyTheme.lightTheme.textTheme.displaySmall),
+              );
+            }).toList(),
+            onChanged: (String? value) {
+              setState(() {
+                if (widget.itemsKey == 'months_en' || widget.itemsKey == 'months_ar') {
+                  selectedMonth = value;
+                }
+                widget.onChanged(value);
+              });
+            },
+            buttonStyleData: ButtonStyleData(padding: EdgeInsets.only(right: 16.w)),
+            iconStyleData: IconStyleData(
+                icon: RotatedBox(quarterTurns: -45, child: Icon(Icons.arrow_back_ios_new_outlined, color: FluukyTheme.inputTextColor)),
+                iconSize: 14.w),
+            dropdownStyleData: DropdownStyleData(
+              maxHeight: 390.h,
+              offset: Offset(0, -5.w),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.w),
+                boxShadow: [
+                  BoxShadow(color: FluukyTheme.secondaryColor),
+                  const BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+                ],
+                color: FluukyTheme.inputBackgroundColor,
+              ),
+            ),
+            menuItemStyleData: MenuItemStyleData(padding: EdgeInsets.symmetric(horizontal: 16.w)),
+          ),
         ),
-        menuItemStyleData: const MenuItemStyleData(padding: EdgeInsets.symmetric(horizontal: 16)),
-      ),
+        if (errorText != null)
+          Padding(
+            padding: EdgeInsets.only(top: 8.h),
+            child: Text(
+              errorText!,
+              style: TextStyle(color: FluukyTheme.redColor, fontSize: 12.h), // Customize error message style
+            ),
+          ),
+      ],
     );
   }
 }

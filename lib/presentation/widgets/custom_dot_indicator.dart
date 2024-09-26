@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomDotIndicator extends StatefulWidget {
   final int count;
@@ -32,8 +33,7 @@ class _CustomDotIndicatorState extends State<CustomDotIndicator> {
   }
 
   void _scrollToCenter() {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final centerPosition = (widget.activeIndex * screenWidth / 4) - screenWidth / 6;
+    final centerPosition = (widget.activeIndex * 94.w) - 62.w;
     _scrollController.animateTo(
       centerPosition.toDouble(),
       duration: const Duration(milliseconds: 300),
@@ -56,10 +56,10 @@ class _CustomDotIndicatorState extends State<CustomDotIndicator> {
               duration: const Duration(milliseconds: 300),
               margin: const EdgeInsets.symmetric(horizontal: 4),
               height: 4,
-              width: MediaQuery.of(context).size.width / 4,
+              width: 94.w,
               decoration: BoxDecoration(
                 color: widget.activeIndex == index ? Colors.white : Colors.grey,
-                borderRadius: BorderRadius.circular(12.0),
+                borderRadius: BorderRadius.circular(12.w),
               ),
             ),
           );

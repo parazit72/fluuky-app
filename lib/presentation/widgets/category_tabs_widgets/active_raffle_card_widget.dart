@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
+import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
@@ -32,63 +34,61 @@ class ActiveRaffleCardWidget extends StatelessWidget {
 
     return Column(
       children: [
-        Container(
-          width: MediaQuery.of(context).size.height * 0.3,
-          margin: const EdgeInsets.only(left: 12, right: 12, bottom: 20),
-          // padding: const EdgeInsets.symmetric(vertical: 20),
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(14)),
-            image: DecorationImage(image: AssetImage('assets/images/raffle-back-vrtal.png'), fit: BoxFit.fill),
-            // boxShadow: [
-            //   BoxShadow(color: Color(0xFFDBDBDB)),
-            //   BoxShadow(color: Colors.white, spreadRadius: 4.0, blurRadius: 8.6),
-            // ],
-          ),
-          child: Column(
-            children: [
-              Skeletonizer(
-                ignoreContainers: true,
-                enabled: loading,
-                child: ClipRRect(
-                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-                    child: raffle.image.isNotEmpty
-                        ? CachedNetworkImage(
-                            height: 130,
-                            width: MediaQuery.of(context).size.width,
-                            fit: BoxFit.cover,
-                            imageUrl: raffle.mainImage,
-                            placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                            errorWidget: (context, url, error) => const Center(child: Icon(Icons.error)),
-                            // progressIndicatorBuilder: (context, url, downloadProgress) => CircularProgressIndicator(value: downloadProgress.progress),
-                            cacheManager: CachedNetworkImageProvider.defaultCacheManager,
-                            fadeInDuration: const Duration(milliseconds: 500),
-                            fadeInCurve: Curves.easeIn,
-                          )
-                        : Container(
-                            height: 250,
-                            width: MediaQuery.of(context).size.width,
-                            color: FluukyTheme.secondaryColor,
-                          )),
-              ),
-              const SizedBox(height: 10),
-              Container(
-                width: MediaQuery.of(context).size.width * (isGridView ? 0.66 : 1),
-                padding: const EdgeInsets.all(16.0),
-                child: Skeletonizer(
+        InkWell(
+          onTap: () => Get.toNamed(draw, arguments: raffle),
+          child: Container(
+            width: 163.w,
+            margin: EdgeInsets.only(right: 10.w),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(14.w)),
+              image: const DecorationImage(image: AssetImage('assets/images/raffle-back-vrtal.png'), fit: BoxFit.fill),
+            ),
+            child: Column(
+              children: [
+                Skeletonizer(
                   ignoreContainers: true,
                   enabled: loading,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(raffle.name, style: Theme.of(context).textTheme.titleMedium),
-                      const SizedBox(height: 8),
-                      Text(t.translate("Trees Planted: ") + formatNumber(raffle.capacity.toString()),
-                          style: FluukyTheme.lightTheme.textTheme.displaySmall),
-                    ],
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(8.w), topRight: Radius.circular(8.w)),
+                      child: raffle.image.isNotEmpty
+                          ? CachedNetworkImage(
+                              height: 100.h,
+                              width: 163.w,
+                              fit: BoxFit.cover,
+                              imageUrl: raffle.mainImage,
+                              placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                              errorWidget: (context, url, error) => const Center(child: Icon(Icons.error)),
+                              // progressIndicatorBuilder: (context, url, downloadProgress) => CircularProgressIndicator(value: downloadProgress.progress),
+                              cacheManager: CachedNetworkImageProvider.defaultCacheManager,
+                              fadeInDuration: const Duration(milliseconds: 500),
+                              fadeInCurve: Curves.easeIn,
+                            )
+                          : Container(
+                              height: 250.h,
+                              width: MediaQuery.of(context).size.width,
+                              color: FluukyTheme.secondaryColor,
+                            )),
+                ),
+                SizedBox(height: 10.h),
+                Container(
+                  width: 375.w * (isGridView ? 0.66 : 1),
+                  padding: const EdgeInsets.all(16.0),
+                  child: Skeletonizer(
+                    ignoreContainers: true,
+                    enabled: loading,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(raffle.name, style: Theme.of(context).textTheme.titleMedium),
+                        SizedBox(height: 8.h),
+                        Text(t.translate("Trees Planted: ") + formatNumber(raffle.capacity.toString()),
+                            style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],

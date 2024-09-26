@@ -137,12 +137,13 @@ class AuthController extends GetxController {
   Future<void> logout() async {
     try {
       isLogged.value = true;
-      await _secureStorage.write(key: _tokenKey, value: null);
+      bool serverLogedOut = await _authRepository.logout();
+      if (serverLogedOut) {
+        await _secureStorage.write(key: _tokenKey, value: null);
+      }
 
       user.value = null;
       isLogged.value = false;
-
-      await _authRepository.logout();
     } catch (e) {
       _showErrorDialog(e.toString());
     } finally {

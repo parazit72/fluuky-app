@@ -10,9 +10,12 @@ class FluukyTheme {
   // App Colors
   static Color thirdColor = const Color(0xFF8C8C8C);
   static Color primaryColor = const Color(0XFF205C32);
+  static Color fourthColor = const Color(0XFFE9EFEB);
   static Color secondaryColor = const Color(0xFFDBDBDB);
+  static Color fifthColor = const Color(0xFFB3B3B3);
   static Color inputTextColor = const Color(0xFF1A1A1A);
   static Color redColor = const Color(0xFFD30201);
+  static Color phosphorColor = const Color(0XFFADFB4F);
 
   static Color inputBackgroundColor = const Color.fromARGB(25, 219, 219, 219);
 
@@ -48,7 +51,7 @@ class FluukyTheme {
       backgroundColor: Colors.transparent,
       iconTheme: const IconThemeData(color: Colors.black),
       systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
-      titleTextStyle: TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.w700, fontSize: 16, color: Colors.black),
+      titleTextStyle: TextStyle(fontFamily: fontFamily, fontWeight: FontWeight.w700, fontSize: 16.w, color: Colors.black),
     ),
     cardColor: const Color(0XFFE9EFEB),
     primaryColor: primaryColor,
@@ -77,25 +80,25 @@ class FluukyTheme {
     sliderTheme: const SliderThemeData(showValueIndicator: ShowValueIndicator.always),
     colorScheme: ColorScheme.light(primary: primaryColor, onPrimary: primaryColor, background: primaryColor, onBackground: primaryColor),
     textTheme: TextTheme(
-      titleLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.black, fontFamily: fontFamily, height: 1.5),
-      titleMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black, fontFamily: fontFamily, height: 1.2),
-      titleSmall: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black, fontFamily: fontFamily, height: 1.2),
+      titleLarge: TextStyle(fontSize: 24.w, fontWeight: FontWeight.w600, color: Colors.black, fontFamily: fontFamily, height: 1.5),
+      titleMedium: TextStyle(fontSize: 20.w, fontWeight: FontWeight.w500, color: Colors.black, fontFamily: fontFamily, height: 1.2),
+      titleSmall: TextStyle(fontSize: 20.w, fontWeight: FontWeight.w500, color: Colors.black, fontFamily: fontFamily, height: 1.2),
       //
-      bodyLarge: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500, color: Colors.black, fontFamily: fontFamily, height: 2),
-      bodyMedium: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 2),
-      bodySmall: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 2),
+      bodyLarge: TextStyle(fontSize: 14.w, fontWeight: FontWeight.w500, color: Colors.black, fontFamily: fontFamily, height: 1.5),
+      bodyMedium: TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, color: Colors.black, fontFamily: fontFamily, height: 1.5),
+      bodySmall: TextStyle(fontSize: 14.w, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 1.5),
       //
-      displayLarge: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 2),
-      displayMedium: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 2),
-      displaySmall: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: FluukyTheme.thirdColor, fontFamily: fontFamily, height: 2),
+      displayLarge: TextStyle(fontSize: 28.w, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 1.5),
+      displayMedium: TextStyle(fontSize: 24.w, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 1.5),
+      displaySmall: TextStyle(fontSize: 14.w, fontWeight: FontWeight.w400, color: FluukyTheme.thirdColor, fontFamily: fontFamily, height: 1.5),
       //
-      headlineLarge: const TextStyle(fontSize: 30, fontWeight: FontWeight.w900, color: Colors.black, fontFamily: 'Brinnan', height: 1.25),
-      headlineMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: primaryColor, fontFamily: fontFamily, height: 1.5),
-      headlineSmall: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w900, color: primaryColor, fontFamily: fontFamily, height: 2),
+      headlineLarge: TextStyle(fontSize: 36.w, fontWeight: FontWeight.w700, color: Colors.white, fontFamily: 'Brinnan', height: 1.25),
+      headlineMedium: TextStyle(fontSize: 30.w, fontWeight: FontWeight.w900, color: primaryColor, fontFamily: 'Brinnan', height: 1.5),
+      headlineSmall: TextStyle(fontSize: 16.w, fontWeight: FontWeight.w400, color: Colors.white, fontFamily: 'Brinnan', height: 1.5),
       //
-      labelLarge: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 2),
-      labelMedium: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400, color: Colors.black, fontFamily: fontFamily, height: 1.5),
-      labelSmall: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 2),
+      labelLarge: TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, color: primaryColor, fontFamily: fontFamily, height: 1.5),
+      labelMedium: TextStyle(fontSize: 16.w, fontWeight: FontWeight.w400, color: Colors.black, fontFamily: fontFamily, height: 1.5),
+      labelSmall: TextStyle(fontSize: 12.w, fontWeight: FontWeight.w400, color: Colors.black, fontFamily: fontFamily, height: 1.5),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
@@ -103,8 +106,8 @@ class FluukyTheme {
         foregroundColor: WidgetStateProperty.all<Color?>(Colors.white),
         backgroundColor: WidgetStateProperty.all<Color?>(primaryColor),
         minimumSize: WidgetStateProperty.all<Size>(Size(double.infinity, 48.h)),
-        textStyle:
-            WidgetStateProperty.all<TextStyle>(TextStyle(color: Colors.white, fontSize: 16, fontFamily: FluukyTheme.updateFontFamilyBasedOnLocale())),
+        textStyle: WidgetStateProperty.all<TextStyle>(
+            TextStyle(color: Colors.white, fontSize: 16.w, fontFamily: FluukyTheme.updateFontFamilyBasedOnLocale())),
         shape: WidgetStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0), side: const BorderSide(color: Colors.transparent)),
         ),
@@ -136,12 +139,12 @@ class FluukyTheme {
       labelStyle: TextStyle(color: secondaryColor),
       floatingLabelBehavior: FloatingLabelBehavior.never,
       hintStyle: TextStyle(color: Colors.black.withOpacity(0.6)),
-      contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: secondaryColor, width: 1.0)),
-      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: secondaryColor, width: 1.0)),
-      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: secondaryColor, width: 1.0)),
-      focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: BorderSide(color: secondaryColor, width: 1.0)),
-      errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: const BorderSide(color: Colors.red, width: 1.0)),
+      contentPadding: EdgeInsets.symmetric(vertical: 12.w, horizontal: 16.w),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.w), borderSide: BorderSide(color: secondaryColor, width: 1.0)),
+      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.w), borderSide: BorderSide(color: secondaryColor, width: 1.0)),
+      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.w), borderSide: BorderSide(color: secondaryColor, width: 1.0)),
+      focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.w), borderSide: BorderSide(color: secondaryColor, width: 1.0)),
+      errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.w), borderSide: BorderSide(color: FluukyTheme.redColor, width: 1.0)),
     ),
   );
 
@@ -157,38 +160,38 @@ class FluukyTheme {
         fillColor: WidgetStateProperty.all<Color?>(secondaryColor),
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap),
     textTheme: lightTheme.textTheme.copyWith(
-      displayLarge: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w700, color: Colors.white, fontFamily: fontFamily),
-      displayMedium: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w700, color: Colors.white, fontFamily: fontFamily),
+      displayLarge: TextStyle(fontSize: 24.w, fontWeight: FontWeight.w700, color: Colors.white, fontFamily: fontFamily),
+      displayMedium: TextStyle(fontSize: 24.w, fontWeight: FontWeight.w700, color: Colors.white, fontFamily: fontFamily),
       displaySmall: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: FluukyTheme.thirdColor, fontFamily: fontFamily),
-      headlineLarge: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w900, color: Colors.white, fontFamily: fontFamily),
-      headlineMedium: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w900, color: Colors.white, fontFamily: fontFamily),
-      headlineSmall: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w900, color: Colors.white, fontFamily: fontFamily),
-      titleLarge: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.white, fontFamily: fontFamily),
-      titleMedium: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: fontFamily),
-      titleSmall: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: fontFamily),
-      labelLarge: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: fontFamily),
-      labelMedium: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: fontFamily),
-      labelSmall: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: fontFamily),
-      bodyLarge: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w300, color: Colors.white, fontFamily: fontFamily),
-      bodyMedium: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w300, color: Colors.white, fontFamily: fontFamily),
-      bodySmall: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400, color: Colors.white, fontFamily: fontFamily),
+      headlineLarge: TextStyle(fontSize: 24.w, fontWeight: FontWeight.w900, color: Colors.white, fontFamily: fontFamily),
+      headlineMedium: TextStyle(fontSize: 20.w, fontWeight: FontWeight.w900, color: Colors.white, fontFamily: fontFamily),
+      headlineSmall: TextStyle(fontSize: 18.w, fontWeight: FontWeight.w900, color: Colors.white, fontFamily: fontFamily),
+      titleLarge: TextStyle(fontSize: 18.w, fontWeight: FontWeight.w600, color: Colors.white, fontFamily: fontFamily),
+      titleMedium: TextStyle(fontSize: 18.w, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: fontFamily),
+      titleSmall: TextStyle(fontSize: 18.w, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: fontFamily),
+      labelLarge: TextStyle(fontSize: 16.w, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: fontFamily),
+      labelMedium: TextStyle(fontSize: 16.w, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: fontFamily),
+      labelSmall: TextStyle(fontSize: 16.w, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: fontFamily),
+      bodyLarge: TextStyle(fontSize: 14.w, fontWeight: FontWeight.w300, color: Colors.white, fontFamily: fontFamily),
+      bodyMedium: TextStyle(fontSize: 14.w, fontWeight: FontWeight.w300, color: Colors.white, fontFamily: fontFamily),
+      bodySmall: TextStyle(fontSize: 14.w, fontWeight: FontWeight.w400, color: Colors.white, fontFamily: fontFamily),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         elevation: 0,
         backgroundColor: primaryColor,
         shadowColor: Colors.transparent,
-        textStyle: TextStyle(fontSize: 20.0, color: Colors.white, fontFamily: fontFamily),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+        textStyle: TextStyle(fontSize: 20.w, color: Colors.white, fontFamily: fontFamily),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.w)),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         foregroundColor: primaryColor,
-        textStyle: TextStyle(fontSize: 16, color: primaryColor, fontFamily: fontFamily),
+        textStyle: TextStyle(fontSize: 16.w, color: primaryColor, fontFamily: fontFamily),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          side: BorderSide(color: primaryColor, width: 5),
+          borderRadius: BorderRadius.circular(8.w),
+          side: BorderSide(color: primaryColor, width: 5.w),
         ),
       ),
     ),

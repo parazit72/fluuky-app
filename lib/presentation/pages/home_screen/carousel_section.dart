@@ -3,6 +3,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider_plus/carousel_slider_plus.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/presentation/controllers/raffle_controller.dart';
 import 'package:fluuky/presentation/widgets/custom_dot_indicator.dart';
@@ -36,10 +37,7 @@ class _CarouselSectionWidgetState extends State<CarouselSectionWidget> {
     return Obx(() {
       if (raffleController.raffles.isEmpty) {
         return Stack(children: [
-          Container(
-              height: MediaQuery.of(context).size.height * 0.3,
-              color: FluukyTheme.secondaryColor,
-              child: const Center(child: CircularProgressIndicator())),
+          Container(height: 260.h, color: FluukyTheme.secondaryColor, child: const Center(child: CircularProgressIndicator())),
         ]);
       }
 
@@ -54,7 +52,7 @@ class _CarouselSectionWidgetState extends State<CarouselSectionWidget> {
                         enabled: raffle.image.isEmpty,
                         child: CachedNetworkImage(
                           width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height * 0.4,
+                          height: 260.h,
                           fit: BoxFit.cover,
                           imageUrl: raffle.mainImage,
                           placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
@@ -62,14 +60,17 @@ class _CarouselSectionWidgetState extends State<CarouselSectionWidget> {
                         ),
                       ),
                       Positioned(
-                        bottom: 40,
-                        left: 20,
+                        top: 157.h,
+                        left: 20.w,
+                        right: 20.w,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(raffle.name, style: FluukyTheme.lightTheme.textTheme.titleLarge!.copyWith(color: Colors.white)),
-                            Text(formatNumber('\$${raffle.price.toString()}'),
-                                style: Theme.of(context).textTheme.labelMedium!.copyWith(color: Colors.white)),
+                            Text(
+                              formatNumber('\$${raffle.price.toString()}'),
+                              style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(color: Colors.white),
+                            ),
                           ],
                         ),
                       ),
@@ -79,23 +80,23 @@ class _CarouselSectionWidgetState extends State<CarouselSectionWidget> {
                 .toList(),
             controller: _carouselSliderController,
             options: CarouselOptions(
-                enlargeCenterPage: false,
+                height: 260.h,
                 viewportFraction: 1,
-                height: MediaQuery.of(context).size.height * 0.4,
+                enlargeCenterPage: false,
                 onPageChanged: (index, reason) => setState(() => _currentIndex = index)),
           ),
           Positioned(
-            bottom: 24,
-            left: 0,
-            right: 0,
+            left: 20.w,
+            right: 20.w,
+            bottom: 24.h,
             child: CustomDotIndicator(
-              count: raffleController.raffles.length,
               activeIndex: _currentIndex,
+              count: raffleController.raffles.length,
               onDotClicked: (index) {
                 _carouselSliderController.animateToPage(
                   index,
-                  duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
+                  duration: const Duration(milliseconds: 300),
                 );
               },
             ),

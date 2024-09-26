@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/domain/entities/announcement_entity.dart';
 import 'package:fluuky/domain/entities/category_entity.dart';
 import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/domain/entities/winner_category_entity.dart';
 import 'package:fluuky/domain/entities/winner_entity.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
 import 'package:fluuky/presentation/controllers/raffle_controller.dart';
 import 'package:fluuky/presentation/widgets/category_tabs_widgets/announcement_card_widget.dart';
@@ -27,17 +30,25 @@ Widget buildUserActiveDrawsList() {
   });
 }
 
-Widget buildItemsList() {
+Widget buildItemsList(context) {
   final ItemsController itemsController = Get.find();
   final RaffleController raffleController = Get.find();
+  var t = AppLocalizations.of(context)!;
   return Obx(() {
     if (itemsController.selectedItemType.value == ItemType.draws) {
       if (itemsController.viewType.value == ViewType.list) {
         return _buildItemsView<RaffleEntity>(
           raffleController.raffles,
-          (raffle) => RaffleCardWidget(
-            raffle: raffle,
-            viewType: ViewType.list,
+          (raffle) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(t.translate('plantXTrees') + raffle.name, style: FluukyTheme.lightTheme.textTheme.titleLarge),
+              SizedBox(height: 16.h),
+              RaffleCardWidget(
+                raffle: raffle,
+                viewType: ViewType.list,
+              ),
+            ],
           ),
         );
       } else {
@@ -71,7 +82,7 @@ Widget _buildItemsView<T>(
   if (controller.viewType.value == ViewType.list) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: Column(
           children: items.map((item) => itemBuilder(item)).toList(),
         ),
@@ -110,21 +121,21 @@ Widget _buildCategoryGridView<T>(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
+            padding: EdgeInsets.only(left: 20.w, right: 20.w),
             child: Text(
               category.name,
-              style: Theme.of(Get.context!).textTheme.titleMedium,
+              style: FluukyTheme.lightTheme.textTheme.titleMedium,
               textAlign: TextAlign.start,
             ),
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(children: [const SizedBox(width: 20), ...categoryItems.map((item) => itemBuilder(item))]),
+            child: Row(children: [SizedBox(width: 20.w), ...categoryItems.map((item) => itemBuilder(item))]),
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 20),
-            child: Divider(height: 20),
+          Padding(
+            padding: EdgeInsets.only(left: 20.w),
+            child: Divider(height: 20.h),
           ),
         ],
       );

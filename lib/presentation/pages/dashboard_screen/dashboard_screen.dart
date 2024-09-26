@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/pages/dashboard_screen/badges_list_widget.dart';
+import 'package:fluuky/presentation/pages/dashboard_screen/transactions_history_list_widget.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
 import 'package:fluuky/presentation/pages/dashboard_screen/order_history_list_widget.dart';
 import 'package:fluuky/presentation/pages/dashboard_screen/referral_rewards_widget.dart';
@@ -25,17 +27,16 @@ class DashboardScreen extends StatelessWidget {
       bottomNavigationBar: CustomNavBar(),
       body: ListView(
         children: [
-          const SizedBox(height: 12),
           WelcomeUserAvatar(),
           const UserStatusWidget(),
-          const Padding(padding: EdgeInsets.symmetric(horizontal: 20), child: Divider()),
+          Padding(padding: EdgeInsets.symmetric(horizontal: 20.w), child: const Divider()),
           const BadgesListWidget(),
-          const Padding(padding: EdgeInsets.symmetric(horizontal: 20), child: Divider()),
+          Padding(padding: EdgeInsets.symmetric(horizontal: 20.w), child: const Divider()),
           const YourImpactWidget(),
           const TreesPlantedWithFlukkyWidget(),
-          const SizedBox(height: 24),
-          const Padding(padding: EdgeInsets.symmetric(horizontal: 20), child: Divider()),
+          Padding(padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h), child: const Divider()),
           const OrderHistoryListHorizentalWidget(),
+          const TransactionsHistoryListHorizentalWidget(),
           const ReferralRewardsWidget(),
           Obx(() {
             return _authController.isLoading.value ? const Center(child: CircularProgressIndicator()) : Container();

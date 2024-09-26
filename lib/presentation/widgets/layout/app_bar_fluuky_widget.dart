@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/pages/basket/basket_screen.dart';
 import 'package:fluuky/presentation/pages/notification_screen.dart';
+import 'package:fluuky/presentation/widgets/welcome_user_avatar.dart';
 import 'package:get/get.dart';
 
 class AppBarFluuky extends StatelessWidget implements PreferredSizeWidget {
-  const AppBarFluuky({super.key});
-
+  final bool showIcon;
+  const AppBarFluuky({super.key, this.showIcon = false});
   void goNotification() {
     Get.to(() => const NotificationScreen());
   }
 
   void goBasket() {
-    Get.to(() => BasketScreen());
+    Get.to(() => const BasketScreen());
   }
 
   @override
   Widget build(BuildContext context) {
     final NotificationController notificationController = Get.find();
     return AppBar(
+      toolbarHeight: 64.h,
       automaticallyImplyLeading: false,
       backgroundColor: const Color(0xFFF7F7F7),
-      title: Image.asset('assets/images/fluuky.png', height: 16, fit: BoxFit.contain, width: 100),
+      title: showIcon ? SvgPicture.asset('assets/images/fluuky.svg', height: 16.h) : WelcomeUserAvatar(),
       actions: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -32,12 +35,12 @@ class AppBarFluuky extends StatelessWidget implements PreferredSizeWidget {
             Stack(
               children: [
                 IconButton(
-                  icon: const Icon(Icons.notifications_outlined, size: 26),
+                  icon: Icon(Icons.notifications_outlined, size: 20.w),
                   onPressed: () => goNotification(),
                 ),
                 Positioned(
-                  right: 11,
-                  top: 11,
+                  right: 11.w,
+                  top: 11.w,
                   child: Obx(() {
                     return notificationController.notificationCount.value > 0
                         ? Container(
@@ -46,13 +49,13 @@ class AppBarFluuky extends StatelessWidget implements PreferredSizeWidget {
                               color: Theme.of(context).primaryColor,
                               borderRadius: BorderRadius.circular(6),
                             ),
-                            constraints: const BoxConstraints(
-                              minWidth: 14,
-                              minHeight: 14,
+                            constraints: BoxConstraints(
+                              minWidth: 14.w,
+                              minHeight: 14.w,
                             ),
                             child: Text(
                               '${notificationController.notificationCount.value}',
-                              style: const TextStyle(color: Colors.white, fontSize: 8),
+                              style: TextStyle(color: Colors.white, fontSize: 8.w),
                               textAlign: TextAlign.center,
                             ),
                           )
@@ -62,7 +65,7 @@ class AppBarFluuky extends StatelessWidget implements PreferredSizeWidget {
               ],
             ),
             IconButton(
-              icon: SvgPicture.asset('assets/images/basket.svg', width: 32),
+              icon: SvgPicture.asset('assets/images/basket.svg', height: 20.w),
               onPressed: () => goBasket(),
             ),
           ],

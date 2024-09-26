@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
-import 'package:fluuky/domain/entities/user_entity.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_fluuky_widget.dart';
@@ -22,28 +23,17 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
 
   @override
   Widget build(BuildContext context) {
-    UserEntity? user = _authController.user.value;
-    user = UserEntity(
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'john.doe@example.com',
-        avatar: 'assets/images/avatar.jpg',
-        acceptedTermsAndConditions: false,
-        phone: '',
-        birthDate: DateTime.now());
-
-    var t = AppLocalizations.of(context)!;
-
     return BackgroundScaffold(
-      appBar: const AppBarFluuky(),
+      appBar: const AppBarFluuky(showIcon: true),
       bottomNavigationBar: CustomNavBar(),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(20.h),
         child: ListView(
           children: [
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
             WelcomeUserAvatar(),
             const Divider(),
+            SizedBox(height: 24.h),
             _buildListItem('dashboard', 'Dashboard', dashboard),
             _buildListItem('profile', 'Profile', profilePreferences),
             _buildListItem('recommendations', 'Recommendations', recommendations),
@@ -51,13 +41,7 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
             _buildListItem('logo-green', 'Green Subscription', greenSubscription),
             _buildListItem('packages', 'Packages', packages),
             _buildListItem('notifications', 'Notifications', notifications),
-            ListTile(
-                leading: SvgPicture.asset('assets/images/logout.svg', colorFilter: const ColorFilter.mode(Colors.black, BlendMode.srcIn)),
-                title: Text(t.translate('Log Out')),
-                onTap: () {
-                  _authController.logout();
-                  Get.offAllNamed(login);
-                }),
+            _buildListItem('logout', 'Log Out', login, logoutToo: true),
             Obx(() {
               return _authController.isLoading.value ? const Center(child: CircularProgressIndicator()) : Container();
             }),
@@ -67,14 +51,31 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
     );
   }
 
-  Widget _buildListItem(String icon, String title, String route) {
+  Widget _buildListItem(String icon, String title, String route, {bool logoutToo = false}) {
     var t = AppLocalizations.of(context)!;
-    return ListTile(
-        leading: SvgPicture.asset(
-          'assets/images/$icon.svg',
-          colorFilter: const ColorFilter.mode(Colors.black, BlendMode.srcIn),
-        ),
-        title: Text(t.translate(title)),
-        onTap: () => Get.toNamed(route));
+    return Padding(
+      padding: EdgeInsets.only(bottom: 32.h),
+      child: Row(
+        children: [
+          SvgPicture.asset(
+            'assets/images/$icon.svg',
+            width: 20.w,
+            colorFilter: const ColorFilter.mode(Colors.black, BlendMode.srcIn),
+          ),
+          SizedBox(width: 8.w),
+          InkWell(
+            child: Text(
+              t.translate(title),
+              style: FluukyTheme.lightTheme.textTheme.labelMedium,
+            ),
+            onTap: () {
+              if (logoutToo) _authController.logout();
+
+              Get.toNamed(route);
+            },
+          )
+        ],
+      ),
+    );
   }
 }

@@ -1,10 +1,11 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
+import 'package:fluuky/presentation/controllers/items_controller.dart';
+import 'package:fluuky/presentation/widgets/category_tabs_widgets/raffle_card_widget.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
-import 'package:jhijri/_src/_jHijri.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 
 class DrawItemScreen extends StatelessWidget {
@@ -21,41 +22,25 @@ class DrawItemScreen extends StatelessWidget {
           children: [
             CarouselSectionWidget(),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(selectedRaffle.description, style: FluukyTheme.lightTheme.textTheme.displaySmall),
-                  const SizedBox(height: 10),
-                  Text(
-                    '${t.translate('drawDate')} ${DateFormat('MMMM dd\'th\', yyyy - HH:mm').format(selectedRaffle.deadline)}',
-                    style: FluukyTheme.lightTheme.textTheme.displaySmall,
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 24.h),
+                    child: Text(selectedRaffle.description, style: FluukyTheme.lightTheme.textTheme.labelMedium),
                   ),
-                  const SizedBox(height: 10),
-                  const DrawDetailsWidget(),
-                  const SizedBox(height: 20),
-                  NumberPicker(
-                    minValue: 1,
-                    maxValue: 20,
-                    initialValue: 10,
-                    onChanged: (value) {
-                      print('Selected number: $value');
-                    },
+                  RaffleCardWidget(raffle: selectedRaffle, viewType: ViewType.list),
+                  SizedBox(height: 24.h),
+                  Container(
+                    height: 100.h,
+                    width: 375.w,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(8.h)),
+                      image: const DecorationImage(image: AssetImage('assets/images/empty-box.png'), fit: BoxFit.fill),
+                    ),
                   ),
-                  const SizedBox(height: 20),
-                  const ScrollingImages(
-                    imagePaths: [
-                      'assets/images/mountain-layer-1.png',
-                      'assets/images/sun.png',
-                      'assets/images/mountain-layer-2.png',
-                      'assets/images/forest-layer-1.png',
-                      'assets/images/forest-layer-2.png',
-                      'assets/images/forest-layer-3.png',
-                    ],
-                    speeds: [1.0, 0.8, 0.5, 0.5, 0.5, 0.5],
-                  ),
-                  const SizedBox(height: 20),
-                  ActionButtons(),
+                  SizedBox(height: 20.h),
                 ],
               ),
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/presentation/pages/dashboard_screen/single_badge_dialog.dart';
@@ -30,33 +31,21 @@ class BadgeWidget extends StatelessWidget {
             : null;
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 24),
+        // padding: const EdgeInsets.symmetric(vertical: 24),
         margin: const EdgeInsets.only(right: 12, left: 12),
         child: Column(
           children: [
-            DashedCircle(
-                color: achieved ? Colors.transparent : FluukyTheme.secondaryColor,
-                strokeWidth: 1,
-                child: Container(
-                  width: 56,
-                  height: 56,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: achieved ? Theme.of(context).primaryColor : Colors.transparent,
-                  ),
-                  child: Center(
-                    child: achieved
-                        ? SvgPicture.asset(
-                            imagePath,
-                            width: 32,
-                            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                          )
-                        : Container(),
-                  ),
+            CircleAvatar(
+                backgroundColor: achieved ? FluukyTheme.primaryColor : FluukyTheme.secondaryColor,
+                radius: 28.w,
+                child: SvgPicture.asset(
+                  achieved ? imagePath : 'assets/images/lock.svg',
+                  width: achieved ? 32.w : 20.w,
+                  colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                 )),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             SizedBox(
-              width: 56,
+              width: 56.w,
               child: Text(
                 text,
                 style: FluukyTheme.lightTheme.textTheme.displaySmall,

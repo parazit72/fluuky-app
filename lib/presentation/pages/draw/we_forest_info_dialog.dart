@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/widgets/layout/background_scaffold.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
+import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+final Uri _url = Uri.parse('https://www.weforest.org/about-us/');
 
 class WeForestInfoScreen extends StatelessWidget {
   const WeForestInfoScreen({super.key});
@@ -13,105 +18,100 @@ class WeForestInfoScreen extends StatelessWidget {
     return Dialog(
       insetPadding: const EdgeInsets.all(0),
       child: BackgroundScaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+        body: Stack(
+          children: [
+            Positioned(
+              top: 32.h,
+              right: 20.w,
+              child: IconButton(
+                icon: Icon(Icons.close, size: 24.w),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ),
+            Positioned(
+              top: 165.h,
+              left: 44.w,
+              right: 44.w,
+              bottom: 20.h,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: 100.h,
+                    child: Image.asset('assets/images/weforest-logo.png', fit: BoxFit.contain, height: 121.h),
+                  ),
+                  SizedBox(height: 32.h),
+                  Text(
+                    t.translate('fluukyPartnerWeForest'),
+                    style: FluukyTheme.lightTheme.textTheme.titleLarge,
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 10.h),
+                  Text(
+                    t.translate('throughThisPartnership'),
+                    style: FluukyTheme.lightTheme.textTheme.labelSmall,
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 32.h),
+                  Text(
+                    t.translate('valuesThatInspire'),
+                    style: FluukyTheme.lightTheme.textTheme.labelSmall,
+                  ),
+                  SizedBox(height: 2.h),
+                  Wrap(
+                    children: <Widget>[
+                      ValueChip(t: t, msg: 'Passion'),
+                      ValueChip(t: t, msg: 'collaboration'),
+                      ValueChip(t: t, msg: 'integrity'),
+                    ],
+                  ),
+                  Wrap(
+                    children: <Widget>[
+                      ValueChip(t: t, msg: 'transparency'),
+                      ValueChip(t: t, msg: 'excellence'),
+                    ],
+                  ),
+                  ValueChip(t: t, msg: 'courage'),
+                  const Spacer(),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () => _launchUrl(t),
+                      child: Text(t.translate('Learn More')),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                width: double.infinity,
-                height: 100,
-                decoration: BoxDecoration(color: const Color.fromARGB(255, 233, 239, 235), borderRadius: BorderRadius.circular(8)),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Image.asset('assets/images/weforest-logo.png', fit: BoxFit.contain, height: 121),
-                ),
-              ),
-              const SizedBox(height: 16.0),
-              Text(
-                t.translate('fluukyPartnerWeForest'),
-                style: FluukyTheme.lightTheme.textTheme.titleLarge,
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                t.translate('throughThisPartnership'),
-                style: Theme.of(context).textTheme.bodyMedium,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 32),
-              Text(
-                t.translate('valuesThatInspire'),
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(height: 16.0),
-              Wrap(
-                spacing: 8.0,
-                runSpacing: 8.0,
-                children: <Widget>[
-                  Chip(
-                    backgroundColor: Colors.white,
-                    label: Text(t.translate('Passion')),
-                    shape: const StadiumBorder(side: BorderSide(color: Colors.grey)),
-                  ),
-                  Chip(
-                    backgroundColor: Colors.white,
-                    label: Text(t.translate('collaboration')),
-                    shape: const StadiumBorder(side: BorderSide(color: Colors.grey)),
-                  ),
-                  Chip(
-                    backgroundColor: Colors.white,
-                    label: Text(t.translate('integrity')),
-                    shape: const StadiumBorder(side: BorderSide(color: Colors.grey)),
-                  ),
-                ],
-              ),
-              Wrap(
-                spacing: 8.0,
-                runSpacing: 8.0,
-                children: <Widget>[
-                  Chip(
-                    backgroundColor: Colors.white,
-                    label: Text(t.translate('transparency')),
-                    shape: const StadiumBorder(side: BorderSide(color: Colors.grey)),
-                  ),
-                  Chip(
-                    backgroundColor: Colors.white,
-                    label: Text(t.translate('excellence')),
-                    shape: const StadiumBorder(side: BorderSide(color: Colors.grey)),
-                  ),
-                ],
-              ),
-              Chip(
-                backgroundColor: Colors.white,
-                label: Text(t.translate('courage')),
-                shape: const StadiumBorder(side: BorderSide(color: Colors.grey)),
-              ),
-              const Spacer(),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Handle learn more action
-                  },
-                  child: Text(t.translate('learnMore')),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
+    );
+  }
+
+  Future<void> _launchUrl(AppLocalizations t) async {
+    if (!await launchUrl(_url)) {
+      Get.snackbar('Error', t.translate('Could not launch') + _url.toString());
+    }
+  }
+}
+
+class ValueChip extends StatelessWidget {
+  const ValueChip({super.key, required this.t, required this.msg});
+
+  final AppLocalizations t;
+  final String msg;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+      decoration: BoxDecoration(
+        border: Border.all(color: FluukyTheme.inputTextColor),
+        borderRadius: BorderRadius.all(Radius.circular(50.w)),
+        color: Colors.transparent,
+      ),
+      child: Text(t.translate(msg)),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
@@ -19,28 +20,28 @@ class SingleBadgeScreen extends StatelessWidget {
       child: BackgroundScaffold(
         appBar: const AppBarDialog(),
         body: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.w),
           child: Stack(
             children: [
               Positioned(
-                top: MediaQuery.of(context).size.height * 0.1,
+                top: 70.h,
                 left: 0,
                 right: 0,
                 child: Column(children: [
                   Text(
-                    t.translate('congratulations') + 'John Doe!',
-                    style: FluukyTheme.lightTheme.textTheme.bodySmall,
+                    '${t.translate('congratulations')} John Doe!',
+                    style: FluukyTheme.lightTheme.textTheme.displaySmall,
                     // textAlign: TextAlign.center,
                   ),
                   Text(
                     t.translate('youve_just_earned_your_first_badge'),
-                    style: FluukyTheme.lightTheme.textTheme.bodySmall,
+                    style: FluukyTheme.lightTheme.textTheme.displaySmall,
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 32),
+                  SizedBox(height: 32.h),
                   Container(
-                    width: 150,
-                    height: 150,
+                    width: 152.w,
+                    height: 152.h,
                     decoration: BoxDecoration(
                       border: Border.all(color: Theme.of(context).primaryColor, width: 2.0),
                       shape: BoxShape.circle,
@@ -49,16 +50,16 @@ class SingleBadgeScreen extends StatelessWidget {
                     child: Center(
                       child: SvgPicture.asset(
                         imagePath,
-                        width: 72,
+                        width: 72.w,
                         colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 32),
+                  SizedBox(height: 32.h),
                   Text(t.translate('eco_guardian'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   SizedBox(
-                      width: MediaQuery.of(context).size.width - 130,
+                      width: 239.w,
                       child: Text(t.translate('feel_good_knowing_you_have_planted_10_trees'),
                           textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium)),
                 ]),
@@ -69,8 +70,8 @@ class SingleBadgeScreen extends StatelessWidget {
                 right: 0,
                 child: Column(
                   children: [
-                    ElevatedButton(onPressed: () => Get.back(), child: Text(t.translate('THANK_YOU_FOR_YOUR_IMPACT'))),
-                    const SizedBox(height: 16.0),
+                    ElevatedButton(onPressed: () => Get.back(), child: Text(t.translate('THANK YOU FOR YOUR IMPACT'))),
+                    SizedBox(height: 16.h),
                     OutlinedButton(onPressed: () {}, child: Text(t.translate('share')))
                   ],
                 ),

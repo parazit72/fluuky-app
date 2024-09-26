@@ -1,6 +1,9 @@
+import 'package:get/get.dart';
+
 import '../../domain/entities/raffle_entity.dart';
 
 class RaffleModel {
+  RxBool isFavorite = false.obs;
   final int id;
   final int categoryId;
   final int brandId;
@@ -16,6 +19,7 @@ class RaffleModel {
   final DateTime deadline;
 
   RaffleModel({
+    isFavorite,
     required this.id,
     required this.categoryId,
     required this.brandId,
@@ -40,6 +44,7 @@ class RaffleModel {
       adminId: json['admin_id'],
       name: json['name'],
       slug: json['slug'],
+      isFavorite: json['isFavorite'] ?? false.obs,
       description: json['description'],
       mainImage: json['main_image'],
       capacity: json['capacity'],
@@ -65,6 +70,7 @@ class RaffleModel {
       'mainImage': mainImage,
       'price': price,
       'status': status,
+      'isFavorite': isFavorite,
       'deadline': deadline.toIso8601String(),
     };
   }
@@ -85,6 +91,7 @@ class RaffleModel {
       status: status,
       deadline: deadline,
       mainImage: mainImage,
+      isFavorite: isFavorite,
     );
   }
 }

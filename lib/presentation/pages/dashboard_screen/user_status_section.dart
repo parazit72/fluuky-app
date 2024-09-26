@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
@@ -25,14 +26,14 @@ class UserStatusWidget extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+      padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 20.w),
       child: InkWell(
         onTap: () => Get.toNamed(flukkyLoyalityProgram),
         child: Container(
-          padding: const EdgeInsets.all(20),
-          decoration: const BoxDecoration(
-            image: DecorationImage(fit: BoxFit.fill, image: AssetImage('assets/images/paper-box.png')),
-            borderRadius: BorderRadius.all(Radius.circular(8)),
+          padding: EdgeInsets.all(16.h),
+          decoration: BoxDecoration(
+            image: const DecorationImage(fit: BoxFit.fill, image: AssetImage('assets/images/paper-box.png')),
+            borderRadius: BorderRadius.all(Radius.circular(8.w)),
           ),
           child: Column(
             children: [
@@ -43,30 +44,34 @@ class UserStatusWidget extends StatelessWidget {
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       SvgPicture.asset('assets/images/leaf-circle-green.svg',
-                          colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn), width: 16, height: 16),
-                      const SizedBox(width: 5),
-                      Text(t.translate('basic'), style: Theme.of(context).textTheme.headlineSmall),
+                          colorFilter: ColorFilter.mode(FluukyTheme.primaryColor, BlendMode.srcIn), width: 16.w, height: 16.h),
+                      SizedBox(width: 5.w),
+                      Text(t.translate('basic'),
+                          style: TextStyle(
+                              fontSize: 14.w, fontWeight: FontWeight.w600, color: FluukyTheme.primaryColor, fontFamily: 'Causten', height: 1.5)),
                     ],
                   ),
                   Wrap(
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       SvgPicture.asset('assets/images/leaf-circle-green.svg',
-                          colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn), width: 16, height: 16),
-                      const SizedBox(width: 5),
-                      Text(t.translate('silver'), style: Theme.of(context).textTheme.headlineSmall),
+                          colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn), width: 16.w, height: 16.h),
+                      SizedBox(width: 5.w),
+                      Text(t.translate('silver'),
+                          style: TextStyle(
+                              fontSize: 14.w, fontWeight: FontWeight.w600, color: FluukyTheme.primaryColor, fontFamily: 'Causten', height: 1.5)),
                     ],
                   ),
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 8, top: 8),
+                padding: EdgeInsets.symmetric(vertical: 8.h),
                 child: LinearProgressIndicator(
-                  value: 0,
+                  value: 45 / 100,
                   borderRadius: BorderRadius.circular(50),
-                  color: FluukyTheme.primaryColor,
-                  backgroundColor: FluukyTheme.lightTheme.primaryColor,
-                  valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                  color: FluukyTheme.secondaryColor,
+                  backgroundColor: FluukyTheme.secondaryColor,
+                  valueColor: AlwaysStoppedAnimation<Color>(FluukyTheme.primaryColor),
                 ),
               ),
               Row(
@@ -78,20 +83,19 @@ class UserStatusWidget extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(16),
-                ),
+                padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 4.w),
+                decoration: BoxDecoration(color: FluukyTheme.fourthColor, borderRadius: BorderRadius.circular(8.w)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Image.asset('assets/images/exclamation-mark.png', width: 20, height: 20),
-                    const SizedBox(width: 12),
+                    Padding(
+                      padding: EdgeInsets.only(top: 6.h, bottom: 6.h, right: 16.w, left: 12.w),
+                      child: Image.asset('assets/images/exclamation-mark.png', width: 20.w, height: 20.h),
+                    ),
                     Expanded(
                       child: Text(
                         formatNumber(t.translate('spend_5k_more')),
-                        style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(fontSize: 11),
+                        style: FluukyTheme.lightTheme.textTheme.labelSmall,
                       ),
                     ),
                   ],
