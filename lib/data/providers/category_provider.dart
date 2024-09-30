@@ -12,8 +12,6 @@ class CategoryProvider extends GetxService {
   @override
   void onInit() {
     super.onInit();
-    final categoryBox = Hive.box<CategoryEntity>('categoryBox');
-    categoryRepository = CategoryRepositoryImpl(categoryBox);
     getAllCategoriesUseCase = GetAllCategoriesUseCase(categoryRepository);
   }
 }

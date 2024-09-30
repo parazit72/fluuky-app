@@ -57,18 +57,20 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
         Stack(
           children: [
             Container(
-                height: 48.h,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                  color: FluukyTheme.inputBackgroundColor,
-                  boxShadow: [
-                    BoxShadow(color: FluukyTheme.secondaryColor),
-                    const BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
-                  ],
-                )),
+              height: 48.h,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                color: FluukyTheme.inputBackgroundColor,
+                boxShadow: [
+                  BoxShadow(color: FluukyTheme.secondaryColor),
+                  const BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+                ],
+              ),
+            ),
             SizedBox(
               height: 48.h,
               child: TextFormField(
+                style: TextStyle(height: 1, color: FluukyTheme.inputTextColor, fontSize: 16.h, fontWeight: FontWeight.w400),
                 keyboardType: TextInputType.visiblePassword,
                 controller: widget.controller,
                 focusNode: widget.focusNode,

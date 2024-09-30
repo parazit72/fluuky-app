@@ -44,7 +44,7 @@ class _CustomDotIndicatorState extends State<CustomDotIndicator> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 4,
+      height: 4.h,
       child: ListView.builder(
         controller: _scrollController,
         scrollDirection: Axis.horizontal,
@@ -54,9 +54,9 @@ class _CustomDotIndicatorState extends State<CustomDotIndicator> {
             onTap: () => widget.onDotClicked(index),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 300),
-              margin: const EdgeInsets.symmetric(horizontal: 4),
-              height: 4,
-              width: 94.w,
+              margin: EdgeInsets.symmetric(horizontal: 4.h),
+              height: 4.h,
+              width: 78.w,
               decoration: BoxDecoration(
                 color: widget.activeIndex == index ? Colors.white : Colors.grey,
                 borderRadius: BorderRadius.circular(12.w),

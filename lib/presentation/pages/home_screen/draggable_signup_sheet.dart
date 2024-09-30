@@ -6,14 +6,14 @@ import 'package:fluuky/app/config/route_constants.dart';
 import 'package:to_arabic_number/to_arabic_number.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 
-class DraggableCheckoutSheet extends StatefulWidget {
-  const DraggableCheckoutSheet({super.key});
+class DraggableSignupSheet extends StatefulWidget {
+  const DraggableSignupSheet({super.key});
 
   @override
-  _DraggableCheckoutSheetState createState() => _DraggableCheckoutSheetState();
+  _DraggableSignupSheetState createState() => _DraggableSignupSheetState();
 }
 
-class _DraggableCheckoutSheetState extends State<DraggableCheckoutSheet> {
+class _DraggableSignupSheetState extends State<DraggableSignupSheet> {
   @override
   Widget build(BuildContext context) {
     var t = AppLocalizations.of(context)!;
@@ -32,9 +32,8 @@ class _DraggableCheckoutSheetState extends State<DraggableCheckoutSheet> {
     return Align(
       alignment: Alignment.bottomCenter,
       child: DraggableScrollableSheet(
-        initialChildSize: 0.37,
-        minChildSize: 0.37,
-        maxChildSize: 0.37,
+        initialChildSize: 0.35,
+        maxChildSize: 0.35,
         builder: (BuildContext context, ScrollController scrollController) {
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 25.w),
@@ -49,39 +48,23 @@ class _DraggableCheckoutSheetState extends State<DraggableCheckoutSheet> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: 24.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(t.translate('Total Bundle Discount:'), style: FluukyTheme.lightTheme.textTheme.bodyMedium),
-                      Text(formatNumber('\$29,97'), style: FluukyTheme.lightTheme.textTheme.bodyMedium),
-                    ],
-                  ),
-                  SizedBox(height: 16.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(t.translate('total_amount'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
-                      Text(formatNumber('\$100'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
-                    ],
-                  ),
+                  Text(t.translate('Sign up to see what you’re missing!'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+                  SizedBox(height: 12.h),
+                  Text(t.translate('Start your tree-planting journey in just a few clicks.'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                   SizedBox(height: 24.h),
                   ElevatedButton(
                     style:
                         ButtonStyle(textStyle: WidgetStateProperty.all(FluukyTheme.lightTheme.textTheme.bodyMedium!.copyWith(color: Colors.white))),
-                    onPressed: () => Get.toNamed(checkout),
-                    child: Text(t.translate('checkout')),
+                    onPressed: () => Get.toNamed(signUp),
+                    child: Text(t.translate('Sign Up')),
                   ),
                   SizedBox(height: 16.h),
-                  Text(t.translate('purchase_terms')),
                   Wrap(children: [
+                    Text(t.translate('Already have an account?'), style: FluukyTheme.lightTheme.textTheme.bodyMedium),
+                    SizedBox(width: 6.w),
                     InkWell(
-                      onTap: () => Get.toNamed(termsAndCondition),
-                      child: Text(t.translate('Terms & Conditions'), style: TextStyle(color: FluukyTheme.primaryColor)),
-                    ),
-                    const Text(' and '),
-                    InkWell(
-                      onTap: () => Get.toNamed(privacyPolicy),
-                      child: Text(t.translate('privacy_policy'), style: TextStyle(color: FluukyTheme.primaryColor)),
+                      onTap: () => Get.toNamed(login),
+                      child: Text(t.translate('Log in'), style: TextStyle(color: FluukyTheme.primaryColor)),
                     ),
                   ])
                 ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:fluuky/app/config/route_constants.dart';
@@ -42,11 +43,11 @@ class DraggableBasketSheetState extends State<DraggableBasketSheet> {
     return Align(
       alignment: Alignment.bottomCenter,
       child: GestureDetector(
-        onTap: () => changeSheetSize(0.4),
+        onTap: () => changeSheetSize(0.49),
         child: DraggableScrollableSheet(
           initialChildSize: widget.sheetPosition,
-          minChildSize: 0.1,
-          maxChildSize: 0.41,
+          minChildSize: 0.17,
+          maxChildSize: 0.49,
           controller: _controller,
           builder: (BuildContext context, ScrollController scrollController) {
             return ColoredBox(
@@ -55,16 +56,24 @@ class DraggableBasketSheetState extends State<DraggableBasketSheet> {
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 25),
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
-                        boxShadow: [BoxShadow(offset: Offset(0, -1), color: Colors.black26, spreadRadius: 0, blurRadius: 4)],
+                      padding: EdgeInsets.symmetric(horizontal: 25.w),
+                      decoration: BoxDecoration(
+                        image: const DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(8.w), topRight: Radius.circular(8.w)),
+                        boxShadow: const [BoxShadow(offset: Offset(0, -1), color: Colors.black26, spreadRadius: 0, blurRadius: 4)],
                       ),
                       child: ListView(
                         controller: scrollController,
                         children: [
-                          const SizedBox(height: 24),
+                          SizedBox(height: 24.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(t.translate('Total Bundle Discount:'), style: FluukyTheme.lightTheme.textTheme.bodyMedium),
+                              Text(formatNumber('\$29,97'), style: FluukyTheme.lightTheme.textTheme.bodyMedium),
+                            ],
+                          ),
+                          SizedBox(height: 16.h),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -72,16 +81,16 @@ class DraggableBasketSheetState extends State<DraggableBasketSheet> {
                               Text(formatNumber('\$100'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
                             ],
                           ),
-                          const SizedBox(height: 24),
+                          SizedBox(height: 24.h),
                           ElevatedButton(onPressed: () => Get.toNamed(checkout), child: Text(t.translate('checkout'))),
-                          const SizedBox(height: 16),
-                          OutlinedButton(onPressed: () => Get.toNamed(drawsList), child: Text(t.translate('add_more_draws'))),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 16.h),
+                          OutlinedButton(onPressed: () => Get.toNamed(drawsList), child: Text(t.translate('Add More Draws'))),
+                          SizedBox(height: 24.h),
                           Text(t.translate('purchase_terms'), textAlign: TextAlign.center),
                           Wrap(alignment: WrapAlignment.center, crossAxisAlignment: WrapCrossAlignment.center, children: [
                             InkWell(
                               onTap: () => Get.toNamed(termsAndCondition),
-                              child: Text(t.translate('terms_conditions'), style: TextStyle(color: Theme.of(context).primaryColor)),
+                              child: Text(t.translate('Terms & Conditions'), style: TextStyle(color: Theme.of(context).primaryColor)),
                             ),
                             Text(t.translate('_and_')),
                             InkWell(

@@ -31,7 +31,7 @@ class WelcomeUserAvatar extends StatelessWidget {
             backgroundImage: AssetImage(user.avatar ?? 'assets/images/avatar.jpg'),
           ),
           SizedBox(width: 12.w),
-          Text('${t.translate('Welcome')}, ${user.firstName}', style: FluukyTheme.lightTheme.textTheme.labelMedium),
+          Text('${t.translate('Welcome, ')} ${user.firstName}', style: FluukyTheme.lightTheme.textTheme.labelMedium),
         ],
       ),
     );

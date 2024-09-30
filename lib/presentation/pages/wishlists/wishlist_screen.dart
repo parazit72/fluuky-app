@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/domain/entities/raffle_entity.dart';
@@ -35,7 +36,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
     var t = AppLocalizations.of(context)!;
 
     return BackgroundScaffold(
-      appBar: const AppBarFluuky(),
+      appBar: AppBarFluuky(),
       bottomNavigationBar: CustomNavBar(),
       body: Stack(
         children: [
@@ -51,11 +52,11 @@ class _WishlistScreenState extends State<WishlistScreen> {
                     buildItemsList(raffleController.wishlist)
                   else
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 20.w),
                       child: Column(
                         children: [
                           ClipRRect(borderRadius: BorderRadius.circular(8), child: SvgPicture.asset('assets/images/empty-wishlist.svg')),
-                          const SizedBox(height: 24),
+                          SizedBox(height: 24.h),
                           ElevatedButton(onPressed: () => Get.toNamed(drawList), child: Text(t.translate('buyTicketsNow')))
                         ],
                       ),
@@ -78,21 +79,22 @@ class WhislistTextHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var t = AppLocalizations.of(context)!;
+    final RaffleController raffleController = Get.find();
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(t.translate('Wishlist'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           Text(
             isEmpty
                 ? t.translate('you_havent_added_draws_wish_list_browse_current')
                 : t.translate('you_added_these_wish_list_dont_wait_planting_chance_win'),
             style: FluukyTheme.lightTheme.textTheme.displaySmall,
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
           if (!isEmpty)
             TextButton.icon(
               style: ButtonStyle(
@@ -100,11 +102,42 @@ class WhislistTextHeaderWidget extends StatelessWidget {
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   padding: WidgetStateProperty.all(EdgeInsets.zero)),
               onPressed: () {
-                Get.find<RaffleController>().wishlist.clear();
+                showDialog<bool>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text(t.translate('Are you sure?')),
+                      content: Text(t.translate('Do you want to delete the selected items?')),
+                      actions: <Widget>[
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextButton(
+                                onPressed: () => Navigator.pop(context, false),
+                                child: const Text('No'),
+                              ),
+                            ),
+                            Expanded(
+                              child: TextButton(
+                                onPressed: () {
+                                  raffleController.wishlist.removeWhere((raffle) => raffleController.wishlistToDelete.contains(raffle.id));
+                                  Navigator.pop(context, true);
+                                },
+                                child: const Text('Yes'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  },
+                ).then((bool? value) {
+                  if (value == true) {
+                    raffleController.wishlistToDelete.clear();
+                  }
+                });
               },
-              icon: const Icon(
-                Icons.delete,
-              ),
+              icon: const Icon(Icons.delete),
               label: Text(t.translate('Delete')),
             ),
           const Divider(),
@@ -118,14 +151,9 @@ class WhislistTextHeaderWidget extends StatelessWidget {
 Widget buildItemsList(RxList<RaffleEntity> wishlist) {
   return Obx(() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
-        children: wishlist
-            .map((item) => RaffleCardWidget(
-                  raffle: item,
-                  viewType: ViewType.list,
-                ))
-            .toList(),
+        children: wishlist.map((item) => RaffleCardWidget(raffle: item, viewType: ViewType.list, wishlist: true)).toList(),
       ),
     );
   });

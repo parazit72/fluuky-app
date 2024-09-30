@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluuky/data/local/local_storage.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/pages/auth/login_screen.dart';
+import 'package:fluuky/presentation/pages/draw/draws_list_screen.dart';
 import 'package:fluuky/presentation/pages/home_screen/home_screen.dart';
 import 'package:fluuky/presentation/pages/intro/walkthrough_screen.dart';
 import 'package:get/get.dart';
@@ -44,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
     } else if (_authRepository.isLogged.value) {
       Get.offAll(() => const HomeScreen());
     } else {
-      Get.offAll(() => const LoginScreen());
+      Get.offAll(() => const DrawsListScreen());
     }
   }
 

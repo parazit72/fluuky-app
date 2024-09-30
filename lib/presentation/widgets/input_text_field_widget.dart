@@ -53,7 +53,7 @@ class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
             Container(
               height: 48.h,
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                borderRadius: BorderRadius.all(Radius.circular(8.w)),
                 color: FluukyTheme.inputBackgroundColor,
                 boxShadow: [
                   BoxShadow(color: FluukyTheme.secondaryColor),
@@ -72,7 +72,7 @@ class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
                 inputFormatters: [
                   LengthLimitingTextInputFormatter(50), // Set max length to 50
                 ],
-                style: TextStyle(height: 1, color: FluukyTheme.inputTextColor, fontSize: 16.h),
+                style: TextStyle(height: 1, color: FluukyTheme.inputTextColor, fontSize: 16.h, fontWeight: FontWeight.w400),
                 keyboardType: widget.keyboardType,
                 controller: widget.controller,
                 focusNode: widget.focusNode,
@@ -94,7 +94,7 @@ class _InputTextFieldWidgetState extends State<InputTextFieldWidget> {
                   height: 48.h,
                   decoration: BoxDecoration(
                     color: Colors.transparent,
-                    borderRadius: const BorderRadius.all(Radius.circular(8)),
+                    borderRadius: BorderRadius.all(Radius.circular(8.w)),
                     border: Border.all(width: 1, color: FluukyTheme.redColor),
                   ),
                 ),

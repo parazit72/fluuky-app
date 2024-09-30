@@ -16,30 +16,30 @@ class SubscriptionSection extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 27.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.w),
-        image: const DecorationImage(image: AssetImage('assets/images/paper-box.png'), fit: BoxFit.fill),
+        image: const DecorationImage(image: AssetImage('assets/images/fluuky-green-subscription.png'), fit: BoxFit.fill),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Image.asset('assets/images/logo-green.png', height: 24.h),
+              Image.asset('assets/images/logo-green.png', height: 14.h),
               SizedBox(width: 4.w),
-              Text(t.translate('fluukyGreenSubscription'), style: FluukyTheme.lightTheme.textTheme.headlineSmall),
+              Text(t.translate('Fluuky Green Subscription'),
+                  style: FluukyTheme.lightTheme.textTheme.bodyLarge!.copyWith(color: FluukyTheme.primaryColor)),
             ],
           ),
           SizedBox(height: 10.h),
           Text(t.translate('withGreenSubscription'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
           SizedBox(height: 10.h),
           OutlinedButton(
-            onPressed: () => Get.toNamed(greenSubscription),
-            child: Text(t.translate('Learn More')),
-            // style: OutlinedButton.styleFrom(
-            //   textStyle: TextStyle(
-            //     fontFamily: FluukyTheme.updateFontFamilyBasedOnLocale(),
-            //   ),
-            // ),
-          ),
+              onPressed: () => Get.toNamed(greenSubscription),
+              style: FluukyTheme.lightTheme.outlinedButtonTheme.style,
+              child: Text(
+                t.translate('Learn More'),
+                style: FluukyTheme.lightTheme.textTheme.bodyLarge!
+                    .copyWith(color: FluukyTheme.primaryColor, fontSize: 14.w, fontWeight: FontWeight.w600),
+              )),
         ],
       ),
     );

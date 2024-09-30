@@ -1,29 +1,13 @@
-import 'package:hive/hive.dart';
+import 'package:fluuky/domain/entities/raffle_entity.dart';
 
-part 'category_entity.g.dart';
-
-@HiveType(typeId: 3)
 class CategoryEntity {
-  @HiveField(0)
   final int id;
-
-  @HiveField(1)
   final String name;
-
-  @HiveField(2)
   final String slug;
-
-  @HiveField(3)
+  final String iconPath;
   final String description;
-
-  @HiveField(4)
   final int status;
-
-  @HiveField(5)
-  final int? parentId;
-
-  @HiveField(6)
-  final String? iconPath;
+  // final List<RaffleEntity> raffles;
 
   CategoryEntity({
     required this.id,
@@ -32,6 +16,6 @@ class CategoryEntity {
     required this.description,
     required this.status,
     required this.iconPath,
-    this.parentId,
+    // required this.raffles,
   });
 }

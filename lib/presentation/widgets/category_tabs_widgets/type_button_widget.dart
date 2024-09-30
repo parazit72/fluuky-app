@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
+import 'package:fluuky/presentation/controllers/auth_controller.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
 import 'package:get/get.dart';
 
 Widget TypeButtonWidget({required ItemType type, required String text}) {
   final ItemsController itemsController = Get.find();
+  final AuthController authController = Get.find();
 
   return Obx(() {
     bool isSelected = itemsController.selectedItemType.value == type;
@@ -21,11 +23,20 @@ Widget TypeButtonWidget({required ItemType type, required String text}) {
           ],
         ),
         height: 32.h,
+        width: 335.w,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(elevation: 0, backgroundColor: isSelected ? FluukyTheme.primaryColor : Colors.transparent),
           onPressed: () {
-            itemsController.selectedItemType.value = type;
-            if (type == ItemType.winners || type == ItemType.announcements) {
+            if (type == ItemType.winners) {
+              var userIsLoggedIn = authController.checkAuthAndShowSheet();
+              if (userIsLoggedIn) {
+                itemsController.selectedItemType.value = type;
+              }
+              if (type == ItemType.winners || type == ItemType.announcements) {
+                itemsController.viewType.value = ViewType.list;
+              }
+            } else {
+              itemsController.selectedItemType.value = type;
               itemsController.viewType.value = ViewType.list;
             }
           },
@@ -33,8 +44,8 @@ Widget TypeButtonWidget({required ItemType type, required String text}) {
             text,
             softWrap: false,
             style: isSelected
-                ? FluukyTheme.lightTheme.textTheme.bodyMedium!.copyWith(color: Colors.white)
-                : FluukyTheme.lightTheme.textTheme.labelMedium!.copyWith(color: FluukyTheme.primaryColor),
+                ? FluukyTheme.lightTheme.textTheme.bodyMedium!.copyWith(color: Colors.white, fontSize: 16.h)
+                : FluukyTheme.lightTheme.textTheme.labelMedium!.copyWith(color: FluukyTheme.primaryColor, fontSize: 16.h),
           ),
         ),
       ),

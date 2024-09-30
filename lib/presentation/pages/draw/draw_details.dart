@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/pages/draw/trees_planted_dialog.dart';
@@ -16,7 +17,7 @@ class DrawDetailsWidget extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(14)),
+            borderRadius: BorderRadius.all(Radius.circular(14.w)),
             image: const DecorationImage(image: AssetImage('assets/images/paper.jpg'), fit: BoxFit.cover),
             boxShadow: [
               BoxShadow(
@@ -30,12 +31,12 @@ class DrawDetailsWidget extends StatelessWidget {
           child: Column(
             children: [
               ClipRRect(
-                borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(8.w), topRight: Radius.circular(8.w)),
                 child: Image.asset(
                   'assets/images/back4.jpg',
                   alignment: Alignment.topCenter,
-                  height: 200,
-                  width: 500,
+                  height: 200.h,
+                  width: 500.w,
                   fit: BoxFit.cover,
                 ),
               ),

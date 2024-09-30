@@ -1,5 +1,6 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
@@ -19,7 +20,7 @@ class ReceiptScreen extends StatelessWidget {
       child: BackgroundScaffold(
         appBar: const AppBarDialog(),
         body: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.w),
           child: Stack(
             alignment: Alignment.center,
             children: [

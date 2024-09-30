@@ -52,9 +52,9 @@ class DetailsAboutYouScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(t.translate('details_about_you'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+                  Text(t.translate('Details About You'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
                   SizedBox(height: 4.h),
-                  Text(t.translate('you_are_almost_there'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                  Text(t.translate('You’re almost there!'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                   SizedBox(height: 24.h),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 12.w),
@@ -119,7 +119,7 @@ class DetailsAboutYouScreen extends StatelessWidget {
                   CustomDropdownButton(
                     itemsKey: 'genders',
                     onChanged: (value) => _selectedGender = value,
-                    hintText: t.translate('select'),
+                    hintText: t.translate('Select'),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 24.h),
@@ -147,9 +147,12 @@ class DetailsAboutYouScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(width: 8.w),
-                        Text(
-                          t.translate('I confirm that I am 18 years of age or older'),
-                          style: FluukyTheme.lightTheme.textTheme.labelMedium,
+                        InkWell(
+                          onTap: () => iAm18YearsOld.value = !iAm18YearsOld.value,
+                          child: Text(
+                            t.translate('I confirm that I am 18 years of age or older'),
+                            style: FluukyTheme.lightTheme.textTheme.labelMedium,
+                          ),
                         ),
                       ],
                     ),
@@ -167,6 +170,10 @@ class DetailsAboutYouScreen extends StatelessWidget {
                     showDuration: const Duration(seconds: 3),
                     message: t.translate('Please confirm your age.'),
                     child: ElevatedButton(
+                      style: ButtonStyle(
+                        minimumSize: WidgetStatePropertyAll(Size(335.w, 48.h)),
+                        textStyle: WidgetStateProperty.all(TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, fontFamily: 'Causten')),
+                      ),
                       onPressed: () {
                         FocusScope.of(context).unfocus();
                         print(_formKey.currentState!.validate());

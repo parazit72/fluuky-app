@@ -90,7 +90,7 @@ class ShippingAddressScreen extends StatelessWidget {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(t.translate('processing_data'))),
+                      SnackBar(content: Text(t.translate('Processing Data'))),
                     );
                     Get.toNamed(helpCenter);
 

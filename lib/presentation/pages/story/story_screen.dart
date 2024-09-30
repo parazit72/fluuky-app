@@ -42,49 +42,42 @@ class StoryScreen extends StatelessWidget {
                 return Stack(
                   children: [
                     // Fullscreen image
-                    Positioned.fill(
-                      child: Image.asset(
-                        storyItem.imagePath,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                    Positioned.fill(child: Image.asset(storyItem.imagePath, fit: BoxFit.cover)),
                     // Overlay content
                     Positioned(
-                      top: 80,
-                      left: 16,
-                      right: 16,
+                      top: 120.h,
+                      left: 16.w,
+                      right: 16.w,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 16.h),
                           // Title and Close button
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(storyItem.title, style: FluukyTheme.lightTheme.textTheme.headlineMedium),
+                              Text(storyItem.title, style: FluukyTheme.lightTheme.textTheme.headlineMedium!.copyWith(color: Colors.white)),
                               IconButton(
                                 onPressed: () => Get.back(),
-                                icon: const Icon(Icons.close, color: Colors.white),
+                                icon: Icon(Icons.close, color: Colors.white, size: 26.w),
                               ),
                             ],
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 16.h),
                           // Description text
-                          Text(
-                            storyItem.description,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
+                          Text(storyItem.description, style: TextStyle(color: Colors.white, fontSize: 16.w, fontWeight: FontWeight.w400)),
                         ],
                       ),
                     ),
                     Positioned(
-                      bottom: 40,
-                      left: 20,
-                      right: 20,
-                      child: ElevatedButton(onPressed: () {}, child: Text(t.translate('View Details'))),
+                      bottom: 40.h,
+                      left: 20.w,
+                      right: 20.w,
+                      child: ElevatedButton(
+                          onPressed: () {},
+                          child: Text(
+                            t.translate('View Details'),
+                            style: FluukyTheme.lightTheme.textTheme.bodyMedium!.copyWith(color: Colors.white),
+                          )),
                     ),
                   ],
                 );
@@ -93,47 +86,53 @@ class StoryScreen extends StatelessWidget {
 
             // Indicator
             Positioned(
-              top: 50,
-              left: 16,
-              right: 16,
+              top: 64.h,
+              left: 0.w,
+              right: 0.w,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                  // SizedBox(width: 10),
-                  ...List.generate(
-                    _storyController.stories.length,
-                    (i) => GestureDetector(
-                      onTap: () {
-                        _pageController.animateToPage(
-                          i,
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                        _storyController.updateIndex(i);
-                      },
-                      child: Column(
-                        children: [
-                          SvgPicture.asset(
-                            'assets/images/tree-green.svg',
-                            width: 24,
-                            colorFilter: ColorFilter.mode(i == _storyController.currentIndex.value ? Colors.white : Colors.grey, BlendMode.srcIn),
+                child: Row(
+                  children: [
+                    const SizedBox(width: 16),
+                    ...List.generate(
+                      _storyController.stories.length,
+                      (i) => Padding(
+                        padding: EdgeInsets.only(right: 7.w),
+                        child: GestureDetector(
+                          onTap: () {
+                            _pageController.animateToPage(
+                              i,
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                            );
+                            _storyController.updateIndex(i);
+                          },
+                          child: Column(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/images/tree-green.svg',
+                                width: 24.w,
+                                colorFilter: ColorFilter.mode(i == _storyController.currentIndex.value ? Colors.white : Colors.grey, BlendMode.srcIn),
+                              ),
+                              SizedBox(height: 8.h),
+                              Container(
+                                // width: 50,
+                                margin: EdgeInsets.only(right: 4.w),
+                                width: 50.w,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50.w),
+                                  color: i == _storyController.currentIndex.value ? Colors.white : Colors.grey,
+                                ),
+                                height: 4.h,
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 8),
-                          Container(
-                            // width: 50,
-                            margin: const EdgeInsets.only(right: 4),
-                            width: (MediaQuery.of(context).size.width - 40) / 6,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: i == _storyController.currentIndex.value ? Colors.white : Colors.grey,
-                            ),
-                            height: 4,
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ]),
+                    const SizedBox(width: 16),
+                  ],
+                ),
               ),
             ),
           ],

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
-import 'package:fluuky/presentation/widgets/category_tabs_widgets/category_tabs_widgets.dart';
+import 'package:fluuky/presentation/controllers/items_controller.dart';
+import 'package:fluuky/presentation/controllers/raffle_controller.dart';
+import 'package:fluuky/presentation/widgets/category_tabs_widgets/active_raffle_card_widget.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:get/get.dart';
 
@@ -39,6 +41,21 @@ class ActiveDrawsSection extends StatelessWidget {
   }
 }
 
+Widget buildUserActiveDrawsList() {
+  final RaffleController raffleController = Get.find();
+  return Obx(() {
+    return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+            children: raffleController.raffles
+                .map((item) => ActiveRaffleCardWidget(
+                      raffle: item,
+                      viewType: ViewType.grid,
+                    ))
+                .toList()));
+  });
+}
+
 class EmptyActiveDraws extends StatelessWidget {
   const EmptyActiveDraws({
     super.key,
@@ -71,9 +88,9 @@ class EmptyActiveDraws extends StatelessWidget {
           ),
           SizedBox(height: 24.h),
           ElevatedButton(
-              style: ButtonStyle(textStyle: WidgetStateProperty.all(TextStyle(fontSize: 12.w))),
+              style: ButtonStyle(textStyle: WidgetStateProperty.all(TextStyle(fontSize: 12.w, fontWeight: FontWeight.w600))),
               onPressed: () {},
-              child: Text(t.translate('enterNow'))),
+              child: Text(t.translate('Enter Now!'))),
         ],
       ),
     );

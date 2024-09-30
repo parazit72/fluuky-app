@@ -1,7 +1,7 @@
 import 'package:fluuky/data/providers/network/api_provider.dart';
 import 'package:fluuky/data/providers/network/api_representable.dart';
 
-enum RaffleEndpoint { getRaffles, getRaffle }
+enum RaffleEndpoint { getRaffles, getRaffle, getRaffleCategories }
 
 class RaffleAPI implements APIRequestRepresentable {
   final RaffleEndpoint raffleEndpoint;
@@ -12,6 +12,8 @@ class RaffleAPI implements APIRequestRepresentable {
   @override
   String get endpoint {
     switch (raffleEndpoint) {
+      case RaffleEndpoint.getRaffleCategories:
+        return '/categories';
       case RaffleEndpoint.getRaffles:
         return '/draws';
       case RaffleEndpoint.getRaffle:
@@ -38,6 +40,7 @@ class RaffleAPI implements APIRequestRepresentable {
     switch (raffleEndpoint) {
       case RaffleEndpoint.getRaffle:
       case RaffleEndpoint.getRaffles:
+      case RaffleEndpoint.getRaffleCategories:
         return RequestMethod.get;
     }
   }

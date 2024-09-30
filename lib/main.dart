@@ -27,8 +27,6 @@ void main() async {
   await Hive.openBox<NotificationEntity>('notificationsBox');
   // Hive.registerAdapter(RaffleEntityAdapter());
   await Hive.openBox<RaffleEntity>('rafflesBox');
-  Hive.registerAdapter(CategoryEntityAdapter());
-  await Hive.openBox<CategoryEntity>('categoryBox');
 
   // SystemChrome.setSystemUIOverlayStyle(
   //   SystemUiOverlayStyle.light.copyWith(

@@ -24,7 +24,7 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
   @override
   Widget build(BuildContext context) {
     return BackgroundScaffold(
-      appBar: const AppBarFluuky(showIcon: true),
+      appBar: AppBarFluuky(showIcon: true),
       bottomNavigationBar: CustomNavBar(),
       body: Padding(
         padding: EdgeInsets.all(20.h),

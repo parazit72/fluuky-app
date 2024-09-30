@@ -10,6 +10,7 @@ class FluukyTheme {
   // App Colors
   static Color thirdColor = const Color(0xFF8C8C8C);
   static Color primaryColor = const Color(0XFF205C32);
+  static Color primaryShadowColor = const Color.fromARGB(90, 76, 97, 83);
   static Color fourthColor = const Color(0XFFE9EFEB);
   static Color secondaryColor = const Color(0xFFDBDBDB);
   static Color fifthColor = const Color(0xFFB3B3B3);
@@ -84,7 +85,7 @@ class FluukyTheme {
       titleMedium: TextStyle(fontSize: 20.w, fontWeight: FontWeight.w500, color: Colors.black, fontFamily: fontFamily, height: 1.2),
       titleSmall: TextStyle(fontSize: 20.w, fontWeight: FontWeight.w500, color: Colors.black, fontFamily: fontFamily, height: 1.2),
       //
-      bodyLarge: TextStyle(fontSize: 14.w, fontWeight: FontWeight.w500, color: Colors.black, fontFamily: fontFamily, height: 1.5),
+      bodyLarge: TextStyle(fontSize: 14.w, fontWeight: FontWeight.w600, color: Colors.black, fontFamily: fontFamily, height: 1.5),
       bodyMedium: TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, color: Colors.black, fontFamily: fontFamily, height: 1.5),
       bodySmall: TextStyle(fontSize: 14.w, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 1.5),
       //
@@ -116,10 +117,11 @@ class FluukyTheme {
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         minimumSize: Size(double.infinity, 48.h),
-        textStyle: TextStyle(fontSize: 16.h, color: Colors.white, fontFamily: FluukyTheme.updateFontFamilyBasedOnLocale()),
+        textStyle:
+            TextStyle(fontSize: 14.h, fontWeight: FontWeight.w600, color: primaryColor, fontFamily: FluukyTheme.updateFontFamilyBasedOnLocale()),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          side: const BorderSide(color: Color.fromARGB(255, 13, 39, 21)),
+          borderRadius: BorderRadius.circular(8.w),
+          side: BorderSide(color: primaryColor),
         ),
       ),
     ),

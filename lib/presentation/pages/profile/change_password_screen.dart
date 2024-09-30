@@ -36,7 +36,7 @@ class ChangePasswordScreen extends StatelessWidget {
                             // focusNode: _passwordFocusNode,
                             validator: (val) {
                               if (val != null && val.length < 6) {
-                                return t.translate('password_too_short');
+                                return t.translate('Password too short.');
                               }
                               return null;
                             },
@@ -52,7 +52,7 @@ class ChangePasswordScreen extends StatelessWidget {
                             // focusNode: _passwordFocusNode,
                             validator: (val) {
                               if (val != null && val.length < 6) {
-                                return t.translate('password_too_short');
+                                return t.translate('Password too short.');
                               }
                               return null;
                             },
@@ -67,7 +67,7 @@ class ChangePasswordScreen extends StatelessWidget {
                             labelText: t.translate('confirmPassword'),
                             hintText: t.translate('password'),
                             // focusNode: _passwordFocusNode,
-                            validator: (val) => (val != _authController.passwordController.text) ? t.translate('passwords_do_not_match') : null,
+                            validator: (val) => (val != _authController.passwordController.text) ? t.translate('Passwords do not match.') : null,
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 34, vertical: 24),
@@ -96,7 +96,7 @@ class ChangePasswordScreen extends StatelessWidget {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(t.translate('processing_data'))),
+                        SnackBar(content: Text(t.translate('Processing Data'))),
                       );
                       Get.toNamed(helpCenter);
 

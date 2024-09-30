@@ -17,7 +17,7 @@ class LoyalityProgramScreen extends StatelessWidget {
       appBar: AppBar(
         title: Center(
           child: Text(
-            t.translate('terms_conditions'),
+            t.translate('Terms & Conditions'),
             style: FluukyTheme.lightTheme.textTheme.titleLarge,
             textAlign: TextAlign.center,
           ),

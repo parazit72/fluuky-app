@@ -1,3 +1,4 @@
+import 'package:fluuky/domain/entities/category_entity.dart';
 import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/domain/repositories/raffle_repository.dart';
 import 'package:get/get.dart';
@@ -6,10 +7,15 @@ class RaffleController extends GetxController {
   final RaffleRepository raffleRepository;
 
   var raffles = <RaffleEntity>[].obs;
+  var raffleCategories = <CategoryEntity>[].obs;
   var wishlist = <RaffleEntity>[].obs;
+  var wishlistToDelete = <int>[].obs;
+  var selectedCategory = 1.obs;
   var currentIndex = 0.obs;
 
   RaffleController({required this.raffleRepository});
+
+  List<RaffleEntity> get filteredRaffles => raffles.where((raffle) => raffle.categoryId == selectedCategory.value).toList();
 
   @override
   void onReady() {
@@ -20,6 +26,7 @@ class RaffleController extends GetxController {
   @override
   void onInit() {
     fetchRaffles();
+    fetchRaffleCategories();
     // fetchWishlist();
     super.onInit();
   }
@@ -33,14 +40,34 @@ class RaffleController extends GetxController {
     }
   }
 
-  // Method to fetch wishlist
-  void fetchWishlist() async {
+  Future<void> fetchRaffleCategories() async {
     try {
-      final fetchedRaffles = await raffleRepository.getRaffles();
-      wishlist.assignAll(fetchedRaffles);
+      final fetchedRaffleCategories = await raffleRepository.getRaffleCategories();
+      raffleCategories.assignAll(fetchedRaffleCategories);
+
+      selectedCategory.value = raffleCategories.first.id;
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<void> deleteSelectedWishlist() async {
+    // try {
+    //   final fetchedRaffles = await raffleRepository.getRaffles();
+    //   raffles.assignAll(fetchedRaffles);
+    // } catch (e) {
+    //   print(e);
+    // }
+  }
+
+  // Method to fetch wishlist
+  void fetchWishlist() async {
+    // try {
+    //   final fetchedRaffles = await raffleRepository.getRaffles();
+    //   wishlist.assignAll(fetchedRaffles);
+    // } catch (e) {
+    //   print(e);
+    // }
 
     // wishlist.value = [];
   }

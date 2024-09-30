@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/presentation/pages/auth/verification_screen.dart';
+import 'package:fluuky/presentation/pages/home_screen/draggable_signup_sheet.dart';
 import 'package:fluuky/presentation/pages/home_screen/home_screen.dart';
 import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -22,6 +23,18 @@ class AuthController extends GetxController {
   var hasDigit = false.obs;
   var hasSpecialCharacter = false.obs;
   var isAtLeast8Characters = false.obs;
+
+  bool checkAuthAndShowSheet() {
+    if (!isLogged.value) {
+      Get.bottomSheet(
+        const DraggableSignupSheet(),
+        isScrollControlled: true,
+      );
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   void checkPassword(String password) {
     hasUpperCase.value = password.contains(RegExp(r'[A-Z]'));

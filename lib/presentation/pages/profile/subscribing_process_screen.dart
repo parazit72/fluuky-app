@@ -1,4 +1,6 @@
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
@@ -64,17 +66,17 @@ class _SubscribingProcessScreenState extends State<SubscribingProcessScreen> wit
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 32),
+                  SizedBox(height: 32.h),
                   Text(t.translate('My Subscription'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 6.h),
                   Text(
                     t.translate(
                         'With a simple monthly commitment, you not only contribute to a greener planet by funding tree planting but also get a chance to win in exclusive draws!'),
-                    style: FluukyTheme.lightTheme.textTheme.bodySmall,
+                    style: FluukyTheme.lightTheme.textTheme.displaySmall,
                   ),
                   Container(
-                    margin: const EdgeInsets.symmetric(vertical: 24),
-                    padding: const EdgeInsets.all(24),
+                    margin: EdgeInsets.symmetric(vertical: 24.h),
+                    padding: EdgeInsets.all(24.w),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       image: const DecorationImage(image: AssetImage('assets/images/paper-box.png'), fit: BoxFit.fill),
@@ -86,28 +88,63 @@ class _SubscribingProcessScreenState extends State<SubscribingProcessScreen> wit
                           crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
                             SvgPicture.asset(
-                              'assets/images/logo.svg',
+                              'assets/images/logo-green.svg',
                               colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn),
-                              width: 24,
-                              height: 24,
+                              height: 14.h,
                             ),
-                            const SizedBox(width: 16),
-                            Text(t.translate('Planter Package'),
-                                style: Theme.of(context).textTheme.titleSmall!.copyWith(color: FluukyTheme.primaryColor)),
+                            SizedBox(width: 4.w),
+                            Text(t.translate('FLUUKY Green Subscription'),
+                                style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: FluukyTheme.primaryColor)),
                           ],
                         ),
-                        const SizedBox(height: 16),
+                        SizedBox(height: 4.h),
                         Text(t.translate('120 Trees'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
-                        Text('${t.translate('Billing starts:')} April 26, 2024', style: FluukyTheme.lightTheme.textTheme.bodySmall),
-                        const Divider(),
+                        SizedBox(height: 4.h),
+                        Text('${t.translate('Billing starts:')} April 26, 2024', style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 16.h),
+                          child: DottedLine(
+                            direction: Axis.horizontal,
+                            alignment: WrapAlignment.center,
+                            lineLength: 287.w,
+                            dashLength: 8.w,
+                            dashColor: FluukyTheme.secondaryColor,
+                            dashGapLength: 6.w,
+                            dashGapColor: Colors.transparent,
+                          ),
+                        ),
+                        SizedBox(height: 8.h),
                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                          Text(t.translate("Monthly Tree Planting:")),
-                          Text(t.translate("10 Trees")),
+                          Text(
+                            t.translate("Monthly Tree Planting:"),
+                            style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(color: FluukyTheme.inputTextColor),
+                          ),
+                          Text(
+                            t.translate("10 Trees"),
+                            style: FluukyTheme.lightTheme.textTheme.bodyLarge,
+                          ),
                         ]),
-                        const Divider(),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 24.h),
+                          child: DottedLine(
+                            direction: Axis.horizontal,
+                            alignment: WrapAlignment.center,
+                            lineLength: 287.w,
+                            dashLength: 8.w,
+                            dashColor: FluukyTheme.secondaryColor,
+                            dashGapLength: 6.w,
+                            dashGapColor: Colors.transparent,
+                          ),
+                        ),
                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                          Text(t.translate("Total Monthly Subscription:")),
-                          Text(t.translate("\$75")),
+                          Text(
+                            t.translate("Total Monthly Subscription:"),
+                            style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(color: FluukyTheme.inputTextColor),
+                          ),
+                          Text(
+                            t.translate("\$75"),
+                            style: FluukyTheme.lightTheme.textTheme.bodyLarge,
+                          ),
                         ]),
                       ],
                     ),
@@ -124,7 +161,7 @@ class _SubscribingProcessScreenState extends State<SubscribingProcessScreen> wit
                       ),
                     ],
                   ),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 6.h),
                   SizeTransition(
                     sizeFactor: _animation,
                     axisAlignment: -1.0, // Expands from the top
@@ -132,19 +169,18 @@ class _SubscribingProcessScreenState extends State<SubscribingProcessScreen> wit
                       children: [
                         Text(
                           t.translate('Almost there! Add your payment details to secure your subscription.'),
-                          style: FluukyTheme.lightTheme.textTheme.bodySmall,
+                          style: FluukyTheme.lightTheme.textTheme.displaySmall,
                         ),
                         PaymentFormWidget(),
-                        const SizedBox(height: 24),
-                        // Padding(
-                        //   padding: const EdgeInsets.symmetric(vertical: 24),
-                        //   child: ElevatedButton(
-                        //     onPressed: () {
-                        //       // Get.toNamed(greenSubscription);
-                        //     },
-                        //     child: Text(t.translate('Continue')),
-                        //   ),
-                        // ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 24.h),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // Get.toNamed(greenSubscription);
+                            },
+                            child: Text(t.translate('Continue')),
+                          ),
+                        ),
                         Center(
                           child: Column(
                             children: [
@@ -162,7 +198,7 @@ class _SubscribingProcessScreenState extends State<SubscribingProcessScreen> wit
                                       padding: const EdgeInsets.all(4),
                                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                     ),
-                                    child: Text(t.translate('terms_conditions')),
+                                    child: Text(t.translate('Terms & Conditions')),
                                   ),
                                   Text(
                                     t.translate('_and_'),

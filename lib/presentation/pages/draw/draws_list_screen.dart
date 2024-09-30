@@ -9,7 +9,7 @@ class DrawsListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BackgroundScaffold(
-      appBar: const AppBarFluuky(showIcon: true),
+      appBar: AppBarFluuky(showIcon: true),
       bottomNavigationBar: CustomNavBar(),
       body: SingleChildScrollView(
         child: Column(

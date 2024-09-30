@@ -56,7 +56,7 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> with Widget
       return AppLocalizations.of(context)!.translate('Password Required');
     }
     if (password.length < 8) {
-      return AppLocalizations.of(context)!.translate('password_too_short');
+      return AppLocalizations.of(context)!.translate('Password too short.');
     }
     if (!RegExp(r'^(?=.*?[A-Z])').hasMatch(password)) {
       return AppLocalizations.of(context)!.translate('password_uppercase_required');
@@ -76,7 +76,7 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> with Widget
   // Validation function to check password confirmation
   String? _validateConfirmPassword(String? confirmPassword) {
     if (confirmPassword != _authController.passwordController.text) {
-      return AppLocalizations.of(context)!.translate('passwords_do_not_match');
+      return AppLocalizations.of(context)!.translate('Passwords do not match.');
     }
     return null;
   }
@@ -129,7 +129,7 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> with Widget
                       triggerMode: TooltipTriggerMode.manual,
                       waitDuration: const Duration(seconds: 1),
                       showDuration: const Duration(seconds: 3),
-                      message: t.translate('passwords_do_not_match'),
+                      message: t.translate('Passwords do not match.'),
                       child: PasswordTextFieldWidget(
                         labelText: t.translate('Confirm Password'),
                         controller: _confirmPasswordController,

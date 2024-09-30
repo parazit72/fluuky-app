@@ -1,5 +1,6 @@
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/basket_controller.dart';
@@ -20,7 +21,7 @@ class BasketScreen extends StatefulWidget {
 class _BasketScreenState extends State<BasketScreen> {
   final BasketController controller = Get.find<BasketController>();
   final GlobalKey<DraggableBasketSheetState> _sheetKey = GlobalKey<DraggableBasketSheetState>();
-  double _sheetPosition = 0.4;
+  double _sheetPosition = 0.49;
 
   @override
   void initState() {
@@ -42,13 +43,13 @@ class _BasketScreenState extends State<BasketScreen> {
   @override
   Widget build(BuildContext context) {
     return BackgroundScaffold(
-      appBar: const AppBarFluuky(),
+      appBar: AppBarFluuky(),
       body: NotificationListener<ScrollNotification>(
         onNotification: (scrollNotification) {
           if (scrollNotification is ScrollUpdateNotification && scrollNotification.metrics.pixels > 0) {
             setState(() {
               changeSheetPosition(_sheetPosition);
-              _sheetPosition = 0.1;
+              _sheetPosition = 0.17;
             });
           }
           return true;
@@ -101,8 +102,8 @@ class InsideBasketScreen extends StatelessWidget {
         children: [
           const BasketTextHeaderWidget(),
           BasketItems(controller: controller),
-          RecommendationsForYouSection(controller: controller),
-          SizedBox(height: MediaQuery.of(context).size.height * (_sheetPosition > 0.1 ? 0.4 : 0.08)),
+          const RecommendationsForYouSection(),
+          SizedBox(height: 812.h * (_sheetPosition > 0.17 ? 0.49 : 0.08)),
         ],
       ),
     );
@@ -110,10 +111,7 @@ class InsideBasketScreen extends StatelessWidget {
 }
 
 class SkeletonizerOfBasketLoading extends StatelessWidget {
-  const SkeletonizerOfBasketLoading({
-    super.key,
-    required this.controller,
-  });
+  const SkeletonizerOfBasketLoading({super.key, required this.controller});
 
   final BasketController controller;
 
@@ -121,32 +119,29 @@ class SkeletonizerOfBasketLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Skeletonizer(
         enabled: true,
-        child: Column(
-          children: [
-            const BasketTextHeaderWidget(),
-            BasketItems(controller: controller),
-            RecommendationsForYouSection(controller: controller),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const BasketTextHeaderWidget(),
+              BasketItems(controller: controller),
+              const RecommendationsForYouSection(),
+            ],
+          ),
         ));
   }
 }
 
 class BasketItems extends StatelessWidget {
-  const BasketItems({
-    super.key,
-    required this.controller,
-  });
+  const BasketItems({super.key, required this.controller});
 
   final BasketController controller;
 
   @override
   Widget build(BuildContext context) {
     return controller.basket.value.items.isNotEmpty
-        ? Column(
-            children: controller.basket.value.items.map((item) => BasketItemWidget(item: item)).toList(),
-          )
+        ? Column(children: controller.basket.value.items.map((item) => BasketItemWidget(item: item)).toList())
         : Padding(
-            padding: const EdgeInsets.all(20),
+            padding: EdgeInsets.all(20.w),
             child: Image.asset('assets/images/empty-basket.png'),
           );
   }
@@ -159,14 +154,14 @@ class BasketTextHeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var t = AppLocalizations.of(context)!;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(t.translate('cart'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           Text(t.translate('explore_items_in_cart'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           const Divider(),
         ],
       ),

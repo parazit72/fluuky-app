@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluuky/domain/entities/user_entity.dart';
+import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/pages/notification_screen.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,7 @@ class AppBarProfile extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = AppLocalizations.of(context)!;
     UserEntity? user = _authController.user.value;
     final NotificationController notificationController = Get.find();
     user = UserEntity(
@@ -31,7 +33,7 @@ class AppBarProfile extends StatelessWidget implements PreferredSizeWidget {
         padding: const EdgeInsets.all(8.0),
         child: CircleAvatar(backgroundImage: AssetImage(user.avatar ?? 'assets/images/avatar.jpg')),
       ),
-      title: Text('Welcome, ${user.firstName}'),
+      title: Text("${t.translate('Welcome, ')} ${user.firstName}"),
       actions: [
         Stack(
           children: [

@@ -37,18 +37,20 @@ class HeaderStoriesAvatarWidget extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 24.w,
                     backgroundColor: isWatched ? FluukyTheme.fifthColor : FluukyTheme.phosphorColor,
-                    child: ColorFiltered(
-                      colorFilter: ColorFilter.mode(
-                        storyitem.isWatched ? Colors.grey : Colors.transparent,
-                        BlendMode.saturation,
-                      ),
-                      child: CircleAvatar(
-                        radius: 22.w,
-                        backgroundImage: AssetImage(storyitem.imagePath),
-                        child: SvgPicture.asset(
-                          storyitem.iconPath,
-                          width: 20.w,
-                          colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                    child: ClipOval(
+                      child: ColorFiltered(
+                        colorFilter: ColorFilter.mode(
+                          storyitem.isWatched ? Colors.grey : Colors.transparent,
+                          BlendMode.saturation,
+                        ),
+                        child: CircleAvatar(
+                          radius: 22.w,
+                          backgroundImage: AssetImage(storyitem.imagePath),
+                          child: SvgPicture.asset(
+                            storyitem.iconPath,
+                            width: 20.w,
+                            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                          ),
                         ),
                       ),
                     ),

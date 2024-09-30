@@ -18,7 +18,7 @@ class ContactInformationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
-      appBar: AppBarSingleWidget(title: t.translate('contactInformation')),
+      appBar: AppBarSingleWidget(title: t.translate('Contact Information')),
       bottomNavigationBar: CustomNavBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
@@ -34,7 +34,7 @@ class ContactInformationScreen extends StatelessWidget {
                       MobileInputWidget(
                         controller: _authController.mobileController,
                         labelText: '',
-                        hintText: t.translate('enterPhoneNumber'),
+                        hintText: t.translate('Enter your mobile number'),
                       ),
                       const SizedBox(height: 20),
                       InputTextFieldWidget(
@@ -79,7 +79,7 @@ class ContactInformationScreen extends StatelessWidget {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(t.translate('processing_data'))),
+                      SnackBar(content: Text(t.translate('Processing Data'))),
                     );
                     Get.toNamed(helpCenter);
 

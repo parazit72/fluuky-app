@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluuky/data/providers/category_provider.dart';
 import 'package:fluuky/data/providers/database/local_notification_datasource.dart';
 import 'package:fluuky/data/providers/database/push_notification_datasource.dart';
+import 'package:fluuky/data/providers/network/dio_provider.dart';
 import 'package:fluuky/data/providers/raffle_provider.dart';
 import 'package:fluuky/data/repositories/basket_repository_impl.dart';
 import 'package:fluuky/data/repositories/notification_repository_impl.dart';
@@ -32,19 +33,15 @@ class InitialBindings extends Bindings {
 
     // Register RaffleProvider
     Get.put(RaffleProvider());
-    Get.put(CategoryProvider());
+    Get.put(DioProvider());
 
-    final categoryProvider = Get.put(CategoryProvider());
-    Get.put(CategoryController(categoryProvider.getAllCategoriesUseCase));
+    // final categoryProvider = Get.put(CategoryProvider());
+    // Get.put(CategoryController(categoryProvider.getAllCategoriesUseCase));
 
     // Register RaffleRepository with RaffleProvider
     Get.put(RaffleRepositoryImpl());
     Get.put<RaffleRepository>(Get.find<RaffleRepositoryImpl>());
 
-    // Register GetRafflesUseCase with RaffleRepository
-    Get.put(GetRafflesUseCase(Get.find<RaffleRepository>()));
-
-    // Register RaffleController with GetRafflesUseCase
     Get.put(RaffleController(raffleRepository: Get.find<RaffleRepositoryImpl>()));
     Get.put(StoryController());
     Get.put(ItemsController());

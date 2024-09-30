@@ -75,6 +75,7 @@ class WeForestInfoScreen extends StatelessWidget {
                   const Spacer(),
                   Center(
                     child: ElevatedButton(
+                      style: ButtonStyle(textStyle: WidgetStateProperty.all(TextStyle(fontSize: 14.w, fontWeight: FontWeight.w600))),
                       onPressed: () => _launchUrl(t),
                       child: Text(t.translate('Learn More')),
                     ),

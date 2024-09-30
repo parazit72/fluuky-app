@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
@@ -20,30 +21,30 @@ class CarbonFootprintScreen extends StatelessWidget {
       child: BackgroundScaffold(
         appBar: const AppBarDialog(),
         body: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.h),
           child: Stack(
             children: [
               Positioned(
-                top: MediaQuery.of(context).size.height * 0.1,
+                top: 0.18.sh,
                 left: 0,
                 right: 0,
                 child: Column(children: [
                   Center(
                     child: SvgPicture.asset(
                       imagePath,
-                      width: 100,
+                      width: (100 / 375).sw,
                       colorFilter: ColorFilter.mode(FluukyTheme.primaryColor, BlendMode.srcIn),
                     ),
                   ),
-                  const SizedBox(height: 32),
-                  Text(t.translate('WHAT_IS_YOUR'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 32.h),
+                  Text(t.translate('WHAT IS YOUR'), style: FluukyTheme.lightTheme.textTheme.labelMedium),
+                  SizedBox(height: 16.h),
                   Text(t.translate('carbon_footprint?'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 32.h),
                   SizedBox(
-                      width: MediaQuery.of(context).size.width - 130,
+                      width: (287 / 375).sw,
                       child: Text(t.translate('a_carbon_footprint_is_msg'),
-                          textAlign: TextAlign.center, style: FluukyTheme.lightTheme.textTheme.bodySmall)),
+                          textAlign: TextAlign.center, style: FluukyTheme.lightTheme.textTheme.displaySmall)),
                 ]),
               ),
               Positioned(
@@ -52,8 +53,13 @@ class CarbonFootprintScreen extends StatelessWidget {
                 right: 0,
                 child: Column(
                   children: [
-                    ElevatedButton(onPressed: () => Get.toNamed(questionPage), child: Text(t.translate('calculate_my_carbon_footprint'))),
-                    const SizedBox(height: 16.0),
+                    ElevatedButton(
+                        onPressed: () => Get.toNamed(questionPage),
+                        child: Text(
+                          t.translate('calculate_my_carbon_footprint'),
+                          style: FluukyTheme.lightTheme.textTheme.labelLarge!.copyWith(color: Colors.white),
+                        )),
+                    SizedBox(height: 16.0.h),
                   ],
                 ),
               )

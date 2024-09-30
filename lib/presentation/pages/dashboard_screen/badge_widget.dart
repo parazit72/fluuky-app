@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/presentation/pages/dashboard_screen/single_badge_dialog.dart';
-import 'package:fluuky/presentation/widgets/dashed_circle.dart';
 
 class BadgeWidget extends StatelessWidget {
   final String imagePath;

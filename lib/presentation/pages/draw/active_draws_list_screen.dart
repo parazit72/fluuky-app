@@ -13,7 +13,7 @@ class ActiveDrawsListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BackgroundScaffold(
-      appBar: const AppBarFluuky(),
+      appBar: AppBarFluuky(),
       bottomNavigationBar: CustomNavBar(),
       body: SingleChildScrollView(
         child: Column(

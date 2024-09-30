@@ -134,14 +134,14 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
             CustomDropdownButton(
               itemsKey: 'genders',
               onChanged: (value) => _selectedGender = value,
-              hintText: t.translate('select'),
+              hintText: t.translate('Select'),
             ),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(t.translate('processing_data'))),
+                    SnackBar(content: Text(t.translate('Processing Data'))),
                   );
                   // Get.offAll(() => VerificationScreen(), arguments: {'email': _authController.emailController.text});
 

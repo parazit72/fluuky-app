@@ -15,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return BackgroundScaffold(
-      appBar: const AppBarFluuky(),
+      appBar: AppBarFluuky(showIcon: true),
       bottomNavigationBar: CustomNavBar(),
       body: SingleChildScrollView(
         child: Column(

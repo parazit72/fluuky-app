@@ -60,7 +60,7 @@ class _FluukyAppState extends State<FluukyApp> {
                   return supportedLocales.first;
                 },
                 theme: FluukyTheme.lightTheme.copyWith(
-                  textTheme: Theme.of(context).textTheme.apply(fontFamily: Get.locale?.languageCode == 'ar' ? 'Cairo' : 'Causten'),
+                  textTheme: FluukyTheme.lightTheme.textTheme.apply(fontFamily: Get.locale?.languageCode == 'ar' ? 'Cairo' : 'Causten'),
                 ),
               );
             }),

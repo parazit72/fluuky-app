@@ -36,7 +36,7 @@ class GreenSubscriberWidget extends StatelessWidget {
                 )
               ],
             ),
-            Text('${t.translate('memberSince')} ${JHijri(fDate: DateTime.now())}', style: const TextStyle(color: Color(0XFF8C8C8C), fontSize: 12)),
+            Text('${t.translate('Member since')} ${JHijri(fDate: DateTime.now())}', style: const TextStyle(color: Color(0XFF8C8C8C), fontSize: 12)),
           ],
         ));
   }

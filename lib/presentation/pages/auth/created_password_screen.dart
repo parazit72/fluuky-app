@@ -43,8 +43,8 @@ class CreatedPasswordScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(t.translate('create_a_password'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
-                SizedBox(height: 5.h),
+                Text(t.translate('Create a Password'), style: FluukyTheme.lightTheme.textTheme.labelMedium),
+                SizedBox(height: 4.h),
                 Text(t.translate('lastStep'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                 SizedBox(height: 24.h),
                 PasswordTextFieldWidget(
@@ -53,7 +53,7 @@ class CreatedPasswordScreen extends StatelessWidget {
                   // focusNode: _passwordFocusNode,
                   validator: (val) {
                     if (val != null && val.length < 6) {
-                      return t.translate('password_too_short');
+                      return t.translate('Password too short.');
                     }
                     return null;
                   },
@@ -68,14 +68,17 @@ class CreatedPasswordScreen extends StatelessWidget {
                   labelText: t.translate('Confirm Password'),
                   hintText: t.translate('password'),
                   // focusNode: _passwordFocusNode,
-                  validator: (val) => (val != _authController.passwordController.text) ? t.translate('passwords_do_not_match') : null,
+                  validator: (val) => (val != _authController.passwordController.text) ? t.translate('Passwords do not match.') : null,
                 ),
                 Padding(
                   padding: EdgeInsets.all(16.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(t.translate('Password must include:'), style: FluukyTheme.lightTheme.textTheme.labelMedium),
+                      Text(
+                        t.translate('Password must include:'),
+                        style: FluukyTheme.lightTheme.textTheme.bodySmall!.copyWith(fontWeight: FontWeight.w400),
+                      ),
                       SizedBox(height: 8.h),
                       _buildPasswordRule(context, t.translate('min_8_characters'), _authController.isAtLeast8Characters),
                       _buildPasswordRule(context, t.translate('uppercase_character'), _authController.hasUpperCase),
@@ -87,6 +90,10 @@ class CreatedPasswordScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 8.h),
                 ElevatedButton(
+                  style: ButtonStyle(
+                    minimumSize: WidgetStatePropertyAll(Size(335.w, 48.h)),
+                    textStyle: WidgetStateProperty.all(TextStyle(fontSize: 16.w, fontWeight: FontWeight.w400, fontFamily: 'Causten')),
+                  ),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       // Optionally, check other conditions here if needed
@@ -107,13 +114,14 @@ class CreatedPasswordScreen extends StatelessWidget {
                       Get.snackbar('Validation Error', t.translate('Please fill out all fields correctly.'));
                     }
                   },
-                  child: Text(t.translate('activate_account')),
+                  child: Text(t.translate('Activate Account')),
                 ),
                 SizedBox(height: 24.h),
                 Center(
                     child: Column(
                   children: [
-                    Text(t.translate('terms_and_conditions_msg'), style: FluukyTheme.lightTheme.textTheme.labelMedium),
+                    Text(t.translate('terms_and_conditions_msg'),
+                        style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(color: FluukyTheme.inputTextColor)),
                     Wrap(
                       // alignment: WrapAlignment.center,
                       crossAxisAlignment: WrapCrossAlignment.center,
@@ -121,17 +129,21 @@ class CreatedPasswordScreen extends StatelessWidget {
                         TextButton(
                           onPressed: () => Get.toNamed(termsAndCondition),
                           style: TextButton.styleFrom(
+                            textStyle: FluukyTheme.lightTheme.textTheme.bodyLarge!.copyWith(color: FluukyTheme.primaryColor),
                             minimumSize: const Size(0, 0),
-                            padding: const EdgeInsets.all(4),
+                            padding: const EdgeInsets.all(0),
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
-                          child: Text(t.translate('terms_conditions')),
+                          child: Text(t.translate('Terms & Conditions')),
                         ),
-                        Text(t.translate('_and_'), style: FluukyTheme.lightTheme.textTheme.labelMedium, textAlign: TextAlign.center),
+                        Text(t.translate('_and_'),
+                            style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(color: FluukyTheme.inputTextColor),
+                            textAlign: TextAlign.center),
                         TextButton(
                           onPressed: () => Get.toNamed(privacyPolicy),
                           style: TextButton.styleFrom(
-                            padding: const EdgeInsets.all(4),
+                            textStyle: FluukyTheme.lightTheme.textTheme.bodyLarge!.copyWith(color: FluukyTheme.primaryColor),
+                            padding: const EdgeInsets.all(0),
                             minimumSize: const Size(0, 0),
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
@@ -151,13 +163,15 @@ class CreatedPasswordScreen extends StatelessWidget {
 
   Widget _buildPasswordRule(BuildContext context, String ruleText, RxBool isValid) {
     return Obx(() => Wrap(
+          alignment: WrapAlignment.start,
           crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: 8,
           children: [
             Icon(
               isValid.value ? Icons.check : Icons.close,
-              color: isValid.value ? Theme.of(context).primaryColor : const Color(0XFFD30201),
+              color: isValid.value ? FluukyTheme.primaryColor : FluukyTheme.redColor,
+              size: 18.w,
             ),
+            SizedBox(width: 4.w),
             Text(ruleText, style: FluukyTheme.lightTheme.textTheme.displaySmall),
           ],
         ));

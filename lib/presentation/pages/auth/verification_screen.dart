@@ -35,7 +35,7 @@ class VerificationScreen extends GetView<AuthController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(t.translate('registerSteps'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                Text(t.translate('Register in 4 steps:'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                 Text(t.translate('step_2_4'), style: FluukyTheme.lightTheme.textTheme.displaySmall)
               ],
             ),
@@ -49,34 +49,38 @@ class VerificationScreen extends GetView<AuthController> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(t.translate('verificationCode'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
-            SizedBox(height: 5.h),
+            Text(t.translate('Verification Code'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+            SizedBox(height: 4.h),
             Text(t.translate('verificationCodeSent_1') + userEmailAddress + t.translate('verificationCodeSent_2'),
                 style: FluukyTheme.lightTheme.textTheme.displaySmall),
-            SizedBox(height: 24.h),
-            Form(
-              key: formKey,
-              child: Center(
-                child: Pinput(
-                  defaultPinTheme: FluukyTheme.defaultPinTheme,
-                  focusNode: _pinFocusNode,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
-                  // focusedPinTheme: Theme.of(context).focusedPinTheme,
-                  // submittedPinTheme: Theme.of(context).submittedPinTheme,
-                  validator: (s) {
-                    return s != '12345' ? null : 'Pin is incorrect';
-                  },
-                  length: 5,
-                  controller: controller.codeController,
-                  onCompleted: (pin) => controller.verifyCode,
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 24.h),
+              child: Form(
+                key: formKey,
+                child: Center(
+                  child: Pinput(
+                    length: 5,
+                    focusNode: _pinFocusNode,
+                    keyboardType: TextInputType.number,
+                    controller: controller.codeController,
+                    onCompleted: (pin) => controller.verifyCode,
+                    defaultPinTheme: FluukyTheme.defaultPinTheme,
+                    autofillHints: const [AutofillHints.oneTimeCode],
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    // focusedPinTheme: Theme.of(context).focusedPinTheme,
+                    // submittedPinTheme: Theme.of(context).submittedPinTheme,
+                    validator: (s) {
+                      return s != '12345' ? null : 'Pin is incorrect';
+                    },
+                  ),
                 ),
               ),
             ),
-            SizedBox(height: 24.h),
             ElevatedButton(
+              style: ButtonStyle(
+                minimumSize: WidgetStatePropertyAll(Size(335.w, 48.h)),
+                textStyle: WidgetStateProperty.all(TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, fontFamily: 'Causten')),
+              ),
               onPressed: () {
                 String? previousRoute = Get.previousRoute;
 
@@ -91,10 +95,20 @@ class VerificationScreen extends GetView<AuthController> {
               child: Text(t.translate('verify')),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 14.h, bottom: 10.h),
-              child: OutlinedButton(onPressed: () => _authController.resendCode(userEmailAddress), child: Text(t.translate('resend_code'))),
+              padding: EdgeInsets.only(top: 16.h, bottom: 24.h),
+              child: OutlinedButton(
+                onPressed: () => _authController.resendCode(userEmailAddress),
+                style: ButtonStyle(
+                  minimumSize: WidgetStatePropertyAll(Size(335.w, 48.h)),
+                  textStyle: WidgetStateProperty.all(TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, fontFamily: 'Causten')),
+                ),
+                child: Text(t.translate('resend_code')),
+              ),
             ),
-            TextButton(onPressed: () => Get.back(), child: Text(t.translate('Use different email address'))),
+            TextButton(
+                onPressed: () => Get.back(),
+                child: Text(t.translate('Use different email address'),
+                    style: TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, fontFamily: 'Causten'))),
           ],
         ),
       ),

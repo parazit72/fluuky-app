@@ -163,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                               focusNode: _passwordFocusNode,
                               validator: (value) {
                                 if (value != null && value.length < 6) {
-                                  return t.translate('password_too_short');
+                                  return t.translate('Password too short.');
                                 }
                                 return null;
                               },

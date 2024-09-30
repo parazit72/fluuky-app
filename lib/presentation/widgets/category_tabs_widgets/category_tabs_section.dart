@@ -8,7 +8,7 @@ import 'package:fluuky/presentation/widgets/category_tabs_widgets/category_tabs_
 import 'package:get/get.dart';
 
 class CategoryTabsSection extends StatelessWidget {
-  final ItemsController controller = Get.find();
+  final ItemsController itemsController = Get.find();
   // final RaffleController raffleController = Get.find();
   var t = AppLocalizations.of(Get.context!)!;
   @override
@@ -31,7 +31,7 @@ class CategoryTabsSection extends StatelessWidget {
             ),
           ),
           Obx(() {
-            if (controller.selectedItemType.value != ItemType.draws) {
+            if (itemsController.selectedItemType.value != ItemType.draws) {
               return Container();
             }
             {
@@ -78,7 +78,7 @@ class CategoryTabsSection extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Obx(() {
-                  if (controller.selectedItemType.value == ItemType.draws && controller.viewType.value != ViewType.grid) {
+                  if (itemsController.selectedItemType.value == ItemType.draws && itemsController.viewType.value != ViewType.grid) {
                     return buildCategoryButtons(context);
                   } else {
                     return const SizedBox.shrink();

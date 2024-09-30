@@ -31,48 +31,63 @@ class _SignupScreenState extends State<SignupScreen> {
     return BackgroundScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
         leading: null,
-        title: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(t.translate('registerSteps'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
-                Text(t.translate('step_1_4'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
-              ],
-            ),
-            const Divider(),
-          ],
-        ),
+        toolbarHeight: 90.h,
+        actions: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              SizedBox(
+                width: 375.w,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(t.translate('Register in 4 steps:'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                      Text(t.translate('step_1_4'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(width: 375.w, child: const Expanded(child: Divider(thickness: 1))),
+            ],
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(18.w),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
             Text(t.translate('create_account'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+            SizedBox(height: 4.h),
             Text(t.translate('readyToMakeImpact'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
-            SizedBox(height: 20.h),
+            SizedBox(height: 24.h),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 5.w),
+              padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 12.w),
               decoration: BoxDecoration(
                 boxShadow: [
-                  BoxShadow(color: FluukyTheme.secondaryColor),
-                  BoxShadow(color: FluukyTheme.fourthColor),
-                  const BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+                  BoxShadow(color: FluukyTheme.primaryShadowColor, spreadRadius: 0),
+                  BoxShadow(color: FluukyTheme.fourthColor, spreadRadius: -4.0, blurRadius: 8.6),
                 ],
                 color: FluukyTheme.secondaryColor.withOpacity(0.3),
                 borderRadius: BorderRadius.circular(16.w),
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.w),
-                    child: Icon(Icons.info_outline, size: 20.w, color: FluukyTheme.primaryColor),
+                    padding: EdgeInsets.only(top: 5.h),
+                    child: Icon(Icons.info_outline, size: 16.w, color: FluukyTheme.primaryColor),
                   ),
+                  SizedBox(width: 8.w),
                   SizedBox(
-                    width: 262.w,
+                    width: 287.w,
                     child: Text(
                       t.translate('pleaseEnterFirstNameMandatoryPrizesWinning'),
                       style: FluukyTheme.lightTheme.textTheme.labelSmall!.copyWith(color: FluukyTheme.primaryColor, height: 1.66),
@@ -81,7 +96,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 15),
+            SizedBox(height: 24.h),
             registerWidget()
           ]),
         ),
@@ -110,7 +125,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 return null;
               },
             ),
-            SizedBox(height: 20.h),
+            SizedBox(height: 24.h),
             InputTextFieldWidget(
               controller: _authController.lastNameController,
               labelText: t.translate('lastName'),
@@ -124,53 +139,53 @@ class _SignupScreenState extends State<SignupScreen> {
                 return null;
               },
             ),
-            SizedBox(height: 20.h),
+            SizedBox(height: 24.h),
             MobileInputWidget(
               controller: _authController.mobileController,
-              hintText: t.translate('enterPhoneNumber'),
+              showCode: true,
+              hintText: t.translate('Enter your mobile number'),
               labelText: t.translate('phoneNumber'),
             ),
-            SizedBox(height: 20.h),
+            SizedBox(height: 24.h),
             InputTextFieldWidget(
               controller: _authController.emailController,
               labelText: t.translate('email'),
               hintText: t.translate('Enter your Email Address'),
               keyboardType: TextInputType.emailAddress,
-              validator: (value) => EmailValidator.validate(value ?? '') ? null : "Please enter a valid email",
+              validator: (value) => EmailValidator.validate(value ?? '') ? null : t.translate("Please enter a valid email"),
             ),
-            SizedBox(height: 20.h),
+            SizedBox(height: 24.h),
             InputTextFieldWidget(
               controller: _authController.referralCodeController,
               labelText: t.translate('referral_code'),
               labelTextHelper: t.translate('(If Available)'),
               hintText: t.translate('enter_referral_code'),
             ),
-            SizedBox(height: 24.h),
-            ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  // ScaffoldMessenger.of(context).showSnackBar(
-                  //   SnackBar(content: Text(t.translate('processing_data'))),
-                  // );
-
-                  Get.toNamed(verification, arguments: {'email': _authController.emailController.text});
-
-                  // _authController.registerWithEmail();
-                }
-              },
-              child: Text(t.translate('continue')),
-            ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 14),
-              child: TextButton(
-                  onPressed: goSignIn,
-                  child: Wrap(
-                    children: [
-                      Text(t.translate('Already have an account?'), style: Theme.of(context).textTheme.bodyMedium),
-                      Text(t.translate('sign_in'), style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).primaryColor)),
-                    ],
-                  )),
-            )
+              padding: EdgeInsets.symmetric(vertical: 24.h),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  minimumSize: WidgetStatePropertyAll(Size(335.w, 48.h)),
+                  textStyle: WidgetStateProperty.all(TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, fontFamily: 'Causten')),
+                ),
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    Get.toNamed(verification, arguments: {'email': _authController.emailController.text});
+                    // _authController.registerWithEmail();
+                  }
+                },
+                child: Text(t.translate('continue')),
+              ),
+            ),
+            TextButton(
+                onPressed: goSignIn,
+                child: Wrap(
+                  children: [
+                    Text(t.translate('Already have an account?'), style: FluukyTheme.lightTheme.textTheme.labelMedium),
+                    SizedBox(width: 6.w),
+                    Text(t.translate('Sign in'), style: FluukyTheme.lightTheme.textTheme.labelLarge),
+                  ],
+                ))
           ],
         ),
       ),

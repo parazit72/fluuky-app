@@ -59,9 +59,9 @@ class TreesPlantedSection extends StatelessWidget {
                 ),
                 SizedBox(height: 16.h),
                 ElevatedButton(
-                  style: ButtonStyle(textStyle: WidgetStateProperty.all(TextStyle(fontSize: 12.w))),
+                  style: ButtonStyle(textStyle: WidgetStateProperty.all(TextStyle(fontSize: 12.w, fontWeight: FontWeight.w600))),
                   onPressed: () => Get.toNamed(greenSubscription),
-                  child: Text(t.translate('Enter Now!')),
+                  child: Text(t.translate('Plant Now!')),
                 ),
               ],
             ),

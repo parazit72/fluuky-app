@@ -54,13 +54,10 @@ Widget buildItemsList(RaffleController raffleController) {
   });
 }
 
-Widget _buildCategoryGridView<T>(
-  List<T> items,
-  Widget Function(T) itemBuilder,
-) {
+Widget _buildCategoryGridView<T>(List<T> items, Widget Function(T) itemBuilder) {
   RxList categories;
-  final ItemsController itemsController = Get.find();
-  RxList<CategoryEntity> raffleCategories = itemsController.raffleCategories;
+  final RaffleController raffleController = Get.find();
+  RxList<CategoryEntity> raffleCategories = raffleController.raffleCategories;
   final locale = Get.locale;
   categories = raffleCategories;
 

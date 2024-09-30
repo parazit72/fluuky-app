@@ -9,7 +9,11 @@ import 'package:get/get.dart';
 
 class AppBarFluuky extends StatelessWidget implements PreferredSizeWidget {
   final bool showIcon;
-  const AppBarFluuky({super.key, this.showIcon = false});
+  AppBarFluuky({super.key, this.showIcon = false});
+
+  final AuthController _authController = Get.find<AuthController>();
+  bool userIsLoggedIn = false;
+
   void goNotification() {
     Get.to(() => const NotificationScreen());
   }
@@ -36,7 +40,13 @@ class AppBarFluuky extends StatelessWidget implements PreferredSizeWidget {
               children: [
                 IconButton(
                   icon: Icon(Icons.notifications_outlined, size: 20.w),
-                  onPressed: () => goNotification(),
+                  onPressed: () {
+                    userIsLoggedIn = _authController.checkAuthAndShowSheet();
+                    if (!userIsLoggedIn) {
+                      return;
+                    }
+                    goNotification();
+                  },
                 ),
                 Positioned(
                   right: 11.w,
@@ -66,7 +76,13 @@ class AppBarFluuky extends StatelessWidget implements PreferredSizeWidget {
             ),
             IconButton(
               icon: SvgPicture.asset('assets/images/basket.svg', height: 20.w),
-              onPressed: () => goBasket(),
+              onPressed: () {
+                userIsLoggedIn = _authController.checkAuthAndShowSheet();
+                if (!userIsLoggedIn) {
+                  return;
+                }
+                goBasket();
+              },
             ),
           ],
         )
