@@ -51,7 +51,7 @@ class _CarouselSectionWidgetState extends State<CarouselSectionWidget> {
                       Skeletonizer(
                         enabled: raffle.image.isEmpty,
                         child: CachedNetworkImage(
-                          width: MediaQuery.of(context).size.width,
+                          width: 375.w,
                           height: 260.h,
                           fit: BoxFit.cover,
                           imageUrl: raffle.mainImage,
@@ -80,10 +80,11 @@ class _CarouselSectionWidgetState extends State<CarouselSectionWidget> {
                 .toList(),
             controller: _carouselSliderController,
             options: CarouselOptions(
-                height: 260.h,
-                viewportFraction: 1,
-                enlargeCenterPage: false,
-                onPageChanged: (index, reason) => setState(() => _currentIndex = index)),
+              height: 260.h,
+              viewportFraction: 1,
+              enlargeCenterPage: false,
+              onPageChanged: (index, reason) => setState(() => _currentIndex = index),
+            ),
           ),
           Positioned(
             left: 20.w,

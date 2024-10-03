@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/domain/entities/category_entity.dart';
@@ -35,8 +36,9 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 16.h),
             const UpdateYourInterestBoxWidget(),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             buildItemsList(raffleController),
           ],
         ),
@@ -49,7 +51,7 @@ Widget buildItemsList(RaffleController raffleController) {
   return Obx(() {
     return _buildCategoryGridView<RaffleEntity>(
       raffleController.raffles,
-      (raffle) => RaffleCardWidget(raffle: raffle, viewType: ViewType.grid),
+      (raffle) => RaffleCardWidget(raffle: raffle, viewType: ViewType.list),
     );
   });
 }
@@ -62,29 +64,98 @@ Widget _buildCategoryGridView<T>(List<T> items, Widget Function(T) itemBuilder) 
   categories = raffleCategories;
 
   return Column(
-    // Ensure this column can be part of a scrollable parent
-    children: categories.map((category) {
-      final categoryItems = items.where((item) => (item as dynamic).categoryId == category.id).toList();
-
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: Text(category.name, style: Theme.of(Get.context!).textTheme.titleMedium),
+    children: [
+      SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            SizedBox(width: 20.w),
+            tagBtnWidget(
+              raffleController: raffleController,
+              categoryEntity: CategoryEntity(id: -1, name: 'All', slug: '', status: 1, description: '', iconPath: ''),
+              isAllButton: true,
+            ),
+            SizedBox(width: 8.w),
+            // Other categories
+            ...raffleCategories.map(
+              (item) => Wrap(
+                children: [
+                  tagBtnWidget(raffleController: raffleController, categoryEntity: item),
+                  SizedBox(width: 8.w),
+                ],
+              ),
+            ),
+            SizedBox(width: 20.w),
+          ],
+        ),
+      ),
+      SizedBox(height: 24.h),
+      ...categories.map((category) {
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              if (locale?.languageCode != 'ar') SizedBox(width: 20.w),
+              if (raffleController.selectedCategory.value == -1)
+                ...raffleController.raffles.map((item) => itemBuilder(item as T))
+              else
+                ...raffleController.filteredRaffles.map((item) => itemBuilder(item as T)),
+            ],
           ),
-          const SizedBox(height: 10),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(children: [
-              if (locale?.languageCode != 'ar') const SizedBox(width: 20),
-              ...categoryItems.map((item) => itemBuilder(item)),
-            ]),
-          ),
-        ],
-      );
-    }).toList(),
+        );
+      }),
+    ],
   );
+}
+
+class tagBtnWidget extends StatelessWidget {
+  const tagBtnWidget({
+    super.key,
+    required this.raffleController,
+    required this.categoryEntity,
+    this.isAllButton = false,
+  });
+
+  final RaffleController raffleController;
+  final CategoryEntity categoryEntity;
+  final bool isAllButton;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        if (isAllButton) {
+          raffleController.selectedCategory.value = -1; // Clear category to show all
+        } else {
+          raffleController.selectedCategory.value = categoryEntity.id;
+        }
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          boxShadow: (isAllButton && raffleController.selectedCategory.value == 0) || raffleController.selectedCategory.value == categoryEntity.id
+              ? [
+                  BoxShadow(color: FluukyTheme.secondaryColor),
+                  BoxShadow(color: FluukyTheme.fourthColor),
+                  const BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+                ]
+              : null,
+          color: (isAllButton && raffleController.selectedCategory.value == 0) || raffleController.selectedCategory.value == categoryEntity.id
+              ? FluukyTheme.primaryColor
+              : FluukyTheme.fourthColor,
+          borderRadius: BorderRadius.all(Radius.circular(8.w)),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
+        height: 32.w,
+        child: Text(
+          categoryEntity.name,
+          style: FluukyTheme.lightTheme.textTheme.labelMedium!.copyWith(
+            color: (isAllButton && raffleController.selectedCategory.value == 0) || raffleController.selectedCategory.value == categoryEntity.id
+                ? Colors.white
+                : FluukyTheme.primaryColor,
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class UpdateYourInterestBoxWidget extends StatelessWidget {
@@ -94,35 +165,30 @@ class UpdateYourInterestBoxWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var t = AppLocalizations.of(context)!;
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 18),
+      margin: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
+      padding: EdgeInsets.symmetric(vertical: 30.h, horizontal: 18.w),
       decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(color: FluukyTheme.secondaryColor),
-          BoxShadow(color: FluukyTheme.fourthColor),
-          const BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
-        ],
-        color: FluukyTheme.secondaryColor.withOpacity(0.3),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8.w),
+        image: const DecorationImage(image: AssetImage('assets/images/fluuky-green-subscription.png'), fit: BoxFit.fill),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: Text(t.translate('updateInterests'), style: Theme.of(context).textTheme.titleMedium),
+            padding: EdgeInsets.only(bottom: 10.h),
+            child: Text(t.translate('updateInterests'), style: FluukyTheme.lightTheme.textTheme.bodyLarge),
           ),
           Text(
             t.translate('updateInterests_msg'),
-            style: FluukyTheme.lightTheme.textTheme.displaySmall,
+            style: FluukyTheme.lightTheme.textTheme.bodySmall,
           ),
-          const SizedBox(height: 16.0),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 14),
-            child: OutlinedButton(
-              onPressed: () => Get.toNamed(recommendationsForm),
-              child: Text(t.translate('Update')),
+          SizedBox(height: 16.h),
+          OutlinedButton(
+            onPressed: () => Get.toNamed(recommendationsForm),
+            child: Text(
+              t.translate('Update'),
+              style: TextStyle(fontSize: 14.w, fontWeight: FontWeight.w600, color: FluukyTheme.primaryColor, fontFamily: 'Causten', height: 1.5),
             ),
           ),
         ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
@@ -26,14 +27,12 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
           children: <Widget>[
             ListTile(
               leading: const Icon(Icons.email),
-              title: Text(t.translate('send_an_email')),
-              onTap: () {
-                Navigator.pop(context);
-              },
+              title: Text(t.translate('Send an Email')),
+              onTap: () => Navigator.pop(context),
             ),
             ListTile(
               leading: const Icon(Icons.copy),
-              title: Text(t.translate('copy_email_address')),
+              title: Text(t.translate('Copy Email Address')),
               onTap: () {
                 Clipboard.setData(ClipboardData(text: email));
                 Navigator.pop(context);
@@ -55,22 +54,22 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
       appBar: AppBarSingleWidget(title: t.translate('helpCenter')),
       body: ListView(
         children: <Widget>[
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  t.translate('faq'),
+                  t.translate('Frequently Asked Questions'),
                   style: FluukyTheme.lightTheme.textTheme.titleLarge,
                 ),
-                const SizedBox(height: 8.0),
+                SizedBox(height: 8.h),
                 Text(
                   t.translate('faqDescription'),
                   style: FluukyTheme.lightTheme.textTheme.bodySmall,
                 ),
-                const SizedBox(height: 16.0),
+                SizedBox(height: 16.h),
               ],
             ),
           ),
@@ -104,7 +103,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
               sendEmailSheet();
             },
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 32.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -112,7 +111,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
                     t.translate('contactUs'),
                     style: FluukyTheme.lightTheme.textTheme.titleLarge,
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
                   Text(
                     t.translate('stillHaveQuestions'),
                     style: FluukyTheme.lightTheme.textTheme.bodySmall,
@@ -175,7 +174,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
                         children: [
                           const Icon(Icons.email, color: Colors.black),
                           const SizedBox(width: 8),
-                          Text(t.translate('send_an_email'), style: const TextStyle(color: Colors.black)),
+                          Text(t.translate('Send an Email'), style: const TextStyle(color: Colors.black)),
                         ],
                       ),
                     ),
@@ -226,11 +225,11 @@ class CustomFAQTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(bottom: item.isExpanded ? 16.0 : 0),
+      padding: EdgeInsets.only(bottom: item.isExpanded ? 16.w : 0),
       decoration: item.isExpanded
           ? const BoxDecoration(
               boxShadow: [
-                BoxShadow(color: Colors.black26),
+                BoxShadow(color: Colors.black38),
                 BoxShadow(color: Color.fromARGB(192, 247, 247, 247), spreadRadius: -4.0, blurRadius: 8.6),
               ],
               color: Color(0XAAF7F7F7),
@@ -240,18 +239,19 @@ class CustomFAQTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ListTile(
-            title:
-                Text(item.headerValue, style: Theme.of(context).textTheme.titleMedium!.copyWith(color: item.isExpanded ? Colors.black : Colors.grey)),
+            title: Text(item.headerValue,
+                style: FluukyTheme.lightTheme.textTheme.bodyLarge!
+                    .copyWith(color: item.isExpanded ? FluukyTheme.inputTextColor : FluukyTheme.thirdColor)),
             trailing: Icon(item.isExpanded ? Icons.expand_less : Icons.expand_more),
             onTap: onTap,
           ),
           if (item.isExpanded)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: item.expandedValue.map((point) {
-                  return Text(point, style: const TextStyle(fontSize: 16));
+                  return Text(point, style: FluukyTheme.lightTheme.textTheme.labelSmall);
                 }).toList(),
               ),
             ),
@@ -304,7 +304,7 @@ List<FaqItem> generateItems(int numberOfItems) {
       headerValue: 'How do I subscribe?',
       expandedValue: [
         '• Log in to your Fluuky account.',
-        '• Navigate to the "Fluuky Green Subscription" section.',
+        '• Navigate to the "FLUUKY Green Subscription" section.',
         '• Calculate your carbon footprint and discover your compensation needs.',
         '• Set up your payment method for automatic billing.',
         '• Confirm your subscription.',

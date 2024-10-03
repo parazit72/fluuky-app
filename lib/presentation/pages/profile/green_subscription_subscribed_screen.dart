@@ -25,7 +25,7 @@ class _GreenSubscriptionSubscribedScreenState extends State<GreenSubscriptionSub
   Widget build(BuildContext context) {
     var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
-      appBar: AppBarSingleWidget(title: t.translate('green_subscription')),
+      appBar: AppBarSingleWidget(title: t.translate('Green Subscription')),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -201,7 +201,7 @@ class _GreenSubscriptionSubscribedScreenState extends State<GreenSubscriptionSub
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 24),
-        Text(t.translate('faq'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+        Text(t.translate('Frequently Asked Questions'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
         const SizedBox(height: 6),
         Text(
           t.translate('find_all_the_information_you_need'),

@@ -57,7 +57,7 @@ class _SubscribingProcessScreenState extends State<SubscribingProcessScreen> wit
   Widget build(BuildContext context) {
     var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
-      appBar: AppBarSingleWidget(title: t.translate('green_subscription')),
+      appBar: AppBarSingleWidget(title: t.translate('Green Subscription')),
       body: SingleChildScrollView(
         child: Column(
           children: [

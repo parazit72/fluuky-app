@@ -31,9 +31,7 @@ class HeaderStoriesAvatarWidget extends StatelessWidget {
               return Padding(
                 padding: EdgeInsets.only(left: 10.w, right: 10.w),
                 child: InkWell(
-                  onTap: () {
-                    Get.toNamed(story, arguments: storyitem);
-                  },
+                  onTap: () => Get.toNamed(story, arguments: storyitem),
                   child: CircleAvatar(
                     radius: 24.w,
                     backgroundColor: isWatched ? FluukyTheme.fifthColor : FluukyTheme.phosphorColor,

@@ -64,9 +64,9 @@ class RaffleCardWidget extends StatelessWidget {
         Stack(
           children: [
             Container(
-              width: 375.w * (isGridView ? 0.66 : 1),
+              width: 335.w,
               // height: MediaQuery.of(context).size.height * 0.6,
-              margin: EdgeInsets.only(right: isGridView ? 12.w : 0, bottom: 20.h),
+              margin: EdgeInsets.only(right: 0, bottom: 20.h),
               // padding: const EdgeInsets.only(bottom: 20),
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(14)),
@@ -80,8 +80,8 @@ class RaffleCardWidget extends StatelessWidget {
                         borderRadius: BorderRadius.only(topLeft: Radius.circular(8.w), topRight: const Radius.circular(8)),
                         child: raffle.image.isNotEmpty
                             ? CachedNetworkImage(
-                                width: 375.w,
-                                height: 812.h * (isGridView ? 0.2 : 0.3),
+                                width: 335.w,
+                                height: 162.h,
                                 fit: BoxFit.cover,
                                 imageUrl: raffle.mainImage,
                                 fadeInCurve: Curves.easeIn,
@@ -91,14 +91,14 @@ class RaffleCardWidget extends StatelessWidget {
                                 placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                               )
                             : Container(
-                                height: 812.h * 0.2,
+                                height: 162.h,
                                 width: 375.w,
                                 color: FluukyTheme.secondaryColor,
                               )),
                   ),
                   SizedBox(height: 10.h),
                   Container(
-                    width: 375.w * (isGridView ? 0.66 : 1),
+                    width: 335.w,
                     padding: EdgeInsets.all(20.h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,37 +116,17 @@ class RaffleCardWidget extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(t.translate('Price per ticket:'),
-                                style: TextStyle(
-                                  fontSize: 14.w,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
-                                  fontFamily: 'Causten',
-                                  height: 1.5,
-                                )),
-                            Text('\$${raffle.price.toStringAsFixed(2)}',
-                                style: TextStyle(
-                                  fontSize: 14.w,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
-                                  fontFamily: 'Causten',
-                                  height: 1.5,
-                                )),
+                            Text(t.translate('Price per ticket:'), style: FluukyTheme.lightTheme.textTheme.bodyLarge),
+                            Text('\$${raffle.price.toStringAsFixed(2)}', style: FluukyTheme.lightTheme.textTheme.bodyLarge),
                           ],
                         ),
                         SizedBox(height: 16.h),
                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                           SizedBox(
-                              width: 345.w * 0.5,
+                              width: 140.w,
                               child: Text(
                                 "How many tickets do you wish to purchase?",
-                                style: TextStyle(
-                                  fontSize: 14.w,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black,
-                                  fontFamily: 'Causten',
-                                  height: 1.5,
-                                ),
+                                style: FluukyTheme.lightTheme.textTheme.bodySmall,
                               )),
                           Wrap(
                             crossAxisAlignment: WrapCrossAlignment.center,
@@ -180,17 +160,13 @@ class RaffleCardWidget extends StatelessWidget {
                                 children: [
                                   SvgPicture.asset('assets/images/ticket-active.svg', width: 18.w),
                                   SizedBox(width: 4.w),
-                                  Text(t.translate('Tickets sold:'),
-                                      style: TextStyle(
-                                        fontSize: 14.w,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black,
-                                        fontFamily: 'Causten',
-                                        height: 1.5,
-                                      )),
+                                  Text(
+                                    t.translate('Tickets sold:'),
+                                    style: FluukyTheme.lightTheme.textTheme.bodySmall,
+                                  ),
                                 ],
                               ),
-                              Text(formatNumber('${raffle.capacity}/2000'), style: FluukyTheme.lightTheme.textTheme.bodyMedium),
+                              Text(formatNumber('${raffle.capacity}/2000'), style: FluukyTheme.lightTheme.textTheme.bodyLarge),
                             ],
                           ),
                         ),
@@ -205,16 +181,12 @@ class RaffleCardWidget extends StatelessWidget {
                                 SvgPicture.asset('assets/images/tree-green.svg',
                                     height: 18.h, colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn)),
                                 SizedBox(width: 4.w),
-                                Text(t.translate('each_ticket_plants'),
-                                    style: TextStyle(
-                                      fontSize: 14.w,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black,
-                                      fontFamily: 'Causten',
-                                      height: 1.5,
-                                    )),
+                                Text(
+                                  t.translate('each_ticket_plants'),
+                                  style: FluukyTheme.lightTheme.textTheme.bodySmall,
+                                ),
                               ]),
-                              Text(formatNumber('10 ${t.translate('Trees')}'), style: FluukyTheme.lightTheme.textTheme.bodyMedium),
+                              Text(formatNumber('10 ${t.translate('Trees')}'), style: FluukyTheme.lightTheme.textTheme.bodyLarge),
                             ],
                           ),
                         ),
@@ -228,7 +200,7 @@ class RaffleCardWidget extends StatelessWidget {
                               Expanded(
                                 child: Row(
                                   children: [
-                                    Icon(Icons.info_outline, size: 18.w, color: Theme.of(context).primaryColor),
+                                    Icon(Icons.info_outline, size: 18.w, color: FluukyTheme.primaryColor),
                                     const SizedBox(width: 2),
                                     GestureDetector(
                                       onTap: () {
@@ -239,16 +211,17 @@ class RaffleCardWidget extends StatelessWidget {
                                       },
                                       child: Text(
                                         t.translate('tree_planting_count'),
-                                        style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(
-                                            decoration: TextDecoration.underline,
-                                            color: FluukyTheme.primaryColor,
-                                            decorationColor: FluukyTheme.primaryColor),
+                                        style: FluukyTheme.lightTheme.textTheme.bodyLarge!.copyWith(
+                                          color: FluukyTheme.primaryColor,
+                                          decoration: TextDecoration.underline,
+                                          decorationColor: FluukyTheme.primaryColor,
+                                        ),
                                       ),
                                     )
                                   ],
                                 ),
                               ),
-                              Text(formatNumber('10 ${t.translate('Trees')}'), style: FluukyTheme.lightTheme.textTheme.bodyMedium),
+                              Text(formatNumber('10 ${t.translate('Trees')}'), style: FluukyTheme.lightTheme.textTheme.bodyLarge),
                             ],
                           ),
                         ),
@@ -273,7 +246,7 @@ class RaffleCardWidget extends StatelessWidget {
                                       },
                                       child: Text(
                                         t.translate('bundleDiscount'),
-                                        style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(
+                                        style: FluukyTheme.lightTheme.textTheme.bodyLarge!.copyWith(
                                             decoration: TextDecoration.underline,
                                             color: FluukyTheme.primaryColor,
                                             decorationColor: FluukyTheme.primaryColor),
@@ -282,7 +255,7 @@ class RaffleCardWidget extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              Text(formatNumber('\$9.99'), style: FluukyTheme.lightTheme.textTheme.bodyMedium),
+                              Text(formatNumber('\$9.99'), style: FluukyTheme.lightTheme.textTheme.bodyLarge),
                             ],
                           ),
                         ),
@@ -300,8 +273,7 @@ class RaffleCardWidget extends StatelessWidget {
                             Expanded(
                               child: ElevatedButton(
                                 style: ButtonStyle(
-                                    textStyle: WidgetStateProperty.all(TextStyle(
-                                        fontSize: 14.w, fontWeight: FontWeight.w600, color: Colors.black, fontFamily: 'Causten', height: 1.5)),
+                                    textStyle: WidgetStateProperty.all(FluukyTheme.lightTheme.textTheme.bodyLarge),
                                     minimumSize: WidgetStateProperty.all<Size>(Size(double.infinity, 40.h))),
                                 onPressed: () {
                                   userIsLoggedIn = authController.checkAuthAndShowSheet();
@@ -310,9 +282,7 @@ class RaffleCardWidget extends StatelessWidget {
                                   }
                                   Get.toNamed(draw, arguments: raffle);
                                 },
-                                child: Text(
-                                  t.translate('Add to Cart'),
-                                ),
+                                child: Text(t.translate('Add to Cart')),
                               ),
                             ),
                             SizedBox(width: 16.w),

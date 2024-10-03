@@ -25,7 +25,7 @@ class SubscriptionSection extends StatelessWidget {
             children: [
               Image.asset('assets/images/logo-green.png', height: 14.h),
               SizedBox(width: 4.w),
-              Text(t.translate('Fluuky Green Subscription'),
+              Text(t.translate('FLUUKY Green Subscription'),
                   style: FluukyTheme.lightTheme.textTheme.bodyLarge!.copyWith(color: FluukyTheme.primaryColor)),
             ],
           ),

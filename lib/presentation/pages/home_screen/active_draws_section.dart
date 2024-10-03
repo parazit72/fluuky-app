@@ -57,9 +57,7 @@ Widget buildUserActiveDrawsList() {
 }
 
 class EmptyActiveDraws extends StatelessWidget {
-  const EmptyActiveDraws({
-    super.key,
-  });
+  const EmptyActiveDraws({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +87,7 @@ class EmptyActiveDraws extends StatelessWidget {
           SizedBox(height: 24.h),
           ElevatedButton(
               style: ButtonStyle(textStyle: WidgetStateProperty.all(TextStyle(fontSize: 12.w, fontWeight: FontWeight.w600))),
-              onPressed: () {},
+              onPressed: () => Get.toNamed(drawsList),
               child: Text(t.translate('Enter Now!'))),
         ],
       ),

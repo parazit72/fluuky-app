@@ -38,6 +38,7 @@ const String recommendations = '/RecommendationsScreen';
 const String recommendationsCreated = '/RecommendationsCreatedScreen';
 const String recommendationsForm = '/RecommendationsFormScreen';
 const String wishlist = '/WishlistScreen';
+const String winnerScreen = '/WinnerScreen';
 const String greenSubscription = '/GreenSubscriptionScreen';
 const String questionPage = '/QuestionPage';
 const String estimatedCarbonFootprintScreen = '/EstimatedCarbonFootprintScreen';

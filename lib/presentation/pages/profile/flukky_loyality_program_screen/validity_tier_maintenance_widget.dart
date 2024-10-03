@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 
 class ValidityTierMaintenanceWidget extends StatelessWidget {
@@ -7,22 +9,22 @@ class ValidityTierMaintenanceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var t = AppLocalizations.of(context)!;
     return Container(
-        padding: const EdgeInsets.all(16),
-        decoration: const BoxDecoration(
-          image: DecorationImage(image: AssetImage("assets/images/paper-box.png"), fit: BoxFit.fill),
-          borderRadius: BorderRadius.all(Radius.circular(8)),
+        padding: EdgeInsets.all(16.w),
+        decoration: BoxDecoration(
+          image: const DecorationImage(image: AssetImage("assets/images/paper-box.png"), fit: BoxFit.fill),
+          borderRadius: BorderRadius.all(Radius.circular(8.w)),
           boxShadow: [
-            BoxShadow(color: Color(0xFFDBDBDB)),
-            BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+            BoxShadow(color: FluukyTheme.secondaryColor),
+            const BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
           ],
         ),
-        width: MediaQuery.of(context).size.width,
+        width: 375.w,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(t.translate('validityAndTierMaintenance'), style: Theme.of(context).textTheme.titleMedium),
-            const SizedBox(height: 16),
-            Text(t.translate('rollingPeriod')),
+            Text(t.translate('Validity and Tier Maintenance'), style: FluukyTheme.lightTheme.textTheme.titleMedium),
+            SizedBox(height: 16.h),
+            Text(t.translate('rollingPeriod'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
           ],
         ));
   }

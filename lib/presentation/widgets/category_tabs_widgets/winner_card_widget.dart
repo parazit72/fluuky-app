@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/domain/entities/winner_entity.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
@@ -13,27 +14,32 @@ class WinnerCardWidget extends StatelessWidget {
     var t = AppLocalizations.of(context)!;
 
     return Container(
-      padding: const EdgeInsets.only(bottom: 20, right: 32),
+      padding: EdgeInsets.only(bottom: 20.h, right: 32.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           CircleAvatar(
-            backgroundColor: Colors.transparent,
-            radius: MediaQuery.of(context).size.width * 0.17,
-            backgroundImage: const AssetImage('assets/images/avatar.jpg'),
+            backgroundColor: FluukyTheme.secondaryColor,
+            radius: 70.w,
+            // backgroundImage: const AssetImage('assets/images/avatar.jpg'),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
+          Text(t.translate('WINNER OF THE'), style: FluukyTheme.lightTheme.textTheme.labelSmall!.copyWith(color: FluukyTheme.primaryColor)),
+          Text('Rolex Submariner', style: Theme.of(context).textTheme.bodyMedium),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 3),
-            child:
-                Text(t.translate('winner_of_the'), style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(color: FluukyTheme.primaryColor)),
+            child: Text(winner.name, style: FluukyTheme.lightTheme.textTheme.labelSmall),
           ),
-          Text('Rolex Submariner', style: Theme.of(context).textTheme.titleSmall),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 3),
-            child: Text(winner.name, style: FluukyTheme.lightTheme.textTheme.displaySmall),
+          Text(
+            '20 December 2023',
+            style: TextStyle(
+              fontSize: 12.w,
+              fontWeight: FontWeight.w400,
+              color: FluukyTheme.thirdColor,
+              fontFamily: 'Causten',
+              height: 1.5,
+            ),
           ),
-          Text('20 December 2023', style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(color: FluukyTheme.secondaryColor)),
         ],
       ),
     );

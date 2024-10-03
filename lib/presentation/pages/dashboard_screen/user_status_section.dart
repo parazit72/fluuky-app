@@ -36,7 +36,10 @@ class UserStatusWidget extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(8.w)),
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text(t.translate('Your Status'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+              Divider(height: 20.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

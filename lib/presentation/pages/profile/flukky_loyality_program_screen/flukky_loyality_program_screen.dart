@@ -16,13 +16,15 @@ class FlukkyLoyalityProgramScreen extends StatelessWidget {
     var t = AppLocalizations.of(context)!;
 
     return BackgroundScaffold(
-      appBar: AppBarSingleWidget(title: t.translate('flukkyLoyaltyProgram')),
+      appBar: AppBarSingleWidget(title: t.translate('FLUUKY Loyalty Program')),
       body: Padding(
         padding: const EdgeInsets.all(32),
         child: ListView(
           children: [
-            const SizedBox(height: 32),
-            Text(t.translate('unlockRewardsWithOurTieredLoyaltyProgram'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
+            Text(
+              t.translate('unlockRewardsWithOurTieredLoyaltyProgram'),
+              style: FluukyTheme.lightTheme.textTheme.displaySmall,
+            ),
             const SizedBox(height: 24),
             const SilverTierWidget(),
             const SizedBox(height: 32),

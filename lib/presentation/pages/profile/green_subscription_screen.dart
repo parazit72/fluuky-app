@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
@@ -23,7 +24,7 @@ class _GreenSubscriptionScreenState extends State<GreenSubscriptionScreen> {
   Widget build(BuildContext context) {
     var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
-      appBar: AppBarSingleWidget(title: t.translate('green_subscription')),
+      appBar: AppBarSingleWidget(title: t.translate('Green Subscription')),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -32,48 +33,55 @@ class _GreenSubscriptionScreenState extends State<GreenSubscriptionScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 32),
+                  SizedBox(height: 32.h),
                   Text(t.translate('fluuky_green_subscription'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
-                  const SizedBox(height: 6),
-                  Text(t.translate('conserving_lands'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
-                  const SizedBox(height: 32),
-                  Text(t.translate("when_you_subscribe_we_support_your_journey"), style: FluukyTheme.lightTheme.textTheme.displaySmall),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 4.h),
+                  Text(t.translate('conserving_lands'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                  SizedBox(height: 24.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      buildColumnCard('assets/images/foot.svg', t.translate('calculate_carbon_footprint')),
-                      buildColumnCard('assets/images/navigator.svg', t.translate('discover_compensation_needs')),
-                      buildColumnCard('assets/images/globe.svg', t.translate('make_a_difference')),
+                      buildColumnCard('assets/images/foot.svg', t.translate('calculate_carbon_footprint'), 90.w),
+                      buildColumnCard('assets/images/navigator.svg', t.translate('discover_compensation_needs'), 112.w),
+                      buildColumnCard('assets/images/globe.svg', t.translate('make_a_difference'), 90.w),
                     ],
                   ),
-                  const SizedBox(height: 24),
-                  ElevatedButton(onPressed: () => Get.toNamed(subscribingProcessScreen), child: Text(t.translate('Subscribe'))),
-                  TextButton(onPressed: () => Get.toNamed(termsAndCondition), child: Text(t.translate('terms_and_conditions'))),
-                  const Divider(height: 48),
-                  Text(t.translate('grow_the_future'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 24.h),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                        minimumSize: WidgetStatePropertyAll(Size(335.w, 48.h)),
+                        textStyle: WidgetStateProperty.all(TextStyle(fontSize: 14.w, fontWeight: FontWeight.w600, height: 1.5))),
+                    onPressed: () => Get.toNamed(subscribingProcessScreen),
+                    child: Text(t.translate('Subscribe')),
+                  ),
+                  TextButton(
+                      style: ButtonStyle(textStyle: WidgetStateProperty.all(TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, height: 1.5))),
+                      onPressed: () => Get.toNamed(termsAndCondition),
+                      child: Text(t.translate('terms_and_conditions'))),
+                  Divider(height: 48.h),
+                  Text(t.translate('Grow the Future'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+                  SizedBox(height: 4.h),
                   Text(t.translate('fluuky_green_message'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
                   InkWell(
                       onTap: () => showDialog(
                             context: context,
                             builder: (BuildContext context) => const CarbonFootprintScreen(imagePath: 'assets/images/carbon-footprint.svg'),
                           ),
                       child: buildCard('assets/images/leaf.svg', t.translate('carbon_calculator'), t.translate('carbon_calculator_message'))),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
                   buildCard('assets/images/tree-green.svg', t.translate('carbon_compensation'), t.translate('carbon_compensation_message')),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
                   buildCard('assets/images/trees.svg', t.translate('double_the_impact'), t.translate('double_the_impact_message')),
-                  const Divider(height: 48),
-                  Text(t.translate('faq'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
-                  const SizedBox(height: 6),
-                  Text(t.translate('find_all_the_information_you_need'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
+                  Divider(height: 48.h),
+                  Text(t.translate('Frequently Asked Questions'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+                  SizedBox(height: 6.h),
+                  Text(t.translate('find_all_the_information_you_need'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                 ],
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h),
             ..._data.asMap().entries.map((entry) {
               final index = entry.key;
               final item = entry.value;
@@ -99,24 +107,24 @@ class _GreenSubscriptionScreenState extends State<GreenSubscriptionScreen> {
                 belowItemExpanded: belowItemExpanded, // Pass the below item expanded state
               );
             }),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h),
           ],
         ),
       ),
     );
   }
 
-  Widget buildColumnCard(String svgAsset, String textKey) {
+  Widget buildColumnCard(String svgAsset, String textKey, double width) {
     return SizedBox(
-      width: (MediaQuery.of(context).size.width - 40) / 3,
+      width: width.w,
       child: Column(
         children: [
-          SvgPicture.asset(svgAsset),
-          const SizedBox(height: 16),
+          SvgPicture.asset(svgAsset, width: 48.w),
+          SizedBox(height: 16.h),
           Text(
             textKey,
             textAlign: TextAlign.center,
-            style: FluukyTheme.lightTheme.textTheme.displaySmall,
+            style: FluukyTheme.lightTheme.textTheme.labelSmall,
           ),
         ],
       ),
@@ -125,15 +133,15 @@ class _GreenSubscriptionScreenState extends State<GreenSubscriptionScreen> {
 
   Widget buildCard(String svgAsset, String titleKey, String messageKey) {
     return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24),
+      width: 335.w,
+      padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 24.w),
       decoration: BoxDecoration(
-        boxShadow: const [
-          BoxShadow(color: Color(0xFFDBDBDB)),
-          BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+        boxShadow: [
+          BoxShadow(color: FluukyTheme.secondaryColor),
+          const BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
         ],
-        color: Theme.of(context).primaryColor.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(16),
+        color: FluukyTheme.primaryColor.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(16.w),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min, // This will make the column take the minimum height needed
@@ -144,22 +152,22 @@ class _GreenSubscriptionScreenState extends State<GreenSubscriptionScreen> {
             children: [
               SvgPicture.asset(
                 svgAsset,
-                width: 24,
+                width: 24.w,
                 colorFilter: ColorFilter.mode(FluukyTheme.primaryColor, BlendMode.srcIn),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8.w),
               Text(
                 titleKey,
-                style: FluukyTheme.lightTheme.textTheme.titleLarge!.copyWith(color: Theme.of(context).primaryColor),
+                style: FluukyTheme.lightTheme.textTheme.titleLarge!.copyWith(color: FluukyTheme.primaryColor),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           Text(
             messageKey,
-            style: FluukyTheme.lightTheme.textTheme.displaySmall,
+            style: FluukyTheme.lightTheme.textTheme.labelMedium,
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
         ],
       ),
     );

@@ -1,10 +1,7 @@
+import 'package:fluuky/presentation/widgets/category_tabs_widgets/winner_screen.dart';
+import 'package:get/get.dart';
 import 'package:fluuky/app/config/route_constants.dart';
-import 'package:fluuky/data/providers/network/dio_provider.dart';
-import 'package:fluuky/data/repositories/basket_repository_impl.dart';
-import 'package:fluuky/domain/repositories/basket_repository.dart';
-import 'package:fluuky/presentation/bindings/basket_bindings.dart';
 import 'package:fluuky/presentation/bindings/order_bindings.dart';
-import 'package:fluuky/presentation/controllers/basket_controller.dart';
 import 'package:fluuky/presentation/pages/auth/forgot_password_screen.dart';
 import 'package:fluuky/presentation/pages/auth/set_new_password_screen.dart';
 import 'package:fluuky/presentation/pages/draw/active_draws_list_screen.dart';
@@ -18,7 +15,6 @@ import 'package:fluuky/presentation/pages/profile/green_subscription_subscribed_
 import 'package:fluuky/presentation/pages/profile/question_page.dart';
 import 'package:fluuky/presentation/pages/profile/subscribing_process_screen.dart';
 import 'package:fluuky/presentation/pages/transaction_history_screen.dart';
-import 'package:get/get.dart';
 import 'package:fluuky/presentation/pages/auth/created_password_screen.dart';
 import 'package:fluuky/presentation/pages/auth/details_about_you_screen.dart';
 import 'package:fluuky/presentation/pages/basket/basket_screen.dart';
@@ -95,6 +91,10 @@ List<GetPage<dynamic>>? generateRoute = [
     page: () => const WishlistScreen(),
   ),
   GetPage(
+    name: winnerScreen,
+    page: () => const WinnerScreen(),
+  ),
+  GetPage(
     name: greenSubscription,
     page: () => const GreenSubscriptionScreen(),
   ),
@@ -112,7 +112,7 @@ List<GetPage<dynamic>>? generateRoute = [
   ),
   GetPage(
     name: packages,
-    page: () => const PackagesScreen(),
+    page: () => PackagesScreen(),
   ),
   GetPage(
     name: subscribingProcessScreen,

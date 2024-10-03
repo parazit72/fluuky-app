@@ -1,6 +1,5 @@
+import 'package:carousel_slider_plus/carousel_slider_plus.dart';
 import 'package:fluuky/domain/entities/announcement_entity.dart';
-import 'package:fluuky/domain/entities/category_entity.dart';
-import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/domain/entities/winner_category_entity.dart';
 import 'package:fluuky/domain/entities/winner_entity.dart';
 import 'package:get/get.dart';
@@ -15,7 +14,8 @@ class ItemsController extends GetxController {
   var winners = <WinnerEntity>[].obs;
   var winnerCategories = <WinnerCategoryEntity>[].obs;
   var announcements = <AnnouncementEntity>[].obs;
-
+  var winnerCarouselIndex = 0.obs;
+  CarouselSliderController carouselSliderController = CarouselSliderController();
   // Initialize with some mock data or fetch from the repository
   @override
   void onInit() {

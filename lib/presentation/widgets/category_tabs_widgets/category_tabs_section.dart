@@ -34,40 +34,39 @@ class CategoryTabsSection extends StatelessWidget {
             if (itemsController.selectedItemType.value != ItemType.draws) {
               return Container();
             }
-            {
-              return Container(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Divider(height: 40.h),
-                    Obx(() {
-                      final ItemsController controller = Get.find();
-                      final selectedTypeName = () {
-                        switch (controller.selectedItemType.value) {
-                          case ItemType.draws:
-                            return t.translate('Draws');
-                          case ItemType.winners:
-                            return t.translate('Winners');
-                          // case ItemType.announcements:
-                          //   return t.translate('Winning Announcements');
-                          default:
-                            return '';
-                        }
-                      }();
 
-                      return Text(
-                        selectedTypeName.capitalizeFirst!,
-                        style: FluukyTheme.lightTheme.textTheme.titleLarge,
-                        textAlign: TextAlign.start,
-                      );
-                    }),
-                    SizedBox(height: 24.h),
-                    // buildViewButtons(context),
-                  ],
-                ),
-              );
-            }
+            return Container(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Divider(height: 40.h),
+                  Obx(() {
+                    final ItemsController controller = Get.find();
+                    final selectedTypeName = () {
+                      switch (controller.selectedItemType.value) {
+                        case ItemType.draws:
+                          return t.translate('Draws');
+                        case ItemType.winners:
+                          return t.translate('Winners');
+                        // case ItemType.announcements:
+                        //   return t.translate('Winning Announcements');
+                        default:
+                          return '';
+                      }
+                    }();
+
+                    return Text(
+                      selectedTypeName.capitalizeFirst!,
+                      style: FluukyTheme.lightTheme.textTheme.titleLarge,
+                      textAlign: TextAlign.start,
+                    );
+                  }),
+                  SizedBox(height: 24.h),
+                  // buildViewButtons(context),
+                ],
+              ),
+            );
           }),
           SizedBox(
             width: 375.w,

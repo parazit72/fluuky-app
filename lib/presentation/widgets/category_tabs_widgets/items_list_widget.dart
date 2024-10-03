@@ -1,3 +1,4 @@
+import 'package:carousel_slider_plus/carousel_slider_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
@@ -11,6 +12,7 @@ import 'package:fluuky/presentation/widgets/category_tabs_widgets/announcement_c
 import 'package:fluuky/presentation/widgets/category_tabs_widgets/raffle_card_widget.dart';
 import 'package:fluuky/presentation/widgets/category_tabs_widgets/winner_card_widget.dart';
 import 'package:get/get.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 Widget buildItemsList(context) {
   final ItemsController itemsController = Get.find();
@@ -21,15 +23,18 @@ Widget buildItemsList(context) {
       if (itemsController.viewType.value == ViewType.list) {
         return _buildItemsView<RaffleEntity>(
           raffleController.filteredRaffles,
-          (raffle) => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(t.translate('plantXTrees') + raffle.name, style: FluukyTheme.lightTheme.textTheme.titleLarge),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.h),
-                child: RaffleCardWidget(raffle: raffle, viewType: ViewType.list),
-              ),
-            ],
+          (raffle) => Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(t.translate('plantXTrees') + raffle.name, style: FluukyTheme.lightTheme.textTheme.titleLarge),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16.h),
+                  child: RaffleCardWidget(raffle: raffle, viewType: ViewType.list),
+                ),
+              ],
+            ),
           ),
         );
       } else {
@@ -39,9 +44,93 @@ Widget buildItemsList(context) {
         );
       }
     } else if (itemsController.selectedItemType.value == ItemType.winners) {
-      return _buildCategoryGridView<WinnerEntity>(
-        itemsController.winners,
-        (winner) => WinnerCardWidget(winner: winner),
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Text('Winning Announcement', style: FluukyTheme.lightTheme.textTheme.titleLarge),
+          ),
+          SizedBox(height: 4.h),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Text('See all the draws happening live!', style: FluukyTheme.lightTheme.textTheme.displaySmall),
+          ),
+          SizedBox(
+            width: 375.w,
+            child: Column(
+              children: [
+                SizedBox(height: 24.h),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('Rolex Cosmograph Daytona'),
+                      IconButton(
+                        style: const ButtonStyle(
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          padding: WidgetStatePropertyAll(EdgeInsets.zero),
+                          minimumSize: WidgetStatePropertyAll(Size(0, 0)),
+                        ),
+                        onPressed: () {},
+                        icon: const Icon(Icons.chevron_right),
+                      )
+                    ],
+                  ),
+                ),
+                CarouselSlider(
+                  items: itemsController.announcements
+                      .map((item) => Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20.w),
+                            child: AnnouncementCardWidget(announcement: item),
+                          ))
+                      .toList(),
+                  controller: itemsController.carouselSliderController,
+                  options: CarouselOptions(
+                    height: 375.h,
+                    viewportFraction: 1,
+                    enlargeCenterPage: false,
+                    onPageChanged: (index, reason) {
+                      itemsController.winnerCarouselIndex.value = index;
+                    },
+                  ),
+                ),
+                // Spacing if needed
+                AnimatedSmoothIndicator(
+                  activeIndex: itemsController.winnerCarouselIndex.value,
+                  count: itemsController.announcements.length,
+                  effect: ExpandingDotsEffect(
+                    expansionFactor: 1.1,
+                    dotHeight: 8.w,
+                    dotWidth: 8.w,
+                    activeDotColor: FluukyTheme.primaryColor,
+                    dotColor: FluukyTheme.thirdColor,
+                  ),
+                  onDotClicked: (index) {
+                    itemsController.carouselSliderController.animateToPage(index);
+                  },
+                ),
+                Divider(height: 48.h),
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Text('Winners Gallery', style: FluukyTheme.lightTheme.textTheme.titleLarge),
+          ),
+          SizedBox(height: 4.h),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Text('Be inspired to take climate action while enjoying the luxury of giving back.',
+                style: FluukyTheme.lightTheme.textTheme.displaySmall),
+          ),
+          SizedBox(height: 24.h),
+          _buildCategoryGridView<WinnerEntity>(
+            itemsController.winners,
+            (winner) => WinnerCardWidget(winner: winner),
+          ),
+        ],
       );
     } else {
       return _buildItemsView<AnnouncementEntity>(
@@ -56,10 +145,7 @@ Widget _buildItemsView<T>(List<T> items, Widget Function(T) itemBuilder) {
   final ItemsController controller = Get.find();
   if (controller.viewType.value == ViewType.list) {
     return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: Column(children: items.map((item) => itemBuilder(item)).toList()),
-      ),
+      child: Column(children: items.map((item) => itemBuilder(item)).toList()),
     );
   } else {
     return GridView.builder(
@@ -90,27 +176,32 @@ Widget _buildCategoryGridView<T>(
     children: categories.map((category) {
       final categoryItems = items.where((item) => (item as dynamic).categoryId == category.id).toList();
 
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 20.w, right: 20.w),
-            child: Text(
-              category.name,
-              style: FluukyTheme.lightTheme.textTheme.titleMedium,
-              textAlign: TextAlign.start,
+      return SizedBox(
+        width: 375.w,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 16.h),
+              child: Text(
+                category.name,
+                style: FluukyTheme.lightTheme.textTheme.bodyMedium,
+                textAlign: TextAlign.start,
+              ),
             ),
-          ),
-          SizedBox(height: 10.h),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(children: [SizedBox(width: 20.w), ...categoryItems.map((item) => itemBuilder(item))]),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 20.w),
-            child: Divider(height: 20.h),
-          ),
-        ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  SizedBox(width: 20.w),
+                  ...categoryItems.map((item) => itemBuilder(item)),
+                  SizedBox(width: 20.w),
+                ],
+              ),
+            ),
+            SizedBox(height: 32.h),
+          ],
+        ),
       );
     }).toList(),
   );

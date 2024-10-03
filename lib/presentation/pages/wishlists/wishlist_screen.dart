@@ -57,7 +57,12 @@ class _WishlistScreenState extends State<WishlistScreen> {
                         children: [
                           ClipRRect(borderRadius: BorderRadius.circular(8), child: SvgPicture.asset('assets/images/empty-wishlist.svg')),
                           SizedBox(height: 24.h),
-                          ElevatedButton(onPressed: () => Get.toNamed(drawList), child: Text(t.translate('buyTicketsNow')))
+                          ElevatedButton(
+                              style: ButtonStyle(
+                                textStyle: WidgetStateProperty.all(FluukyTheme.lightTheme.textTheme.bodyMedium!.copyWith(color: Colors.white)),
+                              ),
+                              onPressed: () => Get.toNamed(drawList),
+                              child: Text(t.translate('Buy Tickets Now')))
                         ],
                       ),
                     ),

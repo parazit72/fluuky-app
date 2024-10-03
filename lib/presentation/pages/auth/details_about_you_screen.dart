@@ -171,8 +171,8 @@ class DetailsAboutYouScreen extends StatelessWidget {
                     message: t.translate('Please confirm your age.'),
                     child: ElevatedButton(
                       style: ButtonStyle(
+                        textStyle: WidgetStateProperty.all(FluukyTheme.lightTheme.textTheme.bodyMedium!.copyWith(color: Colors.white)),
                         minimumSize: WidgetStatePropertyAll(Size(335.w, 48.h)),
-                        textStyle: WidgetStateProperty.all(TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, fontFamily: 'Causten')),
                       ),
                       onPressed: () {
                         FocusScope.of(context).unfocus();

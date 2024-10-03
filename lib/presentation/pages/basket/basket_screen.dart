@@ -160,7 +160,7 @@ class BasketTextHeaderWidget extends StatelessWidget {
         children: [
           Text(t.translate('cart'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
           SizedBox(height: 4.h),
-          Text(t.translate('explore_items_in_cart'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
+          Text(t.translate('explore_items_in_cart'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
           SizedBox(height: 24.h),
           const Divider(),
         ],

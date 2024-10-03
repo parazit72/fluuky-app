@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
@@ -28,7 +29,7 @@ class _RecommendationsFormScreenState extends State<RecommendationsFormScreen> {
     return BackgroundScaffold(
       appBar: AppBarSingleWidget(title: t.translate('Recommendations')),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 32.h),
         child: Stack(
           children: [
             Column(
@@ -75,8 +76,8 @@ class RecommendationsForm extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              const SizedBox(height: 20),
-              Text('Intrests', style: Theme.of(context).textTheme.titleMedium),
+              SizedBox(height: 20.h),
+              Text('Intrests', style: FluukyTheme.lightTheme.textTheme.labelMedium),
               const PickYourInterestsWidget(),
             ],
           ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
+import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/domain/entities/announcement_entity.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:get/get.dart';
@@ -26,56 +28,46 @@ class AnnouncementCardWidget extends StatelessWidget {
 
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [const Text('Rolex Cosmograph Daytona'), IconButton(onPressed: () {}, icon: const Icon(Icons.chevron_right))],
-        ),
+        SizedBox(height: 16.h),
         Container(
-            height: MediaQuery.of(context).size.height * 0.3,
-            margin: const EdgeInsets.only(bottom: 16),
+            height: 190.h,
+            margin: EdgeInsets.only(bottom: 16.w),
             decoration: BoxDecoration(
-              border: Border.all(color: const Color(0xFFDBDBDB)),
-              boxShadow: const [
-                BoxShadow(color: Color(0xFFDBDBDB)),
-                BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+              border: Border.all(color: FluukyTheme.secondaryColor),
+              boxShadow: [
+                BoxShadow(color: FluukyTheme.secondaryColor),
+                const BoxShadow(color: Colors.white70, spreadRadius: -4.0, blurRadius: 8.6),
               ],
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.w),
             ),
-            child: Center(child: Icon(Icons.play_arrow, size: MediaQuery.of(context).size.height * 0.1, color: const Color(0XFF8C8C8C)))),
+            child: Center(child: Icon(Icons.play_arrow, size: 80.h, color: FluukyTheme.thirdColor))),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _buildTimerSegment('02', t.translate('days_label')),
-              const Text(':', style: TextStyle(fontSize: 20)),
+              Text(':', style: TextStyle(fontSize: 20.w)),
               _buildTimerSegment('02', t.translate('hours_label')),
-              const Text(':', style: TextStyle(fontSize: 20)),
+              Text(':', style: TextStyle(fontSize: 20.w)),
               _buildTimerSegment('02', t.translate('minutes_label')),
-              const Text(':', style: TextStyle(fontSize: 20)),
+              Text(':', style: TextStyle(fontSize: 20.w)),
               _buildTimerSegment('02', t.translate('seconds_label')),
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Wrap(children: [
-                Padding(padding: const EdgeInsets.only(right: 5), child: SvgPicture.asset('assets/images/ticket-active.svg')),
-                const SizedBox(width: 10),
-                Text(t.translate('ticketsRemaining'))
-              ]),
-              Text(formatNumber('576/2000'))
-            ],
+        SizedBox(
+          width: 335.w,
+          height: 48.h,
+          child: ElevatedButton(
+            onPressed: () => Get.toNamed(drawsList),
+            child: Text(
+              t.translate('Buy More Tickets'),
+              style: TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, color: Colors.white, fontFamily: 'Causten', height: 1.5),
+            ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: ElevatedButton(onPressed: () {}, child: Text(t.translate('buyMoreTickets'))),
-        ),
-        const Divider(height: 24),
+        //slider
       ],
     );
   }
@@ -85,8 +77,14 @@ Widget _buildTimerSegment(String value, String unit) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Text(value),
-      Text(unit),
+      Text(
+        value,
+        style: FluukyTheme.lightTheme.textTheme.titleMedium,
+      ),
+      Text(
+        unit,
+        style: FluukyTheme.lightTheme.textTheme.labelSmall!.copyWith(color: FluukyTheme.primaryColor),
+      ),
     ],
   );
 }

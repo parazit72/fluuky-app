@@ -82,20 +82,34 @@ class DraggableBasketSheetState extends State<DraggableBasketSheet> {
                             ],
                           ),
                           SizedBox(height: 24.h),
-                          ElevatedButton(onPressed: () => Get.toNamed(checkout), child: Text(t.translate('checkout'))),
+                          ElevatedButton(
+                              style: ButtonStyle(
+                                minimumSize: WidgetStatePropertyAll(Size(335.w, 48.h)),
+                                textStyle: WidgetStateProperty.all(TextStyle(fontSize: 16.w, fontWeight: FontWeight.w400, fontFamily: 'Causten')),
+                              ),
+                              onPressed: () => Get.toNamed(checkout),
+                              child: Text(t.translate('checkout'))),
                           SizedBox(height: 16.h),
-                          OutlinedButton(onPressed: () => Get.toNamed(drawsList), child: Text(t.translate('Add More Draws'))),
+                          OutlinedButton(
+                              style: ButtonStyle(
+                                minimumSize: WidgetStatePropertyAll(Size(335.w, 48.h)),
+                                textStyle: WidgetStateProperty.all(TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, fontFamily: 'Causten')),
+                              ),
+                              onPressed: () => Get.toNamed(drawsList),
+                              child: Text(t.translate('Add More Draws'))),
                           SizedBox(height: 24.h),
-                          Text(t.translate('purchase_terms'), textAlign: TextAlign.center),
+                          Text(t.translate('purchase_terms'), textAlign: TextAlign.center, style: FluukyTheme.lightTheme.textTheme.bodySmall),
                           Wrap(alignment: WrapAlignment.center, crossAxisAlignment: WrapCrossAlignment.center, children: [
                             InkWell(
                               onTap: () => Get.toNamed(termsAndCondition),
-                              child: Text(t.translate('Terms & Conditions'), style: TextStyle(color: Theme.of(context).primaryColor)),
+                              child: Text(t.translate('Terms & Conditions'),
+                                  style: FluukyTheme.lightTheme.textTheme.bodyLarge!.copyWith(color: FluukyTheme.primaryColor)),
                             ),
-                            Text(t.translate('_and_')),
+                            Text(t.translate('_and_'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
                             InkWell(
                               onTap: () => Get.toNamed(privacyPolicy),
-                              child: Text(t.translate('privacy_policy'), style: TextStyle(color: Theme.of(context).primaryColor)),
+                              child: Text(t.translate('privacy_policy'),
+                                  style: FluukyTheme.lightTheme.textTheme.bodyLarge!.copyWith(color: FluukyTheme.primaryColor)),
                             ),
                           ])
                         ],

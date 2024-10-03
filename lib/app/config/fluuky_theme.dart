@@ -81,16 +81,16 @@ class FluukyTheme {
     sliderTheme: const SliderThemeData(showValueIndicator: ShowValueIndicator.always),
     colorScheme: ColorScheme.light(primary: primaryColor, onPrimary: primaryColor, background: primaryColor, onBackground: primaryColor),
     textTheme: TextTheme(
-      titleLarge: TextStyle(fontSize: 24.w, fontWeight: FontWeight.w600, color: Colors.black, fontFamily: fontFamily, height: 1.5),
-      titleMedium: TextStyle(fontSize: 20.w, fontWeight: FontWeight.w500, color: Colors.black, fontFamily: fontFamily, height: 1.2),
-      titleSmall: TextStyle(fontSize: 20.w, fontWeight: FontWeight.w500, color: Colors.black, fontFamily: fontFamily, height: 1.2),
+      titleLarge: TextStyle(fontSize: 24.w, fontWeight: FontWeight.w600, color: inputTextColor, fontFamily: fontFamily, height: 1.5),
+      titleMedium: TextStyle(fontSize: 20.w, fontWeight: FontWeight.w500, color: inputTextColor, fontFamily: fontFamily, height: 1.2),
+      titleSmall: TextStyle(fontSize: 20.w, fontWeight: FontWeight.w500, color: inputTextColor, fontFamily: fontFamily, height: 1.2),
       //
-      bodyLarge: TextStyle(fontSize: 14.w, fontWeight: FontWeight.w600, color: Colors.black, fontFamily: fontFamily, height: 1.5),
-      bodyMedium: TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, color: Colors.black, fontFamily: fontFamily, height: 1.5),
-      bodySmall: TextStyle(fontSize: 14.w, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 1.5),
+      bodyLarge: TextStyle(fontSize: 14.w, fontWeight: FontWeight.w600, color: inputTextColor, fontFamily: fontFamily, height: 1.5),
+      bodyMedium: TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, color: inputTextColor, fontFamily: fontFamily, height: 1.5),
+      bodySmall: TextStyle(fontSize: 14.w, fontWeight: FontWeight.w400, color: inputTextColor, fontFamily: fontFamily, height: 1.5),
       //
-      displayLarge: TextStyle(fontSize: 28.w, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 1.5),
-      displayMedium: TextStyle(fontSize: 24.w, fontWeight: FontWeight.w300, color: Colors.black, fontFamily: fontFamily, height: 1.5),
+      displayLarge: TextStyle(fontSize: 28.w, fontWeight: FontWeight.w300, color: inputTextColor, fontFamily: fontFamily, height: 1.5),
+      displayMedium: TextStyle(fontSize: 24.w, fontWeight: FontWeight.w300, color: inputTextColor, fontFamily: fontFamily, height: 1.5),
       displaySmall: TextStyle(fontSize: 14.w, fontWeight: FontWeight.w400, color: FluukyTheme.thirdColor, fontFamily: fontFamily, height: 1.5),
       //
       headlineLarge: TextStyle(fontSize: 36.w, fontWeight: FontWeight.w700, color: Colors.white, fontFamily: 'Brinnan', height: 1.25),
@@ -98,8 +98,8 @@ class FluukyTheme {
       headlineSmall: TextStyle(fontSize: 16.w, fontWeight: FontWeight.w400, color: Colors.white, fontFamily: 'Brinnan', height: 1.5),
       //
       labelLarge: TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, color: primaryColor, fontFamily: fontFamily, height: 1.5),
-      labelMedium: TextStyle(fontSize: 16.w, fontWeight: FontWeight.w400, color: Colors.black, fontFamily: fontFamily, height: 1.5),
-      labelSmall: TextStyle(fontSize: 12.w, fontWeight: FontWeight.w400, color: Colors.black, fontFamily: fontFamily, height: 1.5),
+      labelMedium: TextStyle(fontSize: 16.w, fontWeight: FontWeight.w400, color: inputTextColor, fontFamily: fontFamily, height: 1.5),
+      labelSmall: TextStyle(fontSize: 12.w, fontWeight: FontWeight.w400, color: inputTextColor, fontFamily: fontFamily, height: 1.5),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(

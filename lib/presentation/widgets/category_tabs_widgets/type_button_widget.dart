@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
+import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/presentation/controllers/auth_controller.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
 import 'package:get/get.dart';
@@ -27,14 +28,14 @@ Widget TypeButtonWidget({required ItemType type, required String text}) {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(elevation: 0, backgroundColor: isSelected ? FluukyTheme.primaryColor : Colors.transparent),
           onPressed: () {
+            var userIsLoggedIn = authController.checkAuthAndShowSheet();
+            if (userIsLoggedIn) {
+              itemsController.selectedItemType.value = type;
+            }
+
             if (type == ItemType.winners) {
-              var userIsLoggedIn = authController.checkAuthAndShowSheet();
-              if (userIsLoggedIn) {
-                itemsController.selectedItemType.value = type;
-              }
-              if (type == ItemType.winners || type == ItemType.announcements) {
-                itemsController.viewType.value = ViewType.list;
-              }
+              // Get.toNamed(winnerScreen);
+              itemsController.viewType.value = ViewType.list;
             } else {
               itemsController.selectedItemType.value = type;
               itemsController.viewType.value = ViewType.list;
