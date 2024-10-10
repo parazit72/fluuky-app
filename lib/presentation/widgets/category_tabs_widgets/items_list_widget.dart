@@ -8,6 +8,7 @@ import 'package:fluuky/domain/entities/winner_entity.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
 import 'package:fluuky/presentation/controllers/raffle_controller.dart';
+import 'package:fluuky/presentation/controllers/winner_controller.dart';
 import 'package:fluuky/presentation/widgets/category_tabs_widgets/announcement_card_widget.dart';
 import 'package:fluuky/presentation/widgets/category_tabs_widgets/raffle_card_widget.dart';
 import 'package:fluuky/presentation/widgets/category_tabs_widgets/winner_card_widget.dart';
@@ -17,6 +18,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 Widget buildItemsList(context) {
   final ItemsController itemsController = Get.find();
   final RaffleController raffleController = Get.find();
+  final WinnerController winnerController = Get.find();
   var t = AppLocalizations.of(context)!;
   return Obx(() {
     if (itemsController.selectedItemType.value == ItemType.draws) {
@@ -49,12 +51,12 @@ Widget buildItemsList(context) {
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: Text('Winning Announcement', style: FluukyTheme.lightTheme.textTheme.titleLarge),
+            child: Text(t.translate('Winning Announcement'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
           ),
           SizedBox(height: 4.h),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: Text('See all the draws happening live!', style: FluukyTheme.lightTheme.textTheme.displaySmall),
+            child: Text(t.translate('See all the draws happening live!'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
           ),
           SizedBox(
             width: 375.w,
@@ -66,7 +68,7 @@ Widget buildItemsList(context) {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Rolex Cosmograph Daytona'),
+                      Text(t.translate('Rolex Cosmograph Daytona')),
                       IconButton(
                         style: const ButtonStyle(
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -80,7 +82,7 @@ Widget buildItemsList(context) {
                   ),
                 ),
                 CarouselSlider(
-                  items: itemsController.announcements
+                  items: winnerController.announcements
                       .map((item) => Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20.w),
                             child: AnnouncementCardWidget(announcement: item),
@@ -97,44 +99,45 @@ Widget buildItemsList(context) {
                   ),
                 ),
                 // Spacing if needed
-                AnimatedSmoothIndicator(
-                  activeIndex: itemsController.winnerCarouselIndex.value,
-                  count: itemsController.announcements.length,
-                  effect: ExpandingDotsEffect(
-                    expansionFactor: 1.1,
-                    dotHeight: 8.w,
-                    dotWidth: 8.w,
-                    activeDotColor: FluukyTheme.primaryColor,
-                    dotColor: FluukyTheme.thirdColor,
+                if (winnerController.announcements.length > 1)
+                  AnimatedSmoothIndicator(
+                    activeIndex: itemsController.winnerCarouselIndex.value,
+                    count: winnerController.announcements.length,
+                    effect: ExpandingDotsEffect(
+                      expansionFactor: 1.1,
+                      dotHeight: 8.w,
+                      dotWidth: 8.w,
+                      activeDotColor: FluukyTheme.primaryColor,
+                      dotColor: FluukyTheme.thirdColor,
+                    ),
+                    onDotClicked: (index) {
+                      itemsController.carouselSliderController.animateToPage(index);
+                    },
                   ),
-                  onDotClicked: (index) {
-                    itemsController.carouselSliderController.animateToPage(index);
-                  },
-                ),
                 Divider(height: 48.h),
               ],
             ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: Text('Winners Gallery', style: FluukyTheme.lightTheme.textTheme.titleLarge),
+            child: Text(t.translate('Winners Gallery'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
           ),
           SizedBox(height: 4.h),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: Text('Be inspired to take climate action while enjoying the luxury of giving back.',
+            child: Text(t.translate('Be inspired to take climate action while enjoying the luxury of giving back.'),
                 style: FluukyTheme.lightTheme.textTheme.displaySmall),
           ),
           SizedBox(height: 24.h),
           _buildCategoryGridView<WinnerEntity>(
-            itemsController.winners,
+            winnerController.winners,
             (winner) => WinnerCardWidget(winner: winner),
           ),
         ],
       );
     } else {
       return _buildItemsView<AnnouncementEntity>(
-        itemsController.announcements,
+        winnerController.announcements,
         (announcement) => AnnouncementCardWidget(announcement: announcement),
       );
     }
@@ -165,16 +168,18 @@ Widget _buildCategoryGridView<T>(
   RxList categories;
   final ItemsController itemsController = Get.find();
   final RaffleController raffleController = Get.find();
+  final WinnerController winnerController = Get.find();
 
   if (itemsController.selectedItemType.value == ItemType.draws) {
     categories = raffleController.raffleCategories;
   } else {
-    categories = itemsController.winnerCategories;
+    categories = winnerController.winnerCategories;
   }
+  var t = AppLocalizations.of(Get.context!)!;
 
   return Column(
     children: categories.map((category) {
-      final categoryItems = items.where((item) => (item as dynamic).categoryId == category.id).toList();
+      final categoryItems = items.where((item) => (item as dynamic).raffle.categoryId == category.id).toList();
 
       return SizedBox(
         width: 375.w,
@@ -184,7 +189,7 @@ Widget _buildCategoryGridView<T>(
             Padding(
               padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 16.h),
               child: Text(
-                category.name,
+                category.name + ' ' + t.translate('Winners'),
                 style: FluukyTheme.lightTheme.textTheme.bodyMedium,
                 textAlign: TextAlign.start,
               ),

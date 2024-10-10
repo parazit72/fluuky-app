@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/domain/entities/notification_entity.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
@@ -29,32 +30,32 @@ class NotificationScreen extends StatelessWidget {
         centerTitle: true,
         automaticallyImplyLeading: true,
         leading: IconButton(
-          splashRadius: 50,
+          splashRadius: 50.w,
           onPressed: () => Get.offAll(() => const HomeScreen()),
-          icon: const Icon(Icons.chevron_left, size: 24),
+          icon: Icon(Icons.chevron_left, size: 24.w),
         ),
         actions: [
           IconButton(
             onPressed: () => _showScrollableSheetNotificationDialog(notificationController),
-            icon: const Icon(Icons.more_vert, size: 24),
+            icon: Icon(Icons.more_vert, size: 24.w),
           )
         ],
-        leadingWidth: 50,
+        leadingWidth: 50.w,
         elevation: 2,
         surfaceTintColor: Colors.transparent,
         title: Text(
           t.translate('Notifications'),
-          style: Theme.of(context).textTheme.titleMedium,
+          style: FluukyTheme.lightTheme.textTheme.titleMedium,
           textAlign: TextAlign.center,
         ),
       ),
       body: Obx(() {
         return Column(
           children: [
-            const SizedBox(height: 32),
+            SizedBox(height: 32.h),
             notificationController.notifications.isEmpty
                 ? Padding(
-                    padding: const EdgeInsets.all(20),
+                    padding: EdgeInsets.all(20.w),
                     child: Column(
                       children: [
                         Text(t.translate('We don’t have any notifications today! Check back later.'),
@@ -93,11 +94,11 @@ class NotificationScreen extends StatelessWidget {
           builder: (context, scrollController) {
             return Container(
               width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.all(20),
-              decoration: const BoxDecoration(
-                image: DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
-                boxShadow: [BoxShadow(offset: Offset(0, -1), color: Colors.black26, spreadRadius: 0, blurRadius: 4)],
+              padding: EdgeInsets.all(20.w),
+              decoration: BoxDecoration(
+                image: const DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(35.w), topRight: Radius.circular(35.w)),
+                boxShadow: const [BoxShadow(offset: Offset(0, -1), color: Colors.black26, spreadRadius: 0, blurRadius: 4)],
               ),
               child: SingleChildScrollView(
                 controller: scrollController,
@@ -107,9 +108,10 @@ class NotificationScreen extends StatelessWidget {
                   children: [
                     Text(t.translate('Notifications'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
                     Text(t.translate('chooseOneOfTheFollowing'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10.h),
                     TextButton(
                       style: ButtonStyle(
+                        textStyle: WidgetStateProperty.all(FluukyTheme.lightTheme.textTheme.labelLarge),
                         padding: WidgetStateProperty.all(const EdgeInsets.all(0)),
                         minimumSize: WidgetStateProperty.all(const Size(0, 0)),
                       ),
@@ -119,7 +121,7 @@ class NotificationScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(t.translate('push_notifications'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                        Text(t.translate('push_notifications'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
                         Obx(
                           () {
                             return Switch(
@@ -151,15 +153,15 @@ class NotificationRowWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.only(bottom: 10, top: 10, left: 20, right: 47),
+      // margin:  EdgeInsets.only(bottom: 16),
+      padding: EdgeInsets.only(bottom: 10.h, top: 10.h, left: 20.w, right: 47.w),
       decoration: notification.isRead
           ? BoxDecoration(
-              boxShadow: const [
-                BoxShadow(color: Color(0xFFDBDBDB)),
-                BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+              boxShadow: [
+                BoxShadow(color: FluukyTheme.secondaryColor),
+                const BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
               ],
-              color: Theme.of(context).primaryColor.withOpacity(0.1),
+              color: FluukyTheme.primaryColor.withOpacity(0.08),
             )
           : null,
       child: Row(
@@ -172,18 +174,18 @@ class NotificationRowWidget extends StatelessWidget {
               notification.isRead
                   ? Row(
                       children: [
-                        Icon(Icons.circle, color: FluukyTheme.primaryColor, size: 6),
-                        const SizedBox(width: 8),
+                        Icon(Icons.circle, color: FluukyTheme.primaryColor, size: 6.w),
+                        SizedBox(width: 8.w),
                       ],
                     )
-                  : const SizedBox(width: 14),
+                  : SizedBox(width: 14.w),
               CircleAvatar(
                 backgroundColor: FluukyTheme.secondaryColor,
                 // backgroundImage: AssetImage(notification.imageUrl),
               ),
             ],
           ),
-          const SizedBox(width: 14),
+          SizedBox(width: 14.w),
           Expanded(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -192,13 +194,19 @@ class NotificationRowWidget extends StatelessWidget {
                 Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
-                    Text(notification.title, style: Theme.of(context).textTheme.titleSmall),
-                    const SizedBox(width: 8),
-                    Text(timeago.format(DateTime.parse(notification.timestamp.toString())),
-                        style: FluukyTheme.lightTheme.textTheme.displaySmall!.copyWith(color: Colors.grey)),
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        Text(notification.title, style: FluukyTheme.lightTheme.textTheme.bodyLarge),
+                        SizedBox(width: 8.w),
+                        Text(timeago.format(DateTime.parse(notification.timestamp.toString())),
+                            style: FluukyTheme.lightTheme.textTheme.labelSmall!.copyWith(color: FluukyTheme.thirdColor, fontSize: 10.w)),
+                      ],
+                    ),
+                    SizedBox(width: 8.w),
                   ],
                 ),
-                Text(notification.body, style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                Text(notification.body, style: FluukyTheme.lightTheme.textTheme.labelSmall),
               ],
             ),
           ),

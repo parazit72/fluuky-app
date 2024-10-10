@@ -166,7 +166,7 @@ class _SignupScreenState extends State<SignupScreen> {
               child: ElevatedButton(
                 style: ButtonStyle(
                   minimumSize: WidgetStatePropertyAll(Size(335.w, 48.h)),
-                  textStyle: WidgetStateProperty.all(TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, fontFamily: 'Causten')),
+                  textStyle: WidgetStateProperty.all(TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, fontFamily: FluukyTheme.fontFamily)),
                 ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {

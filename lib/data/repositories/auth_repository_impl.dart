@@ -2,19 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:fluuky/data/models/auth_model.dart';
 import 'package:fluuky/data/models/user_model.dart';
 import 'package:fluuky/data/providers/network/auth_remote_data_source.dart';
-import 'package:fluuky/data/providers/network/dio_provider.dart';
 import 'package:fluuky/domain/entities/user_entity.dart';
 import 'package:fluuky/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  late final AuthRemoteDataSource _remoteDataSource;
-  late final AuthModel _authModel;
-
-  AuthRepositoryImpl({AuthRemoteDataSource? remoteDataSource, AuthModel? authModel, DioProvider? dioProvider}) {
-    _authModel = authModel ?? AuthModel(); // Instantiate AuthModel if not provided
-    _remoteDataSource =
-        remoteDataSource ?? AuthRemoteDataSource(dioProvider ?? DioProvider(), _authModel); // Instantiate remote data source with DioProvider
-  }
+  late final AuthRemoteDataSource _remoteDataSource = AuthRemoteDataSource();
+  late final AuthModel _authModel = AuthModel();
 
   @override
   Future<void> login(String email, String password) async {

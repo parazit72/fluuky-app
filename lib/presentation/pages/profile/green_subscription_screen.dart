@@ -3,9 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
+import 'package:fluuky/data/models/faq_model.dart';
+import 'package:fluuky/data/repositories/home_repository_impl.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
+import 'package:fluuky/presentation/controllers/home_controller.dart';
 import 'package:fluuky/presentation/pages/profile/carbon_footprint_screen_dialog.dart';
 import 'package:fluuky/presentation/pages/pages.dart';
+import 'package:fluuky/presentation/widgets/faq_widget.dart';
 import 'package:get/get.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
@@ -18,10 +22,11 @@ class GreenSubscriptionScreen extends StatefulWidget {
 }
 
 class _GreenSubscriptionScreenState extends State<GreenSubscriptionScreen> {
-  final List<FaqItem> _data = generateItems(5);
+  final HomeController faqController = Get.find();
 
   @override
   Widget build(BuildContext context) {
+    FluukyTheme.updateFontFamilyBasedOnLocale();
     var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
       appBar: AppBarSingleWidget(title: t.translate('Green Subscription')),
@@ -29,7 +34,7 @@ class _GreenSubscriptionScreenState extends State<GreenSubscriptionScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -51,12 +56,15 @@ class _GreenSubscriptionScreenState extends State<GreenSubscriptionScreen> {
                   ElevatedButton(
                     style: ButtonStyle(
                         minimumSize: WidgetStatePropertyAll(Size(335.w, 48.h)),
-                        textStyle: WidgetStateProperty.all(TextStyle(fontSize: 14.w, fontWeight: FontWeight.w600, height: 1.5))),
+                        textStyle: WidgetStateProperty.all(
+                            TextStyle(fontSize: 14.w, fontWeight: FontWeight.w600, height: 1.5, fontFamily: FluukyTheme.fontFamily))),
                     onPressed: () => Get.toNamed(subscribingProcessScreen),
                     child: Text(t.translate('Subscribe')),
                   ),
                   TextButton(
-                      style: ButtonStyle(textStyle: WidgetStateProperty.all(TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, height: 1.5))),
+                      style: ButtonStyle(
+                          textStyle: WidgetStateProperty.all(
+                              TextStyle(fontSize: 14.w, fontWeight: FontWeight.w600, height: 1.5, fontFamily: FluukyTheme.fontFamily))),
                       onPressed: () => Get.toNamed(termsAndCondition),
                       child: Text(t.translate('terms_and_conditions'))),
                   Divider(height: 48.h),
@@ -82,31 +90,48 @@ class _GreenSubscriptionScreenState extends State<GreenSubscriptionScreen> {
               ),
             ),
             SizedBox(height: 24.h),
-            ..._data.asMap().entries.map((entry) {
-              final index = entry.key;
-              final item = entry.value;
+            Obx(
+              () {
+                if (faqController.isLoading.value) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-              // Check if the next item is expanded
-              final bool belowItemExpanded = (index < _data.length - 1) ? _data[index + 1].isExpanded : false;
+                if (faqController.faqs.isEmpty) {
+                  return Center(
+                      child: Container(
+                    padding: EdgeInsets.all(10.w),
+                    width: 375.w,
+                    height: 150.h,
+                    color: FluukyTheme.primaryColor,
+                  ));
+                }
 
-              return CustomFAQTile(
-                item: item,
-                onTap: () {
-                  setState(() {
-                    // Collapse all other items
-                    for (var otherItem in _data) {
-                      if (otherItem != item) {
-                        otherItem.isExpanded = false;
-                      }
-                    }
-                    // Toggle the selected item
-                    item.isExpanded = !item.isExpanded;
-                  });
-                },
-                isLastItem: index == _data.length - 1,
-                belowItemExpanded: belowItemExpanded, // Pass the below item expanded state
-              );
-            }),
+                // Constrain ListView.builder inside Expanded
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(), // Prevents ListView from scrolling independently
+                  itemCount: faqController.faqs.length,
+                  itemBuilder: (context, index) {
+                    final bool belowItemExpanded = (index < faqController.faqs.length - 1) ? faqController.faqs[index + 1].isExpanded : false;
+                    final faq = faqController.faqs[index];
+                    return CustomFAQTile(
+                      item: faq,
+                      onTap: () {
+                        for (var otherItem in faqController.faqs) {
+                          if (otherItem != faq) {
+                            otherItem.isExpanded = false;
+                          }
+                        }
+                        faq.isExpanded = !faq.isExpanded;
+                        faqController.faqs.refresh(); // Refresh to update UI
+                      },
+                      isLastItem: index == faqController.faqs.length - 1,
+                      belowItemExpanded: belowItemExpanded,
+                    );
+                  },
+                );
+              },
+            ),
             SizedBox(height: 24.h),
           ],
         ),

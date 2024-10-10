@@ -55,7 +55,7 @@ List<GetPage<dynamic>>? generateRoute = [
   ),
   GetPage(
     name: notifications,
-    page: () => const NotificationScreen(),
+    page: () => NotificationScreen(),
   ),
   GetPage(
     name: walkthrough,

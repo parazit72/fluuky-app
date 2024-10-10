@@ -79,7 +79,7 @@ class VerificationScreen extends GetView<AuthController> {
             ElevatedButton(
               style: ButtonStyle(
                 minimumSize: WidgetStatePropertyAll(Size(335.w, 48.h)),
-                textStyle: WidgetStateProperty.all(TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, fontFamily: 'Causten')),
+                textStyle: WidgetStateProperty.all(TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, fontFamily: FluukyTheme.fontFamily)),
               ),
               onPressed: () {
                 String? previousRoute = Get.previousRoute;
@@ -100,7 +100,7 @@ class VerificationScreen extends GetView<AuthController> {
                 onPressed: () => _authController.resendCode(userEmailAddress),
                 style: ButtonStyle(
                   minimumSize: WidgetStatePropertyAll(Size(335.w, 48.h)),
-                  textStyle: WidgetStateProperty.all(TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, fontFamily: 'Causten')),
+                  textStyle: WidgetStateProperty.all(TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, fontFamily: FluukyTheme.fontFamily)),
                 ),
                 child: Text(t.translate('resend_code')),
               ),
@@ -108,7 +108,7 @@ class VerificationScreen extends GetView<AuthController> {
             TextButton(
                 onPressed: () => Get.back(),
                 child: Text(t.translate('Use different email address'),
-                    style: TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, fontFamily: 'Causten'))),
+                    style: TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, fontFamily: FluukyTheme.fontFamily))),
           ],
         ),
       ),

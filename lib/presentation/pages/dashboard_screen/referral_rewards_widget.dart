@@ -60,7 +60,7 @@ class ReferralRewardsWidget extends StatelessWidget {
                       message: t.translate('code_copied'),
                       child: ElevatedButton(
                           style: ButtonStyle(
-                            textStyle: WidgetStateProperty.all(TextStyle(fontSize: 12.w)),
+                            textStyle: WidgetStateProperty.all(FluukyTheme.lightTheme.textTheme.labelSmall!.copyWith(fontWeight: FontWeight.w600)),
                             minimumSize: WidgetStateProperty.all<Size>(Size(240.w, 36.h)),
                           ),
                           onPressed: () {

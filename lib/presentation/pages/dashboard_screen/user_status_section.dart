@@ -51,7 +51,11 @@ class UserStatusWidget extends StatelessWidget {
                       SizedBox(width: 5.w),
                       Text(t.translate('basic'),
                           style: TextStyle(
-                              fontSize: 14.w, fontWeight: FontWeight.w600, color: FluukyTheme.primaryColor, fontFamily: 'Causten', height: 1.5)),
+                              fontSize: 14.w,
+                              fontWeight: FontWeight.w600,
+                              color: FluukyTheme.primaryColor,
+                              fontFamily: FluukyTheme.fontFamily,
+                              height: 1.5)),
                     ],
                   ),
                   Wrap(
@@ -62,7 +66,11 @@ class UserStatusWidget extends StatelessWidget {
                       SizedBox(width: 5.w),
                       Text(t.translate('silver'),
                           style: TextStyle(
-                              fontSize: 14.w, fontWeight: FontWeight.w600, color: FluukyTheme.primaryColor, fontFamily: 'Causten', height: 1.5)),
+                              fontSize: 14.w,
+                              fontWeight: FontWeight.w600,
+                              color: FluukyTheme.primaryColor,
+                              fontFamily: FluukyTheme.fontFamily,
+                              height: 1.5)),
                     ],
                   ),
                 ],

@@ -19,14 +19,14 @@ class BasketScreen extends StatefulWidget {
 }
 
 class _BasketScreenState extends State<BasketScreen> {
-  final BasketController controller = Get.find<BasketController>();
+  final BasketController basketController = Get.find<BasketController>();
   final GlobalKey<DraggableBasketSheetState> _sheetKey = GlobalKey<DraggableBasketSheetState>();
   double _sheetPosition = 0.49;
 
   @override
   void initState() {
     super.initState();
-    controller.fetchBasket();
+    basketController.fetchBasket();
   }
 
   void _updateSheetPosition(double position) {
@@ -57,27 +57,28 @@ class _BasketScreenState extends State<BasketScreen> {
         child: Stack(
           children: [
             Obx(() {
-              if (controller.isLoading.value) {
-                return SkeletonizerOfBasketLoading(controller: controller);
+              if (basketController.isLoading.value) {
+                return SkeletonizerOfBasketLoading(controller: basketController);
               }
 
               return EasyRefresh(
                 header: const MaterialHeader(),
                 footer: const MaterialFooter(),
                 onRefresh: () async {
-                  controller.isLoading.value = true;
-                  await controller.fetchBasket();
-                  controller.isLoading.value = false;
+                  basketController.isLoading.value = true;
+                  await basketController.fetchBasket();
+                  basketController.isLoading.value = false;
                 },
                 onLoad: () async {},
-                child: InsideBasketScreen(controller: controller, sheetPosition: _sheetPosition),
+                child: InsideBasketScreen(basketController: basketController, sheetPosition: _sheetPosition),
               );
             }),
-            DraggableBasketSheet(
-              key: _sheetKey,
-              sheetPosition: _sheetPosition,
-              onSheetPositionChanged: _updateSheetPosition,
-            ),
+            if (basketController.currentBasket.value != null)
+              DraggableBasketSheet(
+                key: _sheetKey,
+                sheetPosition: _sheetPosition,
+                onSheetPositionChanged: _updateSheetPosition,
+              ),
           ],
         ),
       ),
@@ -88,11 +89,11 @@ class _BasketScreenState extends State<BasketScreen> {
 class InsideBasketScreen extends StatelessWidget {
   const InsideBasketScreen({
     super.key,
-    required this.controller,
+    required this.basketController,
     required double sheetPosition,
   }) : _sheetPosition = sheetPosition;
 
-  final BasketController controller;
+  final BasketController basketController;
   final double _sheetPosition;
 
   @override
@@ -101,9 +102,9 @@ class InsideBasketScreen extends StatelessWidget {
       child: Column(
         children: [
           const BasketTextHeaderWidget(),
-          BasketItems(controller: controller),
+          BasketItems(controller: basketController),
           const RecommendationsForYouSection(),
-          SizedBox(height: 812.h * (_sheetPosition > 0.17 ? 0.49 : 0.08)),
+          if (basketController.isLoading.value) SizedBox(height: 812.h * (_sheetPosition > 0.17 ? 0.49 : 0.08)),
         ],
       ),
     );
@@ -138,8 +139,14 @@ class BasketItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return controller.basket.value.items.isNotEmpty
-        ? Column(children: controller.basket.value.items.map((item) => BasketItemWidget(item: item)).toList())
+    // Ensure the currentBasket and items are not null
+    final basket = controller.currentBasket.value;
+    final items = basket?.items;
+
+    return items != null && items.isNotEmpty
+        ? Column(
+            children: items.map((item) => BasketItemWidget(item: item)).toList(),
+          )
         : Padding(
             padding: EdgeInsets.all(20.w),
             child: Image.asset('assets/images/empty-basket.png'),

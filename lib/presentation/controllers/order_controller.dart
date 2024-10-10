@@ -8,17 +8,17 @@ class OrderController extends GetxController {
 
   RxBool isLoading = false.obs;
   var orders = <OrderEntity>[].obs;
-  var currentOrder = Rxn<OrderEntity>();
+  var currentOrder = Rx<OrderEntity?>(null);
   var filteredOrders = <OrderEntity>[].obs;
   RxString timeFilter = ''.obs;
 
   OrderController({required this.orderRepository});
 
-  @override
-  void onInit() {
-    super.onInit();
-    fetchOrders();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   fetchOrders();
+  // }
 
   // Fetch all orders
   Future<void> fetchOrders() async {

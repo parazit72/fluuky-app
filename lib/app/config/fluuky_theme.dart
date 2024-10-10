@@ -21,7 +21,7 @@ class FluukyTheme {
   static Color inputBackgroundColor = const Color.fromARGB(25, 219, 219, 219);
 
   static String updateFontFamilyBasedOnLocale() {
-    Locale locale = Get.locale ?? const Locale('ar');
+    Locale locale = Get.locale ?? const Locale('en');
     fontFamily = 'Causten'; // Fallback font
     if (locale.languageCode == 'ar') {
       fontFamily = "Cairo";

@@ -63,7 +63,7 @@ class AnnouncementCardWidget extends StatelessWidget {
             onPressed: () => Get.toNamed(drawsList),
             child: Text(
               t.translate('Buy More Tickets'),
-              style: TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, color: Colors.white, fontFamily: 'Causten', height: 1.5),
+              style: TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, color: Colors.white, fontFamily: FluukyTheme.fontFamily, height: 1.5),
             ),
           ),
         ),

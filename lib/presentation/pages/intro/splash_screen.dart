@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/data/local/local_storage.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
-import 'package:fluuky/presentation/pages/auth/login_screen.dart';
 import 'package:fluuky/presentation/pages/draw/draws_list_screen.dart';
 import 'package:fluuky/presentation/pages/home_screen/home_screen.dart';
 import 'package:fluuky/presentation/pages/intro/walkthrough_screen.dart';
@@ -18,7 +18,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final AuthController _authRepository = Get.find();
+  final AuthController authController = Get.find();
   bool isFirstLaunch = false;
 
   @override
@@ -30,9 +30,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _initializeSettings() async {
     // Check if it's the first app launch
     isFirstLaunch = await LocalStorage.isFirstLaunch();
-
     // Check if the user is logged in
-    await _authRepository.checkLoginStatus();
+    await authController.checkLoginStatus();
 
     await Future.delayed(const Duration(seconds: 2));
     // Navigate after initialization is complete
@@ -42,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void _navigateToNextScreen() {
     if (isFirstLaunch) {
       Get.offAll(() => const WalkthroughScreen());
-    } else if (_authRepository.isLogged.value) {
+    } else if (authController.isLogged.value) {
       Get.offAll(() => const HomeScreen());
     } else {
       Get.offAll(() => const DrawsListScreen());

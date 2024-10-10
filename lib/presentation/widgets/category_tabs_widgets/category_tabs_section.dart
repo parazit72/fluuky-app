@@ -49,8 +49,6 @@ class CategoryTabsSection extends StatelessWidget {
                           return t.translate('Draws');
                         case ItemType.winners:
                           return t.translate('Winners');
-                        // case ItemType.announcements:
-                        //   return t.translate('Winning Announcements');
                         default:
                           return '';
                       }

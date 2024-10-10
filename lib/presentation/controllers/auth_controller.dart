@@ -15,7 +15,6 @@ class AuthController extends GetxController {
   // final VerifyCodeUseCase _verifyCodeUseCase;
   final isLogged = false.obs;
   final isLoading = false.obs;
-  final isBillingAddressEqualShippingAddress = false.obs;
   final rememberMe = false.obs;
 
   var hasUpperCase = false.obs;
@@ -23,6 +22,7 @@ class AuthController extends GetxController {
   var hasDigit = false.obs;
   var hasSpecialCharacter = false.obs;
   var isAtLeast8Characters = false.obs;
+  final isBillingAddressEqualShippingAddress = false.obs;
 
   bool checkAuthAndShowSheet() {
     if (!isLogged.value) {
@@ -165,6 +165,6 @@ class AuthController extends GetxController {
   }
 
   void _showErrorDialog(String message) {
-    Get.snackbar('Error', message);
+    Get.snackbar('Error', message, duration: const Duration(seconds: 10));
   }
 }

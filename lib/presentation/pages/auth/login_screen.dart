@@ -214,7 +214,7 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                         minimumSize: WidgetStateProperty.all(const Size(0, 0)),
                                       ),
                                       onPressed: () => Get.toNamed(forgotPassword),
-                                      child: Text(t.translate('forgot_password')),
+                                      child: Text(t.translate('forgot_password'), style: FluukyTheme.lightTheme.textTheme.labelLarge),
                                     ),
                                   )
                                 ],
@@ -226,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                   await _authController.loginWithEmail();
                                 }
                               },
-                              child: Text(t.translate('login')),
+                              child: Text(t.translate('login'), style: FluukyTheme.lightTheme.textTheme.bodyMedium!.copyWith(color: Colors.white)),
                             ),
                             SizedBox(height: 24.h),
                             TextButton(
@@ -241,7 +241,7 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                   t.translate('dontHaveAccount'),
                                   style: FluukyTheme.lightTheme.textTheme.displaySmall,
                                 ),
-                                Text(t.translate('signup'))
+                                Text(t.translate('signup'), style: FluukyTheme.lightTheme.textTheme.labelLarge)
                               ]),
                             ),
                           ],

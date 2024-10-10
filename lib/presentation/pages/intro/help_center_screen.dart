@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
+import 'package:fluuky/presentation/controllers/home_controller.dart';
+import 'package:fluuky/presentation/widgets/faq_widget.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -16,8 +18,6 @@ class HelpCenterScreen extends StatefulWidget {
 }
 
 class _HelpCenterScreenState extends State<HelpCenterScreen> {
-  final List<FaqItem> _data = generateItems(5);
-
   void _showEmailOptions(BuildContext context, String email) {
     var t = AppLocalizations.of(context)!;
     showModalBottomSheet(
@@ -47,88 +47,108 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
     );
   }
 
+  final HomeController homeController = Get.find();
+
+  Future<void> _refreshFAQs() async {
+    homeController.fetchHomeData(); // Assuming this method fetches FAQs again
+  }
+
   @override
   Widget build(BuildContext context) {
     var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
       appBar: AppBarSingleWidget(title: t.translate('helpCenter')),
-      body: ListView(
-        children: <Widget>[
-          SizedBox(height: 24.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  t.translate('Frequently Asked Questions'),
-                  style: FluukyTheme.lightTheme.textTheme.titleLarge,
-                ),
-                SizedBox(height: 8.h),
-                Text(
-                  t.translate('faqDescription'),
-                  style: FluukyTheme.lightTheme.textTheme.bodySmall,
-                ),
-                SizedBox(height: 16.h),
-              ],
-            ),
-          ),
-          ..._data.asMap().entries.map((entry) {
-            final index = entry.key;
-            final item = entry.value;
-
-            // Check if the next item is expanded
-            final bool belowItemExpanded = (index < _data.length - 1) ? _data[index + 1].isExpanded : false;
-
-            return CustomFAQTile(
-              item: item,
-              onTap: () {
-                setState(() {
-                  // Collapse all other items
-                  for (var otherItem in _data) {
-                    if (otherItem != item) {
-                      otherItem.isExpanded = false;
-                    }
-                  }
-                  // Toggle the selected item
-                  item.isExpanded = !item.isExpanded;
-                });
-              },
-              isLastItem: index == _data.length - 1,
-              belowItemExpanded: belowItemExpanded, // Pass the below item expanded state
-            );
-          }),
-          InkWell(
-            onTap: () {
-              sendEmailSheet();
-            },
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 32.h),
+      body: RefreshIndicator(
+        onRefresh: _refreshFAQs, // Call the refresh method
+        child: ListView(
+          children: <Widget>[
+            SizedBox(height: 24.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    t.translate('contactUs'),
+                    t.translate('Frequently Asked Questions'),
                     style: FluukyTheme.lightTheme.textTheme.titleLarge,
                   ),
-                  SizedBox(height: 24.h),
+                  SizedBox(height: 8.h),
                   Text(
-                    t.translate('stillHaveQuestions'),
+                    t.translate('faqDescription'),
                     style: FluukyTheme.lightTheme.textTheme.bodySmall,
                   ),
-                  const ContactItem(
-                    icon: 'assets/images/email.png',
-                    label: 'cs@fluuky.com',
-                  ),
-                  const ContactItem(
-                    icon: 'assets/images/whatsapp.png',
-                    label: 'WhatsApp Us',
-                  ),
+                  SizedBox(height: 16.h),
                 ],
               ),
             ),
-          ),
-        ],
+            Obx(
+              () {
+                if (homeController.isLoading.value) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (homeController.faqs.isEmpty) {
+                  return Container();
+                }
+
+                // Constrain ListView.builder inside Expanded
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(), // Prevents ListView from scrolling independently
+                  itemCount: homeController.faqs.length,
+                  itemBuilder: (context, index) {
+                    final bool belowItemExpanded = (index < homeController.faqs.length - 1) ? homeController.faqs[index + 1].isExpanded : false;
+                    final faq = homeController.faqs[index];
+                    return CustomFAQTile(
+                      item: faq,
+                      onTap: () {
+                        for (var otherItem in homeController.faqs) {
+                          if (otherItem != faq) {
+                            otherItem.isExpanded = false;
+                          }
+                        }
+                        faq.isExpanded = !faq.isExpanded;
+                        homeController.faqs.refresh(); // Refresh to update UI
+                      },
+                      isLastItem: index == homeController.faqs.length - 1,
+                      belowItemExpanded: belowItemExpanded,
+                    );
+                  },
+                );
+              },
+            ),
+            InkWell(
+              onTap: () {
+                sendEmailSheet();
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 32.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      t.translate('contactUs'),
+                      style: FluukyTheme.lightTheme.textTheme.titleLarge,
+                    ),
+                    SizedBox(height: 24.h),
+                    Text(
+                      t.translate('stillHaveQuestions'),
+                      style: FluukyTheme.lightTheme.textTheme.bodySmall,
+                    ),
+                    ContactItem(
+                      icon: 'assets/images/email.png',
+                      label: homeController.info.value.email,
+                    ),
+                    const ContactItem(
+                      icon: 'assets/images/whatsapp.png',
+                      label: 'WhatsApp Us',
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -148,7 +168,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
           builder: (context, scrollController) {
             return Container(
               width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.all(20.w),
               decoration: const BoxDecoration(
                 image: DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
@@ -160,7 +180,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
                     TextButton(
                       style: ButtonStyle(
                         minimumSize: WidgetStateProperty.all(const Size(0, 0)),
@@ -173,12 +193,12 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           const Icon(Icons.email, color: Colors.black),
-                          const SizedBox(width: 8),
+                          SizedBox(width: 8.w),
                           Text(t.translate('Send an Email'), style: const TextStyle(color: Colors.black)),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
                     TextButton(
                       style: ButtonStyle(
                         minimumSize: WidgetStateProperty.all(const Size(0, 0)),
@@ -191,12 +211,12 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           const Icon(Icons.copy, color: Colors.black),
-                          const SizedBox(width: 8),
+                          SizedBox(width: 8.w),
                           Text(t.translate('copy_the_email'), style: const TextStyle(color: Colors.black)),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10.h),
                   ],
                 ),
               ),
@@ -204,61 +224,6 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
           },
         );
       },
-    );
-  }
-}
-
-class CustomFAQTile extends StatelessWidget {
-  final FaqItem item;
-  final VoidCallback onTap;
-  final bool isLastItem;
-  final bool belowItemExpanded; // Add this field
-
-  const CustomFAQTile({
-    super.key,
-    required this.item,
-    required this.onTap,
-    required this.isLastItem,
-    required this.belowItemExpanded, // Add this parameter
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(bottom: item.isExpanded ? 16.w : 0),
-      decoration: item.isExpanded
-          ? const BoxDecoration(
-              boxShadow: [
-                BoxShadow(color: Colors.black38),
-                BoxShadow(color: Color.fromARGB(192, 247, 247, 247), spreadRadius: -4.0, blurRadius: 8.6),
-              ],
-              color: Color(0XAAF7F7F7),
-            )
-          : null,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ListTile(
-            title: Text(item.headerValue,
-                style: FluukyTheme.lightTheme.textTheme.bodyLarge!
-                    .copyWith(color: item.isExpanded ? FluukyTheme.inputTextColor : FluukyTheme.thirdColor)),
-            trailing: Icon(item.isExpanded ? Icons.expand_less : Icons.expand_more),
-            onTap: onTap,
-          ),
-          if (item.isExpanded)
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: item.expandedValue.map((point) {
-                  return Text(point, style: FluukyTheme.lightTheme.textTheme.labelSmall);
-                }).toList(),
-              ),
-            ),
-          // Show Divider only when item is not expanded, it's not the last item, and below item is not expanded
-          if (!item.isExpanded && !isLastItem && !belowItemExpanded) const Divider(),
-        ],
-      ),
     );
   }
 }
@@ -284,31 +249,4 @@ class ContactItem extends StatelessWidget {
       ),
     );
   }
-}
-
-class FaqItem {
-  FaqItem({
-    required this.headerValue,
-    required this.expandedValue,
-    this.isExpanded = false,
-  });
-
-  String headerValue;
-  List<String> expandedValue;
-  bool isExpanded;
-}
-
-List<FaqItem> generateItems(int numberOfItems) {
-  return List<FaqItem>.generate(numberOfItems, (int index) {
-    return FaqItem(
-      headerValue: 'How do I subscribe?',
-      expandedValue: [
-        '• Log in to your Fluuky account.',
-        '• Navigate to the "FLUUKY Green Subscription" section.',
-        '• Calculate your carbon footprint and discover your compensation needs.',
-        '• Set up your payment method for automatic billing.',
-        '• Confirm your subscription.',
-      ],
-    );
-  });
 }

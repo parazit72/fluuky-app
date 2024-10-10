@@ -1,4 +1,4 @@
-import 'package:fluuky/domain/entities/category_entity.dart';
+import 'package:fluuky/domain/entities/raffle_category_entity.dart';
 import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/domain/repositories/raffle_repository.dart';
 import 'package:get/get.dart';
@@ -7,7 +7,7 @@ class RaffleController extends GetxController {
   final RaffleRepository raffleRepository;
 
   var raffles = <RaffleEntity>[].obs;
-  var raffleCategories = <CategoryEntity>[].obs;
+  var raffleCategories = <RaffleCategoryEntity>[].obs;
   var wishlist = <RaffleEntity>[].obs;
   var wishlistToDelete = <int>[].obs;
   var selectedCategory = 1.obs;
@@ -45,7 +45,9 @@ class RaffleController extends GetxController {
       final fetchedRaffleCategories = await raffleRepository.getRaffleCategories();
       raffleCategories.assignAll(fetchedRaffleCategories);
 
-      selectedCategory.value = raffleCategories.first.id;
+      if (raffleCategories.first.id != null) {
+        selectedCategory.value = raffleCategories.first.id!;
+      }
     } catch (e) {
       print(e);
     }

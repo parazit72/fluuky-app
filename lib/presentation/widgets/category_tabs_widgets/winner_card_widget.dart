@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/domain/entities/winner_entity.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 class WinnerCardWidget extends StatelessWidget {
   final WinnerEntity winner;
@@ -21,22 +22,22 @@ class WinnerCardWidget extends StatelessWidget {
           CircleAvatar(
             backgroundColor: FluukyTheme.secondaryColor,
             radius: 70.w,
-            // backgroundImage: const AssetImage('assets/images/avatar.jpg'),
+            backgroundImage: AssetImage(winner.avatar!),
           ),
           SizedBox(height: 8.h),
           Text(t.translate('WINNER OF THE'), style: FluukyTheme.lightTheme.textTheme.labelSmall!.copyWith(color: FluukyTheme.primaryColor)),
-          Text('Rolex Submariner', style: Theme.of(context).textTheme.bodyMedium),
+          Text(winner.raffle!.name, style: Theme.of(context).textTheme.bodyMedium),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 3),
-            child: Text(winner.name, style: FluukyTheme.lightTheme.textTheme.labelSmall),
+            child: Text('${winner.firstName} ${winner.lastName}', style: FluukyTheme.lightTheme.textTheme.labelSmall),
           ),
           Text(
-            '20 December 2023',
+            DateFormat('d MMMM yyyy').format(winner.raffle!.deadline),
             style: TextStyle(
               fontSize: 12.w,
               fontWeight: FontWeight.w400,
               color: FluukyTheme.thirdColor,
-              fontFamily: 'Causten',
+              fontFamily: FluukyTheme.fontFamily,
               height: 1.5,
             ),
           ),

@@ -11,7 +11,7 @@ class AppBarProfile extends StatelessWidget implements PreferredSizeWidget {
   final AuthController _authController = Get.find<AuthController>();
 
   void goNotification() {
-    Get.offAll(() => const NotificationScreen());
+    Get.offAll(() => NotificationScreen());
   }
 
   @override

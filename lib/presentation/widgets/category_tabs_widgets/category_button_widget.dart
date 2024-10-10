@@ -23,7 +23,7 @@ Widget buildCategoryButtons(context) {
             ...raffleController.raffleCategories.asMap().entries.map((entry) {
               final isLast = entry.key == raffleController.raffleCategories.length - 1;
               final category = entry.value;
-              return _buildCategoryButton(category.id, category.name, category.iconPath, context, isLast);
+              return _buildCategoryButton(category.id!, category.name!, category.activeIconPath, context, isLast);
             }),
             Get.locale == const Locale('ar') ? SizedBox(width: 20.w) : Container(),
           ],

@@ -54,6 +54,7 @@ dependencies:
   easy_refresh: ^3.4.0
   flutter_screenutil: ^5.9.3
   email_validator: ^3.0.0
+  flutter_html: ^3.0.0-beta.2
   # rive: ^0.13.9
 
 dev_dependencies:

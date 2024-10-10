@@ -1,10 +1,9 @@
 import 'package:fluuky/domain/entities/raffle_entity.dart';
 
-class OrderEntity {
+class TransactionEntity {
   int? id;
   int? userId;
-  double? totalPrice;
-  double? totalBundleDiscount;
+  int? totalPrice;
   String? status;
   String? firstName;
   String? lastName;
@@ -17,11 +16,10 @@ class OrderEntity {
   String? zipCode;
   List<Items>? items;
 
-  OrderEntity(
+  TransactionEntity(
       {this.id,
       this.userId,
       this.totalPrice,
-      this.totalBundleDiscount,
       this.status,
       this.firstName,
       this.lastName,
@@ -34,11 +32,10 @@ class OrderEntity {
       this.zipCode,
       this.items});
 
-  OrderEntity.fromJson(Map<String, dynamic> json) {
+  TransactionEntity.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
     totalPrice = json['total_price'];
-    totalBundleDiscount = json['total_bundle_discount'];
     status = json['status'];
     firstName = json['first_name'];
     lastName = json['last_name'];
@@ -62,7 +59,6 @@ class OrderEntity {
     data['id'] = id;
     data['user_id'] = userId;
     data['total_price'] = totalPrice;
-    data['total_bundle_discount'] = totalBundleDiscount;
     data['status'] = status;
     data['first_name'] = firstName;
     data['last_name'] = lastName;
@@ -83,7 +79,7 @@ class OrderEntity {
 class Items {
   int? id;
   int? quantity;
-  double? price;
+  int? price;
   RaffleEntity? raffle;
 
   Items({this.id, this.quantity, this.price, this.raffle});

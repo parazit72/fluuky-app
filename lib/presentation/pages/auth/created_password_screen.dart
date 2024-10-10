@@ -92,7 +92,7 @@ class CreatedPasswordScreen extends StatelessWidget {
                 ElevatedButton(
                   style: ButtonStyle(
                     minimumSize: WidgetStatePropertyAll(Size(335.w, 48.h)),
-                    textStyle: WidgetStateProperty.all(TextStyle(fontSize: 16.w, fontWeight: FontWeight.w400, fontFamily: 'Causten')),
+                    textStyle: WidgetStateProperty.all(TextStyle(fontSize: 16.w, fontWeight: FontWeight.w400, fontFamily: FluukyTheme.fontFamily)),
                   ),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {

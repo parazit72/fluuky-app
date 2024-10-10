@@ -59,9 +59,7 @@ class _FluukyAppState extends State<FluukyApp> {
                   }
                   return supportedLocales.first;
                 },
-                theme: FluukyTheme.lightTheme.copyWith(
-                  textTheme: FluukyTheme.lightTheme.textTheme.apply(fontFamily: Get.locale?.languageCode == 'ar' ? 'Cairo' : 'Causten'),
-                ),
+                theme: FluukyTheme.lightTheme,
               );
             }),
           );

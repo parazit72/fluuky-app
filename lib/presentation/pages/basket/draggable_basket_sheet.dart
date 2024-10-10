@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
+import 'package:fluuky/presentation/controllers/order_controller.dart';
 import 'package:get/get.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:to_arabic_number/to_arabic_number.dart';
@@ -17,9 +18,11 @@ class DraggableBasketSheet extends StatefulWidget {
 }
 
 class DraggableBasketSheetState extends State<DraggableBasketSheet> {
-  final DraggableScrollableController _controller = DraggableScrollableController();
+  final DraggableScrollableController draggableScrollableController = DraggableScrollableController();
+  final OrderController orderController = Get.find<OrderController>();
+
   void changeSheetSize(double sheetPosition) {
-    _controller.animateTo(
+    draggableScrollableController.animateTo(
       sheetPosition,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
@@ -48,7 +51,7 @@ class DraggableBasketSheetState extends State<DraggableBasketSheet> {
           initialChildSize: widget.sheetPosition,
           minChildSize: 0.17,
           maxChildSize: 0.49,
-          controller: _controller,
+          controller: draggableScrollableController,
           builder: (BuildContext context, ScrollController scrollController) {
             return ColoredBox(
               color: Colors.transparent,
@@ -70,7 +73,8 @@ class DraggableBasketSheetState extends State<DraggableBasketSheet> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(t.translate('Total Bundle Discount:'), style: FluukyTheme.lightTheme.textTheme.bodyMedium),
-                              Text(formatNumber('\$29,97'), style: FluukyTheme.lightTheme.textTheme.bodyMedium),
+                              Text(formatNumber(orderController.currentOrder.value!.totalBundleDiscount.toString()),
+                                  style: FluukyTheme.lightTheme.textTheme.bodyMedium),
                             ],
                           ),
                           SizedBox(height: 16.h),
@@ -78,14 +82,15 @@ class DraggableBasketSheetState extends State<DraggableBasketSheet> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(t.translate('total_amount'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
-                              Text(formatNumber('\$100'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+                              Text(formatNumber(orderController.currentOrder.value!.totalPrice.toString()),
+                                  style: FluukyTheme.lightTheme.textTheme.titleLarge),
                             ],
                           ),
                           SizedBox(height: 24.h),
                           ElevatedButton(
                               style: ButtonStyle(
                                 minimumSize: WidgetStatePropertyAll(Size(335.w, 48.h)),
-                                textStyle: WidgetStateProperty.all(TextStyle(fontSize: 16.w, fontWeight: FontWeight.w400, fontFamily: 'Causten')),
+                                textStyle: WidgetStateProperty.all(FluukyTheme.lightTheme.textTheme.labelMedium),
                               ),
                               onPressed: () => Get.toNamed(checkout),
                               child: Text(t.translate('checkout'))),
@@ -93,7 +98,7 @@ class DraggableBasketSheetState extends State<DraggableBasketSheet> {
                           OutlinedButton(
                               style: ButtonStyle(
                                 minimumSize: WidgetStatePropertyAll(Size(335.w, 48.h)),
-                                textStyle: WidgetStateProperty.all(TextStyle(fontSize: 16.w, fontWeight: FontWeight.w600, fontFamily: 'Causten')),
+                                textStyle: WidgetStateProperty.all(FluukyTheme.lightTheme.textTheme.labelMedium),
                               ),
                               onPressed: () => Get.toNamed(drawsList),
                               child: Text(t.translate('Add More Draws'))),

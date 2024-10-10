@@ -1,8 +1,8 @@
-import 'package:fluuky/domain/entities/category_entity.dart';
+import 'package:fluuky/domain/entities/raffle_category_entity.dart';
 
 abstract class CategoryRepository {
-  Future<List<CategoryEntity>> getAllCategories();
-  Future<void> addCategory(CategoryEntity category);
-  Future<void> updateCategory(CategoryEntity category);
+  Future<List<RaffleCategoryEntity>> getAllCategories();
+  Future<void> addCategory(RaffleCategoryEntity category);
+  Future<void> updateCategory(RaffleCategoryEntity category);
   Future<void> deleteCategory(int id);
 }

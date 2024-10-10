@@ -33,19 +33,14 @@ class _TransactionsHistoryListHorizentalWidgetState extends State<TransactionsHi
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(t.translate('Transactions History'), style: FluukyTheme.lightTheme.textTheme.titleSmall),
-                    Text(t.translate('Explore the details of every transaction'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
-                  ],
-                ),
+                child: Text(t.translate('Transactions History'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
               ),
               IconButton(
                 onPressed: () {
@@ -61,6 +56,7 @@ class _TransactionsHistoryListHorizentalWidgetState extends State<TransactionsHi
               )
             ],
           ),
+          Text(t.translate('Explore the details of every transaction'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
           SizedBox(height: 20.h),
           Obx(() {
             if (orderController.isLoading.value) {
@@ -77,28 +73,68 @@ class _TransactionsHistoryListHorizentalWidgetState extends State<TransactionsHi
                     (index) => Container(
                       margin: EdgeInsets.only(bottom: 8.h),
                       decoration: const BoxDecoration(
-                        image: DecorationImage(image: AssetImage('assets/images/paper-box.png'), fit: BoxFit.fill),
-                      ),
+                          image: DecorationImage(image: AssetImage('assets/images/paper-box.png'), fit: BoxFit.fill),
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
                       padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 28.h),
                       child: Skeletonizer(
                         enabled: false,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        child: Column(
                           children: [
-                            Wrap(
-                              crossAxisAlignment: WrapCrossAlignment.center,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 CircleAvatar(backgroundColor: FluukyTheme.secondaryColor, radius: 16.w),
-                                SizedBox(width: 11.w),
-                                Text('Referral Code Credit', style: FluukyTheme.lightTheme.textTheme.bodyMedium)
+                                SizedBox(
+                                  width: 155.w,
+                                  child: Wrap(
+                                    children: [SizedBox(width: 6.w), Text('Referral Code Credit', style: FluukyTheme.lightTheme.textTheme.bodyLarge)],
+                                  ),
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text('+\$9.99', style: FluukyTheme.lightTheme.textTheme.bodyLarge),
+                                    SizedBox(height: 4.h),
+                                    Text('13 August, 11:22',
+                                        style: FluukyTheme.lightTheme.textTheme.labelSmall!.copyWith(color: FluukyTheme.thirdColor)),
+                                  ],
+                                )
                               ],
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
+                            SizedBox(height: 10.h),
+                            Row(
                               children: [
-                                Text('+\$9.99', style: FluukyTheme.lightTheme.textTheme.bodyMedium),
-                                SizedBox(height: 4.h),
-                                Text('13 August, 11:22', style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                                SizedBox(width: 50.w),
+                                Wrap(
+                                  crossAxisAlignment: WrapCrossAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/images/ticket-active.svg',
+                                      width: 14.w,
+                                      colorFilter: ColorFilter.mode(FluukyTheme.primaryColor, BlendMode.srcIn),
+                                    ),
+                                    Text(
+                                      'Tickets: 100',
+                                      style: FluukyTheme.lightTheme.textTheme.labelSmall,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(width: 8.w),
+                                Wrap(
+                                  crossAxisAlignment: WrapCrossAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/images/tree-green.svg',
+                                      width: 14.w,
+                                      colorFilter: ColorFilter.mode(FluukyTheme.primaryColor, BlendMode.srcIn),
+                                    ),
+                                    Text(
+                                      'Trees: 50',
+                                      style: FluukyTheme.lightTheme.textTheme.labelSmall,
+                                    ),
+                                  ],
+                                ),
                               ],
                             )
                           ],

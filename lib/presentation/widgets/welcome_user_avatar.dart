@@ -22,7 +22,7 @@ class WelcomeUserAvatar extends StatelessWidget {
         phone: '',
         birthDate: DateTime.now());
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.w),
+      padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 20.w),
       child: Wrap(
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [

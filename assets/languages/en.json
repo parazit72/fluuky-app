@@ -1,7 +1,8 @@
 {
   "draws": "Draws",
   "winners": "Winners",
-  "winningAnnouncement": "Winning Announcement",
+  "Winning Announcements": "Winning Announcements",
+  "Winning Announcement": "Winning Announcement",
   "plantingTrees": "Planting Trees",
   "helpCenter": "Help Center",
   "forBusiness": "For Business",
@@ -654,7 +655,7 @@
   "what_is_carbon_footprint": "What is a Carbon Footprint?",
   "contact_us": "Contact Us",
   "reach_out_us": "Still have questions? Reach out to us!",
-  "email_us": "Email us at cs@fluuky.com",
+  "email_us": "Email us at ",
   "whatsapp_us": "WhatsApp Us",
 
   "corporate_impact_draws": "FLUUKY Corporate Impact Draws",

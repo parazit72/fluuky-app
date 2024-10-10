@@ -15,7 +15,7 @@ class AppBarFluuky extends StatelessWidget implements PreferredSizeWidget {
   bool userIsLoggedIn = false;
 
   void goNotification() {
-    Get.to(() => const NotificationScreen());
+    Get.to(() => NotificationScreen());
   }
 
   void goBasket() {

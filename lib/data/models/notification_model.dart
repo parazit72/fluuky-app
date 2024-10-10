@@ -1,28 +1,10 @@
-import 'package:hive/hive.dart';
-
-part 'notification_model.g.dart';
-
-@HiveType(typeId: 1)
 class NotificationModel {
-  @HiveField(0)
   String id;
-
-  @HiveField(1)
   String title;
-
-  @HiveField(2)
   String body;
-
-  @HiveField(3)
   String imageUrl;
-
-  @HiveField(4)
   bool isRead;
-
-  @HiveField(5)
   DateTime timestamp;
-
-  @HiveField(6)
   Map<String, dynamic> data;
 
   NotificationModel({

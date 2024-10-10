@@ -32,33 +32,30 @@ class _OrderHistoryListHorizentalWidgetState extends State<OrderHistoryListHoriz
     if (orderController.orders.isNotEmpty) {
       return Column(
         children: [
-          Container(
-            // margin: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(t.translate('orders_history'), style: FluukyTheme.lightTheme.textTheme.titleSmall),
-                    Flexible(
-                      child: Text(t.translate('see_a_rundown'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
-                    ),
-                  ],
-                ),
-                IconButton(
-                  onPressed: () => Get.toNamed(orderHistory),
-                  style: ButtonStyle(
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    alignment: Alignment.centerRight,
-                    padding: WidgetStateProperty.all(EdgeInsets.zero),
-                    minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(t.translate('orders_history'), style: FluukyTheme.lightTheme.textTheme.titleSmall),
+                  Flexible(
+                    child: Text(t.translate('see_a_rundown'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
                   ),
-                  icon: const Icon(Icons.chevron_right),
-                )
-              ],
-            ),
+                ],
+              ),
+              IconButton(
+                onPressed: () => Get.toNamed(orderHistory),
+                style: ButtonStyle(
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  alignment: Alignment.centerRight,
+                  padding: WidgetStateProperty.all(EdgeInsets.zero),
+                  minimumSize: WidgetStateProperty.all(const Size(0, 0)),
+                ),
+                icon: const Icon(Icons.chevron_right),
+              )
+            ],
           ),
           SizedBox(height: 20.h),
           Obx(() {

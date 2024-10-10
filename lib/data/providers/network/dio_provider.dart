@@ -5,41 +5,38 @@ import 'package:get/get.dart';
 
 class DioProvider {
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
-  static const _tokenKey = 'auth_token';
-  Locale locale = Get.locale ?? const Locale('ar');
+  static const String _tokenKey = 'auth_token';
+  static const String _baseUrl = 'https://dev-flukky.snatch.digital/api/v1';
+  static const Duration _timeout = Duration(seconds: 30);
 
   Dio createDio() {
     final Dio dio = Dio(BaseOptions(
-      baseUrl: 'https://dev-flukky.snatch.digital/api/v1',
-      connectTimeout: const Duration(seconds: 30),
-      receiveTimeout: const Duration(seconds: 30),
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
+      baseUrl: _baseUrl,
+      connectTimeout: _timeout,
+      receiveTimeout: _timeout,
     ));
 
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
-        final token = await _secureStorage.read(key: _tokenKey);
-
-        if (token != null) {
-          options.headers['Authorization'] = 'Bearer $token';
-        }
-
-        final Locale locale = Get.locale ?? const Locale('ar');
-        options.headers['Accept-Language'] = locale.languageCode == 'ar' ? 'ar' : 'en';
-
+        options.headers.addAll(await _defaultHeaders());
         return handler.next(options);
       },
-      onResponse: (response, handler) {
-        return handler.next(response);
-      },
-      onError: (DioException e, handler) {
-        return handler.next(e);
-      },
+      onResponse: (response, handler) => handler.next(response),
+      onError: (DioException e, handler) => handler.next(e),
     ));
 
     return dio;
+  }
+
+  Future<Map<String, String>> _defaultHeaders() async {
+    final token = await _secureStorage.read(key: _tokenKey);
+    final locale = Get.locale ?? const Locale('en');
+
+    return {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      if (token != null) 'Authorization': 'bearer $token',
+      'Accept-Language': locale.languageCode,
+    };
   }
 }

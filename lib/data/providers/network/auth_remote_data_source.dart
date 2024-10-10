@@ -4,10 +4,7 @@ import 'package:fluuky/data/models/user_model.dart';
 import 'package:fluuky/data/providers/network/dio_provider.dart';
 
 class AuthRemoteDataSource {
-  late final Dio _dio;
-  final AuthModel authModel;
-
-  AuthRemoteDataSource(DioProvider dioProvider, this.authModel) : _dio = dioProvider.createDio(); // Use DioProvider to create Dio
+  final Dio _dio = DioProvider().createDio(); // Direct instantiation of Dio
 
   Future<AuthModel> login(String email, String password) async {
     final response = await _dio.post('/auth/login', data: {

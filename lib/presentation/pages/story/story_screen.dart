@@ -9,15 +9,18 @@ import 'package:get/get.dart';
 class StoryScreen extends StatelessWidget {
   final StoryController _storyController = Get.put(StoryController());
   final PageController _pageController = PageController();
+  final ScrollController _scrollController = ScrollController(); // Add ScrollController
 
   final int initialPageIndex;
   StoryScreen({super.key, this.initialPageIndex = 0});
+  int previousIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _pageController.jumpToPage(initialPageIndex);
       _storyController.updateIndex(initialPageIndex); // Keep the index synced
+      _scrollToActiveIndicator(initialPageIndex); // Scroll to initial indicator
     });
 
     return Scaffold(
@@ -30,10 +33,13 @@ class StoryScreen extends StatelessWidget {
           children: [
             PageView.builder(
               controller: _pageController, // Connect the PageController
-
               itemCount: _storyController.stories.length,
               onPageChanged: (index) {
                 _storyController.updateIndex(index);
+                if (index > 4 || previousIndex > index) {
+                  _scrollToActiveIndicator(index); // Scroll to center active indicator
+                  previousIndex = index;
+                }
               },
               itemBuilder: (context, index) {
                 final storyItem = _storyController.stories[index];
@@ -41,9 +47,7 @@ class StoryScreen extends StatelessWidget {
 
                 return Stack(
                   children: [
-                    // Fullscreen image
                     Positioned.fill(child: Image.asset(storyItem.imagePath, fit: BoxFit.cover)),
-                    // Overlay content
                     Positioned(
                       top: 120.h,
                       left: 16.w,
@@ -51,19 +55,8 @@ class StoryScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Title and Close button
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(storyItem.title, style: FluukyTheme.lightTheme.textTheme.headlineMedium!.copyWith(color: Colors.white)),
-                              IconButton(
-                                onPressed: () => Get.back(),
-                                icon: Icon(Icons.close, color: Colors.white, size: 26.w),
-                              ),
-                            ],
-                          ),
+                          Text(storyItem.title, style: FluukyTheme.lightTheme.textTheme.headlineMedium!.copyWith(color: Colors.white)),
                           SizedBox(height: 16.h),
-                          // Description text
                           Text(storyItem.description, style: TextStyle(color: Colors.white, fontSize: 16.w, fontWeight: FontWeight.w400)),
                         ],
                       ),
@@ -83,17 +76,24 @@ class StoryScreen extends StatelessWidget {
                 );
               },
             ),
-
-            // Indicator
+            Positioned(
+              top: 120.h,
+              right: 16.w,
+              child: IconButton(
+                onPressed: () => Get.back(),
+                icon: Icon(Icons.close, color: Colors.white, size: 26.w),
+              ),
+            ),
             Positioned(
               top: 64.h,
               left: 0.w,
               right: 0.w,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
+                controller: _scrollController, // Connect the ScrollController
                 child: Row(
                   children: [
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16.w),
                     ...List.generate(
                       _storyController.stories.length,
                       (i) => Padding(
@@ -106,6 +106,7 @@ class StoryScreen extends StatelessWidget {
                               curve: Curves.easeInOut,
                             );
                             _storyController.updateIndex(i);
+                            _scrollToActiveIndicator(i); // Scroll to center active indicator
                           },
                           child: Column(
                             children: [
@@ -116,7 +117,6 @@ class StoryScreen extends StatelessWidget {
                               ),
                               SizedBox(height: 8.h),
                               Container(
-                                // width: 50,
                                 margin: EdgeInsets.only(right: 4.w),
                                 width: 50.w,
                                 decoration: BoxDecoration(
@@ -130,7 +130,7 @@ class StoryScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16.w),
                   ],
                 ),
               ),
@@ -138,6 +138,21 @@ class StoryScreen extends StatelessWidget {
           ],
         );
       }),
+    );
+  }
+
+  void _scrollToActiveIndicator(int index) {
+    // Calculate the offset to center the active indicator
+    final double screenWidth = Get.width;
+    const double indicatorWidth = 50; // Adjust to the actual width of each indicator
+    const double padding = 16; // Adjust for left/right padding
+
+    // Center the active indicator
+    final double offset = index * (indicatorWidth + 7) - (screenWidth / 2) + (indicatorWidth / 2) + padding;
+    _scrollController.animateTo(
+      offset,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
     );
   }
 }

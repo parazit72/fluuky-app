@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
-import 'package:fluuky/domain/entities/category_entity.dart';
+import 'package:fluuky/domain/entities/raffle_category_entity.dart';
 import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
@@ -59,7 +59,7 @@ Widget buildItemsList(RaffleController raffleController) {
 Widget _buildCategoryGridView<T>(List<T> items, Widget Function(T) itemBuilder) {
   RxList categories;
   final RaffleController raffleController = Get.find();
-  RxList<CategoryEntity> raffleCategories = raffleController.raffleCategories;
+  RxList<RaffleCategoryEntity> raffleCategories = raffleController.raffleCategories;
   final locale = Get.locale;
   categories = raffleCategories;
 
@@ -72,7 +72,8 @@ Widget _buildCategoryGridView<T>(List<T> items, Widget Function(T) itemBuilder) 
             SizedBox(width: 20.w),
             tagBtnWidget(
               raffleController: raffleController,
-              categoryEntity: CategoryEntity(id: -1, name: 'All', slug: '', status: 1, description: '', iconPath: ''),
+              raffleCategoryEntity:
+                  RaffleCategoryEntity(id: -1, name: 'All', slug: '', status: '1', description: '', activeIconPath: '', inactiveIconPath: ''),
               isAllButton: true,
             ),
             SizedBox(width: 8.w),
@@ -80,7 +81,7 @@ Widget _buildCategoryGridView<T>(List<T> items, Widget Function(T) itemBuilder) 
             ...raffleCategories.map(
               (item) => Wrap(
                 children: [
-                  tagBtnWidget(raffleController: raffleController, categoryEntity: item),
+                  tagBtnWidget(raffleController: raffleController, raffleCategoryEntity: item),
                   SizedBox(width: 8.w),
                 ],
               ),
@@ -111,12 +112,12 @@ class tagBtnWidget extends StatelessWidget {
   const tagBtnWidget({
     super.key,
     required this.raffleController,
-    required this.categoryEntity,
+    required this.raffleCategoryEntity,
     this.isAllButton = false,
   });
 
   final RaffleController raffleController;
-  final CategoryEntity categoryEntity;
+  final RaffleCategoryEntity raffleCategoryEntity;
   final bool isAllButton;
 
   @override
@@ -126,19 +127,20 @@ class tagBtnWidget extends StatelessWidget {
         if (isAllButton) {
           raffleController.selectedCategory.value = -1; // Clear category to show all
         } else {
-          raffleController.selectedCategory.value = categoryEntity.id;
+          raffleController.selectedCategory.value = raffleCategoryEntity.id!;
         }
       },
       child: Container(
         decoration: BoxDecoration(
-          boxShadow: (isAllButton && raffleController.selectedCategory.value == 0) || raffleController.selectedCategory.value == categoryEntity.id
-              ? [
-                  BoxShadow(color: FluukyTheme.secondaryColor),
-                  BoxShadow(color: FluukyTheme.fourthColor),
-                  const BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
-                ]
-              : null,
-          color: (isAllButton && raffleController.selectedCategory.value == 0) || raffleController.selectedCategory.value == categoryEntity.id
+          boxShadow:
+              (isAllButton && raffleController.selectedCategory.value == 0) || raffleController.selectedCategory.value == raffleCategoryEntity.id
+                  ? [
+                      BoxShadow(color: FluukyTheme.secondaryColor),
+                      BoxShadow(color: FluukyTheme.fourthColor),
+                      const BoxShadow(color: Colors.white, spreadRadius: -4.0, blurRadius: 8.6),
+                    ]
+                  : null,
+          color: (isAllButton && raffleController.selectedCategory.value == 0) || raffleController.selectedCategory.value == raffleCategoryEntity.id
               ? FluukyTheme.primaryColor
               : FluukyTheme.fourthColor,
           borderRadius: BorderRadius.all(Radius.circular(8.w)),
@@ -146,9 +148,9 @@ class tagBtnWidget extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
         height: 32.w,
         child: Text(
-          categoryEntity.name,
+          raffleCategoryEntity.name!,
           style: FluukyTheme.lightTheme.textTheme.labelMedium!.copyWith(
-            color: (isAllButton && raffleController.selectedCategory.value == 0) || raffleController.selectedCategory.value == categoryEntity.id
+            color: (isAllButton && raffleController.selectedCategory.value == 0) || raffleController.selectedCategory.value == raffleCategoryEntity.id
                 ? Colors.white
                 : FluukyTheme.primaryColor,
           ),
@@ -188,7 +190,8 @@ class UpdateYourInterestBoxWidget extends StatelessWidget {
             onPressed: () => Get.toNamed(recommendationsForm),
             child: Text(
               t.translate('Update'),
-              style: TextStyle(fontSize: 14.w, fontWeight: FontWeight.w600, color: FluukyTheme.primaryColor, fontFamily: 'Causten', height: 1.5),
+              style: TextStyle(
+                  fontSize: 14.w, fontWeight: FontWeight.w600, color: FluukyTheme.primaryColor, fontFamily: FluukyTheme.fontFamily, height: 1.5),
             ),
           ),
         ],
