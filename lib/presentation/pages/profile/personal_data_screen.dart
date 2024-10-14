@@ -1,8 +1,11 @@
 import 'dart:io';
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
+import 'package:fluuky/domain/entities/user_entity.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/auth_controller.dart';
 import 'package:fluuky/presentation/widgets/custom_dropdown_button.dart';
@@ -28,42 +31,64 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
   String? _selectedMonth;
   String? _selectedDay;
 
-  Future<void> _pickImage() async {
+  Future<void> _pickImage(ImageSource imageSource) async {
     final ImagePicker picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: imageSource);
 
     if (pickedFile != null) {
       setState(() {
         _profileImage = File(pickedFile.path);
       });
+      _authController.uploadProfileImage(_profileImage!);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    UserEntity? user = _authController.user.value;
     var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
       appBar: AppBarSingleWidget(title: t.translate('personalData')),
       body: Stack(
         children: [
           ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 32.h),
             children: [
               Text(t.translate('yourPhoto'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
               Text(t.translate('uploadPhotoUnder2MB'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
 
               // Profile image preview and change button
               Center(
                 child: Column(
                   children: [
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundImage: _profileImage != null ? FileImage(_profileImage!) : null,
-                      // : const AssetImage('assets/images/empty-wishlist.png') as ImageProvider, // Use a placeholder image if no image is selected
-                      child: _profileImage == null ? const Icon(Icons.camera_alt, size: 50) : null,
+                    InkWell(
+                      onTap: () => _showImageUploadSheetDialog(),
+                      child: CircleAvatar(
+                          radius: 50.w,
+                          backgroundColor: FluukyTheme.secondaryColor,
+                          child: user != null && user.avatar != null
+                              ? ClipOval(
+                                  child: CachedNetworkImage(
+                                    imageUrl: user.avatar!,
+                                    width: 32.w,
+                                    height: 32.w,
+                                    fit: BoxFit.cover,
+                                    placeholder: (context, url) => Container(),
+                                    errorWidget: (context, url, error) => const Icon(Icons.error, color: Colors.white),
+                                  ),
+                                )
+                              : Icon(
+                                  Icons.camera_alt,
+                                  size: 30.w,
+                                  color: FluukyTheme.thirdColor,
+                                )
+
+                          // :  AssetImage('assets/images/empty-wishlist.png') as ImageProvider, // Use a placeholder image if no image is selected
+                          // child: _profileImage == null ? Icon(Icons.camera_alt, size: 50.w) : null,
+                          ),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     TextButton(
                       onPressed: _showImageUploadSheetDialog,
                       child: Text(t.translate('changePhoto')),
@@ -72,7 +97,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                 ),
               ),
 
-              const Divider(height: 48),
+              Divider(height: 48.h),
               Text(t.translate('personalData'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
               Text(t.translate('manageAllYourPersonalInformation'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
               registerWidget(),
@@ -91,19 +116,20 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 24.h),
             InputTextFieldWidget(
                 controller: _authController.firstNameController, labelText: t.translate('firstName'), hintText: t.translate('enterFirstName')),
-            const SizedBox(height: 20),
+            SizedBox(height: 24.h),
             InputTextFieldWidget(
                 controller: _authController.lastNameController, labelText: t.translate('lastName'), hintText: t.translate('enterLastName')),
-            const SizedBox(height: 20),
+            SizedBox(height: 24.h),
             Text(t.translate('date_of_birth'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.23,
+                  width: 90.w,
                   child: CustomDropdownButton(
                     itemsKey: 'days_en',
                     onChanged: (value) => _selectedDay = value,
@@ -111,7 +137,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   ),
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.37,
+                  width: 130.w,
                   child: CustomDropdownButton(
                     itemsKey: 'months_en',
                     onChanged: (value) => _selectedMonth = value,
@@ -119,7 +145,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   ),
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.25,
+                  width: 100.w,
                   child: CustomDropdownButton(
                     itemsKey: 'years',
                     onChanged: (value) => _selectedYear = value,
@@ -171,7 +197,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
           builder: (context, scrollController) {
             return Container(
               width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.all(20.w),
               decoration: const BoxDecoration(
                 image: DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
@@ -182,42 +208,42 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
                     Text(t.translate('changePhoto'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
-                    Text(t.translate('chooseOneOfTheFollowing'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
-                    const SizedBox(height: 5),
+                    Text(t.translate('chooseOneOfTheFollowing'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
+                    SizedBox(height: 5.h),
                     TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all(const EdgeInsets.all(0)),
                           minimumSize: WidgetStateProperty.all(const Size(0, 0)),
                         ),
-                        onPressed: _pickImage,
+                        onPressed: () => _pickImage(ImageSource.camera),
                         child: Wrap(
                           alignment: WrapAlignment.center,
                           crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
-                            const Icon(Icons.camera_alt_rounded, size: 20, color: Colors.black),
-                            const SizedBox(width: 8),
-                            Text(t.translate('takeAPhoto'), style: const TextStyle(color: Colors.black)),
+                            Icon(Icons.camera_alt_rounded, size: 20.w, color: Colors.black),
+                            SizedBox(width: 8.w),
+                            Text(t.translate('takeAPhoto'), style: FluukyTheme.lightTheme.textTheme.labelMedium),
                           ],
                         )),
-                    const SizedBox(height: 5),
+                    SizedBox(height: 5.w),
                     TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all(const EdgeInsets.all(0)),
                           minimumSize: WidgetStateProperty.all(const Size(0, 0)),
                         ),
-                        onPressed: _pickImage,
+                        onPressed: () => _pickImage(ImageSource.gallery),
                         child: Wrap(
                           alignment: WrapAlignment.center,
                           crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
-                            const Icon(Icons.image, size: 20, color: Colors.black),
-                            const SizedBox(width: 8),
-                            Text(t.translate('uploadFromGallery'), style: const TextStyle(color: Colors.black)),
+                            Icon(Icons.image, size: 20.w, color: Colors.black),
+                            SizedBox(width: 8.w),
+                            Text(t.translate('uploadFromGallery'), style: FluukyTheme.lightTheme.textTheme.labelMedium),
                           ],
                         )),
-                    const SizedBox(height: 5),
+                    SizedBox(height: 5.w),
                     TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all(const EdgeInsets.all(0)),
@@ -225,11 +251,11 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                         ),
                         onPressed: () {},
                         child: Wrap(alignment: WrapAlignment.center, crossAxisAlignment: WrapCrossAlignment.center, children: [
-                          const Icon(Icons.delete, size: 20, color: Color(0XFFD30201)),
-                          const SizedBox(width: 8),
+                          Icon(Icons.delete, size: 20.w, color: FluukyTheme.redColor),
+                          SizedBox(width: 8.w),
                           Text(
                             t.translate('removePhoto'),
-                            style: const TextStyle(color: Color(0XFFD30201)),
+                            style: FluukyTheme.lightTheme.textTheme.labelMedium!.copyWith(color: FluukyTheme.redColor),
                           )
                         ])),
                   ],

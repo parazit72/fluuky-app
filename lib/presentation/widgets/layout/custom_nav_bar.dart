@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,15 +17,6 @@ class CustomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     var t = AppLocalizations.of(context)!;
     UserEntity? user = _authController.user.value;
-    user = UserEntity(
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'john.doe@example.com',
-      avatar: 'assets/images/avatar.jpg',
-      phone: '',
-      birthDate: DateTime.now(),
-      acceptedTermsAndConditions: false,
-    );
     WidgetsBinding.instance.addPostFrameCallback((_) {
       switch (Get.currentRoute) {
         case home:
@@ -37,7 +29,7 @@ class CustomNavBar extends StatelessWidget {
           navBarController.selectedIndex.value = 2;
           break;
         default:
-          navBarController.selectedIndex.value = 0; // Default to home if route is unknown
+          navBarController.selectedIndex.value = 1; // Default to drawlist if route is unknown
       }
     });
     return Obx(() {
@@ -52,20 +44,22 @@ class CustomNavBar extends StatelessWidget {
           elevation: 0,
           selectedFontSize: 15.w,
           unselectedFontSize: 15.w,
+          type: BottomNavigationBarType.fixed,
           currentIndex: navBarController.selectedIndex.value,
           onTap: (index) {
+            userIsLoggedIn = _authController.checkAuthAndShowSheet(index: index);
+            if (!userIsLoggedIn && index != 1) return;
+
             navBarController.changeIndex(index);
             switch (index) {
               case 0:
-                userIsLoggedIn = _authController.checkAuthAndShowSheet();
-                if (userIsLoggedIn) Get.toNamed(home);
+                Get.toNamed(home);
                 break;
               case 1:
                 Get.toNamed(drawsList);
                 break;
               case 2:
-                userIsLoggedIn = _authController.checkAuthAndShowSheet();
-                if (userIsLoggedIn) Get.toNamed(profile);
+                Get.toNamed(profile);
                 break;
             }
             navBarController.changeIndex(index); // Ensure the index is updated
@@ -99,8 +93,20 @@ class CustomNavBar extends StatelessWidget {
                       border: navBarController.selectedIndex.value == 2 ? Border.all(color: FluukyTheme.primaryColor, width: 2.w) : null,
                     ),
                     child: CircleAvatar(
-                      backgroundImage: AssetImage(user!.avatar ?? 'assets/images/avatar.jpg'),
-                      radius: 12.w,
+                      radius: 16.w,
+                      backgroundColor: FluukyTheme.secondaryColor,
+                      child: user != null && user.avatar != null
+                          ? ClipOval(
+                              child: CachedNetworkImage(
+                                imageUrl: user.avatar!,
+                                width: 32.w,
+                                height: 32.w,
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) => Container(),
+                                errorWidget: (context, url, error) => const Icon(Icons.error, color: Colors.white),
+                              ),
+                            )
+                          : Container(),
                     ),
                   ),
                 ],
@@ -119,7 +125,7 @@ class CustomNavBar extends StatelessWidget {
       icon: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (navBarController.selectedIndex.value == index) Container(width: 125.w, height: 2.h, color: Theme.of(context).primaryColor),
+          if (navBarController.selectedIndex.value == index) Container(width: 125.w, height: 2.h, color: FluukyTheme.primaryColor),
           SizedBox(height: 11.h),
           SvgPicture.asset(
             navBarController.selectedIndex.value == index ? activeIconPath : iconPath,

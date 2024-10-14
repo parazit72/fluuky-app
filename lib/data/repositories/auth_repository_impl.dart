@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:fluuky/app/utils/check_internet_connection.dart';
 import 'package:fluuky/data/models/auth_model.dart';
 import 'package:fluuky/data/models/user_model.dart';
 import 'package:fluuky/data/providers/network/auth_remote_data_source.dart';
@@ -8,16 +11,20 @@ import 'package:fluuky/domain/repositories/auth_repository.dart';
 class AuthRepositoryImpl implements AuthRepository {
   late final AuthRemoteDataSource _remoteDataSource = AuthRemoteDataSource();
   late final AuthModel _authModel = AuthModel();
-
   @override
-  Future<void> login(String email, String password) async {
+  Future<UserEntity?> login(String email, String password) async {
     try {
       final response = await _remoteDataSource.login(email, password);
 
       // Assume the API returns a token on successful login
       if (response.token != null) {
         await _authModel.saveToken(response.token!); // Save the token
+        final UserEntity? user = response.toEntity().user;
+        await _authModel.saveUser(user!); // Save the user
+        return user;
       }
+
+      return null; // Return null if token is not present
     } catch (e) {
       if (e is DioException) {
         // Check the HTTP status code
@@ -29,7 +36,7 @@ class AuthRepositoryImpl implements AuthRepository {
           throw Exception('Server error:\nPlease try again later.');
         } else {
           // Handle other Dio-specific errors
-          throw Exception('Failed to login:\n${e.response?.statusMessage}');
+          throw Exception('Failed to login:\nPlease check your internet cnnection and try again.');
         }
       } else {
         // Handle non-Dio errors
@@ -103,12 +110,31 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<String?> uploadAvatar(File image) async {
+    try {
+      final response = await _remoteDataSource.uploadAvatar(image);
+      return response;
+    } catch (e) {
+      // Handle the error
+      return null;
+    }
+  }
+
+  @override
   Future<UserEntity?> getCurrentUser() async {
     try {
-      final UserModel? userModel = await _remoteDataSource.getCurrentUser();
-      return userModel?.toEntity();
+      if (await checkInternetConnection()) {
+        final UserModel? remoteUserModel = await _remoteDataSource.getCurrentUser();
+        return remoteUserModel?.toEntity();
+      }
+
+      // Fallback to local data if remote fetch fails or no internet
+      final UserEntity? localUserModel = await _authModel.getUser();
+      return localUserModel;
     } catch (e) {
-      throw Exception('Failed to get current user: $e');
+      // Handle the error (remote fetch failed)
+      print('Remote fetch failed, falling back to local: $e');
     }
+    return null;
   }
 }

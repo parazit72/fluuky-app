@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/presentation/pages/auth/verification_screen.dart';
@@ -12,7 +14,8 @@ import '../../domain/repositories/auth_repository.dart';
 
 class AuthController extends GetxController {
   final AuthRepository _authRepository;
-  // final VerifyCodeUseCase _verifyCodeUseCase;
+  AuthController(this._authRepository);
+
   final isLogged = false.obs;
   final isLoading = false.obs;
   final rememberMe = false.obs;
@@ -24,9 +27,32 @@ class AuthController extends GetxController {
   var isAtLeast8Characters = false.obs;
   final isBillingAddressEqualShippingAddress = false.obs;
 
-  bool checkAuthAndShowSheet() {
-    if (!isLogged.value) {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController codeController = TextEditingController();
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController referralCodeController = TextEditingController();
+  final TextEditingController mobileController = TextEditingController();
+
+  late Rx<UserEntity?> user = Rx<UserEntity?>(null);
+  final FlutterSecureStorage _secureStorage = Get.find<FlutterSecureStorage>();
+  static const _tokenKey = 'auth_token';
+
+  @override
+  void onInit() {
+    super.onInit();
+    checkLoginStatus();
+  }
+
+  bool checkAuthAndShowSheet({int index = 1}) {
+    print(index);
+    if (!isLogged.value && index != 1) {
       Get.bottomSheet(
+        barrierColor: Colors.transparent,
+        enterBottomSheetDuration: const Duration(microseconds: 500),
+        exitBottomSheetDuration: const Duration(milliseconds: 500),
         const DraggableSignupSheet(),
         isScrollControlled: true,
       );
@@ -42,28 +68,6 @@ class AuthController extends GetxController {
     hasDigit.value = password.contains(RegExp(r'\d'));
     hasSpecialCharacter.value = password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
     isAtLeast8Characters.value = password.length >= 8;
-  }
-
-  AuthController(this._authRepository);
-  // AuthController(this._authRepository, this._verifyCodeUseCase);
-
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
-  final TextEditingController codeController = TextEditingController();
-  final TextEditingController firstNameController = TextEditingController();
-  final TextEditingController lastNameController = TextEditingController();
-  final TextEditingController referralCodeController = TextEditingController();
-  final TextEditingController mobileController = TextEditingController();
-
-  final Rx<UserEntity?> user = Rx<UserEntity?>(null);
-  final FlutterSecureStorage _secureStorage = Get.find<FlutterSecureStorage>();
-  static const _tokenKey = 'auth_token';
-
-  @override
-  void onInit() {
-    super.onInit();
-    checkLoginStatus();
   }
 
   Future<void> registerWithEmail() async {
@@ -98,7 +102,7 @@ class AuthController extends GetxController {
   Future<void> loginWithEmail() async {
     isLoading.value = true;
     try {
-      await _authRepository.login(emailController.text.trim(), passwordController.text);
+      user.value = await _authRepository.login(emailController.text.trim(), passwordController.text);
 
       emailController.clear();
       passwordController.clear();
@@ -140,6 +144,7 @@ class AuthController extends GetxController {
   Future<void> checkLoginStatus() async {
     final token = await _secureStorage.read(key: _tokenKey);
     if (token != null) {
+      user.value = await _authRepository.getCurrentUser();
       isLogged.value = true;
     } else {
       isLogged.value = false;
@@ -161,6 +166,14 @@ class AuthController extends GetxController {
       _showErrorDialog(e.toString());
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  Future<void> uploadProfileImage(File image) async {
+    final imagePath = await _authRepository.uploadAvatar(image);
+    if (imagePath != null) {
+      // Update the user's avatar image path
+      // e.g., update local user model or state management system
     }
   }
 

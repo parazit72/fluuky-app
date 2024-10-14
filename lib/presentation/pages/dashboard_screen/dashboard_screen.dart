@@ -27,7 +27,11 @@ class DashboardScreen extends StatelessWidget {
       bottomNavigationBar: CustomNavBar(),
       body: ListView(
         children: [
-          WelcomeUserAvatar(),
+          SizedBox(height: 24.h),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: WelcomeUserAvatar(),
+          ),
           const UserStatusWidget(),
           Padding(padding: EdgeInsets.symmetric(horizontal: 20.w), child: const Divider()),
           const BadgesListWidget(),

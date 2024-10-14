@@ -15,6 +15,7 @@ import 'package:fluuky/domain/repositories/raffle_repository.dart';
 import 'package:fluuky/presentation/controllers/basket_controller.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/controllers/home_controller.dart';
+import 'package:fluuky/presentation/controllers/internet_controller.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
 import 'package:fluuky/presentation/controllers/order_controller.dart';
 import 'package:fluuky/presentation/controllers/raffle_controller.dart';
@@ -47,6 +48,7 @@ class InitialBindings extends Bindings {
     Get.put<AuthRepository>(Get.find<AuthRepositoryImpl>());
     Get.put(AuthController(Get.find<AuthRepository>()));
 
+    Get.put(InternetController(), permanent: true);
     // Get.lazyPut(() => BasketRepositoryImpl());
 
     Get.lazyPut(() => SubscriptionController());

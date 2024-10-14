@@ -66,7 +66,7 @@ class UserModel {
       email: email ?? '',
       phone: phone ?? '',
       avatar: avatar,
-      birthDate: birthDate != null ? DateTime.tryParse(birthDate!) : null,
+      birthDate: birthDate != null && birthDate!.isNotEmpty ? DateTime.tryParse(birthDate!) : null,
       acceptedTermsAndConditions: acceptedTermsAndConditions ?? false,
     );
   }

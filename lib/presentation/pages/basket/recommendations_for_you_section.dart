@@ -85,7 +85,7 @@ class _RecommendationsForYouSectionState extends State<RecommendationsForYouSect
                       );
                     },
                     options: CarouselOptions(
-                      height: 880.h,
+                      height: 700.h,
                       enlargeCenterPage: false,
                       viewportFraction: 1,
                       onPageChanged: (index, reason) {
@@ -95,7 +95,7 @@ class _RecommendationsForYouSectionState extends State<RecommendationsForYouSect
                   );
                 },
               ),
-        SizedBox(height: 8.h),
+        drawItems.isEmpty ? SizedBox(height: 8.h) : SizedBox(height: 180.h),
       ],
     );
   }

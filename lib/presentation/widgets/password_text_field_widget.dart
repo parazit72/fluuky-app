@@ -59,7 +59,7 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
             Container(
               height: 48.h,
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                borderRadius: BorderRadius.all(Radius.circular(8.w)),
                 color: FluukyTheme.inputBackgroundColor,
                 boxShadow: [
                   BoxShadow(color: FluukyTheme.secondaryColor),

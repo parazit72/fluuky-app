@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -22,7 +24,10 @@ class DioProvider {
         return handler.next(options);
       },
       onResponse: (response, handler) => handler.next(response),
-      onError: (DioException e, handler) => handler.next(e),
+      onError: (DioException e, handler) {
+        // ErrorHandler.handleError(e);
+        return handler.next(e);
+      },
     ));
 
     return dio;
@@ -38,5 +43,33 @@ class DioProvider {
       if (token != null) 'Authorization': 'bearer $token',
       'Accept-Language': locale.languageCode,
     };
+  }
+}
+
+class ErrorHandler {
+  static void handleError(DioException e) {
+    String message;
+    switch (e.type) {
+      case DioExceptionType.connectionTimeout:
+        message = 'Connection timed out. Please try again.';
+        break;
+      case DioExceptionType.receiveTimeout:
+        message = 'Receiving data timed out. Please try again.';
+        break;
+      case DioExceptionType.badResponse:
+        message = 'Received invalid status code: ${e.response?.statusCode}';
+        break;
+      case DioExceptionType.unknown:
+        message = 'An unexpected error occurred. Please try again.';
+        break;
+      default:
+        message = 'An unknown error occurred.';
+    }
+
+    Get.snackbar(
+      'Error',
+      message,
+      snackPosition: SnackPosition.TOP,
+    );
   }
 }

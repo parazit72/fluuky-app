@@ -28,4 +28,16 @@ class UserEntity {
       acceptedTermsAndConditions: json['accepted_terms_and_conditions'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'first_name': firstName,
+      'last_name': lastName,
+      'email': email,
+      'phone': phone,
+      'avatar': avatar,
+      'birth_date': birthDate?.toIso8601String(),
+      'accepted_terms_and_conditions': acceptedTermsAndConditions,
+    };
+  }
 }

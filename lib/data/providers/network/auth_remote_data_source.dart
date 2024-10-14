@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:fluuky/data/models/auth_model.dart';
 import 'package:fluuky/data/models/user_model.dart';
@@ -7,14 +9,34 @@ class AuthRemoteDataSource {
   final Dio _dio = DioProvider().createDio(); // Direct instantiation of Dio
 
   Future<AuthModel> login(String email, String password) async {
-    final response = await _dio.post('/auth/login', data: {
-      'email': email,
-      'password': password,
-    });
-    if (response.statusCode != 200) {
-      throw Exception('Login failed');
+    final response = await _dio.post(
+      '/auth/login',
+      data: {
+        'email': email,
+        'password': password,
+      },
+    );
+    if (response.statusCode == 200) {
+      return AuthModel.fromJson(response.data);
+    } else {
+      throw Exception('Login failed: ${response.data['message'] ?? 'Unknown error'}');
     }
-    return AuthModel.fromJson(response.data);
+  }
+
+  Future<String?> uploadAvatar(File image) async {
+    try {
+      // Use Dio or another HTTP client to upload the image
+      FormData formData = FormData.fromMap({
+        'avatar': await MultipartFile.fromFile(image.path),
+      });
+      final response = await _dio.post('/update-user-profile-avatar', data: formData);
+
+      // Return the image URL or path if successful
+      return response.data['avatarUrl'];
+    } catch (e) {
+      // Handle the error
+      return null;
+    }
   }
 
   Future<bool?> resendCode(String email) async {

@@ -1,7 +1,9 @@
+import 'dart:io';
+
 import '../entities/user_entity.dart';
 
 abstract class AuthRepository {
-  Future<void> login(String email, String password);
+  Future<UserEntity?> login(String email, String password);
   Future<bool?> resendCode(String email);
   Future<void> refreshToken();
   Future<bool?> createPassword(String email, String password);
@@ -10,4 +12,5 @@ abstract class AuthRepository {
   Future<bool> logout();
   Future<void> verifyCode(String code);
   Future<UserEntity?> getCurrentUser();
+  Future<String?> uploadAvatar(File image);
 }

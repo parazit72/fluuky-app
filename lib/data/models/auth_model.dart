@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluuky/data/models/user_model.dart';
 import 'package:fluuky/domain/entities/auth_entity.dart';
+import 'package:fluuky/domain/entities/user_entity.dart';
 
 class AuthModel {
   static const _tokenKey = 'auth_token';
@@ -45,6 +48,22 @@ class AuthModel {
   // Save token
   Future<void> saveToken(String token) async {
     await _secureStorage.write(key: _tokenKey, value: token);
+  }
+
+  // Save user
+  Future<void> saveUser(UserEntity userEntity) async {
+    await _secureStorage.write(key: 'user', value: jsonEncode(userEntity.toJson()));
+  }
+
+  // Get user
+  Future<UserEntity?> getUser() async {
+    final String? userData = await _secureStorage.read(key: 'user');
+    print(userData);
+    if (userData != null) {
+      return UserEntity.fromJson(jsonDecode(userData));
+    }
+
+    return null;
   }
 
   // Get token

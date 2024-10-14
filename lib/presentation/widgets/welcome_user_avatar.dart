@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
@@ -11,27 +12,35 @@ class WelcomeUserAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var t = AppLocalizations.of(context)!;
     UserEntity? user = _authController.user.value;
-    user = UserEntity(
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'john.doe@example.com',
-        avatar: 'assets/images/avatar.jpg',
-        acceptedTermsAndConditions: false,
-        phone: '',
-        birthDate: DateTime.now());
+    var t = AppLocalizations.of(context)!;
+
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 20.w),
+      padding: EdgeInsets.symmetric(vertical: 16.w, horizontal: 0.w),
       child: Wrap(
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
           CircleAvatar(
             radius: 16.w,
-            backgroundImage: AssetImage(user.avatar ?? 'assets/images/avatar.jpg'),
+            backgroundColor: FluukyTheme.secondaryColor,
+            child: user != null && user.avatar != null
+                ? ClipOval(
+                    child: CachedNetworkImage(
+                      imageUrl: user.avatar!,
+                      width: 32.w,
+                      height: 32.w,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => Container(),
+                      errorWidget: (context, url, error) => const Icon(Icons.error, color: Colors.white),
+                    ),
+                  )
+                : Container(),
           ),
           SizedBox(width: 12.w),
-          Text('${t.translate('Welcome, ')} ${user.firstName}', style: FluukyTheme.lightTheme.textTheme.labelMedium),
+          Text(
+            user != null ? '${t.translate('Welcome, ')} ${user.firstName}' : t.translate('Welcome, Guest'), // Handle null user
+            style: FluukyTheme.lightTheme.textTheme.labelMedium,
+          ),
         ],
       ),
     );

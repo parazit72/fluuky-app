@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
@@ -19,41 +20,41 @@ class ProfilePreferencesScreen extends StatelessWidget {
       appBar: AppBarSingleWidget(title: t.translate('profile')),
       bottomNavigationBar: CustomNavBar(),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 0.h),
         child: ListView(
           children: [
-            const SizedBox(height: 32),
+            SizedBox(height: 32.h),
             buildSectionTitle(t.translate('Account'), context),
             buildPreferenceItem(t.translate('personalData'), personalData),
             buildPreferenceItem(t.translate('Contact Information'), contactInformation),
             buildPreferenceItem(t.translate('change_password'), changePassword),
-            const SizedBox(height: 32),
+            SizedBox(height: 32.h),
             buildSectionTitle(t.translate('checkoutDetails'), context),
             buildPreferenceItem(t.translate('billingAddress'), billingAddress),
             // buildPreferenceItem(t.translate('Shipping Address'), shippingAddress),
             buildPreferenceItem(t.translate('payment_method'), paymentMethod),
-            const SizedBox(height: 32),
+            SizedBox(height: 32.h),
             buildSectionTitle(t.translate('Manage Subscription'), context),
             buildSimpleRow(t.translate('Membership'), t.translate('basic')),
             buildTextButton(t.translate('upgrade_now'), () {}),
-            const SizedBox(height: 32),
+            SizedBox(height: 32.h),
             buildSectionTitle(t.translate('referral_program'), context),
             buildTextButton(t.translate('invite_a_friend'), () {}),
-            const SizedBox(height: 32),
+            SizedBox(height: 32.h),
             buildSectionTitle(t.translate('Language'), context),
             LanguageDropdown(hintText: 'Select Language', initialValue: Get.locale?.languageCode),
-            const SizedBox(height: 32),
+            SizedBox(height: 32.h),
             buildSectionTitle(t.translate('About'), context),
             buildPreferenceItem(t.translate('privacy_policy'), privacyPolicy),
             buildPreferenceItem(t.translate('terms_of_service'), termsAndCondition),
             buildPreferenceItem(t.translate('helpCenter'), helpCenter),
-            const SizedBox(height: 32),
-            buildTextButton(t.translate('logout'), () => _showLogOutSheet(context)),
-            buildTextButton(t.translate('delete_account'), () {}, color: const Color(0XFFD30201)),
-            const SizedBox(height: 32),
+            SizedBox(height: 32.h),
+            buildTextButton(t.translate('logout'), () => _showLogOutSheet(context), color: FluukyTheme.inputTextColor),
+            buildTextButton(t.translate('delete_account'), () {}, color: FluukyTheme.redColor),
+            SizedBox(height: 32.h),
             buildSectionTitle(t.translate('fluuky_in_social_media'), context),
             buildSocialMediaRow(),
-            const SizedBox(height: 40),
+            SizedBox(height: 40.h),
           ],
         ),
       ),
@@ -67,25 +68,28 @@ class ProfilePreferencesScreen extends StatelessWidget {
           onTap: () => Get.toNamed(route),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text(title), const Icon(Icons.chevron_right)],
+            children: [Text(title, style: FluukyTheme.lightTheme.textTheme.labelMedium), Icon(Icons.chevron_right, size: 24.h)],
           ),
         ),
-        const Divider(height: 32),
+        Divider(height: 32.h),
       ],
     );
   }
 
   Widget buildSectionTitle(String title, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: Text(title, style: FluukyTheme.lightTheme.textTheme.bodySmall),
+      padding: EdgeInsets.only(bottom: 16.h),
+      child: Text(title, style: FluukyTheme.lightTheme.textTheme.bodyMedium!.copyWith(color: FluukyTheme.thirdColor)),
     );
   }
 
   Widget buildSimpleRow(String title, String value) {
     return Column(
       children: [
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text(title), Text(value, style: TextStyle(color: FluukyTheme.thirdColor))]),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Text(title, style: FluukyTheme.lightTheme.textTheme.labelMedium),
+          Text(value, style: FluukyTheme.lightTheme.textTheme.bodyMedium!.copyWith(color: FluukyTheme.thirdColor))
+        ]),
         const Divider(),
       ],
     );
@@ -105,11 +109,11 @@ class ProfilePreferencesScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(title, style: TextStyle(color: color ?? FluukyTheme.primaryColor, fontWeight: FontWeight.w600)),
+              Text(title, style: TextStyle(color: color ?? FluukyTheme.primaryColor, fontWeight: FontWeight.w400)),
             ],
           ),
         ),
-        const Divider(height: 32),
+        Divider(height: 32.h),
       ],
     );
   }
@@ -118,7 +122,7 @@ class ProfilePreferencesScreen extends StatelessWidget {
     const socialMediaIcons = ['email.png', 'whatsapp.png', 'telegram.png', 'facebook.png', 'instagram.png', 'x.png'];
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: socialMediaIcons.map((icon) => IconButton(onPressed: () {}, icon: Image.asset('assets/images/$icon', width: 32))).toList(),
+      children: socialMediaIcons.map((icon) => IconButton(onPressed: () {}, icon: Image.asset('assets/images/$icon', width: 32.w))).toList(),
     );
   }
 
@@ -135,8 +139,8 @@ class ProfilePreferencesScreen extends StatelessWidget {
           maxChildSize: 0.35,
           builder: (context, scrollController) {
             return Container(
-              width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.all(20),
+              width: 375.w,
+              padding: EdgeInsets.all(20.w),
               decoration: const BoxDecoration(
                 image: DecorationImage(image: AssetImage("assets/images/paper.jpg"), fit: BoxFit.cover),
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
@@ -147,10 +151,10 @@ class ProfilePreferencesScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 20),
-                    Text(t.translate('logout?'), style: Theme.of(context).textTheme.titleMedium),
+                    SizedBox(height: 20.h),
+                    Text(t.translate('logout?'), style: FluukyTheme.lightTheme.textTheme.titleMedium),
                     Text(t.translate('are_you_sure_you_want_to_log_out'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
                     ElevatedButton(
                         onPressed: () {
                           _authController.logout();
@@ -158,12 +162,12 @@ class ProfilePreferencesScreen extends StatelessWidget {
                           Get.offAllNamed(login);
                         },
                         child: Text(t.translate('logout'))),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
                     OutlinedButton(
                       onPressed: () => Navigator.pop(context),
                       child: Text(t.translate('Cancel')),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10.h),
                   ],
                 ),
               ),

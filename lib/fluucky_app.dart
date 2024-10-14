@@ -22,6 +22,7 @@ class FluukyApp extends StatefulWidget {
 
 class _FluukyAppState extends State<FluukyApp> {
   String appRoot = splash;
+  // static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
