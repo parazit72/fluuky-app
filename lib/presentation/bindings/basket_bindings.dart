@@ -9,6 +9,6 @@ class BasketBindings extends Bindings {
     Get.put(BasketRepositoryImpl());
     Get.put<BasketRepository>(Get.find<BasketRepositoryImpl>());
 
-    Get.put(BasketController(Get.find<BasketRepository>()));
+    Get.put(BasketController(repository: Get.find<BasketRepository>()));
   }
 }

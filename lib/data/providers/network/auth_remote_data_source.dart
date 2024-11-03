@@ -39,6 +39,41 @@ class AuthRemoteDataSource {
     }
   }
 
+  Future<String> updateUserPassword(String currentPassword, String newPassword) async {
+    final response = await _dio.post(
+      '/update-user-password',
+      data: {
+        'current_password': currentPassword,
+        'newPassword': newPassword,
+        'newPassword_confirmation': newPassword,
+      },
+    );
+    if (response.statusCode == 200) {
+      return response.data['token'];
+    } else {
+      throw Exception('Update user password failed: ${response.data['message'] ?? 'Unknown error'}');
+    }
+  }
+
+  Future<bool> updateUserBillingAddress(String addressLine1, String addressLine2, String city, String country, String state, String zipCode) async {
+    final response = await _dio.post(
+      '/update-user-billing-address',
+      data: {
+        "address_line_1": addressLine1,
+        "address_line_2": addressLine2,
+        "city": city,
+        "country": country,
+        "state": state,
+        "zip_code": zipCode,
+      },
+    );
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('Update user billing address failed: ${response.data['message'] ?? 'Unknown error'}');
+    }
+  }
+
   Future<bool?> resendCode(String email) async {
     final response = await _dio.post('/auth/resend-code', data: {
       'email': email,
@@ -120,5 +155,19 @@ class AuthRemoteDataSource {
       return UserModel.fromJson(response.data['user']);
     }
     return null;
+  }
+
+  Future<void> updateUserPersonalData(String name, String lastName, String day, String month, String year, String gender) async {
+    final response = await _dio.post('/update-user-personal-data', data: {
+      'name': name,
+      'last_name': lastName,
+      'day': day,
+      'month': month,
+      'year': year,
+      'gender': gender,
+    });
+    if (response.statusCode != 200) {
+      throw Exception('Failed to update personal data');
+    }
   }
 }

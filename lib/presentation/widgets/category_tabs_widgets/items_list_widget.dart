@@ -23,20 +23,25 @@ Widget buildItemsList(context) {
   return Obx(() {
     if (itemsController.selectedItemType.value == ItemType.draws) {
       if (itemsController.viewType.value == ViewType.list) {
-        return _buildItemsView<RaffleEntity>(
-          raffleController.filteredRaffles,
-          (raffle) => Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(t.translate('plantXTrees') + raffle.name, style: FluukyTheme.lightTheme.textTheme.titleLarge),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16.h),
-                  child: RaffleCardWidget(raffle: raffle, viewType: ViewType.list),
-                ),
-              ],
-            ),
+        return SingleChildScrollView(
+          child: Column(
+            children: raffleController.filteredRaffles
+                .map(
+                  (item) => Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(t.translate('plantXTrees') + item.name, style: FluukyTheme.lightTheme.textTheme.titleLarge),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 16.h),
+                          child: RaffleCardWidget(raffle: item, viewType: ViewType.list),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+                .toList(),
           ),
         );
       } else {
@@ -125,8 +130,7 @@ Widget buildItemsList(context) {
           SizedBox(height: 4.h),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: Text(t.translate('Be inspired to take climate action while enjoying the luxury of giving back.'),
-                style: FluukyTheme.lightTheme.textTheme.displaySmall),
+            child: Text(t.translate('winnersGalleryDescription'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
           ),
           SizedBox(height: 24.h),
           _buildCategoryGridView<WinnerEntity>(
@@ -136,29 +140,11 @@ Widget buildItemsList(context) {
         ],
       );
     } else {
-      return _buildItemsView<AnnouncementEntity>(
-        winnerController.announcements,
-        (announcement) => AnnouncementCardWidget(announcement: announcement),
+      return SingleChildScrollView(
+        child: Column(children: winnerController.announcements.map((item) => AnnouncementCardWidget(announcement: item)).toList()),
       );
     }
   });
-}
-
-Widget _buildItemsView<T>(List<T> items, Widget Function(T) itemBuilder) {
-  final ItemsController controller = Get.find();
-  if (controller.viewType.value == ViewType.list) {
-    return SingleChildScrollView(
-      child: Column(children: items.map((item) => itemBuilder(item)).toList()),
-    );
-  } else {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-      itemCount: items.length,
-      itemBuilder: (context, index) => itemBuilder(items[index]),
-    );
-  }
 }
 
 Widget _buildCategoryGridView<T>(

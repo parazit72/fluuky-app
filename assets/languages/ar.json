@@ -20,6 +20,8 @@
   "enter_code_msg": "يرجى إدخال الرمز هنا للتحقق من عنوان بريدك الإلكتروني.",
   "resend_code": "ألم يصلك الرمز؟ إعادة الإرسال",
   "back": "العودة",
+  "no_transactions_found":"No transactions found",
+
   "verify": "التحقق",
   "is required":" مطلوب",
   "set_new_password": "تعيين كلمة مرور جديدة",
@@ -313,7 +315,7 @@
   "exclusiveGoldTierDraws": "شارك في سحوبات وأحداث حصرية للدرجة الذهبية.",
   "changePhoto": "تغيير الصورة",
   "spend10kAEDwithin12Months": "أنفق 10,000 درهم إماراتي خلال فترة 12 شهرًا متتالية.",
-  "saveChanges": " حفظ التغييرات",
+  "Save Changes": " حفظ التغييرات",
   "spend25kAEDwithin12Months": "أنفِق 25,000 درهم إماراتي خلال فترة 12 شهرًا متتالية.",
   "unlockRewardsWithOurTieredLoyaltyProgram": "إفتح المكافآت مع برنامج الولاء المتدرج لدينا!",
   "personalData": "البيانات الشخصية",

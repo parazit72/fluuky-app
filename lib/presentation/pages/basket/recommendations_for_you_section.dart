@@ -20,7 +20,6 @@ class _RecommendationsForYouSectionState extends State<RecommendationsForYouSect
   int _currentIndex = 0;
   final CarouselSliderController _carouselController = CarouselSliderController();
   final BasketController basketController = Get.find<BasketController>();
-
   final RaffleController raffleController = Get.find<RaffleController>();
 
   @override
@@ -68,34 +67,35 @@ class _RecommendationsForYouSectionState extends State<RecommendationsForYouSect
                   ),
                 ),
               ),
-        drawItems.isEmpty
-            ? Container(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Text(t.translate('Sorry we have nothing to show you right now!')),
-              )
-            : LayoutBuilder(
-                builder: (context, constraints) {
-                  return CarouselSlider.builder(
-                    itemCount: drawItems.length,
-                    controller: _carouselController,
-                    itemBuilder: (context, index, realIndex) {
-                      return Container(
-                        padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 8.h),
-                        child: drawItems[index],
-                      );
-                    },
-                    options: CarouselOptions(
-                      height: 700.h,
-                      enlargeCenterPage: false,
-                      viewportFraction: 1,
-                      onPageChanged: (index, reason) {
-                        setState(() => _currentIndex = index);
-                      },
-                    ),
+        if (drawItems.isNotEmpty)
+          // ? Container(
+          //     padding: EdgeInsets.symmetric(horizontal: 20.w),
+          //     child: Text(t.translate('Sorry we have nothing to show you right now!')),
+          //   )
+          // :
+          LayoutBuilder(
+            builder: (context, constraints) {
+              return CarouselSlider.builder(
+                itemCount: drawItems.length,
+                controller: _carouselController,
+                itemBuilder: (context, index, realIndex) {
+                  return Container(
+                    padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 8.h),
+                    child: drawItems[index],
                   );
                 },
-              ),
-        drawItems.isEmpty ? SizedBox(height: 8.h) : SizedBox(height: 180.h),
+                options: CarouselOptions(
+                  height: 710.h,
+                  enlargeCenterPage: false,
+                  viewportFraction: 1,
+                  onPageChanged: (index, reason) {
+                    setState(() => _currentIndex = index);
+                  },
+                ),
+              );
+            },
+          ),
+        drawItems.isEmpty ? SizedBox(height: 180.h) : SizedBox(height: 8.h),
       ],
     );
   }

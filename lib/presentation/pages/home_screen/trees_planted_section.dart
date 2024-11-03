@@ -50,7 +50,7 @@ class TreesPlantedSection extends StatelessWidget {
             child: Column(
               children: [
                 SvgPicture.asset('assets/images/tree-green.svg',
-                    colorFilter: ColorFilter.mode(FluukyTheme.primaryColor, BlendMode.srcIn), width: 50.w, height: 50.h),
+                    colorFilter: ColorFilter.mode(FluukyTheme.primaryColor, BlendMode.srcIn), width: 64.w),
                 SizedBox(height: 16.h),
                 Text(
                   t.translate('youHavenPlantedAnyTrees'),

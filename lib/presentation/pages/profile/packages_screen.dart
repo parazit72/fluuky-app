@@ -7,7 +7,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/widgets/bullet_list.dart';
-import 'package:fluuky/presentation/widgets/payment_form_widget.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
 

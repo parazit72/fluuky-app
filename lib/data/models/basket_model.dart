@@ -3,8 +3,8 @@ import 'package:fluuky/domain/entities/basket_entity.dart';
 import 'basket_item_model.dart';
 
 class BasketModel {
-  final double totalPrice;
-  final List<BasketItemModel> items;
+  double totalPrice;
+  List<BasketItemModel> items;
 
   BasketModel({required this.totalPrice, required this.items, required int id, required int userId});
 

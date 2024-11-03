@@ -59,7 +59,7 @@ class CarbonFootprintScreen extends StatelessWidget {
                           t.translate('calculate_my_carbon_footprint'),
                           style: FluukyTheme.lightTheme.textTheme.labelLarge!.copyWith(color: Colors.white),
                         )),
-                    SizedBox(height: 16.0.h),
+                    SizedBox(height: 16.h),
                   ],
                 ),
               )

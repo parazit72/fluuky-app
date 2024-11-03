@@ -5,6 +5,7 @@ import 'package:fluuky/domain/repositories/order_repository.dart';
 
 class OrderController extends GetxController {
   final OrderRepository orderRepository;
+  OrderController({required OrderRepository repository}) : orderRepository = repository;
 
   RxBool isLoading = false.obs;
   var orders = <OrderEntity>[].obs;
@@ -12,23 +13,22 @@ class OrderController extends GetxController {
   var filteredOrders = <OrderEntity>[].obs;
   RxString timeFilter = ''.obs;
 
-  OrderController({required this.orderRepository});
-
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  //   fetchOrders();
-  // }
+  @override
+  void onInit() {
+    fetchOrders();
+    super.onInit();
+  }
 
   // Fetch all orders
-  Future<void> fetchOrders() async {
+  Future<void> fetchOrders({DateTimeRange? timeRange}) async {
     try {
       isLoading.value = true;
-      final fetchedOrders = await orderRepository.getOrders();
+      final fetchedOrders = await orderRepository.getOrdersByTime(timeRange);
       orders.assignAll(fetchedOrders);
     } catch (e) {
-      isLoading.value = false;
       print(e);
+    } finally {
+      isLoading.value = false;
     }
   }
 

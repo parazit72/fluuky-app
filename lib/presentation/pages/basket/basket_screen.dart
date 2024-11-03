@@ -23,12 +23,6 @@ class _BasketScreenState extends State<BasketScreen> {
   final GlobalKey<DraggableBasketSheetState> _sheetKey = GlobalKey<DraggableBasketSheetState>();
   double _sheetPosition = 0.49;
 
-  @override
-  void initState() {
-    super.initState();
-    basketController.fetchBasket();
-  }
-
   void _updateSheetPosition(double position) {
     setState(() {
       _sheetPosition = position;
@@ -161,10 +155,11 @@ class BasketTextHeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var t = AppLocalizations.of(context)!;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: 32.h),
           Text(t.translate('cart'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
           SizedBox(height: 4.h),
           Text(t.translate('explore_items_in_cart'), style: FluukyTheme.lightTheme.textTheme.displaySmall),

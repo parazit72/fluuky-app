@@ -39,7 +39,7 @@ class CustomFAQTile extends StatelessWidget {
             child: InkWell(
               onTap: onTap,
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 12.h),
+                padding: EdgeInsets.only(top: 12.h),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

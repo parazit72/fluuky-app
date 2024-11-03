@@ -1,11 +1,14 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:get/get.dart';
 
 class EstimatedCarbonFootprintScreen extends StatelessWidget {
+  const EstimatedCarbonFootprintScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,81 +36,81 @@ class EstimatedCarbonFootprintScreen extends StatelessWidget {
                 title: SvgPicture.asset(
                   'assets/images/fluuky.svg',
                   colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                  height: 16,
+                  height: 16.h,
                 ),
                 centerTitle: true,
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
                   child: Column(
                     children: [
-                      const SizedBox(height: 56),
+                      SizedBox(height: 56.h),
                       SvgPicture.asset(
                         'assets/images/globe.svg',
                         colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                         height: 72,
                       ),
-                      const SizedBox(height: 16),
-                      const Text(
+                      SizedBox(height: 16.h),
+                      Text(
                         'Estimated Carbon Footprint per Year',
-                        style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700, color: Colors.white),
+                        style: TextStyle(fontSize: 32.sp, fontWeight: FontWeight.w700, color: Colors.white),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20.h),
                       // Transparent but blurred box with green border
                       Container(
-                        padding: const EdgeInsets.all(20),
+                        padding: EdgeInsets.all(20.w),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(color: Colors.white10, width: 2),
                           color: Colors.white.withOpacity(0.1), // Semi-transparent background
                         ),
-                        child: const Center(
+                        child: Center(
                           child: Text(
                             '43.4 Tons of CO2',
-                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: Colors.white),
+                            style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w700, color: Colors.white),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20.h),
                       // Text below the box
-                      const Text(
+                      Text(
                         'Knowledge is power! Now that you have your estimate, you can create a plan to take tangible action towards a more sustainable future.',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white),
+                        style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w400, color: Colors.white),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 64),
+                      SizedBox(height: 64.h),
                       // Additional information
-                      const Text(
+                      Text(
                         'Make a Difference',
-                        style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700, color: Colors.white),
+                        style: TextStyle(fontSize: 32.sp, fontWeight: FontWeight.w700, color: Colors.white),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 16),
-                      const Text(
+                      SizedBox(height: 16.h),
+                      Text(
                         'Subscribe now to plant trees and make a positive impact on the planet—let’s grow a greener tomorrow together!',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white),
+                        style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w400, color: Colors.white),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20.h),
                       Row(
                         children: [
                           SvgPicture.asset(
                             'assets/images/tree-green.svg',
-                            height: 32,
+                            height: 32.h,
                             colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                           ),
-                          const SizedBox(width: 8),
-                          const Flexible(
+                          SizedBox(width: 8.w),
+                          Flexible(
                             child: Text(
                               'Trees to Plant per Month',
-                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: Colors.white),
+                              style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w700, color: Colors.white),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20.h),
                       Container(
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
@@ -115,10 +118,10 @@ class EstimatedCarbonFootprintScreen extends StatelessWidget {
                           border: Border.all(color: Colors.white10, width: 2),
                           color: Colors.white.withOpacity(0.1), // Semi-transparent background
                         ),
-                        child: const Center(
+                        child: Center(
                           child: Text(
                             '36 Trees',
-                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: Colors.white),
+                            style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w700, color: Colors.white),
                           ),
                         ),
                       ),
@@ -130,16 +133,16 @@ class EstimatedCarbonFootprintScreen extends StatelessWidget {
                             height: 32,
                             colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                           ),
-                          const SizedBox(width: 8),
-                          const Flexible(
+                          SizedBox(width: 8.w),
+                          Flexible(
                             child: Text(
                               'Carbon Footprint per Month',
-                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: Colors.white),
+                              style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w700, color: Colors.white),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20.h),
                       Container(
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
@@ -147,31 +150,31 @@ class EstimatedCarbonFootprintScreen extends StatelessWidget {
                           border: Border.all(color: Colors.white10, width: 2),
                           color: Colors.white.withOpacity(0.1), // Semi-transparent background
                         ),
-                        child: const Center(
+                        child: Center(
                           child: Text(
                             '3.6 CO2',
-                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: Colors.white),
+                            style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w700, color: Colors.white),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 64),
+                      SizedBox(height: 64.h),
                       Row(
                         children: [
                           SvgPicture.asset(
                             'assets/images/dollar.svg',
-                            height: 32,
+                            height: 32.h,
                             colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                           ),
-                          const SizedBox(width: 8),
-                          const Flexible(
+                          SizedBox(width: 8.w),
+                          Flexible(
                             child: Text(
                               'Cost per Month',
-                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: Colors.white),
+                              style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w700, color: Colors.white),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20.h),
                       Container(
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
@@ -179,14 +182,14 @@ class EstimatedCarbonFootprintScreen extends StatelessWidget {
                           border: Border.all(color: Colors.white10, width: 2),
                           color: Colors.white.withOpacity(0.1), // Semi-transparent background
                         ),
-                        child: const Center(
+                        child: Center(
                           child: Text(
                             '\$288',
-                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: Colors.white),
+                            style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w700, color: Colors.white),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 64),
+                      SizedBox(height: 64.h),
                       // Buttons at the bottom
                       Column(
                         children: [
@@ -196,10 +199,10 @@ class EstimatedCarbonFootprintScreen extends StatelessWidget {
                             },
                             child: const Text('Create Plan'),
                           ),
-                          const SizedBox(height: 10),
+                          SizedBox(height: 10.h),
                           OutlinedButton(
                             style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(Colors.white),
+                              backgroundColor: WidgetStateProperty.all(Colors.white),
                             ),
                             onPressed: () {
                               Get.toNamed(home);
@@ -208,7 +211,7 @@ class EstimatedCarbonFootprintScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20.h),
                     ],
                   ),
                 ),

@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluuky/app/config/fluuky_theme.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
 
 class TermsAndConditionScreen extends StatelessWidget {
   final List<Map<String, String>> textParts = [
-    {'heading': '1. Introduction', 'content': 'This is the introduction part of the text. It provides an overview of the topic.'},
-    {'heading': '2. Main Content', 'content': 'This is the main content part of the text. It provides detailed information on the topic.'},
-    {'heading': '3. Conclusion', 'content': 'This is the conclusion part of the text. It summarizes the topic and provides final thoughts.'},
+    {
+      'heading': '1. Introduction',
+      'content':
+          '1.  Gorem ipsum dolor sit amet, consectetur adipiscing elit.\n\n1.1. Sorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.\n\n1.2. Dorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.\n\n1.3. Qorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.',
+    },
+    {
+      'heading': '2. Main Content',
+      'content':
+          '1.  Gorem ipsum dolor sit amet, consectetur adipiscing elit.\n\n1.1. Sorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.\n\n1.2. Dorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.\n\n1.3. Qorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.'
+    },
   ];
 
   @override
@@ -16,35 +25,24 @@ class TermsAndConditionScreen extends StatelessWidget {
     return BackgroundScaffold(
       appBar: AppBarSingleWidget(title: t.translate('terms_and_conditions')),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: ListView.builder(
           itemCount: textParts.length,
           itemBuilder: (context, index) {
             final part = textParts[index];
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: '${part['heading']}\n',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    TextSpan(
-                      text: part['content'],
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey[800],
-                      ),
-                    ),
-                  ],
-                ),
+            return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              SizedBox(height: 32.h),
+              Text(
+                '${part['heading']}',
+                style: FluukyTheme.lightTheme.textTheme.titleLarge,
               ),
-            );
+              SizedBox(height: 24.h),
+              Text(
+                '${part['content']}',
+                style: FluukyTheme.lightTheme.textTheme.labelMedium,
+              ),
+              SizedBox(height: 16.h),
+            ]);
           },
         ),
       ),

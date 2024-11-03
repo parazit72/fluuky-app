@@ -14,38 +14,25 @@ import 'package:image_picker/image_picker.dart';
 import 'package:fluuky/presentation/widgets/layout/app_bar_single.dart';
 import 'package:fluuky/presentation/widgets/widgets.dart';
 
-class PersonalDataScreen extends StatefulWidget {
-  const PersonalDataScreen({super.key});
+class PersonalDataScreen extends GetView<AuthController> {
+  PersonalDataScreen({super.key});
 
-  @override
-  _PersonalDataScreenState createState() => _PersonalDataScreenState();
-}
-
-class _PersonalDataScreenState extends State<PersonalDataScreen> {
-  final AuthController _authController = Get.find<AuthController>();
   final _formKey = GlobalKey<FormState>();
-  File? _profileImage;
-
-  String? _selectedGender;
-  String? _selectedYear;
-  String? _selectedMonth;
-  String? _selectedDay;
+  final Rxn<File> _profileImage = Rxn<File>();
 
   Future<void> _pickImage(ImageSource imageSource) async {
     final ImagePicker picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: imageSource);
 
     if (pickedFile != null) {
-      setState(() {
-        _profileImage = File(pickedFile.path);
-      });
-      _authController.uploadProfileImage(_profileImage!);
+      _profileImage.value = File(pickedFile.path);
+      controller.uploadProfileImage(_profileImage.value!);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    UserEntity? user = _authController.user.value;
+    UserEntity? user = controller.user.value;
     var t = AppLocalizations.of(context)!;
     return BackgroundScaffold(
       appBar: AppBarSingleWidget(title: t.translate('personalData')),
@@ -63,7 +50,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                 child: Column(
                   children: [
                     InkWell(
-                      onTap: () => _showImageUploadSheetDialog(),
+                      onTap: () => _showImageUploadSheetDialog(context),
                       child: CircleAvatar(
                           radius: 50.w,
                           backgroundColor: FluukyTheme.secondaryColor,
@@ -71,8 +58,8 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                               ? ClipOval(
                                   child: CachedNetworkImage(
                                     imageUrl: user.avatar!,
-                                    width: 32.w,
-                                    height: 32.w,
+                                    width: 100.w,
+                                    height: 100.w,
                                     fit: BoxFit.cover,
                                     placeholder: (context, url) => Container(),
                                     errorWidget: (context, url, error) => const Icon(Icons.error, color: Colors.white),
@@ -90,7 +77,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                     ),
                     SizedBox(height: 8.h),
                     TextButton(
-                      onPressed: _showImageUploadSheetDialog,
+                      onPressed: () => _showImageUploadSheetDialog(context),
                       child: Text(t.translate('changePhoto')),
                     ),
                   ],
@@ -100,7 +87,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
               Divider(height: 48.h),
               Text(t.translate('personalData'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
               Text(t.translate('manageAllYourPersonalInformation'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
-              registerWidget(),
+              registerWidget(context),
             ],
           ),
         ],
@@ -108,7 +95,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
     );
   }
 
-  Widget registerWidget() {
+  Widget registerWidget(BuildContext context) {
     var t = AppLocalizations.of(context)!;
     return SingleChildScrollView(
       child: Form(
@@ -118,10 +105,10 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
           children: [
             SizedBox(height: 24.h),
             InputTextFieldWidget(
-                controller: _authController.firstNameController, labelText: t.translate('firstName'), hintText: t.translate('enterFirstName')),
+                controller: controller.firstNameController, labelText: t.translate('firstName'), hintText: t.translate('enterFirstName')),
             SizedBox(height: 24.h),
             InputTextFieldWidget(
-                controller: _authController.lastNameController, labelText: t.translate('lastName'), hintText: t.translate('enterLastName')),
+                controller: controller.lastNameController, labelText: t.translate('lastName'), hintText: t.translate('enterLastName')),
             SizedBox(height: 24.h),
             Text(t.translate('date_of_birth'), style: FluukyTheme.lightTheme.textTheme.displaySmall),
             SizedBox(height: 8.h),
@@ -132,7 +119,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   width: 90.w,
                   child: CustomDropdownButton(
                     itemsKey: 'days_en',
-                    onChanged: (value) => _selectedDay = value,
+                    onChanged: (value) => controller.selectedDay.value = (value ?? ''),
                     hintText: t.translate('day'),
                   ),
                 ),
@@ -140,7 +127,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   width: 130.w,
                   child: CustomDropdownButton(
                     itemsKey: 'months_en',
-                    onChanged: (value) => _selectedMonth = value,
+                    onChanged: (value) => controller.selectedMonth.value = (value ?? ''),
                     hintText: t.translate('month'),
                   ),
                 ),
@@ -148,7 +135,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
                   width: 100.w,
                   child: CustomDropdownButton(
                     itemsKey: 'years',
-                    onChanged: (value) => _selectedYear = value,
+                    onChanged: (value) => controller.selectedYear.value = (value ?? ''),
                     hintText: t.translate('year'),
                   ),
                 ),
@@ -159,22 +146,22 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
             const SizedBox(height: 8),
             CustomDropdownButton(
               itemsKey: 'genders',
-              onChanged: (value) => _selectedGender = value,
+              onChanged: (value) => controller.selectedGender.value = (value ?? ''),
               hintText: t.translate('Select'),
             ),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(t.translate('Processing Data'))),
-                  );
-                  // Get.offAll(() => VerificationScreen(), arguments: {'email': _authController.emailController.text});
+                  // ScaffoldMessenger.of(context).showSnackBar(
+                  //   SnackBar(content: Text(t.translate('Processing Data'))),
+                  // );
+                  // Get.offAll(() => VerificationScreen(), arguments: {'email': controller.emailController.text});
 
-                  // _authController.registerWithEmail();
+                  controller.updateUserPersonalData();
                 }
               },
-              child: Text(t.translate('saveChanges')),
+              child: Text(t.translate('Save Changes')),
             ),
           ],
         ),
@@ -182,7 +169,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
     );
   }
 
-  void _showImageUploadSheetDialog() {
+  void _showImageUploadSheetDialog(BuildContext context) {
     // Get.back();
     var t = AppLocalizations.of(context)!;
     showModalBottomSheet(

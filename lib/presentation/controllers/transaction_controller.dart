@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 class TransactionController extends GetxController {
   final TransactionRepository transactionRepository;
+  TransactionController({required TransactionRepository repository}) : transactionRepository = repository;
 
   RxBool isLoading = false.obs;
   var transactions = <TransactionEntity>[].obs;
@@ -12,19 +13,17 @@ class TransactionController extends GetxController {
   var filteredTransactions = <TransactionEntity>[].obs;
   RxString timeFilter = ''.obs;
 
-  TransactionController({required this.transactionRepository});
-
   @override
   void onInit() {
-    super.onInit();
     fetchTransactions();
+    super.onInit();
   }
 
   // Fetch all Transaction
-  Future<void> fetchTransactions() async {
+  Future<void> fetchTransactions({DateTimeRange? timeRange}) async {
     try {
       isLoading.value = true;
-      final fetchedTransactions = await transactionRepository.getTransactions();
+      final fetchedTransactions = await transactionRepository.getTransactionsByTime(timeRange);
       transactions.assignAll(fetchedTransactions);
     } catch (e) {
       isLoading.value = false;

@@ -9,16 +9,16 @@ class OrderRepositoryImpl implements OrderRepository {
 
   OrderRepositoryImpl() : _dio = DioProvider().createDio();
 
-  @override
-  Future<List<OrderEntity>> getOrders() async {
-    try {
-      final response = await _dio.get('/orders');
-      final data = response.data['data'] as List;
-      return data.map((order) => OrderEntity.fromJson(order)).toList();
-    } on DioException catch (e) {
-      throw Exception('Failed to fetch orders: ${e.response?.data['message'] ?? e.message}');
-    }
-  }
+  // @override
+  // Future<List<OrderEntity>> getOrders() async {
+  //   try {
+  //     final response = await _dio.get('/orders');
+  //     final data = response.data['data'] as List;
+  //     return data.map((order) => OrderEntity.fromJson(order)).toList();
+  //   } on DioException catch (e) {
+  //     throw Exception('Failed to fetch orders: ${e.response?.data['message'] ?? e.message}');
+  //   }
+  // }
 
   @override
   Future<OrderEntity> getOrder(int id) async {
@@ -31,15 +31,15 @@ class OrderRepositoryImpl implements OrderRepository {
   }
 
   @override
-  Future<List<OrderEntity>> getOrdersByTime(DateTimeRange timeRange) async {
+  Future<List<OrderEntity>> getOrdersByTime(DateTimeRange? timeRange) async {
     try {
+      final date = timeRange?.start.toIso8601String() ?? DateTime(2024, 1, 1).toIso8601String();
       final response = await _dio.get('/orders', queryParameters: {
-        'start_date': timeRange.start.toIso8601String(),
-        'end_date': timeRange.end.toIso8601String(),
+        'date': date,
       });
       return (response.data as List).map((order) => OrderEntity.fromJson(order)).toList();
     } on DioException catch (e) {
-      throw Exception('Failed to fetch orders by time: ${e.response?.data['message'] ?? e.message}');
+      throw Exception('Failed to fetch orders by date: ${e.response?.data['message'] ?? e.message}');
     }
   }
 }

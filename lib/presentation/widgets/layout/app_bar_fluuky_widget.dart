@@ -15,7 +15,7 @@ class AppBarFluuky extends StatelessWidget implements PreferredSizeWidget {
   bool userIsLoggedIn = false;
 
   void goNotification() {
-    Get.to(() => NotificationScreen());
+    Get.to(() => const NotificationScreen());
   }
 
   void goBasket() {
@@ -28,6 +28,7 @@ class AppBarFluuky extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       toolbarHeight: 64.h,
       automaticallyImplyLeading: false,
+      // backgroundColor: Colors.transparent,
       backgroundColor: const Color(0xFFF7F7F7),
       title: showIcon ? SvgPicture.asset('assets/images/fluuky.svg', height: 16.h) : WelcomeUserAvatar(),
       actions: [

@@ -106,7 +106,7 @@ class PaymentMethodScreen extends StatelessWidget {
                     // _authController.registerWithEmail();
                   }
                 },
-                child: Text(t.translate('saveChanges')),
+                child: Text(t.translate('Save Changes')),
               ),
             ),
           ],

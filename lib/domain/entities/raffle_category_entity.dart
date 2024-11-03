@@ -5,14 +5,23 @@ class RaffleCategoryEntity {
   String? name;
   String? slug;
   String? description;
-  String? status;
+  int? status;
   int? parentId;
   String? activeIconPath;
   String? inactiveIconPath;
   List<RaffleEntity>? raffles;
 
-  RaffleCategoryEntity(
-      {this.id, this.name, this.slug, this.description, this.status, this.parentId, this.raffles, this.activeIconPath, this.inactiveIconPath});
+  RaffleCategoryEntity({
+    this.id,
+    this.name,
+    this.slug,
+    this.description,
+    this.status,
+    this.parentId,
+    this.raffles,
+    this.activeIconPath,
+    this.inactiveIconPath,
+  });
 
   RaffleCategoryEntity.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -25,9 +34,7 @@ class RaffleCategoryEntity {
     parentId = json['parent_id'];
     if (json['raffles'] != null) {
       raffles = <RaffleEntity>[];
-      json['raffles'].forEach((v) {
-        raffles!.add(RaffleEntity.fromJson(v));
-      });
+      json['raffles'].forEach((raffle) => raffles!.add(RaffleEntity.fromJson(raffle)));
     }
   }
 
@@ -42,7 +49,7 @@ class RaffleCategoryEntity {
     data['status'] = status;
     data['parent_id'] = parentId;
     if (raffles != null) {
-      data['raffles'] = raffles!.map((v) => v.toJson()).toList();
+      data['raffles'] = raffles!.map((raffle) => raffle.toJson()).toList();
     }
     return data;
   }

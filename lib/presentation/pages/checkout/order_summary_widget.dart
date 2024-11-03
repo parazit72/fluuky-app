@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
-import 'package:fluuky/presentation/widgets/billing_address_form_widget.dart';
+import 'package:fluuky/presentation/controllers/auth_controller.dart';
+import 'package:fluuky/presentation/widgets/expandable_section_widget.dart';
 import 'package:fluuky/presentation/widgets/input_text_field_widget.dart';
+import 'package:fluuky/presentation/widgets/mobile_input_widget.dart';
 import 'package:fluuky/presentation/widgets/payment_form_widget.dart';
 import 'package:get/get.dart';
 import 'package:to_arabic_number/to_arabic_number.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 
-class OrderSummaryWidget extends StatelessWidget {
+class OrderSummaryWidget extends GetView<AuthController> {
   OrderSummaryWidget({super.key});
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController codeController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,71 @@ class OrderSummaryWidget extends StatelessWidget {
                   style: FluukyTheme.lightTheme.textTheme.displaySmall,
                 ),
                 SizedBox(height: 24.h),
-                BillingAddressFormWidget(formKey: _formKey),
+                Form(
+                  key: formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 20.h),
+                      InputTextFieldWidget(
+                        controller: controller.firstNameController,
+                        labelText: t.translate('fullName'),
+                        hintText: t.translate('fullName'),
+                        validator: (value) => value?.isEmpty ?? true ? t.translate('Name is required') : null,
+                      ),
+                      SizedBox(height: 20.h),
+                      MobileInputWidget(
+                        labelText: 'Country',
+                        hintText: '',
+                        controller: controller.mobileController,
+                        showCode: false,
+                      ),
+                      SizedBox(height: 20.h),
+                      InputTextFieldWidget(
+                        controller: controller.firstNameController,
+                        labelText: t.translate('City'),
+                        hintText: t.translate('Select'),
+                        validator: (value) => value?.isEmpty ?? true ? t.translate('City is required') : null,
+                      ),
+                      SizedBox(height: 20.h),
+                      InputTextFieldWidget(
+                        controller: controller.firstNameController,
+                        labelText: t.translate('addressLine1'),
+                        hintText: t.translate('addressLine1'),
+                        validator: (value) => value?.isEmpty ?? true ? t.translate('Address is required') : null,
+                      ),
+                      SizedBox(height: 20.h),
+                      InputTextFieldWidget(
+                        controller: controller.firstNameController,
+                        labelText: t.translate('addressLine2'),
+                        hintText: t.translate('addressLine2'),
+                      ),
+                      SizedBox(height: 20.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: InputTextFieldWidget(
+                              controller: controller.firstNameController,
+                              labelText: t.translate('state_region'),
+                              hintText: t.translate('state_region'),
+                              validator: (value) => value?.isEmpty ?? true ? t.translate('State is required') : null,
+                            ),
+                          ),
+                          SizedBox(width: 15.w),
+                          Expanded(
+                            child: InputTextFieldWidget(
+                              controller: controller.firstNameController,
+                              labelText: t.translate('zipPostalCode'),
+                              hintText: t.translate('zipPostalCode'),
+                              validator: (value) => value?.isEmpty ?? true ? t.translate('Zip/Postal Code is required') : null,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -93,7 +158,10 @@ class OrderSummaryWidget extends StatelessWidget {
                 Form(
                     // key: ,
                     child: InputTextFieldWidget(
-                        hintText: 'AB-C1-S312', labelText: t.translate('Please enter your promo code below'), controller: codeController)),
+                  hintText: 'AB-C1-S312',
+                  labelText: t.translate('Please enter your promo code below'),
+                  controller: controller.codeController,
+                )),
                 SizedBox(height: 70.h),
               ],
             ),
@@ -202,7 +270,7 @@ class OrderSummaryWidget extends StatelessWidget {
                       SizedBox(height: 12.h),
                       Text(
                         formatNumber('\$50'),
-                        style: TextStyle(fontSize: 14.w, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -213,54 +281,6 @@ class OrderSummaryWidget extends StatelessWidget {
         }),
         const Divider(),
       ],
-    );
-  }
-}
-
-class ExpandableSection extends StatefulWidget {
-  final String title;
-  final Widget collapsedContent;
-  final Widget expandedContent;
-
-  const ExpandableSection({
-    super.key,
-    required this.title,
-    required this.collapsedContent,
-    required this.expandedContent,
-  });
-
-  @override
-  _ExpandableSectionState createState() => _ExpandableSectionState();
-}
-
-class _ExpandableSectionState extends State<ExpandableSection> {
-  bool _isExpanded = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          InkWell(
-            onTap: () => setState(() => _isExpanded = !_isExpanded),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  widget.title,
-                  style: FluukyTheme.lightTheme.textTheme.titleLarge,
-                ),
-                Icon(_isExpanded ? Icons.expand_less : Icons.expand_more, size: 24.w)
-              ],
-            ),
-          ),
-          SizedBox(height: 16.h),
-          _isExpanded ? widget.expandedContent : widget.collapsedContent,
-          SizedBox(height: 20.h),
-        ],
-      ),
     );
   }
 }

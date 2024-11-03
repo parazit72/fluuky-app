@@ -8,6 +8,7 @@ import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/domain/entities/raffle_entity.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/auth_controller.dart';
+import 'package:fluuky/presentation/controllers/basket_controller.dart';
 import 'package:fluuky/presentation/controllers/items_controller.dart';
 import 'package:fluuky/presentation/controllers/raffle_controller.dart';
 import 'package:fluuky/presentation/pages/draw/trees_planted_dialog.dart';
@@ -32,9 +33,11 @@ class RaffleCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     RaffleController raffleController = Get.find<RaffleController>();
     final AuthController authController = Get.find<AuthController>();
+    final BasketController basketController = Get.find<BasketController>();
     final isGridView = viewType == ViewType.grid;
     bool loading = false;
     bool userIsLoggedIn = false;
+    int quantity = 0;
     var t = AppLocalizations.of(context)!;
     final locale = Get.locale;
 
@@ -133,7 +136,7 @@ class RaffleCardWidget extends StatelessWidget {
                             children: [
                               InkWell(
                                 child: Icon(Icons.remove_circle, color: FluukyTheme.primaryColor, size: 20.w),
-                                onTap: () {},
+                                onTap: () => basketController.decrementQuantity(),
                               ),
                               Container(
                                   margin: EdgeInsets.symmetric(horizontal: 14.w),
@@ -141,10 +144,12 @@ class RaffleCardWidget extends StatelessWidget {
                                   height: 20.h,
                                   decoration: BoxDecoration(
                                       border: Border.all(color: Colors.grey, width: 1), borderRadius: const BorderRadius.all(Radius.circular(4))),
-                                  child: Center(child: Text('10', style: FluukyTheme.lightTheme.textTheme.labelSmall))),
+                                  child: Center(
+                                      child:
+                                          Obx(() => Text(basketController.quantity.toString(), style: FluukyTheme.lightTheme.textTheme.labelSmall)))),
                               InkWell(
                                 child: Icon(Icons.add_circle, color: FluukyTheme.primaryColor, size: 20.w),
-                                onTap: () {},
+                                onTap: () => basketController.incrementQuantity(),
                               ),
                             ],
                           )
@@ -235,7 +240,7 @@ class RaffleCardWidget extends StatelessWidget {
                               Expanded(
                                 child: Row(
                                   children: [
-                                    Icon(Icons.info_outline, size: 18.w, color: Theme.of(context).primaryColor),
+                                    Icon(Icons.info_outline, size: 18.w, color: FluukyTheme.primaryColor),
                                     const SizedBox(width: 2),
                                     GestureDetector(
                                       onTap: () {
@@ -275,12 +280,13 @@ class RaffleCardWidget extends StatelessWidget {
                                 style: ButtonStyle(
                                     textStyle: WidgetStateProperty.all(FluukyTheme.lightTheme.textTheme.bodyLarge),
                                     minimumSize: WidgetStateProperty.all<Size>(Size(double.infinity, 40.h))),
-                                onPressed: () {
+                                onPressed: () async {
                                   userIsLoggedIn = authController.checkAuthAndShowSheet();
                                   if (!userIsLoggedIn) {
-                                    return;
+                                    Get.snackbar('Not Login', 'First login to add to cart', snackPosition: SnackPosition.TOP);
                                   }
-                                  Get.toNamed(draw, arguments: raffle);
+                                  await basketController.addToCart(raffle, basketController.quantity.value);
+                                  Get.snackbar('Success', 'Item added to cart', snackPosition: SnackPosition.TOP);
                                 },
                                 child: Text(t.translate('Add to Cart')),
                               ),

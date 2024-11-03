@@ -2,18 +2,27 @@ import 'package:fluuky/data/models/raffle_model.dart';
 import 'package:fluuky/domain/entities/raffle_category_entity.dart';
 
 class RaffleCategoryModel {
-  int? id;
+  String? id;
   String? name;
   String? slug;
   String? description;
   String? status;
   String? activeIconPath;
   String? inactiveIconPath;
-  int? parentId;
+  String? parentId;
   List<RaffleModel>? raffles;
 
-  RaffleCategoryModel(
-      {this.id, this.name, this.slug, this.description, this.status, this.parentId, this.raffles, this.activeIconPath, this.inactiveIconPath});
+  RaffleCategoryModel({
+    this.id,
+    this.name,
+    this.slug,
+    this.description,
+    this.status,
+    this.parentId,
+    this.raffles,
+    this.activeIconPath,
+    this.inactiveIconPath,
+  });
 
   RaffleCategoryModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -26,8 +35,8 @@ class RaffleCategoryModel {
     inactiveIconPath = json['inactive_icon_path'];
     if (json['raffles'] != null) {
       raffles = <RaffleModel>[];
-      json['raffles'].forEach((v) {
-        raffles!.add(RaffleModel.fromJson(v));
+      json['raffles'].forEach((raffle) {
+        raffles!.add(RaffleModel.fromJson(raffle));
       });
     }
   }
@@ -43,7 +52,7 @@ class RaffleCategoryModel {
     data['status'] = status;
     data['parent_id'] = parentId;
     if (raffles != null) {
-      data['raffles'] = raffles!.map((v) => v.toJson()).toList();
+      data['raffles'] = raffles!.map((raffle) => raffle.toJson()).toList();
     }
     return data;
   }
@@ -51,15 +60,15 @@ class RaffleCategoryModel {
   // Method to convert RaffleModel to RaffleEntity
   RaffleCategoryEntity toEntity() {
     return RaffleCategoryEntity(
-      id: id,
+      id: id as int?,
       name: name,
       slug: slug,
       description: description,
-      status: status,
-      parentId: parentId,
+      status: status as int?,
+      parentId: parentId as int?,
       activeIconPath: activeIconPath,
       inactiveIconPath: inactiveIconPath,
-      raffles: raffles?.map((e) => e.toEntity()).toList(),
+      raffles: raffles?.map((raffle) => raffle.toEntity()).toList(),
     );
   }
 }

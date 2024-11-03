@@ -9,9 +9,12 @@ import 'package:fluuky/data/repositories/home_repository_impl.dart';
 import 'package:fluuky/data/repositories/notification_repository_impl.dart';
 import 'package:fluuky/data/repositories/order_repository_impl.dart';
 import 'package:fluuky/data/repositories/raffle_repository_impl.dart';
+import 'package:fluuky/data/repositories/transaction_repository_impl.dart';
 import 'package:fluuky/data/repositories/winner_repository_impl.dart';
 import 'package:fluuky/domain/repositories/basket_repository.dart';
+import 'package:fluuky/domain/repositories/order_repository.dart';
 import 'package:fluuky/domain/repositories/raffle_repository.dart';
+import 'package:fluuky/domain/repositories/transaction_repository.dart';
 import 'package:fluuky/presentation/controllers/basket_controller.dart';
 import 'package:fluuky/presentation/controllers/controllers.dart';
 import 'package:fluuky/presentation/controllers/home_controller.dart';
@@ -31,31 +34,7 @@ class InitialBindings extends Bindings {
   void dependencies() async {
     // Register RaffleProvider
     Get.put(DioProvider());
-
-    // Register RaffleRepository with RaffleProvider
-    Get.put(RaffleRepositoryImpl());
-    Get.put<RaffleRepository>(Get.find<RaffleRepositoryImpl>());
-    Get.put(HomeController(HomeRepositoryImpl()));
-
-    Get.put(RaffleController(raffleRepository: Get.find<RaffleRepositoryImpl>()));
-    Get.put(StoryController());
-    Get.put(ItemsController());
-    Get.put<NavBarController>(NavBarController());
-
-    // Register FlutterSecureStorage
     Get.put(const FlutterSecureStorage());
-    Get.put(AuthRepositoryImpl());
-    Get.put<AuthRepository>(Get.find<AuthRepositoryImpl>());
-    Get.put(AuthController(Get.find<AuthRepository>()));
-
-    Get.put(InternetController(), permanent: true);
-    // Get.lazyPut(() => BasketRepositoryImpl());
-
-    Get.lazyPut(() => SubscriptionController());
-
-    Get.put(BasketRepositoryImpl());
-    Get.put<BasketRepository>(Get.find<BasketRepositoryImpl>());
-    Get.put(BasketController(Get.find<BasketRepository>()));
 
     // Initialize FlutterLocalNotificationsPlugin
     Get.put(FlutterLocalNotificationsPlugin());
@@ -63,17 +42,38 @@ class InitialBindings extends Bindings {
     // Initialize FirebaseMessaging
     Get.put(FirebaseMessaging.instance);
 
+    Get.put<NavBarController>(NavBarController());
+    Get.put(HomeController(HomeRepositoryImpl()));
+    Get.put(InternetController(), permanent: true);
+
+    Get.put(StoryController());
+    Get.put(ItemsController());
+
+    Get.put(RaffleRepositoryImpl());
+    Get.put<RaffleRepository>(Get.find<RaffleRepositoryImpl>());
+    Get.put(RaffleController(repository: Get.find<RaffleRepositoryImpl>()));
+
+    Get.put(AuthRepositoryImpl());
+    Get.put<AuthRepository>(Get.find<AuthRepositoryImpl>());
+    Get.put(AuthController(repository: Get.find<AuthRepository>()));
+
+    Get.put(BasketRepositoryImpl());
+    Get.put<BasketRepository>(Get.find<BasketRepositoryImpl>());
+    Get.put(BasketController(repository: Get.find<BasketRepository>()));
+
     // Register Notification Data Sources with required dependencies
     Get.put(LocalNotificationDataSource(Get.find<FlutterLocalNotificationsPlugin>()));
     Get.put(PushNotificationDataSource(Get.find<FirebaseMessaging>()));
 
+    Get.put(WinnerController(winnerRepository: WinnerRepositoryImpl()));
     // Register NotificationRepository with data sources
     Get.put(NotificationRepositoryImpl());
-    Get.put(WinnerController(RaffleRepositoryImpl(), winnerRepository: WinnerRepositoryImpl()));
-    Get.put(NotificationController(notificationRepository: Get.find<NotificationRepositoryImpl>()));
+    Get.put(NotificationController(repository: Get.find<NotificationRepositoryImpl>()));
 
-    Get.put(OrderController(orderRepository: OrderRepositoryImpl()));
-    // Bind your NotificationController
-    Get.lazyPut(() => NotificationController(notificationRepository: Get.find<NotificationRepositoryImpl>()));
+    Get.lazyPut<OrderRepository>(() => OrderRepositoryImpl());
+    Get.put(OrderController(repository: OrderRepositoryImpl()));
+    Get.lazyPut<TransactionRepository>(() => TransactionRepositoryImpl());
+
+    Get.lazyPut(() => SubscriptionController());
   }
 }

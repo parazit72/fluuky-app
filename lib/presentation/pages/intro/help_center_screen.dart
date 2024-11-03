@@ -75,7 +75,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
                   SizedBox(height: 8.h),
                   Text(
                     t.translate('faqDescription'),
-                    style: FluukyTheme.lightTheme.textTheme.bodySmall,
+                    style: FluukyTheme.lightTheme.textTheme.displaySmall,
                   ),
                   SizedBox(height: 16.h),
                 ],

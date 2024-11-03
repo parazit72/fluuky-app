@@ -4,12 +4,11 @@ import 'package:fluuky/domain/entities/notification_entity.dart';
 
 class NotificationController extends GetxController {
   final NotificationRepositoryImpl notificationRepository;
+  NotificationController({required NotificationRepositoryImpl repository}) : notificationRepository = repository;
 
   var notifications = <NotificationEntity>[].obs;
   var pushNotificationsEnabled = true.obs;
   var notificationCount = 0.obs;
-
-  NotificationController({required this.notificationRepository});
 
   @override
   void onInit() {

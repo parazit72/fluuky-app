@@ -20,12 +20,6 @@ class _OrderHistoryListHorizentalWidgetState extends State<OrderHistoryListHoriz
   final OrderController orderController = Get.find<OrderController>();
 
   @override
-  void initState() {
-    super.initState();
-    orderController.fetchOrders();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var t = AppLocalizations.of(context)!;
 

@@ -13,7 +13,7 @@ class RaffleController extends GetxController {
   var selectedCategory = 1.obs;
   var currentIndex = 0.obs;
 
-  RaffleController({required this.raffleRepository});
+  RaffleController({required RaffleRepository repository}) : raffleRepository = repository;
 
   List<RaffleEntity> get filteredRaffles => raffles.where((raffle) => raffle.categoryId == selectedCategory.value).toList();
 

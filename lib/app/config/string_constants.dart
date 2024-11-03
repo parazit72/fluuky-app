@@ -10,4 +10,6 @@ class StringConstants {
   static const String password = "password";
   static const String signInWithEmail = "signInWithEmail";
   static const String ok = "ok";
+  static const String authToken = "auth_token";
+  static const String user = "user";
 }

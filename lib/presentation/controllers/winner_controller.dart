@@ -1,28 +1,23 @@
-import 'package:fluuky/data/repositories/raffle_repository_impl.dart';
 import 'package:fluuky/data/repositories/winner_repository_impl.dart';
 import 'package:fluuky/domain/entities/announcement_entity.dart';
-import 'package:fluuky/domain/entities/raffle_category_entity.dart';
+import 'package:fluuky/domain/entities/winner_category_entity.dart';
 import 'package:fluuky/domain/entities/winner_entity.dart';
 import 'package:get/get.dart';
 
 class WinnerController extends GetxController {
   final WinnerRepositoryImpl winnerRepository;
-  final RaffleRepositoryImpl raffleRepository;
 
   var winners = <WinnerEntity>[].obs;
   var announcements = <AnnouncementEntity>[].obs;
-  var winnerCategories = <RaffleCategoryEntity>[].obs;
+  RxList<WinnerCategoryEntity> winnerCategories = <WinnerCategoryEntity>[].obs;
 
-  var selectedCategory = 1.obs;
   var currentIndex = 0.obs;
+  var selectedCategory = 1.obs;
 
-  WinnerController(this.raffleRepository, {required this.winnerRepository});
-
-  List<WinnerEntity> get filteredRaffles => winners.where((winner) => winner.raffle!.categoryId == selectedCategory.value).toList();
+  WinnerController({required this.winnerRepository});
 
   @override
   void onInit() {
-    fetchRaffleCategories();
     fetchWinners();
     super.onInit();
   }
@@ -32,19 +27,32 @@ class WinnerController extends GetxController {
       final WinnersResponse fetchedWinnersResponse = await winnerRepository.getWinners();
       winners.assignAll(fetchedWinnersResponse.winners);
       announcements.assignAll(fetchedWinnersResponse.announcements);
-    } catch (e) {
-      print(e);
-    }
-  }
 
-  Future<void> fetchRaffleCategories() async {
-    try {
-      final fetchedRaffleCategories = await raffleRepository.getRaffleCategories();
-      winnerCategories.assignAll(fetchedRaffleCategories);
-
-      if (winnerCategories.first.id != null) {
-        selectedCategory.value = winnerCategories.first.id!;
-      }
+      // Extract winner categories
+      winnerCategories.assignAll(
+        fetchedWinnersResponse.winners
+            .fold<Map<int, List<WinnerEntity>>>({}, (Map<int, List<WinnerEntity>> map, winner) {
+              final categoryId = winner.raffle?.categoryId;
+              if (categoryId != null) {
+                map.putIfAbsent(categoryId, () => []).add(winner); // Group winners by categoryId
+              }
+              return map;
+            })
+            .entries
+            .map((entry) {
+              final categoryId = entry.key;
+              final winnersForCategory = entry.value;
+              // Create WinnerCategoryEntity for each categoryId
+              return WinnerCategoryEntity(
+                id: categoryId,
+                name: '', // Get category name
+                slug: '', // Get category slug
+                description: '', // Get category description
+                winnerEntities: winnersForCategory, // Assign related winners
+              );
+            })
+            .toList(),
+      );
     } catch (e) {
       print(e);
     }

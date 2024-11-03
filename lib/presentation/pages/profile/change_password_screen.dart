@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluuky/app/config/route_constants.dart';
 import 'package:fluuky/l10n/app_localizations.dart';
 import 'package:fluuky/presentation/controllers/auth_controller.dart';
@@ -8,10 +9,9 @@ import 'package:fluuky/presentation/widgets/widgets.dart';
 import 'package:get/get.dart';
 import 'package:fluuky/app/config/fluuky_theme.dart';
 
-class ChangePasswordScreen extends StatelessWidget {
+class ChangePasswordScreen extends GetView<AuthController> {
   ChangePasswordScreen({super.key});
   final _formKey = GlobalKey<FormState>();
-  final AuthController _authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class ChangePasswordScreen extends StatelessWidget {
         appBar: AppBarSingleWidget(title: t.translate('change_password')),
         bottomNavigationBar: CustomNavBar(),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 32.h),
           child: Stack(
             children: [
               ListView(
@@ -31,7 +31,7 @@ class ChangePasswordScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           PasswordTextFieldWidget(
-                            controller: _authController.passwordController,
+                            controller: controller.currentPasswordController,
                             hintText: t.translate('current_password'),
                             // focusNode: _passwordFocusNode,
                             validator: (val) {
@@ -41,13 +41,13 @@ class ChangePasswordScreen extends StatelessWidget {
                               return null;
                             },
                             onChanged: (value) {
-                              _authController.passwordController.text = value;
-                              _authController.checkPassword(value); // Update password checks
+                              controller.currentPasswordController.text = value;
+                              controller.checkPassword(value); // Update password checks
                             },
                           ),
-                          const SizedBox(height: 24),
+                          SizedBox(height: 24.h),
                           PasswordTextFieldWidget(
-                            controller: _authController.passwordController,
+                            controller: controller.passwordController,
                             hintText: t.translate('newPassword'),
                             // focusNode: _passwordFocusNode,
                             validator: (val) {
@@ -57,30 +57,30 @@ class ChangePasswordScreen extends StatelessWidget {
                               return null;
                             },
                             onChanged: (value) {
-                              _authController.passwordController.text = value;
-                              _authController.checkPassword(value); // Update password checks
+                              controller.passwordController.text = value;
+                              controller.checkPassword(value); // Update password checks
                             },
                           ),
-                          const SizedBox(height: 24),
+                          SizedBox(height: 24.h),
                           PasswordTextFieldWidget(
-                            controller: _authController.confirmPasswordController,
+                            controller: controller.confirmPasswordController,
                             labelText: t.translate('confirmPassword'),
                             hintText: t.translate('password'),
                             // focusNode: _passwordFocusNode,
-                            validator: (val) => (val != _authController.passwordController.text) ? t.translate('Passwords do not match.') : null,
+                            validator: (val) => (val != controller.passwordController.text) ? t.translate('Passwords do not match.') : null,
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 34, vertical: 24),
+                            padding: EdgeInsets.symmetric(vertical: 24.h),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(t.translate('Password must include:'), style: FluukyTheme.lightTheme.textTheme.titleLarge),
+                                Text(t.translate('Password must include:'), style: FluukyTheme.lightTheme.textTheme.bodySmall),
                                 const SizedBox(height: 8),
-                                _buildPasswordRule(context, t.translate('min_8_characters'), _authController.isAtLeast8Characters),
-                                _buildPasswordRule(context, t.translate('uppercase_character'), _authController.hasUpperCase),
-                                _buildPasswordRule(context, t.translate('lowercase_character'), _authController.hasLowerCase),
-                                _buildPasswordRule(context, t.translate('a_number'), _authController.hasDigit),
-                                _buildPasswordRule(context, t.translate('special_character'), _authController.hasSpecialCharacter),
+                                _buildPasswordRule(context, t.translate('min_8_characters'), controller.isAtLeast8Characters),
+                                _buildPasswordRule(context, t.translate('uppercase_character'), controller.hasUpperCase),
+                                _buildPasswordRule(context, t.translate('lowercase_character'), controller.hasLowerCase),
+                                _buildPasswordRule(context, t.translate('a_number'), controller.hasDigit),
+                                _buildPasswordRule(context, t.translate('special_character'), controller.hasSpecialCharacter),
                               ],
                             ),
                           ),
@@ -95,15 +95,12 @@ class ChangePasswordScreen extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(t.translate('Processing Data'))),
-                      );
                       Get.toNamed(helpCenter);
 
-                      // _authController.registerWithEmail();
+                      controller.updateUserPassword();
                     }
                   },
-                  child: Text(t.translate('saveChanges')),
+                  child: Text(t.translate('Save Changes')),
                 ),
               ),
             ],
@@ -118,9 +115,9 @@ class ChangePasswordScreen extends StatelessWidget {
           children: [
             Icon(
               isValid.value ? Icons.check : Icons.close,
-              color: isValid.value ? Theme.of(context).primaryColor : const Color(0XFFD30201),
+              color: isValid.value ? FluukyTheme.primaryColor : FluukyTheme.redColor,
             ),
-            Text(ruleText, style: FluukyTheme.lightTheme.textTheme.displaySmall),
+            Text(ruleText, style: FluukyTheme.lightTheme.textTheme.bodySmall),
           ],
         ));
   }

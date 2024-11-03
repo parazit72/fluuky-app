@@ -1,12 +1,11 @@
 import 'package:fluuky/domain/entities/basket_item_entity.dart';
-
-import 'raffle_model.dart';
+import 'package:fluuky/domain/entities/raffle_entity.dart';
 
 class BasketItemModel {
   final int id;
-  final int quantity;
+  int quantity;
   final double price;
-  final RaffleModel raffle;
+  final RaffleEntity raffle;
 
   BasketItemModel({required this.id, required this.quantity, required this.raffle, required this.price});
 
@@ -15,7 +14,7 @@ class BasketItemModel {
       id: id,
       quantity: quantity,
       price: price,
-      raffle: raffle.toEntity(),
+      raffle: raffle,
     );
   }
 
@@ -24,7 +23,7 @@ class BasketItemModel {
       id: json['id'],
       price: json['price'].toDouble(),
       quantity: json['quantity'],
-      raffle: RaffleModel.fromJson(json['raffle']),
+      raffle: RaffleEntity.fromJson(json['raffle']),
     );
   }
 }

@@ -53,7 +53,7 @@
   "takeAPhoto":"Take a Photo",
   "uploadFromGallery":"Upload from Gallery",
   "removePhoto":"Remove Photo",
-  "saveChanges":"Save Changes",
+  "Save Changes":"Save Changes",
   "Validity and Tier Maintenance":"Validity and Tier Maintenance",
   "rollingPeriod":". Rolling Period: Your tier status is determined by your total spend in any consecutive 12-month period. This is a rolling period, meaning it is continuously calculated from the date of your first qualifying purchase.\n. Example: If you spend 10,000 AED in February, your Silver status will last until the end of the following February. To maintain your Silver status beyond that, you would need to spend another 10,000 AED before the end of the next February.\n. Tier Evaluation: Your account will be evaluated monthly to determine if the required spend for your current tier has been met in the preceding 12 months.\n. Downgrade Protection: If you achieve a higher tier, you will enjoy its benefits for a full 12 months, even if your spending does not reach the required amount in the following 12 months. \n. After this 12-month period, your tier status will be adjusted according to your spending in the most recent 12 months",
 
@@ -285,6 +285,7 @@
   "doubleTheImpactDescription": "For every tree you plant we'll plant one your behalf too.",
   "winnersGallery": "Winners Gallery",
   "winnersGalleryDescription": "Be inspired to take climate action while enjoying the luxury of giving back.",
+  "no_transactions_found":"No transactions found",
   "watchWinners": "Watch Winners",
   "handbagWinners": "Handbag Winners",
   "jewelleryWinners": "Jewellery Winners",

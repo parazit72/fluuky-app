@@ -2,7 +2,7 @@ class UserEntity {
   final String firstName;
   final String lastName;
   final String email;
-  final String phone;
+  final String? phone;
   final String? avatar;
   final DateTime? birthDate;
   final bool acceptedTermsAndConditions;
@@ -19,13 +19,13 @@ class UserEntity {
 
   factory UserEntity.fromJson(Map<String, dynamic> json) {
     return UserEntity(
-      firstName: json['firstName'],
-      lastName: json['lastName'],
-      email: json['email'],
-      phone: json['phone'],
-      avatar: json['avatar'],
-      birthDate: json['birth_date'],
-      acceptedTermsAndConditions: json['accepted_terms_and_conditions'],
+      firstName: json['firstName'] ?? '',
+      lastName: json['lastName'] ?? '',
+      email: json['email'] ?? '',
+      phone: json['phone'] ?? '',
+      avatar: json['avatar'] ?? '',
+      birthDate: json['birth_date'] != null ? DateTime.parse(json['birth_date']) : null,
+      acceptedTermsAndConditions: json['accepted_terms_and_conditions'] ?? false,
     );
   }
 

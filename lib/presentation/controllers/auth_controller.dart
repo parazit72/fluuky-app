@@ -13,8 +13,8 @@ import '../../domain/repositories/auth_repository.dart';
 // import '../../../domain/usecases/verify_code_usecase.dart';
 
 class AuthController extends GetxController {
-  final AuthRepository _authRepository;
-  AuthController(this._authRepository);
+  final AuthRepository authRepository;
+  AuthController({required AuthRepository repository}) : authRepository = repository;
 
   final isLogged = false.obs;
   final isLoading = false.obs;
@@ -30,11 +30,17 @@ class AuthController extends GetxController {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController currentPasswordController = TextEditingController();
   final TextEditingController codeController = TextEditingController();
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController referralCodeController = TextEditingController();
   final TextEditingController mobileController = TextEditingController();
+
+  RxString selectedGender = 'female'.obs;
+  RxString selectedYear = '1990'.obs;
+  RxString selectedMonth = '01'.obs;
+  RxString selectedDay = '01'.obs;
 
   late Rx<UserEntity?> user = Rx<UserEntity?>(null);
   final FlutterSecureStorage _secureStorage = Get.find<FlutterSecureStorage>();
@@ -70,11 +76,49 @@ class AuthController extends GetxController {
     isAtLeast8Characters.value = password.length >= 8;
   }
 
+  Future<void> updateUserPersonalData() async {
+    isLoading.value = true;
+
+    try {
+      await authRepository.updateUserPersonalData(
+        firstNameController.text,
+        lastNameController.text,
+        selectedDay.value,
+        selectedMonth.value,
+        selectedYear.value,
+        selectedGender.value,
+      );
+    } catch (e) {
+      _showErrorDialog(e.toString());
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> updateUserBillingAddress() async {
+    isLoading.value = true;
+
+    try {
+      await authRepository.updateUserBillingAddress(
+        firstNameController.text,
+        lastNameController.text,
+        selectedDay.value,
+        selectedMonth.value,
+        selectedYear.value,
+        selectedGender.value,
+      );
+    } catch (e) {
+      _showErrorDialog(e.toString());
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   Future<void> registerWithEmail() async {
     isLoading.value = true;
 
     try {
-      final user = await _authRepository.register(
+      final user = await authRepository.register(
         firstNameController.text,
         lastNameController.text,
         mobileController.text,
@@ -99,10 +143,27 @@ class AuthController extends GetxController {
     }
   }
 
+  Future<void> updateUserPassword() async {
+    isLoading.value = true;
+    try {
+      await authRepository.updateUserPassword(currentPasswordController.text.trim(), passwordController.text);
+
+      emailController.clear();
+      passwordController.clear();
+      isLogged.value = true;
+
+      Get.offAll(() => const HomeScreen());
+    } catch (e) {
+      _showErrorDialog(e.toString());
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   Future<void> loginWithEmail() async {
     isLoading.value = true;
     try {
-      user.value = await _authRepository.login(emailController.text.trim(), passwordController.text);
+      user.value = await authRepository.login(emailController.text.trim(), passwordController.text);
 
       emailController.clear();
       passwordController.clear();
@@ -120,7 +181,7 @@ class AuthController extends GetxController {
     isLoading.value = true;
     try {
       // await _verifyCodeUseCase.execute(codeController.text);
-      await _authRepository.verifyCode(codeController.text);
+      await authRepository.verifyCode(codeController.text);
       Get.toNamed(detailsAboutYou);
     } catch (e) {
       _showErrorDialog(e.toString());
@@ -132,7 +193,7 @@ class AuthController extends GetxController {
   void resendCode(String email) async {
     isLoading.value = true;
     try {
-      await _authRepository.resendCode(email);
+      await authRepository.resendCode(email);
       // Handle success or failure
     } catch (e) {
       _showErrorDialog(e.toString());
@@ -144,7 +205,7 @@ class AuthController extends GetxController {
   Future<void> checkLoginStatus() async {
     final token = await _secureStorage.read(key: _tokenKey);
     if (token != null) {
-      user.value = await _authRepository.getCurrentUser();
+      user.value = await authRepository.getCurrentUser();
       isLogged.value = true;
     } else {
       isLogged.value = false;
@@ -155,7 +216,7 @@ class AuthController extends GetxController {
   Future<void> logout() async {
     try {
       isLogged.value = true;
-      bool serverLogedOut = await _authRepository.logout();
+      bool serverLogedOut = await authRepository.logout();
       if (serverLogedOut) {
         await _secureStorage.write(key: _tokenKey, value: null);
       }
@@ -170,7 +231,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> uploadProfileImage(File image) async {
-    final imagePath = await _authRepository.uploadAvatar(image);
+    final imagePath = await authRepository.uploadAvatar(image);
     if (imagePath != null) {
       // Update the user's avatar image path
       // e.g., update local user model or state management system

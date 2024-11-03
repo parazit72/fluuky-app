@@ -27,6 +27,7 @@ class RaffleRepositoryImpl extends RaffleRepository {
     try {
       final response = await _dio.get('/categories');
       final List<dynamic> raffleCategoriesList = response.data['data'];
+      print(raffleCategoriesList);
       return raffleCategoriesList.map((json) => RaffleCategoryModel.fromJson(json).toEntity()).toList();
     } catch (e) {
       throw Exception('Get raffle categories failed: ${e.toString()}');

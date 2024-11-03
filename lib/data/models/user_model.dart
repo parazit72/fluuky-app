@@ -30,6 +30,7 @@ class UserModel {
   UserModel.fromJson(Map<String, dynamic> json) {
     firstName = json['first_name'];
     lastName = json['last_name'];
+
     avatar = json['avatar'];
     birthDate = json['birth_date'];
     username = json['username'];

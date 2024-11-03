@@ -73,7 +73,7 @@ Widget _buildCategoryGridView<T>(List<T> items, Widget Function(T) itemBuilder) 
             tagBtnWidget(
               raffleController: raffleController,
               raffleCategoryEntity:
-                  RaffleCategoryEntity(id: -1, name: 'All', slug: '', status: '1', description: '', activeIconPath: '', inactiveIconPath: ''),
+                  RaffleCategoryEntity(id: -1, name: 'All', slug: '', status: 1, description: '', activeIconPath: '', inactiveIconPath: ''),
               isAllButton: true,
             ),
             SizedBox(width: 8.w),

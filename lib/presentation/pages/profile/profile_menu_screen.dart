@@ -27,10 +27,10 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
       appBar: AppBarFluuky(showIcon: true),
       bottomNavigationBar: CustomNavBar(),
       body: Padding(
-        padding: EdgeInsets.all(20.h),
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: ListView(
           children: [
-            SizedBox(height: 12.h),
+            // SizedBox(height: 12.h),
             WelcomeUserAvatar(),
             const Divider(),
             SizedBox(height: 24.h),

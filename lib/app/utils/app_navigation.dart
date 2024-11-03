@@ -1,3 +1,4 @@
+import 'package:fluuky/presentation/bindings/dashboard_bindings.dart';
 import 'package:fluuky/presentation/widgets/category_tabs_widgets/winner_screen.dart';
 import 'package:get/get.dart';
 import 'package:fluuky/app/config/route_constants.dart';
@@ -73,7 +74,11 @@ List<GetPage<dynamic>>? generateRoute = [
     name: login,
     page: () => const LoginScreen(),
   ),
-  GetPage(name: dashboard, page: () => DashboardScreen(), binding: OrderBindings()),
+  GetPage(
+    name: dashboard,
+    page: () => DashboardScreen(),
+    binding: DashboardBindings(),
+  ),
   GetPage(
     name: recommendations,
     page: () => const RecommendationsScreen(),
@@ -144,7 +149,7 @@ List<GetPage<dynamic>>? generateRoute = [
   ),
   GetPage(
     name: personalData,
-    page: () => const PersonalDataScreen(),
+    page: () => PersonalDataScreen(),
   ),
   GetPage(
     name: contactInformation,

@@ -64,6 +64,16 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<void> updateUserPassword(String currentPassword, String newPassword) async {
+    try {
+      String token = await _remoteDataSource.updateUserPassword(currentPassword, newPassword);
+      await _authModel.saveToken(token);
+    } catch (e) {
+      throw Exception('Failed to refresh token: $e');
+    }
+  }
+
+  @override
   Future<bool?> createPassword(String email, String password) async {
     try {
       return await _remoteDataSource.createPassword(email, password);
@@ -86,6 +96,15 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<bool> detailsAboutYou(String day, String month, String year, String gender) async {
     try {
       return await _remoteDataSource.detailsAboutYou(day, month, year, gender);
+    } catch (e) {
+      throw Exception('Failed to update details: $e');
+    }
+  }
+
+  @override
+  Future<bool> updateUserBillingAddress(String addressLine1, String addressLine2, String city, String country, String state, String zipCode) async {
+    try {
+      return await _remoteDataSource.updateUserBillingAddress(addressLine1, addressLine2, city, country, state, zipCode);
     } catch (e) {
       throw Exception('Failed to update details: $e');
     }
@@ -123,18 +142,28 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<UserEntity?> getCurrentUser() async {
     try {
+      // Fallback to local data if remote fetch fails or no internet
+      final UserEntity? localUserModel = await _authModel.getUser();
+      if (localUserModel != null) {
+        return localUserModel;
+      }
       if (await checkInternetConnection()) {
         final UserModel? remoteUserModel = await _remoteDataSource.getCurrentUser();
         return remoteUserModel?.toEntity();
       }
-
-      // Fallback to local data if remote fetch fails or no internet
-      final UserEntity? localUserModel = await _authModel.getUser();
-      return localUserModel;
     } catch (e) {
       // Handle the error (remote fetch failed)
       print('Remote fetch failed, falling back to local: $e');
     }
     return null;
+  }
+
+  @override
+  Future<void> updateUserPersonalData(String name, String lastName, String day, String month, String year, String gender) async {
+    try {
+      _remoteDataSource.updateUserPersonalData(name, lastName, day, month, year, gender);
+    } catch (e) {
+      throw Exception('Failed to update peronal data: $e');
+    }
   }
 }

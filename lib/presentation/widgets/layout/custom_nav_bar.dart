@@ -119,8 +119,13 @@ class CustomNavBar extends StatelessWidget {
     });
   }
 
-  BottomNavigationBarItem _buildNavItem(BuildContext context,
-      {required String iconPath, required String activeIconPath, required String label, required int index}) {
+  BottomNavigationBarItem _buildNavItem(
+    BuildContext context, {
+    required String iconPath,
+    required String activeIconPath,
+    required String label,
+    required int index,
+  }) {
     return BottomNavigationBarItem(
       icon: Column(
         mainAxisSize: MainAxisSize.min,
